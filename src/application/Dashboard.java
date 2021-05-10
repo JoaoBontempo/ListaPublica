@@ -24,12 +24,13 @@ public class Dashboard extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			TabPane root = (TabPane)FXMLLoader.load(getClass().getResource("telaDashboard.fxml"));
-			Scene scene = new Scene(root,primaryStage.getMaxWidth(), primaryStage.getMaxHeight());
+			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Image icon = new Image("Recursos/logo.png");
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Lista Pública - Menu principal");
 			primaryStage.getIcons().add(icon);
+			primaryStage.setMaximized(true);
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
