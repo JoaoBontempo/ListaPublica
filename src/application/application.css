@@ -5,7 +5,14 @@
 
 .tab-pane .tab-header-background 
 {
-    -fx-background-color: #060a00;
+    -fx-background-color: #090E11;
+}
+
+.label
+{
+	-fx-font-family: 'Candara';
+	-fx-text-fill: #84ff00;
+	-fx-alignment: center;
 }
 
 .tab-pane .tab
@@ -29,7 +36,7 @@
 {
 	-fx-font-weight: Bold;
 	-fx-font-size: 16px;
-	-fx-font-family: 'Cardano';
+	-fx-font-family: 'Candara';
 	-fx-text-fill: #84ff00;
 	-fx-alignment: center;
 }
@@ -43,11 +50,18 @@
 	-fx-text-fill: #84ff00;
 }
 
-.separator .line
+.separatorHorizontal .line
 {
 	-fx-border-style: solid;
 	-fx-border-color: #84ff00;
-	-fx-border-width: 2px;
+	-fx-border-width: 1px;
+}
+
+.separatorVertical .line
+{
+	-fx-border-style: solid;
+	-fx-border-color: #0f1c00;
+	-fx-border-width: 1px;
 }
 
 .button:hover
@@ -69,6 +83,21 @@
 	-fx-border-radius: 10;
 	-fx-border-width: 2px;
 	-fx-border-color: #84ff00;
+	-fx-text-fill: #000000;
+}
+
+.text-field2
+{
+	-fx-prompt-text-fill: #0f1c00;
+	-fx-background-color: #080f00;
+	-fx-text-fill: #ffffff;
+	-fx-font-weight: Normal;
+	-fx-font-size: 14px;
+	-fx-font-family: 'Cardano';
+	-fx-background-radius: 15;
+	-fx-border-radius: 10;
+	-fx-border-width: 2px;
+	-fx-border-color: #84ff00;
 }
 
 .labelComLink:hover
@@ -82,7 +111,7 @@
 /**TABLE VIEW**/
 /*Tabel inteira */
 .table-view{
-   -fx-background-color: #060a00; /*Muda a cor de fundo da tabela */
+   -fx-background-color: #090E11; /*Muda a cor de fundo da tabela */
    -fx-border-color: #84ff00; /*Muda a cor da borda da tabela */
    -fx-border-width: 2px; /*Muda a espessura da borda da tabela */   
 }
