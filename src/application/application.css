@@ -1,6 +1,18 @@
 .root
 {
+	-fx-background-color: #090E11;
+}
+
+.combo-box
+{
 	-fx-background-color: #080f00;
+	-fx-border-color: #84ff00;
+	-fx-border-radius: 10;
+	-fx-background-radius: 15;
+	-fx-text-fill: #ffffff;
+	-fx-font-weight: Normal;
+	-fx-font-size: 14px;
+	-fx-font-family: 'Cardano';
 }
 
 .tab-pane .tab-header-background 
@@ -8,7 +20,7 @@
     -fx-background-color: #090E11;
 }
 
-.label
+.labelVerde
 {
 	-fx-font-family: 'Candara';
 	-fx-text-fill: #84ff00;
@@ -88,8 +100,8 @@
 
 .text-field2
 {
-	-fx-prompt-text-fill: #0f1c00;
-	-fx-background-color: #080f00;
+	-fx-prompt-text-fill: #121f15;
+	-fx-background-color: #090E11;
 	-fx-text-fill: #ffffff;
 	-fx-font-weight: Normal;
 	-fx-font-size: 14px;
@@ -114,6 +126,11 @@
    -fx-background-color: #090E11; /*Muda a cor de fundo da tabela */
    -fx-border-color: #84ff00; /*Muda a cor da borda da tabela */
    -fx-border-width: 2px; /*Muda a espessura da borda da tabela */   
+}
+
+.table-view .label
+{
+	-fx-text-fill: #84ff00; 
 }
 
 /*Para linhas sem conteúdo*/
