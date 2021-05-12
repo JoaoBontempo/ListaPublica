@@ -38,13 +38,13 @@
                         <Image url="@../Recursos/lupa.png" />
                      </image>
                   </ImageView>
-                  <ComboBox layoutX="537.0" layoutY="77.0" prefHeight="25.0" prefWidth="193.0" AnchorPane.rightAnchor="15.0" />
-                  <Label layoutX="537.0" layoutY="59.0" styleClass="labelVerde" text="Estado" AnchorPane.rightAnchor="167.0">
+                  <ComboBox layoutX="537.0" layoutY="75.0" prefHeight="25.0" prefWidth="193.0" AnchorPane.rightAnchor="15.0" />
+                  <Label layoutX="537.0" layoutY="56.0" styleClass="labelVerde" text="Estado" AnchorPane.rightAnchor="167.0">
                      <font>
                         <Font name="Candara" size="14.0" />
                      </font>
                   </Label>
-                  <ComboBox layoutX="537.0" layoutY="128.0" prefHeight="25.0" prefWidth="193.0" AnchorPane.rightAnchor="15.0" />
+                  <ComboBox layoutX="537.0" layoutY="131.0" prefHeight="25.0" prefWidth="193.0" AnchorPane.rightAnchor="15.0" />
                   <Label layoutX="537.0" layoutY="111.0" styleClass="labelVerde" text="Cidade" AnchorPane.rightAnchor="167.0">
                      <font>
                         <Font size="14.0" />
