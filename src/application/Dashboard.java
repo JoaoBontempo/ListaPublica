@@ -81,8 +81,8 @@ public class Dashboard extends Application {
 		}
 		catch (Exception erro)
 		{
-				Util.MessageBoxShow("Ocorreu um erro ao carregar os Estados", "Um erro ocorreu ao conectar-se a API Geonames.\n"
-						+ " Verifique sua conexão com a internet.", AlertType.ERROR);
+				//Util.MessageBoxShow("Ocorreu um erro ao carregar os Estados", "Um erro ocorreu ao conectar-se a API Geonames.\n"
+						//+ " Verifique sua conexão com a internet.", AlertType.ERROR);
 		}
 		return null;
 	}

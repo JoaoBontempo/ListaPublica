@@ -1,8 +1,11 @@
 package application;
 	
+import classes.Util;
+import classes.Validacao;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -30,7 +33,6 @@ public class Login extends Application {
 
     @FXML
     private PasswordField txtSenha;
-
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -51,13 +53,25 @@ public class Login extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+		
+	private boolean verificarCampos()
+	{
+		if (!Validacao.verificarTextField(txtUsuario))
+			return false;
+		if (!Validacao.verificarTextField(txtSenha))
+			return false;
+		return true;
+	}
 	
 	@FXML
 	public void RealizarLogin()
 	{
-		Dashboard dash = new Dashboard();
-		dash.start(new Stage());
-		Stage stageAtual = (Stage) btnLogar.getScene().getWindow();
-		stageAtual.close();
+		if (verificarCampos())
+		{
+			Dashboard dash = new Dashboard();
+			dash.start(new Stage());
+			Stage stageAtual = (Stage) btnLogar.getScene().getWindow();
+			stageAtual.close();
+		}
 	}
 }
