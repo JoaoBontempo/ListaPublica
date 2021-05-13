@@ -7,12 +7,19 @@
 {
 	-fx-background-color: #090E11;
 	-fx-border-color: #84ff00;
-	-fx-border-radius: 10;
-	-fx-background-radius: 15;
-	-fx-text-fill: #ffffff;
 	-fx-font-weight: Normal;
 	-fx-font-size: 14px;
 	-fx-font-family: 'Cardano';
+}
+
+.combo-box .cell{
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #090E11;   
+}
+
+.combo-box .scroll-bar
+{
+	-fx-background-color: #090E11;
 }
 
 .tab-pane .tab-header-background 

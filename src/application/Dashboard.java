@@ -1,5 +1,7 @@
 package application;
 	
+import java.util.ArrayList;
+
 import org.geonames.Toponym;
 import org.geonames.ToponymSearchCriteria;
 import org.geonames.ToponymSearchResult;
@@ -9,9 +11,12 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -22,20 +27,82 @@ import javafx.fxml.FXMLLoader;
 
 public class Dashboard extends Application {
 	
+	final int GEONAMEIDBRASIL = 3469034;
+	
+	private ArrayList<Integer> geoids = new ArrayList<Integer>();
+	
 	@FXML
     private TextField txtPesquisar;
+
+    @FXML
+    private TableView<?> tvLugares;
+
+    @FXML
+    private TableColumn<?, ?> tvcNumero;
+
+    @FXML
+    private TableColumn<?, ?> tvcNome;
+
+    @FXML
+    private TableColumn<?, ?> tvcCidade;
+
+    @FXML
+    private TableColumn<?, ?> tvcEstado;
+
+    @FXML
+    private TableColumn<?, ?> tvcEmail;
+
+    @FXML
+    private ComboBox<String> cboxEstados;
+
+    @FXML
+    private ComboBox<String> cboxCidades;
+
+    @FXML
+    private TextField txtNome;
+
+    @FXML
+    private TextField txtTelefone;
+
+    @FXML
+    private TextField txtEmail;
 	
+	
+	private ToponymSearchResult getChildren(int id) 
+	{
+		try
+		{
+			WebService.setUserName("JoaoBontempo"); // add your username here
+
+			ToponymSearchResult children = WebService.children(id, STYLESHEET_CASPIAN, null);
+			return children;
+		}
+		catch (Exception erro)
+		{
+				
+		}
+		return null;
+	}
+	
+	@FXML
+	private void recuperarCidades ()
+	{
+		cboxCidades.getItems().clear();
+		for (Toponym estados : getChildren(geoids.get(cboxEstados.getSelectionModel().getSelectedIndex())).getToponyms())
+		{
+			cboxCidades.getItems().addAll(estados.getName());
+			geoids.add(estados.getGeoNameId());
+		}
+	}
 	
 	//Método 'onLoad'
 	public void initialize() throws Exception
 	{
-		WebService.setUserName("JoaoBontempo"); // add your username here
-
-		ToponymSearchCriteria searchCriteria = new ToponymSearchCriteria();
-		searchCriteria.setQ("brazil");
-		ToponymSearchResult searchResult = WebService.search(searchCriteria);
-		for (Toponym toponym : searchResult.getToponyms()) {
-			System.out.println(toponym.getName()+" "+ toponym.getCountryName());
+		//Forma de pegar todos os Estados e suas respectivas cidades
+		for (Toponym estados : getChildren(GEONAMEIDBRASIL).getToponyms())
+		{
+			cboxEstados.getItems().addAll(estados.getName());
+			geoids.add(estados.getGeoNameId());
 		}
 	}
 		
