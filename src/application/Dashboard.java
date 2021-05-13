@@ -7,9 +7,11 @@ import org.geonames.ToponymSearchCriteria;
 import org.geonames.ToponymSearchResult;
 import org.geonames.WebService;
 
+import classes.Util;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -79,7 +81,8 @@ public class Dashboard extends Application {
 		}
 		catch (Exception erro)
 		{
-				
+				Util.MessageBoxShow("Ocorreu um erro ao carregar os Estados", "Um erro ocorreu ao conectar-se a API Geonames.\n"
+						+ " Verifique sua conexão com a internet.", AlertType.ERROR);
 		}
 		return null;
 	}

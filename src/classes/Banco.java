@@ -31,15 +31,6 @@ public class Banco {
 		return resultados;
 	}
 	
-	static void MessageBoxShow(String titulo, String conteudo, AlertType tipo)
-	{
-		Alert alert = new Alert(tipo);
-		alert.setTitle(titulo);
-		alert.setHeaderText(null);
-		alert.setContentText(conteudo);
-		alert.showAndWait();
-	}
-	
 	//String de conexao
 	private static String stringConexao = String.format("jdbc:mysql://%s:%s/%s", ip, porta, banco);
 	
@@ -54,7 +45,7 @@ public class Banco {
 		}
 		catch (Exception erro)
 		{
-			MessageBoxShow("Erro ao conectar ao banco", erro.getMessage(), AlertType.INFORMATION);
+			Util.MessageBoxShow("Erro ao conectar ao banco", erro.getMessage(), AlertType.INFORMATION);
 		}
 	}
 	

@@ -5,6 +5,9 @@
 
 .combo-box
 {
+	-fx-cursor: Hand;
+	-fx-background-radius: 15;
+ 	-fx-border-radius: 10;
 	-fx-background-color: #090E11;
 	-fx-border-color: #84ff00;
 	-fx-font-weight: Normal;
@@ -12,9 +15,62 @@
 	-fx-font-family: 'Cardano';
 }
 
+.combo-box .arrow
+{
+	-fx-background-color: #84ff00;
+}
+
 .combo-box .cell{
     -fx-text-fill: #ffffff;
-    -fx-background-color: #090E11;   
+    -fx-background-color: #090E11;  
+    -fx-background-radius: 15;
+ 	-fx-border-radius: 10; 
+}
+
+.combo-box-popup .list-view
+{
+	-fx-cursor: Hand;
+}
+
+.combo-box-popup .cell
+ {
+ 	-fx-background-radius: 0;
+ 	-fx-border-radius: 0;
+	-fx-text-fill: #ffffff;
+    -fx-background-color: #090E11;  
+ }
+
+.combo-box-popup .cell:hover
+ {
+ 	-fx-background-radius: 0;
+ 	-fx-border-radius: 0;
+	-fx-background-color: #090E11;
+	-fx-text-fill: #ffffff;
+	-fx-border-color: #84ff00;
+ }
+ 
+ .combo-box-popup .cell:selected
+ {
+ 	-fx-background-radius: 0;
+ 	-fx-border-radius: 0;
+	-fx-background-color: #84ff00;
+	-fx-text-fill: #090E11;
+ }
+
+.combo-box .scroll-bar .thumb
+{
+    -fx-background-color: #090E11;
+    -fx-border-color: #84ff00;
+}
+
+.combo-box .scroll-bar .increment-button,
+.combo-box .scroll-bar .decrement-button{
+	-fx-background-color: #090E11;
+}
+
+.combo-box .scroll-bar .increment-arrow,
+.combo-box .scroll-bar .decrement-arrow {
+    -fx-background-color: #84ff00;
 }
 
 .combo-box .scroll-bar
