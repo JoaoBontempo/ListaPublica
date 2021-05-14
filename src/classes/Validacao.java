@@ -2,6 +2,7 @@ package classes;
 
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TextArea;
 
 public final class Validacao {
 	
@@ -18,7 +19,19 @@ public final class Validacao {
 	{
 		if (Validacao.isNullOrEmpty(txt.getText()))
 		{
-			Util.MessageBoxShow("Campo inválido", "O campo '" + txt.getId().substring(3) + "' está vazio.", AlertType.WARNING);
+			Util.MessageBoxShow("Campo inválido", "O campo '" + txt.getId().substring(3).replace("_", " ") + "' está vazio.", AlertType.WARNING);
+			txt.requestFocus();
+			return false;
+		}
+		else
+			return true;
+	}
+	
+	public static boolean verificarTextArea(TextArea txt)
+	{
+		if (Validacao.isNullOrEmpty(txt.getText()))
+		{
+			Util.MessageBoxShow("Campo inválido", "O campo '" + txt.getId().substring(3).replace("_", " ") + "' está vazio.", AlertType.WARNING);
 			txt.requestFocus();
 			return false;
 		}
