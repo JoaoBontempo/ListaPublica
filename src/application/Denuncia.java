@@ -1,5 +1,6 @@
 package application;
 
+import classes.Email;
 import classes.Util;
 import classes.Validacao;
 import javafx.application.Application;
@@ -96,7 +97,10 @@ public class Denuncia extends Application {
 	{
 		if (verificarCampos())
 		{
-			
+			if(Email.enviarEmail(cboxMotivo.getSelectionModel().getSelectedItem() != "Outro" ? cboxMotivo.getSelectionModel().getSelectedItem(): txtOutro_motivo.getText(), txtDescrição.getText()))
+				Util.MessageBoxShow("Denúncia enviada com sucesso!", "Um e-mail com as informações foi enviado para os moderadores.\n"
+						+ "\nSua denúncia será analisada.\n"
+						+ "\nObrigado por contribuir para a melhoria do software!", AlertType.INFORMATION);
 		}
 	}
 	
