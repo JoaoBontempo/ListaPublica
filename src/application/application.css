@@ -149,6 +149,26 @@
 	-fx-cursor: Hand;
 }
 
+.text-area
+{
+	-fx-background-color: #090E11;
+	-fx-font-weight: Normal;
+	-fx-font-size: 14px;
+	-fx-font-family: 'Cardano';
+	-fx-border-width: 2px;
+	-fx-border-color: #84ff00;
+	-fx-text-fill: #ffffff;
+}
+
+.text-area .content
+{
+	-fx-background-color: #090E11;
+	-fx-font-weight: Normal;
+	-fx-font-size: 14px;
+	-fx-font-family: 'Cardano';
+	-fx-text-fill: #ffffff;
+}
+
 .text-field
 {
 	-fx-font-weight: Normal;
