@@ -95,12 +95,12 @@ public class Cadastrar extends Application{
 		try {
 			
 			if(tipo) {
-				Banco.InserirQuery(String.format("INSERT INTO parceiro(nome,usuario,tipo,cnpj,email,senha) VALUES(%s,%s,%s,%s,%s,%s)",
+				Banco.InserirQuery(String.format("INSERT INTO parceiro(id,nome,usuario,tipo,cnpj,email,senha) VALUES(default, %s,%s,%s,%s,%s,%s)",
 						txtNome.getText(), txtUsuario.getText(),tipo,  txtCPFouCNPJ.getText(), txtEmail.getText(), Util.criptografarSenha(txtSenha.getText())));
 			}
 			else {
 
-				Banco.InserirQuery(String.format("INSERT INTO parceiro(nome,usuario,tipo,cpf,email,senha) VALUES(%s,%s,%s,%s,%s,%s)",
+				Banco.InserirQuery(String.format("INSERT INTO parceiro(id,nome,usuario,tipo,cpf,email,senha) VALUES(default, %s,%s,%s,%s,%s,%s)",
 						txtNome.getText(), txtUsuario.getText(),tipo ,txtCPFouCNPJ.getText(), txtEmail.getText(), Util.criptografarSenha(txtSenha.getText())));
 			}
 			

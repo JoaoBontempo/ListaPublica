@@ -25,13 +25,9 @@ import javafx.fxml.FXMLLoader;
 
 
 public class Login extends Application {
-<<<<<<< HEAD
-
-=======
-		
+	
 	private int id;
 	
->>>>>>> eda6f5dbfa0d4e71a038b4f2b4cf494df1a07eef
 	@FXML
 	private TextField txtUsuario;
 
@@ -146,13 +142,9 @@ public class Login extends Application {
 			}
 		}
 	}
-<<<<<<< HEAD
 
-	private void loginRealizado()
-=======
-	
 	private void loginRealizado() throws SQLException
->>>>>>> eda6f5dbfa0d4e71a038b4f2b4cf494df1a07eef
+
 	{
 		ResultSet result = Banco.InserirQueryReader("SELECT * FROM parceiro WHERE id = " + id);
 		result.next();
