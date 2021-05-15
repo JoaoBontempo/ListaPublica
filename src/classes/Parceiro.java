@@ -3,6 +3,24 @@ package classes;
 import java.util.ArrayList;
 
 public class Parceiro {
+	
+	public Parceiro()
+	{
+		
+	}
+	
+	public Parceiro(int id, Object tipo, String nome, String cpf, String cnpj, String email, String usuario)
+	{
+		this.setId(id);
+		this.setCnpj(cnpj);
+		this.setCpf(cpf);
+		this.setEmail(email);
+		this.setNome(nome);
+		this.setTipo(tipo);
+		this.setUsuario(usuario);
+	}
+	
+	
 	private int id;
 	private String nome;
 	private String cpf;
@@ -41,11 +59,23 @@ public class Parceiro {
 		this.cnpj = cnpj;
 	}
 	
-	public boolean isTipo() {
+	public boolean getTipo() {
 		return tipo;
 	}
-	public void setTipo(boolean tipo) {
-		this.tipo = tipo;
+	
+	public void setTipo(Object tipo)
+	{
+		try
+		{
+			if (Integer.parseInt(tipo.toString()) == 0)
+				this.tipo = false;
+			else
+				this.tipo = true;
+		}
+		catch (Exception e)
+		{
+			this.tipo = (boolean) tipo;
+		}
 	}
 	
 	public String getEmail() {
