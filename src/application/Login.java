@@ -1,5 +1,5 @@
 package application;
-	
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -15,6 +15,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXML;
@@ -22,22 +24,22 @@ import javafx.fxml.FXMLLoader;
 
 
 public class Login extends Application {
-		
+
 	@FXML
-    private TextField txtUsuario;
+	private TextField txtUsuario;
 
-    @FXML
-    private Label lbEsqueciSenha;
+	@FXML
+	private Label lbEsqueciSenha;
 
-    @FXML
-    private Button btnLogar;
+	@FXML
+	private Button btnLogar;
 
-    @FXML
-    private Label lbCadastrar;
+	@FXML
+	private Label lbCadastrar;
 
-    @FXML
-    private PasswordField txtSenha;
-	
+	@FXML
+	private PasswordField txtSenha;
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -53,16 +55,16 @@ public class Login extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void initialize() throws ClassNotFoundException, SQLException
 	{
 		Banco.Conectar();
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
-		
+
 	private boolean verificarCampos()
 	{
 		if (!Validacao.verificarTextField(txtUsuario))
@@ -71,7 +73,7 @@ public class Login extends Application {
 			return false;
 		return true;
 	}
-	
+
 	private String verificarTipoLogin()
 	{
 		//CPF || CNPJ
@@ -83,7 +85,7 @@ public class Login extends Application {
 		else
 			return "Usuario";
 	}
-	
+
 	private boolean realizarLoginBanco(String tipo) throws SQLException
 	{
 		if (tipo.equals("Email"))
@@ -136,7 +138,7 @@ public class Login extends Application {
 			}
 		}
 	}
-	
+
 	private void loginRealizado()
 	{
 		Dashboard dash = new Dashboard();
@@ -144,7 +146,7 @@ public class Login extends Application {
 		Stage stageAtual = (Stage) btnLogar.getScene().getWindow();
 		stageAtual.close();
 	}
-	
+
 	@FXML
 	public void RealizarLogin() throws SQLException
 	{ 
@@ -156,4 +158,16 @@ public class Login extends Application {
 				return;
 		}
 	}
+	
+	@FXML
+	void meCadastrar(MouseEvent event) {
+         
+		Cadastrar cadastrar = new Cadastrar();
+		cadastrar.start(new Stage());
+		Stage stageAtual = (Stage) lbCadastrar.getScene().getWindow();
+		stageAtual.close();
+	}
+
+
+
 }

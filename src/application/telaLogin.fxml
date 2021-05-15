@@ -9,20 +9,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="422.0" prefWidth="348.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Login">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="348.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Login">
    <children>
-      <ImageView fitHeight="174.0" fitWidth="267.0" layoutX="47.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="122.0" fitWidth="221.0" layoutX="71.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Recursos/logo_contornada.png" />
          </image>
       </ImageView>
-      <TextField id="txtUsuario" fx:id="txtUsuario" layoutX="16.0" layoutY="219.0" prefHeight="25.0" prefWidth="317.0" promptText="Insira seu e-mail ou usuário" stylesheets="@application.css">
+      <TextField id="txtUsuario" fx:id="txtUsuario" layoutX="16.0" layoutY="211.0" prefHeight="34.0" prefWidth="317.0" promptText="Insira seu e-mail ou usuário" stylesheets="@application.css">
          <font>
             <Font name="Candara" size="14.0" />
          </font>
       </TextField>
-      <Label layoutX="21.0" layoutY="194.0" text="E-mail/usuário" textFill="WHITE">
+      <Label layoutX="21.0" layoutY="186.0" text="E-mail/usuário" textFill="WHITE">
          <font>
             <Font name="Candara" size="19.0" />
          </font>
@@ -32,17 +31,17 @@
             <Font name="Candara" size="19.0" />
          </font>
       </Label>
-      <Label fx:id="lbEsqueciSenha" layoutX="19.0" layoutY="312.0" styleClass="labelComLink" text="Esqueci minha senha" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" underline="true">
+      <Label fx:id="lbEsqueciSenha" layoutX="26.0" layoutY="312.0" styleClass="labelComLink" text="Esqueci minha senha" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" underline="true">
          <font>
             <Font name="Candara Light" size="16.0" />
          </font>
       </Label>
-      <Button fx:id="btnLogar" layoutX="16.0" layoutY="342.0" mnemonicParsing="false" onAction="#RealizarLogin" prefHeight="25.0" prefWidth="317.0" text="Logar">
+      <Button fx:id="btnLogar" layoutX="16.0" layoutY="355.0" mnemonicParsing="false" onAction="#RealizarLogin" prefHeight="25.0" prefWidth="317.0" text="Logar">
          <font>
             <Font name="Candara Bold" size="16.0" />
          </font>
       </Button>
-      <Label fx:id="lbCadastrar" layoutX="19.0" layoutY="374.0" styleClass="labelComLink" text="Quero me cadastrar!" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" underline="true">
+      <Label fx:id="lbCadastrar" layoutX="110.0" layoutY="421.0" onMouseClicked="#meCadastrar" styleClass="labelComLink" text="Quero me cadastrar!" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" underline="true">
          <font>
             <Font name="Candara Light" size="16.0" />
          </font>

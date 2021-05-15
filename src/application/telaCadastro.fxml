@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="569.0" prefWidth="686.0" style="-fx-background-color: #090E11;" stylesheets="@application.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Login">
+   <children>
+      <ImageView fitHeight="122.0" fitWidth="221.0" layoutX="47.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/logo_contornada.png" />
+         </image>
+      </ImageView>
+      <TextField id="txtUsuario" fx:id="txtUsuario" layoutX="313.0" layoutY="151.0" prefHeight="25.0" prefWidth="317.0" promptText="Insira seu usuário" stylesheets="@application.css">
+         <font>
+            <Font name="Candara" size="14.0" />
+         </font>
+      </TextField>
+      <Label layoutX="318.0" layoutY="129.0" text="Usuário" textFill="WHITE">
+         <font>
+            <Font name="Candara" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="318.0" layoutY="328.0" text="Senha" textFill="WHITE">
+         <font>
+            <Font name="Candara" size="19.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnCadastrar" layoutX="313.0" layoutY="472.0" mnemonicParsing="false" onAction="#RealizarCadastro" prefHeight="25.0" prefWidth="317.0" text="Cadastrar">
+         <font>
+            <Font name="Candara Bold" size="16.0" />
+         </font>
+      </Button>
+      <PasswordField id="txtSenha" fx:id="txtSenha" layoutX="313.0" layoutY="350.0" prefHeight="34.0" prefWidth="317.0" promptText="Insira sua senha">
+         <font>
+            <Font name="Candara" size="14.0" />
+         </font>
+      </PasswordField>
+      <TextField id="txtUsuario" fx:id="txtEmail" layoutX="312.0" layoutY="213.0" prefHeight="25.0" prefWidth="317.0" promptText="Insira seu E-mail" stylesheets="@application.css">
+         <font>
+            <Font name="Candara" size="14.0" />
+         </font>
+      </TextField>
+      <Label layoutX="318.0" layoutY="191.0" text="E-mail" textFill="WHITE">
+         <font>
+            <Font name="Candara" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="318.0" layoutY="393.0" text="Confirmar Senha" textFill="WHITE">
+         <font>
+            <Font name="Candara" size="19.0" />
+         </font>
+      </Label>
+      <PasswordField id="txtSenha" fx:id="txtSenha1" layoutX="313.0" layoutY="415.0" prefHeight="34.0" prefWidth="317.0" promptText="Confirme sua senha">
+         <font>
+            <Font name="Candara" size="14.0" />
+         </font>
+      </PasswordField>
+      <Label layoutX="318.0" layoutY="260.0" text="CPF/CNPJ" textFill="WHITE">
+         <font>
+            <Font name="Candara" size="19.0" />
+         </font>
+      </Label>
+      <PasswordField id="txtSenha" fx:id="txtCPFouCNPJ" layoutX="313.0" layoutY="282.0" prefHeight="34.0" prefWidth="317.0" promptText="Insira seu CPF ou CNPJ (dígitos numéricos)">
+         <font>
+            <Font name="Candara" size="14.0" />
+         </font>
+      </PasswordField>
+      <TextField id="txtUsuario" fx:id="txtNome" layoutX="312.0" layoutY="87.0" prefHeight="25.0" prefWidth="317.0" promptText="Insira seu nome" stylesheets="@application.css">
+         <font>
+            <Font name="Candara" size="14.0" />
+         </font>
+      </TextField>
+      <Label layoutX="318.0" layoutY="65.0" text="Nome" textFill="WHITE">
+         <font>
+            <Font name="Candara" size="19.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
