@@ -7,12 +7,12 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX"/>
-	<classpathentry kind="lib" path="src/lib/mysql-connector-java-8.0.23.jar"/>
-	<classpathentry kind="lib" path="src/lib/geonames-1.1.15.jar"/>
-	<classpathentry kind="lib" path="src/lib/jdom-1.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFx"/>
-	<classpathentry kind="lib" path="src/lib/commons-email-1.5.jar"/>
-	<classpathentry kind="lib" path="src/lib/mail-1.4.7.jar"/>
-	<classpathentry kind="lib" path="src/lib/activation-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/activation-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-email-1.5.jar"/>
+	<classpathentry kind="lib" path="lib/geonames-1.1.15.jar"/>
+	<classpathentry kind="lib" path="lib/jdom-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/mail-1.4.7.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-8.0.23.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
