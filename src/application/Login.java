@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import classes.Banco;
+import classes.Parceiro;
 import classes.Util;
 import classes.Validacao;
 import javafx.application.Application;
@@ -24,7 +25,13 @@ import javafx.fxml.FXMLLoader;
 
 
 public class Login extends Application {
+<<<<<<< HEAD
 
+=======
+		
+	private int id;
+	
+>>>>>>> eda6f5dbfa0d4e71a038b4f2b4cf494df1a07eef
 	@FXML
 	private TextField txtUsuario;
 
@@ -118,7 +125,7 @@ public class Login extends Application {
 				}
 			}
 		}
-		ResultSet result = Banco.InserirQueryReader(String.format("SELECT %s, senha FROM parceiro WHERE %s = '%s'", tipo.toLowerCase(), tipo.toLowerCase(), txtUsuario.getText()));
+		ResultSet result = Banco.InserirQueryReader(String.format("SELECT %s, senha, id FROM parceiro WHERE %s = '%s'", tipo.toLowerCase(), tipo.toLowerCase(), txtUsuario.getText()));
 		//result.next();
 		if (!result.next())
 		{
@@ -129,6 +136,7 @@ public class Login extends Application {
 		{
 			if (Util.verificarSenha(txtSenha.getText(), result.getString("senha")))
 			{
+				id = result.getInt("id");
 				return true;
 			}
 			else
@@ -138,9 +146,18 @@ public class Login extends Application {
 			}
 		}
 	}
+<<<<<<< HEAD
 
 	private void loginRealizado()
+=======
+	
+	private void loginRealizado() throws SQLException
+>>>>>>> eda6f5dbfa0d4e71a038b4f2b4cf494df1a07eef
 	{
+		ResultSet result = Banco.InserirQueryReader("SELECT * FROM parceiro WHERE id = " + id);
+		result.next();
+		Parceiro contaLogada = new Parceiro(result.getInt("id"), result.getInt("tipo"), result.getString("nome"), result.getString("cpf"), result.getString("cnpj"), result.getString("email"), result.getString("usuario"));
+		Util.setContaLogada(contaLogada);
 		Dashboard dash = new Dashboard();
 		dash.start(new Stage());
 		Stage stageAtual = (Stage) btnLogar.getScene().getWindow();
