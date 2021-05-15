@@ -62,7 +62,7 @@ public final class Email {
 	public static boolean enviarEmail(String descricao,String titulo,String destinatario)
 	{
  
-		if(!(destinatario.contains("@"))) {
+		if(!Validacao.validarEmail(destinatario)) {
 			return false;
 		}
  

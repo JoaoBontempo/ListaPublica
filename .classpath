@@ -14,5 +14,7 @@
 	<classpathentry kind="lib" path="lib/jdom-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/mail-1.4.7.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-8.0.23.jar"/>
+	<classpathentry kind="lib" path="lib/spring-security-crypto-4.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

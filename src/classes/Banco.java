@@ -9,14 +9,14 @@ import java.sql.Statement;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-public class Banco {
+public final class Banco {
 	
 	//Credenciais do banco
-	private static String ip = "";
-	private static String banco = "";
-	private static String usuario = "";
-	private static String senha = "";
-	private static String porta = "";
+	private static String ip = "dblistapublica.ccenmvdsqpiw.us-east-2.rds.amazonaws.com";
+	private static String banco = "db_lista_publica";
+	private static String usuario = "gerenciamento";
+	private static String senha = "S3nh4F0rt3";
+	private static String porta = "3306";
 	
 	//Biblioteca
 	private final static String DRIVE = "com.mysql.cj.jdbc.Driver";

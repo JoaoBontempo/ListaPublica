@@ -1,5 +1,9 @@
 package application;
 	
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import classes.Banco;
 import classes.Util;
 import classes.Validacao;
 import javafx.application.Application;
@@ -50,6 +54,11 @@ public class Login extends Application {
 		}
 	}
 	
+	public void initialize() throws ClassNotFoundException, SQLException
+	{
+		Banco.Conectar();
+	}
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -63,15 +72,83 @@ public class Login extends Application {
 		return true;
 	}
 	
-	@FXML
-	public void RealizarLogin()
+	private String verificarTipoLogin()
 	{
+		//CPF || CNPJ
+		if (txtUsuario.getText().matches("[0-9]+"))
+			return "CPF/CNPJ";
+		//E-MAIL
+		else if (txtUsuario.getText().contains("@"))
+			return "Email";
+		else
+			return "Usuario";
+	}
+	
+	private boolean realizarLoginBanco(String tipo) throws SQLException
+	{
+		if (tipo.equals("Email"))
+		{
+			if (!Validacao.validarEmail(txtUsuario.getText()))
+			{
+				Util.MessageBoxShow("Campo inválido", "O email inserido é inválido ou está incorreto", AlertType.ERROR);
+				return false;
+			}
+		}
+		if (tipo.equals("CPF/CNPJ"))
+		{
+			//cpf
+			if (txtUsuario.getText().length() == 11)
+			{
+				if (!Validacao.validarCPF(txtUsuario))
+					return false;
+				else
+				{
+					tipo = "CPF";
+				}
+			}
+			else //cnpj
+			{
+				
+			}
+		}
+		ResultSet result = Banco.InserirQueryReader(String.format("SELECT %s, senha FROM parceiro WHERE %s = '%s'", tipo.toLowerCase(), tipo.toLowerCase(), txtUsuario.getText()));
+		//result.next();
+		if (!result.next())
+		{
+			Util.MessageBoxShow("Falha ao realizar login", tipo + " não encontrado", AlertType.ERROR);
+			return false;
+		}
+		else
+		{
+			if (Util.verificarSenha(txtSenha.getText(), result.getString("senha")))
+			{
+				return true;
+			}
+			else
+			{
+				Util.MessageBoxShow("Falha ao realizar login", "Senha incorreta", AlertType.ERROR);
+				return false;
+			}
+		}
+	}
+	
+	private void loginRealizado()
+	{
+		Dashboard dash = new Dashboard();
+		dash.start(new Stage());
+		Stage stageAtual = (Stage) btnLogar.getScene().getWindow();
+		stageAtual.close();
+	}
+	
+	@FXML
+	public void RealizarLogin() throws SQLException
+	{ 
 		if (verificarCampos())
 		{
-			Dashboard dash = new Dashboard();
-			dash.start(new Stage());
-			Stage stageAtual = (Stage) btnLogar.getScene().getWindow();
-			stageAtual.close();
+			if (realizarLoginBanco(verificarTipoLogin()))
+				loginRealizado();
+			else
+				return;
 		}
 	}
 }

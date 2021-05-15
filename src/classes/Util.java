@@ -1,5 +1,7 @@
 package classes;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -17,5 +19,18 @@ public final class Util {
 		stage = (Stage) alert.getDialogPane().getScene().getWindow();
 		stage.getIcons().add(new Image("Recursos/logo.png"));
 		alert.showAndWait();
+	}
+	
+	public static String criptografarSenha(String senha)
+	{
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		return encoder.encode(senha);
+	}
+	
+	public static boolean verificarSenha(String senha, String hash)
+	{
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		return encoder.matches(senha, hash);
 	}
 }
