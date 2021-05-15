@@ -1,19 +1,20 @@
 package classes;
-
+ 
 import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
-
+ 
 import javafx.scene.control.Alert.AlertType;
-
+ 
 public final class Email {
-
+ 
 	static final String destinatario = "lista.publica.adm@gmail.com";
 	static final String[] remetente = {"lista.publica.client@gmail.com", "lista-public-client14492021"};
-
+ 
 	static SimpleEmail email = new SimpleEmail();
-
-	private static void configurarEmail()
-	{
+ 
+	// o static vai executar toda vez que o software iniciar, ai não precisa chamar configurarEmail() nas funções
+	static {
 		try
 		{
 			email.setHostName("smtp.gmail.com");
@@ -23,17 +24,23 @@ public final class Email {
 		}
 		catch (Exception e)
 		{
-
+ 
 		}
 	}
-
-	public static boolean enviarEmail(String motivo, String descricao)
+ 
+	/**
+	 * Essa função de sobreescrita vai funcionar com o e-mail destinatário PADRÃO (lista.publica.adm@gmail.com)
+	 * @param descricao
+	 * @param titulo
+	 * @return
+	 */
+	public static boolean enviarEmail(String descricao,String titulo)
 	{
-		configurarEmail();
+		//configurarEmail();
 		try
 		{
 			email.setFrom(remetente[0]);
-			email.setSubject("Nova denúncia de parceiro: " + motivo);
+			email.setSubject(titulo); // Jogar "Nova denúncia de parceiro: " + motivo como argumento dessa função
 			email.setMsg(descricao);
 			email.addTo(destinatario);
 			email.send();
@@ -45,5 +52,37 @@ public final class Email {
 			return false;
 		}
 	}
-
+ 
+	/**
+	 * Essa função de sobreescrita vai funcionar com o e-mail destinatário passado pelo ARGUMENTO
+	 * @param descricao
+	 * @param titulo
+	 * @return
+	 */
+	public static boolean enviarEmail(String descricao,String titulo,String destinatario)
+	{
+ 
+		if(!(destinatario.contains("@"))) {
+			return false;
+		}
+ 
+		try
+		{
+			email.setFrom(remetente[0]);
+			email.setSubject(titulo); // Jogar "Nova denúncia de parceiro: " + motivo como argumento dessa função
+			email.setMsg(descricao);
+			email.addTo("igor.hscuculha@gmail.com");
+			email.send();
+			return true;
+		}
+		catch (Exception erro)
+		{
+			Util.MessageBoxShow("Erro ao enviar e-mail", erro.getMessage(), AlertType.ERROR);
+			return false;
+		}
+	}
+ 
+ 
+ 
+ 
 }

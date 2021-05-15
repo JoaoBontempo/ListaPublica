@@ -57,4 +57,5 @@ public class Endereco {
 	public void setConta(Parceiro conta) {
 		this.conta = conta;
 	}
+
 }
