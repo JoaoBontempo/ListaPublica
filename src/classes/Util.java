@@ -9,6 +9,16 @@ import javafx.stage.Stage;
 
 public final class Util {
 	
+	private static Parceiro contaLogada;
+	
+	public static Parceiro getContaLogada() {
+		return contaLogada;
+	}
+
+	public static void setContaLogada(Parceiro contaLogada) {
+		Util.contaLogada = contaLogada;
+	}
+
 	public static void MessageBoxShow(String titulo, String conteudo, AlertType tipo)
 	{
 		Alert alert = new Alert(tipo);

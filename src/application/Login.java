@@ -106,9 +106,14 @@ public class Login extends Application {
 					tipo = "CPF";
 				}
 			}
-			else //cnpj
+			else if (txtUsuario.getText().length() == 14) //cnpj
 			{
-				
+				if (!Validacao.validarCNPJ(txtUsuario))
+					return false;
+				else
+				{
+					tipo = "CNPJ";
+				}
 			}
 		}
 		ResultSet result = Banco.InserirQueryReader(String.format("SELECT %s, senha FROM parceiro WHERE %s = '%s'", tipo.toLowerCase(), tipo.toLowerCase(), txtUsuario.getText()));
