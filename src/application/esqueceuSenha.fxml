@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="307.0" minWidth="194.0" prefHeight="614.0" prefWidth="812.0" style="-fx-background-color: #090E11;" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-fx:controller="application.RecuperarSenha">
+<AnchorPane minHeight="307.0" minWidth="194.0" prefHeight="614.0" prefWidth="812.0" style="-fx-background-color: #090E11;" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.RecuperarSenha">
    <children>
       <ImageView fitHeight="112.0" fitWidth="193.0" layoutX="317.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -26,7 +25,7 @@ fx:controller="application.RecuperarSenha">
             <Font size="27.0" />
          </font>
       </Label>
-      <TextField fx:id="txtEmailPrincipal" layoutX="276.0" layoutY="283.0" prefHeight="34.0" prefWidth="275.0" styleClass="text-field2" />
+      <TextField fx:id="txtEmailPrincipal" layoutX="276.0" layoutY="283.0" onKeyPressed="#teclaPressionada" prefHeight="34.0" prefWidth="275.0" styleClass="text-field2" />
       <Label layoutX="276.0" layoutY="183.0" prefHeight="82.0" prefWidth="275.0" styleClass="labelVerde" text="Digite seu e-mail principal abaixo. Um código será enviado para a troca da senha." textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Candara" size="17.0" />
@@ -39,12 +38,32 @@ fx:controller="application.RecuperarSenha">
       </Button>
       <Pane fx:id="pnlCodigos" layoutX="76.0" layoutY="371.0" prefHeight="221.0" prefWidth="670.0" visible="false">
          <children>
-            <TextField fx:id="txtEmailPrincipal1" layoutX="131.0" layoutY="27.0" onAction="#txtNumeroUm" prefHeight="146.0" prefWidth="61.0" styleClass="text-field2" />
-            <TextField fx:id="txtEmailPrincipal11" layoutX="220.0" layoutY="27.0" onAction="#txtNumeroDois" prefHeight="146.0" prefWidth="61.0" styleClass="text-field2" />
-            <TextField fx:id="txtEmailPrincipal12" layoutX="308.0" layoutY="27.0" onAction="#txtNumeroTres" prefHeight="146.0" prefWidth="61.0" styleClass="text-field2" />
-            <TextField fx:id="txtEmailPrincipal13" layoutX="391.0" layoutY="27.0" onAction="#txtNumeroQuatro" prefHeight="146.0" prefWidth="61.0" styleClass="text-field2" />
-            <TextField fx:id="txtEmailPrincipal131" layoutX="479.0" layoutY="27.0" onAction="#txtNumeroCinco" prefHeight="146.0" prefWidth="61.0" styleClass="text-field2" />
+            <TextField fx:id="txtNumeroUm" alignment="CENTER" layoutX="131.0" layoutY="27.0" onKeyTyped="#inserirDigito" prefHeight="146.0" prefWidth="61.0" styleClass="text-field2">
+               <font>
+                  <Font size="30.0" />
+               </font></TextField>
+            <TextField fx:id="txtNumeroDois" alignment="CENTER" layoutX="220.0" layoutY="27.0" onKeyTyped="#inserirDigito" prefHeight="146.0" prefWidth="61.0" styleClass="text-field2">
+               <font>
+                  <Font size="30.0" />
+               </font></TextField>
+            <TextField fx:id="txtNumeroTres" alignment="CENTER" layoutX="308.0" layoutY="27.0" onKeyTyped="#inserirDigito" prefHeight="146.0" prefWidth="61.0" styleClass="text-field2">
+               <font>
+                  <Font size="30.0" />
+               </font></TextField>
+            <TextField fx:id="txtNumeroQuatro" alignment="CENTER" layoutX="391.0" layoutY="27.0" onKeyTyped="#inserirDigito" prefHeight="146.0" prefWidth="61.0" styleClass="text-field2">
+               <font>
+                  <Font size="30.0" />
+               </font></TextField>
+            <TextField fx:id="txtNumeroCinco" alignment="CENTER" layoutX="479.0" layoutY="27.0" onKeyTyped="#inserirDigito" prefHeight="146.0" prefWidth="61.0" styleClass="text-field2">
+               <font>
+                  <Font size="30.0" />
+               </font></TextField>
          </children>
       </Pane>
+      <Button fx:id="btnConfirmarCodigo" layoutX="330.0" layoutY="330.0" mnemonicParsing="false" onAction="#ConfirmarCodigo" prefHeight="33.0" prefWidth="167.0" text="Confirmar código">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
