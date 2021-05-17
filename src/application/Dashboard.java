@@ -27,7 +27,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
 
-public class Dashboard extends Application {
+public class Dashboard extends Application{
 	
 	final int GEONAMEIDBRASIL = 3469034;
 	
@@ -97,10 +97,8 @@ public class Dashboard extends Application {
 		{
 			String cidade=estados.getName();
 			cboxCidades.getItems().addAll(cidade);
-			cidadesUtil.add(cidade); //ArrayList utils
 			geoids.add(estados.getGeoNameId());
 		}
-		
 	}
 	
 	//Método 'onLoad'

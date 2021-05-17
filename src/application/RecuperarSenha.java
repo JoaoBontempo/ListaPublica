@@ -171,7 +171,7 @@ public class RecuperarSenha extends Application {
 		codigoGerado=gerarCodigo(0,"",5);
 		System.out.println("Código: "+codigoGerado);
 		//if(Email.enviarEmail("Seu código de verificação é : "+codigoGerado,"Código de verificação",txtEmailPrincipal.getText()))
-		if(true){
+		if(Email.enviarEmail("Seu código de verificação é : "+codigoGerado,"Código de verificação",txtEmailPrincipal.getText())) {
 			pnlCodigos.setVisible(true);
 			btnConfirmarCodigo.setVisible(true);
 			btnEnviarCodigo.setVisible(false);

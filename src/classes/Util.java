@@ -13,20 +13,8 @@ public final class Util {
 	
 	private static Parceiro contaLogada;
 	
-	private static ArrayList<String> cidadesApi = new ArrayList<>();
-	
-	private static ArrayList<String> estadosApi = new ArrayList<>();
-	
 	public static Parceiro getContaLogada() {
 		return contaLogada;
-	}
-	
-	public static void setCidadesArrayList(ArrayList<String> cidadesArray) {
-		cidadesApi=cidadesArray;
-	}
-	
-	public static void setEstadosArrayList(ArrayList<String> estadosArray) {
-		estadosApi=estadosArray;
 	}
 	
 	public static void setContaLogada(Parceiro contaLogada) {
