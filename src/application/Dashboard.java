@@ -1,7 +1,8 @@
 package application;
-	
+
 import java.util.ArrayList;
 
+import org.geonames.Style;
 import org.geonames.Toponym;
 import org.geonames.ToponymSearchCriteria;
 import org.geonames.ToponymSearchResult;
@@ -16,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -30,82 +32,100 @@ import javafx.fxml.FXMLLoader;
 public class Dashboard extends Application{
 	
 	final int GEONAMEIDBRASIL = 3469034;
-	
+
 	private ArrayList<Integer> geoids = new ArrayList<Integer>();
-	
+
 	private ArrayList<String> cidadesUtil = new ArrayList<String>(); // ArrayList para a classe Utils.
-	
+
 	@FXML
-    private TextField txtPesquisar;
+	private TextField txtPesquisar;
 
-    @FXML
-    private TableView<?> tvLugares;
+	@FXML
+	private TableView<?> tvLugares;
 
-    @FXML
-    private TableColumn<?, ?> tvcNumero;
+	@FXML
+	private TableColumn<?, ?> tvcNumero;
 
-    @FXML
-    private TableColumn<?, ?> tvcNome;
+	@FXML
+	private TableColumn<?, ?> tvcNome;
 
-    @FXML
-    private TableColumn<?, ?> tvcCidade;
+	@FXML
+	private TableColumn<?, ?> tvcCidade;
 
-    @FXML
-    private TableColumn<?, ?> tvcEstado;
+	@FXML
+	private TableColumn<?, ?> tvcEstado;
 
-    @FXML
-    private TableColumn<?, ?> tvcEmail;
+	@FXML
+	private TableColumn<?, ?> tvcEmail;
 
-    @FXML
-    private ComboBox<String> cboxEstados;
+	@FXML
+	private ComboBox<String> cboxEstados;
 
-    @FXML
-    private ComboBox<String> cboxCidades;
+	@FXML
+	private ComboBox<String> cboxCidades;
 
-    @FXML
-    private TextField txtNome;
+	@FXML
+	private TextField txtNome;
 
-    @FXML
-    private TextField txtTelefone;
+	@FXML
+	private TextField txtTelefone;
 
-    @FXML
-    private TextField txtEmail;
-    
-    @FXML
-    private Button btnNovoTelefone;
-	
+	@FXML
+	private TextField txtEmail;
+
+	@FXML
+	private Button btnNovoTelefone;
+
+	@FXML
+	private Tab tbMeusTelefones;
+
+	@FXML
+	private Tab tbMeusEnderecos;
+
+	@FXML
+	private Tab tbMinhaConta;
+
 	private ToponymSearchResult getChildren(int id) 
 	{
 		try
 		{
+			WebService.setDefaultStyle(Style.FULL);
 			WebService.setUserName("JoaoBontempo"); // add your username here
-
-			ToponymSearchResult children = WebService.children(id, STYLESHEET_CASPIAN, null);
+			ToponymSearchResult children = WebService.children(id, STYLESHEET_CASPIAN, Style.SHORT);
 			return children;
 		}
 		catch (Exception erro)
 		{
-				//Util.MessageBoxShow("Ocorreu um erro ao carregar os Estados", "Um erro ocorreu ao conectar-se a API Geonames.\n"
-						//+ " Verifique sua conexão com a internet.", AlertType.ERROR);
+			//Util.MessageBoxShow("Ocorreu um erro ao carregar os Estados", "Um erro ocorreu ao conectar-se a API Geonames.\n"
+			//+ " Verifique sua conexão com a internet.", AlertType.ERROR);
 		}
 		return null;
 	}
-	
+
 	@FXML
 	private void recuperarCidades ()
 	{
+		int cont = 0;
+		//geoids.clear();
 		cboxCidades.getItems().clear();
-		for (Toponym estados : getChildren(geoids.get(cboxEstados.getSelectionModel().getSelectedIndex())).getToponyms())
+		for (Toponym cidades : getChildren(geoids.get(cboxEstados.getSelectionModel().getSelectedIndex())).getToponyms())
 		{
-			String cidade=estados.getName();
-			cboxCidades.getItems().addAll(cidade);
-			geoids.add(estados.getGeoNameId());
+			System.out.println(cidades.getName());
+			cboxCidades.getItems().addAll(cidades.getName());
+			geoids.add(cidades.getGeoNameId());
+			cont++;
 		}
+		System.out.println("RETORNOU: " + cont);
 	}
-	
+
 	//Método 'onLoad'
-	public void initialize() throws Exception
+	public void initialize()
 	{
+
+		tbMeusEnderecos.setDisable(Util.isConvidado());
+		tbMeusTelefones.setDisable(Util.isConvidado());
+		tbMinhaConta.setDisable(Util.isConvidado());
+
 		//Forma de pegar todos os Estados e suas respectivas cidades
 		for (Toponym estados : getChildren(GEONAMEIDBRASIL).getToponyms())
 		{
@@ -113,7 +133,7 @@ public class Dashboard extends Application{
 			geoids.add(estados.getGeoNameId());
 		}
 	}
-		
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -130,17 +150,17 @@ public class Dashboard extends Application{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 	public Stage getStage()
 	{
 		Stage stage = (Stage) txtPesquisar.getScene().getWindow();
-	    return stage;
+		return stage;
 	}
-	
+
 	@FXML
 	public void showNovoTelefone()
 	{

@@ -80,7 +80,7 @@
 				</AnchorPane>
 			</content>
 		</Tab>
-		<Tab text="Meus telefones">
+		<Tab fx:id="tbMeusTelefones" text="Meus telefones">
 			<content>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -88,12 +88,12 @@
                </children></AnchorPane>
 			</content>
 		</Tab>
-		<Tab text="Meus endereços">
+		<Tab fx:id="tbMeusEnderecos" text="Meus endereços">
 			<content>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
 			</content>
 		</Tab>
-		<Tab text="Minha conta">
+		<Tab fx:id="tbMinhaConta" text="Minha conta">
 			<content>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
 			</content>

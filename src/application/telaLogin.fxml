@@ -51,7 +51,7 @@
             <Font name="Candara" size="14.0" />
          </font>
       </PasswordField>
-      <Button fx:id="btnGuest" layoutX="16.0" layoutY="398.0" mnemonicParsing="false" onAction="#RealizarLogin" prefHeight="25.0" prefWidth="317.0" text="Entrar como convidado">
+      <Button fx:id="btnGuest" layoutX="16.0" layoutY="398.0" mnemonicParsing="false" onAction="#loginConvidado" prefHeight="25.0" prefWidth="317.0" text="Entrar como convidado">
          <font>
             <Font name="Candara Bold" size="16.0" />
          </font>

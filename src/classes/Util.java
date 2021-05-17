@@ -14,6 +14,8 @@ public final class Util {
 	
 	private static Parceiro contaLogada;
 	
+	private static boolean convidado = false;
+	
 	public static Parceiro getContaLogada() {
 		return contaLogada;
 	}
@@ -53,5 +55,13 @@ public final class Util {
 	{
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder.matches(senha, hash);
+	}
+
+	public static boolean isConvidado() {
+		return convidado;
+	}
+
+	public static void setConvidado(boolean value) {
+		convidado = value;
 	}
 }
