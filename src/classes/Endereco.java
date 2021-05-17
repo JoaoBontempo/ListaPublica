@@ -7,6 +7,7 @@ public class Endereco {
 	private String bairro;
 	private String cidade;
 	private String estado;
+	private String nome;
 	private Parceiro conta;
 	
 	public int getId() {
@@ -56,6 +57,12 @@ public class Endereco {
 	}
 	public void setConta(Parceiro conta) {
 		this.conta = conta;
+	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 }

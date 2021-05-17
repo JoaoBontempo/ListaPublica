@@ -70,7 +70,9 @@ public class Dashboard extends Application{
 
     @FXML
     private TextField txtEmail;
-	
+    
+    @FXML
+    private Button btnNovoTelefone;
 	
 	private ToponymSearchResult getChildren(int id) 
 	{
@@ -137,5 +139,12 @@ public class Dashboard extends Application{
 	{
 		Stage stage = (Stage) txtPesquisar.getScene().getWindow();
 	    return stage;
+	}
+	
+	@FXML
+	public void showNovoTelefone()
+	{
+		CadastroTelefone ct = new CadastroTelefone();
+		ct.start(new Stage());
 	}
 }

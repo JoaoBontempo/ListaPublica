@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -21,7 +22,7 @@ public final class Util {
 		Util.contaLogada = contaLogada;
 	}
 
-	public static void MessageBoxShow(String titulo, String conteudo, AlertType tipo)
+	public static Alert MessageBoxShow(String titulo, String conteudo, AlertType tipo)
 	{
 		Alert alert = new Alert(tipo);
 		alert.setTitle(titulo);
@@ -31,6 +32,14 @@ public final class Util {
 		stage = (Stage) alert.getDialogPane().getScene().getWindow();
 		stage.getIcons().add(new Image("Recursos/logo.png"));
 		alert.showAndWait();
+		return alert;
+	}
+	
+	public static ButtonType MessageBoxShow(String titulo, String conteudo)
+	{
+		Alert alert = MessageBoxShow(titulo, conteudo, AlertType.CONFIRMATION);
+		return alert.getResult();
+		//return alert;
 	}
 	
 	public static String criptografarSenha(String senha)

@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -42,6 +43,9 @@ public class Login extends Application {
 
 	@FXML
 	private PasswordField txtSenha;
+	
+	 @FXML
+	 private Button btnGuest;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -53,6 +57,7 @@ public class Login extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Lista Pública - Login");
 			primaryStage.getIcons().add(icon);
+		    primaryStage.setResizable(false);
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -177,6 +182,13 @@ public class Login extends Application {
 		stageAtual.close();
 	}
 
-
+	public void loginConvidado()
+	{
+		if(Util.MessageBoxShow("Tem certeza que deseja entrar como convidado?", "Só será possível visualizar telefones cadastrados\n"
+				+ "por outras pessoas ou empresas").equals(ButtonType.YES))
+		{
+			
+		}
+	}
 
 }
