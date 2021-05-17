@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 import org.geonames.Toponym;
 import org.geonames.ToponymSearchResult;
 import org.geonames.WebService;
-
+import classes.Util;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +17,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
@@ -47,9 +49,9 @@ public class CadastrarLocal extends Application implements Initializable {
 	@FXML
 	private TextField txtEmail;
 
-	@FXML
-	private Label lblTipo;
-
+	 @FXML
+	private Label lblCnpj;
+	
 	@FXML
 	private TextField txtTipo;
 
@@ -82,82 +84,35 @@ public class CadastrarLocal extends Application implements Initializable {
 
 	public static void main(String[] args) {
 		launch(args);
-
-	}
-
-	@FXML
-	void VerificaDigito(KeyEvent key) {
-		String builder="";
-		if(key.getCharacter().matches("[a-zA-Z]")) {
-			for(Character c:txtTipo.getText().toCharArray()) {
-				if(!Character.toString(c).matches("[a-zA-Z]")) {
-					builder+=c;	
-				}
-				
-			}
-			txtTipo.setText(builder);
-			txtTipo.positionCaret(txtTipo.getLength());
-		}
-		
 	}
 	
 	@FXML
-	void TratamentoTextoCpfCnpj(KeyEvent key) {
-//		Pattern PATTERN=Pattern.compile("[a-zA-Z]+");
-//		Matcher matcher=PATTERN.matcher(txtTipo.getText());
-//	    if(matcher.find()) {
-//	    	txtTipo.setText(txtTipo.getText(0, txtTipo.getLength()-1));
-//	    	txtTipo.positionCaret(txtTipo.getLength());
-//	    	return;
-//	    }
-//		
-		
-		// DEFINE AS MÁSCARAS
-		if (key.getCode() == KeyCode.DELETE || key.getCode() == KeyCode.BACK_SPACE) {
+    void cadastrarEndereco(ActionEvent event) {
+		if(txtBairro.getText().isEmpty()) {
+			Util.MessageBoxShow("Campo vazio", "Preencha o bairro corretamente", AlertType.ERROR);
 			return;
-		}
-		if (!campoCpfCnpj) { // cpf
-			// FAZ AS VERIFICAÇÕES PRIMEIRAMENTE
-			if (txtTipo.getText().length() == 0)
-				return;
-			
-			
-			
-			
+		}else if(txtRua.getText().isEmpty()) {
+			Util.MessageBoxShow("Campo vazio", "O campo de rua está vazio.", AlertType.ERROR);
+			return;
+		}else if(txtNumeroResidencia.getText().isEmpty()) {
+			Util.MessageBoxShow("Campo vazio", "O campo de número da residência está vazio.", AlertType.ERROR);
+			return;
+		}		
+		
+		String query="";
+    }
 
-			String calcular = txtTipo.getText().replaceAll("\\.", "");// OBTENHO O TEXTO SEM OS PONTOS
-			System.out.println(calcular);
-			if (calcular.length() == 11) {
-				txtTipo.deletePreviousChar();
-				txtTipo.positionCaret(14);
-				return;
-			}
+    @FXML
+    void mudarLabelNome(ActionEvent event) {
+    	CheckBox chk = (CheckBox)event.getSource();
+    	if(chk.isSelected()) {
+    		lblCnpj.setText("CNPJ");
+    	}else {
+    		lblCnpj.setText("Nome");
+    	}
+    }
 
-			if ((calcular.length() % 3) == 0) {
-				// ANTES DE COLOCAR O PONTO, VERIFICA-SE SE O JA CONTÉM O PONTO (Essa situação ocorre quando usa o BACKSPACE)
-				if(!(txtTipo.getText().charAt(txtTipo.getText().length()-1) == '.')) {
-					txtTipo.setText(txtTipo.getText() + ".");
-					txtTipo.positionCaret(txtTipo.getText().length() + 1);	
-				}
-				
-			}
-		} else { // cnpj
-
-		}
-	}
-
-	@FXML
-	void ModificarTipo(ActionEvent event) {
-		if (cmbTipo.getSelectionModel().getSelectedIndex() == 0) {
-			lblTipo.setText("CPF");
-			campoCpfCnpj = false;
-			txtTipo.clear();
-		} else {
-			lblTipo.setText("CNPJ");
-			campoCpfCnpj = true;
-			txtTipo.clear();
-		}
-	}
+	
 
 	// API
 
@@ -205,12 +160,7 @@ public class CadastrarLocal extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		cmbTipo.getItems().add("CPF");
-		cmbTipo.getItems().add("CNPJ");
-		cmbTipo.getSelectionModel().selectFirst();
-
 		for (Toponym estados : getChildren(GEONAMEIDBRASIL).getToponyms()) {
-			System.out.println("->" + estados.getName());
 			cmbEstados.getItems().addAll(estados.getName());
 			geoids.add(estados.getGeoNameId());
 		}

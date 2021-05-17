@@ -1,7 +1,15 @@
 package classes;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.net.http.HttpClient;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javafx.scene.control.Alert;
@@ -31,6 +39,28 @@ public final class Util {
 		stage = (Stage) alert.getDialogPane().getScene().getWindow();
 		stage.getIcons().add(new Image("Recursos/logo.png"));
 		alert.showAndWait();
+	}
+	
+	public static JSONObject obtemInfosApiCep(String cep) {
+		cep=cep.replace('.', '\0').replace('/', '\0');
+		String webSite="https://viacep.com.br/ws/"+cep+"/json/";
+		CloseableHttpClient client = HttpClients.createDefault();
+		HttpGet get = new HttpGet(webSite);
+		JSONObject obj=null;
+		try {
+			HttpResponse resp=client.execute(get);
+			String retString=EntityUtils.toString(resp.getEntity());
+			obj=new JSONObject(retString);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return obj;
+		
+		
 	}
 	
 	public static String criptografarSenha(String senha)
