@@ -33,6 +33,8 @@ public class Dashboard extends Application {
 	
 	private ArrayList<Integer> geoids = new ArrayList<Integer>();
 	
+	private ArrayList<String> cidadesUtil = new ArrayList<String>(); // ArrayList para a classe Utils.
+	
 	@FXML
     private TextField txtPesquisar;
 
@@ -93,9 +95,12 @@ public class Dashboard extends Application {
 		cboxCidades.getItems().clear();
 		for (Toponym estados : getChildren(geoids.get(cboxEstados.getSelectionModel().getSelectedIndex())).getToponyms())
 		{
-			cboxCidades.getItems().addAll(estados.getName());
+			String cidade=estados.getName();
+			cboxCidades.getItems().addAll(cidade);
+			cidadesUtil.add(cidade); //ArrayList utils
 			geoids.add(estados.getGeoNameId());
 		}
+		
 	}
 	
 	//Método 'onLoad'

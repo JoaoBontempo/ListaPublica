@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="475.0" minWidth="500.0" prefHeight="666.0" prefWidth="1163.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="27.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/logo_contornada.png" />
+         </image>
+      </ImageView>
+      <Separator layoutX="224.0" layoutY="35.0" orientation="VERTICAL" prefHeight="378.0" prefWidth="5.0" />
+      <Label layoutX="17.0" layoutY="86.0" prefHeight="29.0" prefWidth="211.0" styleClass="labelVerde" stylesheets="@application.css" text="Cadastro de local">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbTipo" layoutX="365.0" layoutY="54.0" prefHeight="32.0" prefWidth="229.0" />
+      <Label layoutX="294.0" layoutY="55.0" prefHeight="16.0" prefWidth="53.0" styleClass="labelVerde" stylesheets="@application.css" text="Tipo">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="280.0" layoutY="110.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Nome">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtNomeLocal" layoutX="365.0" layoutY="108.0" prefHeight="34.0" prefWidth="229.0" styleClass="text-field2" stylesheets="@application.css" />
+      <Label layoutX="280.0" layoutY="170.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="E-mail">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtEmail" layoutX="365.0" layoutY="168.0" prefHeight="34.0" prefWidth="229.0" styleClass="text-field2" stylesheets="@application.css" />
+      <Label layoutX="515.0" layoutY="234.0" prefHeight="30.0" prefWidth="104.0" styleClass="labelVerde" stylesheets="@application.css" text="N°">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtNumeroResidencia" layoutX="612.0" layoutY="228.0" prefHeight="34.0" prefWidth="47.0" styleClass="text-field2" stylesheets="@application.css" />
+      <Label layoutX="280.0" layoutY="296.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Bairro">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtBairro" layoutX="365.0" layoutY="294.0" prefHeight="34.0" prefWidth="229.0" styleClass="text-field2" stylesheets="@application.css" />
+      <Label layoutX="280.0" layoutY="354.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Estado">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbEstados" layoutX="365.0" layoutY="357.0" prefHeight="32.0" prefWidth="229.0" />
+      <Button layoutX="263.0" layoutY="492.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="372.0" text="Cadastrar local">
+         <font>
+            <Font name="Candara" size="18.0" />
+         </font>
+      </Button>
+      <TextArea fx:id="txtDescricao" layoutX="721.0" layoutY="303.0" prefHeight="120.0" prefWidth="419.0" />
+      <Label layoutX="839.0" layoutY="264.0" prefHeight="30.0" prefWidth="146.0" styleClass="labelVerde" stylesheets="@application.css" text="Descrição">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Separator layoutX="673.0" layoutY="35.0" orientation="VERTICAL" prefHeight="378.0" prefWidth="5.0" />
+      <Pane layoutX="777.0" layoutY="38.0" prefHeight="175.0" prefWidth="278.0" style="-fx-border-color: #fff;" />
+      <ImageView fx:id="imgFotoLocal" fitHeight="149.0" fitWidth="261.0" layoutX="785.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="867.0" layoutY="223.0" text="Anexar foto" textFill="#dddddd">
+         <font>
+            <Font name="Candara" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnAnexarFoto" layoutX="972.0" layoutY="221.0" mnemonicParsing="false" text="..." />
+      <TextField fx:id="txtTelefoneUm" layoutX="365.0" layoutY="411.0" prefHeight="34.0" prefWidth="229.0" styleClass="text-field2" stylesheets="@application.css" />
+      <Label layoutX="257.0" layoutY="413.0" prefHeight="30.0" prefWidth="104.0" styleClass="labelVerde" stylesheets="@application.css" text="Telefone">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="280.0" layoutY="232.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Cidade">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbCidades" layoutX="365.0" layoutY="231.0" prefHeight="32.0" prefWidth="229.0" />
+   </children>
+</AnchorPane>
