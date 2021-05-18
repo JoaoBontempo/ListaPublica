@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import API_IBGE.Distrito;
+import API_IBGE.Municipio;
 import API_IBGE.UF;
 import classes.Util;
 import javafx.application.Application;
@@ -117,17 +118,17 @@ public class Dashboard extends Application{
 	}
 	
 	
-	public ArrayList<Distrito> doGetCidades()
+	public ArrayList<Municipio> doGetCidades()
 	{
 		String strResposta = "";
 
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		ArrayList<Distrito> alunos = new ArrayList<Distrito>();
+		ArrayList<Municipio> alunos = new ArrayList<Municipio>();
 		HttpClient httpClient = HttpClientBuilder.create().build();
-		System.out.println(String.format("https://servicodados.ibge.gov.br/api/v1/localidades/estados/%s/distritos?OrderBy=nome",
+		System.out.println(String.format("https://servicodados.ibge.gov.br/api/v1/localidades/estados/%s/municipios",
 				idsEstado.get(cboxEstados.getSelectionModel().getSelectedIndex())));
-		HttpGet httpGet = new HttpGet(String.format("https://servicodados.ibge.gov.br/api/v1/localidades/estados/%s/distritos?OrderBy=nome",
+		HttpGet httpGet = new HttpGet(String.format("https://servicodados.ibge.gov.br/api/v1/localidades/estados/%s/municipios",
 				idsEstado.get(cboxEstados.getSelectionModel().getSelectedIndex())));
 
 		HttpResponse response;
@@ -137,11 +138,11 @@ public class Dashboard extends Application{
 			strResposta = EntityUtils.toString(resEnt);
 			JSONArray obj = new JSONArray(strResposta);
 
-			Distrito aln;
+			Municipio aln;
 
 			for(int i =0; i < obj.length(); i++)
 			{
-				aln = mapper.readValue(obj.getJSONObject(i).toString(), Distrito.class);
+				aln = mapper.readValue(obj.getJSONObject(i).toString(), Municipio.class);
 				alunos.add(aln);
 			}
 		} catch (ClientProtocolException e) {
@@ -207,12 +208,15 @@ public class Dashboard extends Application{
 		}
 		System.out.println("RETORNOU: " + cont);
 		*/
+		int cont =0;
 		cboxCidades.getItems().clear();
-		ArrayList<Distrito> analise = doGetCidades();
-		for (Distrito uf : analise)
+		ArrayList<Municipio> analise = doGetCidades();
+		for (Municipio uf : analise)
 		{
+			cont++;
 			cboxCidades.getItems().add(uf.getNome());
 		}
+		System.out.println("Municipios: " + cont  );
 	}
 
 	//Método 'onLoad'
