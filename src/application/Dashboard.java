@@ -1,6 +1,7 @@
 package application;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
@@ -23,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import API_IBGE.Distrito;
 import API_IBGE.Municipio;
 import API_IBGE.UF;
+import classes.Banco;
 import classes.Util;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -198,6 +200,8 @@ public class Dashboard extends Application{
 			idsEstado.add(estado.getId());
 			cboxEstados.getItems().add(estado.getNome());
 		}
+		
+		
 	}
 
 	@Override
