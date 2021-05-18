@@ -67,6 +67,9 @@ public class Dashboard extends Application{
 
 	@FXML
 	private TableColumn<?, ?> tvcEstado;
+	
+	@FXML
+	private TableColumn<?, ?> tvcDescricao;
 
 	@FXML
 	private TableColumn<?, ?> tvcEmail;

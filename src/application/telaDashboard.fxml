@@ -25,10 +25,11 @@
 						<TableView fx:id="tvLugares" layoutX="14.0" layoutY="232.0" prefHeight="120.0" prefWidth="715.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="232.0">
 							<columns>
 								<TableColumn fx:id="tvcNumero" prefWidth="75.0" text="Número" />
+								<TableColumn fx:id="tvcDescricao" prefWidth="75.0" text="Descrição" />
 								<TableColumn fx:id="tvcNome" prefWidth="75.0" text="Nome" />
+								<TableColumn fx:id="tvcEmail" prefWidth="75.0" text="E-mail" />
 								<TableColumn fx:id="tvcCidade" prefWidth="75.0" text="Cidade" />
 								<TableColumn fx:id="tvcEstado" prefWidth="75.0" text="Estado" />
-								<TableColumn fx:id="tvcEmail" prefWidth="75.0" text="E-mail" />
 							</columns>
 							<columnResizePolicy>
 								<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
