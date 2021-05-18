@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="549.0" maxWidth="1171.0" minHeight="327.0" minWidth="500.0" prefHeight="408.0" prefWidth="749.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CadastrarLocal">
+<AnchorPane maxHeight="549.0" maxWidth="1171.0" minHeight="327.0" minWidth="500.0" prefHeight="470.0" prefWidth="762.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CadastrarLocal">
    <children>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="46.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -22,25 +22,25 @@
             <Font size="23.0" />
          </font>
       </Label>
-      <Label layoutX="581.0" layoutY="198.0" prefHeight="30.0" prefWidth="104.0" styleClass="labelVerde" stylesheets="@application.css" text="N°">
+      <Label layoutX="585.0" layoutY="249.0" prefHeight="30.0" prefWidth="104.0" styleClass="labelVerde" stylesheets="@application.css" text="N°">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="txtNumeroResidencia" layoutX="651.0" layoutY="196.0" prefHeight="34.0" prefWidth="49.0" styleClass="text-field2" stylesheets="@application.css" />
-      <Label layoutX="294.0" layoutY="150.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Bairro">
+      <TextField fx:id="txtNumeroResidencia" layoutX="655.0" layoutY="247.0" prefHeight="34.0" prefWidth="49.0" styleClass="text-field2" stylesheets="@application.css" />
+      <Label layoutX="298.0" layoutY="201.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Bairro">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="txtBairro" layoutX="379.0" layoutY="148.0" prefHeight="34.0" prefWidth="319.0" styleClass="text-field2" stylesheets="@application.css" />
+      <TextField fx:id="txtBairro" layoutX="383.0" layoutY="199.0" prefHeight="34.0" prefWidth="319.0" styleClass="text-field2" stylesheets="@application.css" />
       <Label layoutX="286.0" layoutY="51.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Estado">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
       <ComboBox fx:id="cmbEstados" layoutX="379.0" layoutY="50.0" onAction="#recuperarCidades" prefHeight="32.0" prefWidth="319.0" />
-      <Button fx:id="btnCadastrarLocal" layoutX="305.0" layoutY="335.0" mnemonicParsing="false" onAction="#cadastrarEndereco" prefHeight="36.0" prefWidth="399.0" text="Cadastrar endereço">
+      <Button fx:id="btnCadastrarLocal" layoutX="301.0" layoutY="381.0" mnemonicParsing="false" onAction="#cadastrarEndereco" prefHeight="36.0" prefWidth="399.0" text="Cadastrar endereço">
          <font>
             <Font name="Candara" size="18.0" />
          </font>
@@ -51,22 +51,28 @@
          </font>
       </Label>
       <ComboBox fx:id="cmbCidades" layoutX="379.0" layoutY="99.0" prefHeight="32.0" prefWidth="319.0" />
-      <Label layoutX="294.0" layoutY="198.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Rua">
+      <Label layoutX="298.0" layoutY="249.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Rua">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="txtRua" layoutX="380.0" layoutY="196.0" prefHeight="34.0" prefWidth="229.0" styleClass="text-field2" stylesheets="@application.css" />
-      <CheckBox fx:id="rbCnpj" layoutX="556.0" layoutY="305.0" mnemonicParsing="false" onAction="#mudarLabelNome" stylesheets="@application.css" text="Sou uma empresa" textFill="#84ff00">
+      <TextField fx:id="txtRua" layoutX="384.0" layoutY="247.0" prefHeight="34.0" prefWidth="229.0" styleClass="text-field2" stylesheets="@application.css" />
+      <CheckBox fx:id="rbCnpj" layoutX="556.0" layoutY="346.0" mnemonicParsing="false" onAction="#mudarLabelNome" stylesheets="@application.css" text="Sou uma empresa" textFill="#84ff00">
          <font>
             <Font name="Candara" size="15.0" />
          </font>
       </CheckBox>
-      <Label fx:id="lblCnpj" layoutX="294.0" layoutY="247.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Nome">
+      <Label fx:id="lblCnpj" layoutX="298.0" layoutY="298.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Nome">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="txtNome" layoutX="380.0" layoutY="245.0" prefHeight="34.0" prefWidth="319.0" styleClass="text-field2" stylesheets="@application.css" />
+      <TextField fx:id="txtNomeLocal" layoutX="384.0" layoutY="296.0" prefHeight="34.0" prefWidth="319.0" styleClass="text-field2" stylesheets="@application.css" />
+      <Label layoutX="221.0" layoutY="149.0" prefHeight="30.0" prefWidth="159.0" styleClass="labelVerde" stylesheets="@application.css" text="Cep (Opcional)">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtCep" layoutX="384.0" layoutY="147.0" prefHeight="34.0" prefWidth="319.0" styleClass="text-field2" stylesheets="@application.css" />
    </children>
 </AnchorPane>

@@ -1,6 +1,7 @@
 package application;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
@@ -9,8 +10,13 @@ import java.util.regex.Pattern;
 import org.geonames.Toponym;
 import org.geonames.ToponymSearchResult;
 import org.geonames.WebService;
+import org.json.JSONObject;
+
+import classes.Banco;
 import classes.Util;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +34,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -44,11 +51,11 @@ public class CadastrarLocal extends Application implements Initializable {
 	private ComboBox<String> cmbTipo;
 
 	@FXML
-	private TextField txtNomeLocal;
-
-	@FXML
 	private TextField txtEmail;
 
+	@FXML
+    private TextField txtCep;
+	
 	 @FXML
 	private Label lblCnpj;
 	
@@ -71,19 +78,24 @@ public class CadastrarLocal extends Application implements Initializable {
 	private TextArea txtDescricao;
 
 	@FXML
+    private TextField txtNomeLocal;
+	
+	@FXML
 	private ImageView imgFotoLocal;
-
-	@FXML
-	private Button btnAnexarFoto;
-
-	@FXML
-	private TextField txtTelefoneUm;
 
 	@FXML
 	private ComboBox<String> cmbCidades;
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	void limparTela() {
+		txtNomeLocal.clear();
+		txtBairro.clear();
+		txtNumeroResidencia.clear();
+		txtRua.clear();
+		txtCep.clear();
 	}
 	
 	@FXML
@@ -97,9 +109,41 @@ public class CadastrarLocal extends Application implements Initializable {
 		}else if(txtNumeroResidencia.getText().isEmpty()) {
 			Util.MessageBoxShow("Campo vazio", "O campo de número da residência está vazio.", AlertType.ERROR);
 			return;
+		}
+		if(lblCnpj.getText().equalsIgnoreCase("cnpj")) {
+			if(txtNomeLocal.getText().isEmpty()) {
+				Util.MessageBoxShow("Campo vazio", "O campo do CNPJ está vazio.", AlertType.ERROR);
+				return;
+			}
+			String cnpjSemMascara=txtNomeLocal.getText().replaceAll("\\.", "").replaceAll("\\-", "").replaceAll("\\/", "");
+			System.out.println(cnpjSemMascara);
+			if(cnpjSemMascara.length() != 14) {
+				Util.MessageBoxShow("Campo errado", "O campo do CNPJ está inválido. Verifique e tente novamente.", AlertType.ERROR);
+				return;
+			}
+		}else {
+			if(txtNomeLocal.getText().isEmpty()) {
+				Util.MessageBoxShow("Campo vazio", "O campo do nome está vazio.", AlertType.ERROR);
+				return;
+			}
 		}		
 		
-		String query="";
+		String query=
+				String.format("insert into endereco values (default,'%s','%s','%s','%s','%s','%s',1)",
+						txtRua.getText(),txtNumeroResidencia.getText(),txtBairro.getText(),cmbEstados.getSelectionModel().getSelectedItem(),
+						cmbCidades.getSelectionModel().getSelectedItem(),txtNomeLocal.getText());
+		try {
+			if(Banco.InserirQuery(query)) {
+				Util.MessageBoxShow("Cadastro realizado", "O seu novo endereço foi cadastrado com sucesso.",AlertType.INFORMATION);
+				limparTela();
+				return;
+			}else {
+				Util.MessageBoxShow("Erro no cadastro", "Um erro ocorreu ao cadastrar seu endereço. Verifique seus dados e tente novamente.",AlertType.INFORMATION);
+				return;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
 
     @FXML
@@ -112,7 +156,8 @@ public class CadastrarLocal extends Application implements Initializable {
     	}
     }
 
-	
+
+    
 
 	// API
 
@@ -158,12 +203,51 @@ public class CadastrarLocal extends Application implements Initializable {
 
 	}
 
+	private void verificaCep() {
+		if(txtCep.getText().isEmpty()) {
+			//Util.MessageBoxShow("Campo vazio", "O campo de cep está vazio.",AlertType.ERROR);
+			return;
+		}
+		String cepSemFormato=txtCep.getText().replaceAll("\\-", "").replace("\\.", "");
+		System.out.println("Sem formato: "+cepSemFormato);
+		if(cepSemFormato.length() == 8) {
+			JSONObject ret = Util.obtemInfosApiCep(cepSemFormato);
+			System.out.println(ret);
+			txtBairro.setText(ret.getString("bairro"));
+			txtRua.setText(ret.getString("logradouro"));
+			//cmbEstados.getSelectionModel().select(ret.getString("uf"));
+			//cmbCidades.getSelectionModel().select(ret.getString(cepSemFormato));
+		}
+	}
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		for (Toponym estados : getChildren(GEONAMEIDBRASIL).getToponyms()) {
 			cmbEstados.getItems().addAll(estados.getName());
 			geoids.add(estados.getGeoNameId());
 		}
+		
+		txtCep.focusedProperty().addListener(new ChangeListener<Boolean>()
+		{
+		    @Override
+		    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+		    {
+		        if (!newPropertyValue)
+		        	verificaCep();
+		    }
+
+			
+		});
+		
+		
+		// VERIFICAÇÃO DE ENTRADAS
+	    txtNumeroResidencia.setTextFormatter(new TextFormatter<>(change ->
+	    (change.getControlNewText().matches("([0-9])+")) ? change : null));
+
+	    txtCep.setTextFormatter(new TextFormatter<>(change ->
+	    (change.getControlNewText().matches("([0-9])+")) ? change : null));
+	    
+		
 
 	}
 
