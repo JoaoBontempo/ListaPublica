@@ -45,8 +45,6 @@ import javafx.fxml.FXMLLoader;
 
 
 public class Dashboard extends Application{
-	
-	final int GEONAMEIDBRASIL = 3469034;
 
 	private ArrayList<Integer> idsEstado = new ArrayList<Integer>();
 
@@ -100,34 +98,14 @@ public class Dashboard extends Application{
 	@FXML
 	private Tab tbMinhaConta;
 
-	private ToponymSearchResult getChildren(int id) 
-	{
-		try
-		{
-			WebService.setDefaultStyle(Style.FULL);
-			WebService.setUserName("JoaoBontempo"); // add your username here
-			ToponymSearchResult children = WebService.children(id, STYLESHEET_CASPIAN, Style.SHORT);
-			return children;
-		}
-		catch (Exception erro)
-		{
-			//Util.MessageBoxShow("Ocorreu um erro ao carregar os Estados", "Um erro ocorreu ao conectar-se a API Geonames.\n"
-			//+ " Verifique sua conexão com a internet.", AlertType.ERROR);
-		}
-		return null;
-	}
-	
-	
 	public ArrayList<Municipio> doGetCidades()
 	{
 		String strResposta = "";
 
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		ArrayList<Municipio> alunos = new ArrayList<Municipio>();
+		ArrayList<Municipio> municipios = new ArrayList<Municipio>();
 		HttpClient httpClient = HttpClientBuilder.create().build();
-		System.out.println(String.format("https://servicodados.ibge.gov.br/api/v1/localidades/estados/%s/municipios",
-				idsEstado.get(cboxEstados.getSelectionModel().getSelectedIndex())));
 		HttpGet httpGet = new HttpGet(String.format("https://servicodados.ibge.gov.br/api/v1/localidades/estados/%s/municipios",
 				idsEstado.get(cboxEstados.getSelectionModel().getSelectedIndex())));
 
@@ -138,12 +116,12 @@ public class Dashboard extends Application{
 			strResposta = EntityUtils.toString(resEnt);
 			JSONArray obj = new JSONArray(strResposta);
 
-			Municipio aln;
+			Municipio municipio;
 
 			for(int i =0; i < obj.length(); i++)
 			{
-				aln = mapper.readValue(obj.getJSONObject(i).toString(), Municipio.class);
-				alunos.add(aln);
+				municipio = mapper.readValue(obj.getJSONObject(i).toString(), Municipio.class);
+				municipios.add(municipio);
 			}
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
@@ -154,15 +132,15 @@ public class Dashboard extends Application{
 			ex.printStackTrace();
 		}
 
-		return alunos;
+		return municipios;
 	}
-	
+
 	public ArrayList<UF> doGetEstados()
 	{
 		String strResposta = "";
 
 		ObjectMapper mapper = new ObjectMapper();
-		ArrayList<UF> alunos = new ArrayList<UF>();
+		ArrayList<UF> estados = new ArrayList<UF>();
 		HttpClient httpClient = HttpClientBuilder.create().build();
 		HttpGet httpGet = new HttpGet("https://servicodados.ibge.gov.br/api/v1/localidades/estados?OrderBy=nome");
 
@@ -173,12 +151,12 @@ public class Dashboard extends Application{
 			strResposta = EntityUtils.toString(resEnt);
 			JSONArray obj = new JSONArray(strResposta);
 
-			UF aln;
+			UF estado;
 
 			for(int i =0; i < obj.length(); i++)
 			{
-				aln = mapper.readValue(obj.getJSONObject(i).toString(), UF.class);
-				alunos.add(aln);
+				estado = mapper.readValue(obj.getJSONObject(i).toString(), UF.class);
+				estados.add(estado);
 			}
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
@@ -189,34 +167,18 @@ public class Dashboard extends Application{
 			ex.printStackTrace();
 		}
 
-		return alunos;
+		return estados;
 	}
-	
+
 	@FXML
 	private void recuperarCidades ()
 	{
-		/*
-		int cont = 0;
-		//geoids.clear();
 		cboxCidades.getItems().clear();
-		for (Toponym cidades : getChildren(idsEstado.get(cboxEstados.getSelectionModel().getSelectedIndex())).getToponyms())
+		ArrayList<Municipio> municipios = doGetCidades();
+		for (Municipio municipio : municipios)
 		{
-			System.out.println(cidades.getName());
-			cboxCidades.getItems().addAll(cidades.getName());
-			idsEstado.add(cidades.getGeoNameId());
-			cont++;
+			cboxCidades.getItems().add(municipio.getNome());
 		}
-		System.out.println("RETORNOU: " + cont);
-		*/
-		int cont =0;
-		cboxCidades.getItems().clear();
-		ArrayList<Municipio> analise = doGetCidades();
-		for (Municipio uf : analise)
-		{
-			cont++;
-			cboxCidades.getItems().add(uf.getNome());
-		}
-		System.out.println("Municipios: " + cont  );
 	}
 
 	//Método 'onLoad'
@@ -226,20 +188,12 @@ public class Dashboard extends Application{
 		tbMeusEnderecos.setDisable(Util.isConvidado());
 		tbMeusTelefones.setDisable(Util.isConvidado());
 		tbMinhaConta.setDisable(Util.isConvidado());
-		/*
-		//Forma de pegar todos os Estados e suas respectivas cidades
-		for (Toponym estados : getChildren(GEONAMEIDBRASIL).getToponyms())
-		{
-			cboxEstados.getItems().addAll(estados.getName());
-			geoids.add(estados.getGeoNameId());
-		}
-		*/
 		
-		ArrayList<UF> analise = doGetEstados();
-		for (UF uf : analise)
+		ArrayList<UF> estados = doGetEstados();
+		for (UF estado : estados)
 		{
-			idsEstado.add(uf.getId());
-			cboxEstados.getItems().add(uf.getNome());
+			idsEstado.add(estado.getId());
+			cboxEstados.getItems().add(estado.getNome());
 		}
 	}
 
