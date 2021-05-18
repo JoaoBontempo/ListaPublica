@@ -14,12 +14,12 @@ public class Regiao_intermediaria {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Uf getUF() {
+	public UF getUF() {
 		return UF;
 	}
-	public void setUF(Uf UF) {
+	public void setUF(UF UF) {
 		this.UF = UF;
 	}
 	private String nome;
-	private Uf UF;
+	private UF UF;
 }

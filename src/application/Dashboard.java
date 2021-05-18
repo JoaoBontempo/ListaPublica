@@ -17,10 +17,11 @@ import org.geonames.ToponymSearchResult;
 import org.geonames.WebService;
 import org.json.JSONArray;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import API_IBGE.Distrito;
-import API_IBGE.Uf;
+import API_IBGE.UF;
 import classes.Util;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -121,6 +122,7 @@ public class Dashboard extends Application{
 		String strResposta = "";
 
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		ArrayList<Distrito> alunos = new ArrayList<Distrito>();
 		HttpClient httpClient = HttpClientBuilder.create().build();
 		System.out.println(String.format("https://servicodados.ibge.gov.br/api/v1/localidades/estados/%s/distritos?OrderBy=nome",
@@ -154,12 +156,12 @@ public class Dashboard extends Application{
 		return alunos;
 	}
 	
-	public ArrayList<Uf> doGetEstados()
+	public ArrayList<UF> doGetEstados()
 	{
 		String strResposta = "";
 
 		ObjectMapper mapper = new ObjectMapper();
-		ArrayList<Uf> alunos = new ArrayList<Uf>();
+		ArrayList<UF> alunos = new ArrayList<UF>();
 		HttpClient httpClient = HttpClientBuilder.create().build();
 		HttpGet httpGet = new HttpGet("https://servicodados.ibge.gov.br/api/v1/localidades/estados?OrderBy=nome");
 
@@ -170,11 +172,11 @@ public class Dashboard extends Application{
 			strResposta = EntityUtils.toString(resEnt);
 			JSONArray obj = new JSONArray(strResposta);
 
-			Uf aln;
+			UF aln;
 
 			for(int i =0; i < obj.length(); i++)
 			{
-				aln = mapper.readValue(obj.getJSONObject(i).toString(), Uf.class);
+				aln = mapper.readValue(obj.getJSONObject(i).toString(), UF.class);
 				alunos.add(aln);
 			}
 		} catch (ClientProtocolException e) {
@@ -229,8 +231,8 @@ public class Dashboard extends Application{
 		}
 		*/
 		
-		ArrayList<Uf> analise = doGetEstados();
-		for (Uf uf : analise)
+		ArrayList<UF> analise = doGetEstados();
+		for (UF uf : analise)
 		{
 			idsEstado.add(uf.getId());
 			cboxEstados.getItems().add(uf.getNome());

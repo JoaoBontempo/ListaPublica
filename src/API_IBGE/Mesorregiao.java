@@ -14,12 +14,12 @@ public class Mesorregiao {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Uf getUf() {
-		return uf;
+	public UF getUF() {
+		return UF;
 	}
-	public void setUf(Uf uf) {
-		this.uf = uf;
+	public void setUF(UF UF) {
+		this.UF = UF;
 	}
 	private String nome;
-	private Uf uf;
+	private UF UF;
 }

@@ -1,6 +1,6 @@
 package API_IBGE;
 
-public class Uf {
+public class UF {
 	private int id;
 	
 	public int getId() {
