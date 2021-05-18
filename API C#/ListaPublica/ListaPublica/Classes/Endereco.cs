@@ -14,6 +14,6 @@ namespace ListaPublica.Classes
         public string cidade { get; set; }
         public string estado { get; set; }
         public string nome { get; set; }
-        public Parceiro parceiro { get; set; }
+        //public Parceiro parceiro { get; set; }
     }
 }
