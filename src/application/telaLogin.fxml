@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="348.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Login">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="348.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Login">
    <children>
       <ImageView fitHeight="122.0" fitWidth="221.0" layoutX="71.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -41,7 +41,7 @@
             <Font name="Candara Bold" size="16.0" />
          </font>
       </Button>
-      <Label fx:id="lbCadastrar" layoutX="110.0" layoutY="421.0" onMouseClicked="#meCadastrar" styleClass="labelComLink" text="Quero me cadastrar!" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" underline="true">
+      <Label fx:id="lbCadastrar" layoutX="110.0" layoutY="446.0" onMouseClicked="#meCadastrar" styleClass="labelComLink" text="Quero me cadastrar!" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" underline="true">
          <font>
             <Font name="Candara Light" size="16.0" />
          </font>
@@ -51,5 +51,10 @@
             <Font name="Candara" size="14.0" />
          </font>
       </PasswordField>
+      <Button fx:id="btnGuest" layoutX="16.0" layoutY="398.0" mnemonicParsing="false" onAction="#loginConvidado" prefHeight="25.0" prefWidth="317.0" text="Entrar como convidado">
+         <font>
+            <Font name="Candara Bold" size="16.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

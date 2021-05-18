@@ -63,6 +63,7 @@ public final class Banco {
 	
 	public static void InserirQuery(String query) throws SQLException
 	{
+		
 		statement.executeUpdate(query);
 	}
 	

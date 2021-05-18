@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -25,9 +26,9 @@ import javafx.fxml.FXMLLoader;
 
 
 public class Login extends Application {
-	
+
 	private int id;
-	
+
 	@FXML
 	private TextField txtUsuario;
 
@@ -43,6 +44,9 @@ public class Login extends Application {
 	@FXML
 	private PasswordField txtSenha;
 
+	@FXML
+	private Button btnGuest;
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -53,6 +57,7 @@ public class Login extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Lista Pública - Login");
 			primaryStage.getIcons().add(icon);
+			primaryStage.setResizable(false);
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -144,12 +149,14 @@ public class Login extends Application {
 	}
 
 	private void loginRealizado() throws SQLException
-
 	{
-		ResultSet result = Banco.InserirQueryReader("SELECT * FROM parceiro WHERE id = " + id);
-		result.next();
-		Parceiro contaLogada = new Parceiro(result.getInt("id"), result.getInt("tipo"), result.getString("nome"), result.getString("cpf"), result.getString("cnpj"), result.getString("email"), result.getString("usuario"));
-		Util.setContaLogada(contaLogada);
+		if (!Util.isConvidado())
+		{
+			ResultSet result = Banco.InserirQueryReader("SELECT * FROM parceiro WHERE id = " + id);
+			result.next();
+			Parceiro contaLogada = new Parceiro(result.getInt("id"), result.getInt("tipo"), result.getString("nome"), result.getString("cpf"), result.getString("cnpj"), result.getString("email"), result.getString("usuario"));
+			Util.setContaLogada(contaLogada);
+		}
 		Dashboard dash = new Dashboard();
 		dash.start(new Stage());
 		Stage stageAtual = (Stage) btnLogar.getScene().getWindow();
@@ -167,16 +174,25 @@ public class Login extends Application {
 				return;
 		}
 	}
-	
+
 	@FXML
 	void meCadastrar(MouseEvent event) {
-         
+
 		Cadastrar cadastrar = new Cadastrar();
 		cadastrar.start(new Stage());
 		Stage stageAtual = (Stage) lbCadastrar.getScene().getWindow();
 		stageAtual.close();
 	}
 
-
+	@FXML
+	public void loginConvidado() throws SQLException
+	{
+		if(Util.MessageBoxShow("Tem certeza que deseja entrar como convidado?", "Só será possível visualizar telefones cadastrados\n"
+				+ "por outras pessoas ou empresas").equals(ButtonType.OK))
+		{
+			Util.setConvidado(true);
+			loginRealizado();
+		}
+	}
 
 }
