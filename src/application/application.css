@@ -201,8 +201,6 @@
 	-fx-cursor: Hand;
 }
 
-
-
 /**TABLE VIEW**/
 /*Tabel inteira */
 .table-view{
@@ -213,30 +211,39 @@
 
 .table-view .label
 {
-	-fx-text-fill: #84ff00; 
+	-fx-text-fill: #090E11; 
 }
 
 /*Para linhas sem conteúdo*/
 .table-row-cell:empty{
-	-fx-background-color: #b80b14; /*Muda a cor de fundo*/
+	-fx-background-color: #090E11; /*Muda a cor de fundo*/
 }
 
+ 
 .table-row-cell:empty .table-cell{
 	-fx-border-width: 0px; /*Muda a espessura da borda de linhas vazias*/
 }
 
+
 .table-row-cell:filled .table-cell{
 	-fx-border-color: #000000; /*Muda a cor da borda lateral de linhas preenchidas*/
 }
+
 
 .table-view .column-header-background{
     -fx-background-color: transparent; /*Muda a cor de fundo das colunas do cabeçalho*/
     -fx-border-color: #080f00; /*Muda a cor da borda das colunas do cabeçalho*/
 }
 
+ 
 .table-view .column-header-background .label{
     -fx-background-color: transparent;
     -fx-text-fill: #080f00;
+}
+
+.table-view .filler
+{
+	-fx-background-color: #090E11;
 }
 
 .table-view .column-header {
@@ -244,32 +251,56 @@
     -fx-border-color: #080f00;/*Muda a cor da borda do preenchimento da coluna do cabeçalho*/
 }
 
-.table-view .table-cell:selected:filled{
-    -fx-text-fill: #000000;/*Muda a cor do texto para linhas selecionadas*/
+/*Linhas preenchidas ímpares*/
+.table-row-cell:odd:filled{
+    -fx-background-color: #162229;
+    -fx-border-width: 0.5px;
 }
+
 
 /*Linhas preenchidas pares*/
 .table-row-cell:filled{
-    -fx-background-color: white; 
-    -fx-border-color: #000000;
+    -fx-background-color: #090E11; 
     -fx-border-width: 0.5px;
 }
 
-/*Linhas preenchidas ímpares*/
-.table-row-cell:odd:filled{
-    -fx-background-color: #cfcfcf;
-    -fx-border-color: #000000;
-    -fx-border-width: 0.5px;
+.table-view .table-cell:filled{
+    -fx-text-fill: #ffffff;/*Muda a cor do texto para linhas selecionadas*/
+}
+
+.table-view .table-cell:selected:filled {
+    -fx-text-fill: #080f00;/*Muda a cor do texto para linhas selecionadas*/
 }
 
 /*Linhas preenchidas e selecionadas*/
 .table-row-cell:selected:filled {
-    -fx-background-color: #ff0011;
-    -fx-border-color: #ffffff;   
-    -fx-border-width: 0.5px;
+    -fx-background-color: #84ff00;
+    -fx-text-fill: #080f00;
+    -fx-border-width: 1px;
 }
 
 /*Linhas preenchidas e selecionadas*/
 .table-row-cell:selected:filled .table-cell{
-    -fx-border-color: #ffffff;   /*Muda a cor da borda lateral*/
+    -fx-text-fill: #080f00;
+}
+
+.table-view .scroll-bar .thumb
+{
+    -fx-background-color: #090E11;
+    -fx-border-color: #84ff00;
+}
+
+.table-view .scroll-bar .increment-button,
+.table-view .scroll-bar .decrement-button{
+	-fx-background-color: #090E11;
+}
+
+.table-view .scroll-bar .increment-arrow,
+.table-view .scroll-bar .decrement-arrow {
+    -fx-background-color: #84ff00;
+}
+
+.table-view .scroll-bar
+{
+	-fx-background-color: #090E11;
 }

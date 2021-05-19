@@ -246,19 +246,24 @@ public class Dashboard extends Application{
 			idsEstado.add(estado.getId());
 			cboxEstados.getItems().add(estado.getNome());
 		}
-		
-		
 		tvcNumero.setCellValueFactory(new PropertyValueFactory("numero"));
+		tvcNumero.setStyle("-fx-alignment: CENTER;");
 		tvcNome.setCellValueFactory(new PropertyValueFactory("nome"));
 		tvcDescricao.setCellValueFactory(new PropertyValueFactory("descricao"));
 		tvcEstado.setCellValueFactory(new PropertyValueFactory("estado"));
+		tvcEstado.setStyle("-fx-alignment: CENTER;");
 		tvcCidade.setCellValueFactory(new PropertyValueFactory("cidade"));
+		tvcCidade.setStyle("-fx-alignment: CENTER;");
 		tvcEmail.setCellValueFactory(new PropertyValueFactory("email"));
 		
-		ArrayList<Telefone> phones = doGetTelefones(50);
-		for (Telefone telefone : phones)
+		AtualizarGridUltimosTelefones(50);
+	}
+	
+	private void AtualizarGridUltimosTelefones(int qntd)
+	{
+		telefones.clear();
+		for (Telefone telefone : doGetTelefones(qntd))
 		{
-			//AQUI ADICIONAR NO GRID
 			telefones.add(new TableViewUtil(telefone, telefone.getParceiro(), telefone.getEndereco()));
 		}
 		
