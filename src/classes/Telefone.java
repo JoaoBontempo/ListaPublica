@@ -4,7 +4,7 @@ public class Telefone {
 	private int id;
 	private String numero;
 	private Endereco endereco;
-	private Parceiro dono;
+	private Parceiro parceiro;
 	private String descricao;
 	
 	public String getNumero() {
@@ -21,11 +21,11 @@ public class Telefone {
 		this.endereco = endereco;
 	}
 	
-	public Parceiro getDono() {
-		return dono;
+	public Parceiro getParceiro() {
+		return parceiro;
 	}
-	public void setDono(Parceiro dono) {
-		this.dono = dono;
+	public void setParceiro(Parceiro parceiro) {
+		this.parceiro = parceiro;
 	}
 	public int getId() {
 		return id;

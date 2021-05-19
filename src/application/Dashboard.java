@@ -3,6 +3,7 @@ package application;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -25,12 +26,18 @@ import API_IBGE.Distrito;
 import API_IBGE.Municipio;
 import API_IBGE.UF;
 import classes.Banco;
+import classes.Endereco;
+import classes.Parceiro;
+import classes.TableViewUtil;
 import classes.Telefone;
 import classes.Util;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -57,25 +64,25 @@ public class Dashboard extends Application{
 	private TextField txtPesquisar;
 
 	@FXML
-	private TableView<?> tvLugares;
+	private TableView<TableViewUtil> tvTelefones;
 
 	@FXML
-	private TableColumn<?, ?> tvcNumero;
+	private TableColumn<TableViewUtil, String> tvcNumero;
 
 	@FXML
-	private TableColumn<?, ?> tvcNome;
+	private TableColumn<TableViewUtil, String> tvcNome;
 
 	@FXML
-	private TableColumn<?, ?> tvcCidade;
+	private TableColumn<TableViewUtil, String> tvcCidade;
 
 	@FXML
-	private TableColumn<?, ?> tvcEstado;
+	private TableColumn<TableViewUtil, String> tvcEstado;
 	
 	@FXML
-	private TableColumn<?, ?> tvcDescricao;
+	private TableColumn<TableViewUtil, String> tvcDescricao;
 
 	@FXML
-	private TableColumn<?, ?> tvcEmail;
+	private TableColumn<TableViewUtil, String> tvcEmail;
 
 	@FXML
 	private ComboBox<String> cboxEstados;
@@ -103,6 +110,9 @@ public class Dashboard extends Application{
 
 	@FXML
 	private Tab tbMinhaConta;
+	
+	private List<TableViewUtil> telefones = new ArrayList();
+	private ObservableList<TableViewUtil> observableTelefones;
 
 	public ArrayList<Municipio> doGetCidades()
 	{
@@ -238,13 +248,22 @@ public class Dashboard extends Application{
 		}
 		
 		
-		ArrayList<Telefone> telefones = doGetTelefones(50);
-		for (Telefone telefone : telefones)
+		tvcNumero.setCellValueFactory(new PropertyValueFactory("numero"));
+		tvcNome.setCellValueFactory(new PropertyValueFactory("nome"));
+		tvcDescricao.setCellValueFactory(new PropertyValueFactory("descricao"));
+		tvcEstado.setCellValueFactory(new PropertyValueFactory("estado"));
+		tvcCidade.setCellValueFactory(new PropertyValueFactory("cidade"));
+		tvcEmail.setCellValueFactory(new PropertyValueFactory("email"));
+		
+		ArrayList<Telefone> phones = doGetTelefones(50);
+		for (Telefone telefone : phones)
 		{
 			//AQUI ADICIONAR NO GRID
+			telefones.add(new TableViewUtil(telefone, telefone.getParceiro(), telefone.getEndereco()));
 		}
 		
-		
+		observableTelefones = FXCollections.observableArrayList(telefones);
+		tvTelefones.setItems(observableTelefones);
 	}
 
 	@Override
