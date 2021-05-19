@@ -25,6 +25,7 @@ import API_IBGE.Distrito;
 import API_IBGE.Municipio;
 import API_IBGE.UF;
 import classes.Banco;
+import classes.Telefone;
 import classes.Util;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -139,6 +140,41 @@ public class Dashboard extends Application{
 
 		return municipios;
 	}
+	
+	private ArrayList<Telefone> doGetTelefones(int limite)
+	{
+		String strResposta = "";
+
+		ObjectMapper mapper = new ObjectMapper();
+		//mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		ArrayList<Telefone> telefones = new ArrayList<Telefone>();
+		HttpClient httpClient = HttpClientBuilder.create().build();
+		HttpGet httpGet = new HttpGet("http://localhost:5000/ListaPublica/getLast/" + limite);
+		HttpResponse response;
+		try {
+			response = httpClient.execute(httpGet);
+			HttpEntity resEnt = response.getEntity();
+			strResposta = EntityUtils.toString(resEnt);
+			JSONArray obj = new JSONArray(strResposta);
+
+			Telefone telefone;
+
+			for(int i =0; i < obj.length(); i++)
+			{
+				telefone = mapper.readValue(obj.getJSONObject(i).toString(), Telefone.class);
+				telefones.add(telefone);
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+
+		return telefones;
+	}
 
 	public ArrayList<UF> doGetEstados()
 	{
@@ -199,6 +235,13 @@ public class Dashboard extends Application{
 		{
 			idsEstado.add(estado.getId());
 			cboxEstados.getItems().add(estado.getNome());
+		}
+		
+		
+		ArrayList<Telefone> telefones = doGetTelefones(50);
+		for (Telefone telefone : telefones)
+		{
+			//AQUI ADICIONAR NO GRID
 		}
 		
 		
