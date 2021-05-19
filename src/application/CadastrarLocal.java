@@ -1,5 +1,6 @@
 package application;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -7,11 +8,24 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.geonames.Toponym;
 import org.geonames.ToponymSearchResult;
 import org.geonames.WebService;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import API_IBGE.Municipio;
+import API_IBGE.UF;
 import classes.Banco;
 import classes.Util;
 import javafx.application.Application;
@@ -41,10 +55,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class CadastrarLocal extends Application implements Initializable {
-	final int GEONAMEIDBRASIL = 3469034;
-
-	private ArrayList<Integer> geoids = new ArrayList<Integer>();
-
+	private ArrayList<Integer> idsEstado = new ArrayList<Integer>();
+	
 	private boolean campoCpfCnpj = false; // false=Cpf
 
 	@FXML
@@ -160,31 +172,88 @@ public class CadastrarLocal extends Application implements Initializable {
     
 
 	// API
+    public ArrayList<UF> doGetEstados()
+	{
+		String strResposta = "";
 
-	@FXML
-	private void recuperarCidades() {
+		ObjectMapper mapper = new ObjectMapper();
+		ArrayList<UF> estados = new ArrayList<UF>();
+		HttpClient httpClient = HttpClientBuilder.create().build();
+		HttpGet httpGet = new HttpGet("https://servicodados.ibge.gov.br/api/v1/localidades/estados?OrderBy=nome");
+
+		HttpResponse response;
+		try {
+			response = httpClient.execute(httpGet);
+			HttpEntity resEnt = response.getEntity();
+			strResposta = EntityUtils.toString(resEnt);
+			JSONArray obj = new JSONArray(strResposta);
+
+			UF estado;
+
+			for(int i =0; i < obj.length(); i++)
+			{
+				estado = mapper.readValue(obj.getJSONObject(i).toString(), UF.class);
+				estados.add(estado);
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+
+		return estados;
+	}
+    
+    @FXML
+	private void recuperarCidades ()
+	{
 		cmbCidades.getItems().clear();
-		for (Toponym estados : getChildren(geoids.get(cmbEstados.getSelectionModel().getSelectedIndex()))
-				.getToponyms()) {
-			String cidade = estados.getName();
-			cmbCidades.getItems().addAll(cidade);
-			geoids.add(estados.getGeoNameId());
+		ArrayList<Municipio> municipios = doGetCidades();
+		for (Municipio municipio : municipios)
+		{
+			cmbCidades.getItems().add(municipio.getNome());
 		}
 	}
+    
+    
+	public ArrayList<Municipio> doGetCidades()
+	{
+		String strResposta = "";
 
-	private ToponymSearchResult getChildren(int id) {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		ArrayList<Municipio> municipios = new ArrayList<Municipio>();
+		HttpClient httpClient = HttpClientBuilder.create().build();
+		HttpGet httpGet = new HttpGet(String.format("https://servicodados.ibge.gov.br/api/v1/localidades/estados/%s/municipios",
+				idsEstado.get(cmbEstados.getSelectionModel().getSelectedIndex())));
+
+		HttpResponse response;
 		try {
-			WebService.setUserName("JoaoBontempo"); // add your username here
+			response = httpClient.execute(httpGet);
+			HttpEntity resEnt = response.getEntity();
+			strResposta = EntityUtils.toString(resEnt);
+			JSONArray obj = new JSONArray(strResposta);
 
-			ToponymSearchResult children = WebService.children(id, STYLESHEET_CASPIAN, null);
-			return children;
-		} catch (Exception erro) {
-			erro.printStackTrace();
-			// Util.MessageBoxShow("Ocorreu um erro ao carregar os Estados", "Um erro
-			// ocorreu ao conectar-se a API Geonames.\n"
-			// + " Verifique sua conexão com a internet.", AlertType.ERROR);
+			Municipio municipio;
+
+			for(int i =0; i < obj.length(); i++)
+			{
+				municipio = mapper.readValue(obj.getJSONObject(i).toString(), Municipio.class);
+				municipios.add(municipio);
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception ex)
+		{
+			ex.printStackTrace();
 		}
-		return null;
+
+		return municipios;
 	}
 
 	@Override
@@ -222,10 +291,13 @@ public class CadastrarLocal extends Application implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		for (Toponym estados : getChildren(GEONAMEIDBRASIL).getToponyms()) {
-			cmbEstados.getItems().addAll(estados.getName());
-			geoids.add(estados.getGeoNameId());
+		ArrayList<UF> estados = doGetEstados();
+		for (UF estado : estados)
+		{
+			idsEstado.add(estado.getId());
+			cmbEstados.getItems().add(estado.getNome());
 		}
+		
 		
 		txtCep.focusedProperty().addListener(new ChangeListener<Boolean>()
 		{
