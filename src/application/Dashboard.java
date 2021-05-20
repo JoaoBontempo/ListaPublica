@@ -31,10 +31,13 @@ import classes.Parceiro;
 import classes.TableViewUtil;
 import classes.Telefone;
 import classes.Util;
+import classes.Validacao;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -45,6 +48,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -52,6 +56,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 
 
 public class Dashboard extends Application{
@@ -77,7 +82,7 @@ public class Dashboard extends Application{
 
 	@FXML
 	private TableColumn<TableViewUtil, String> tvcEstado;
-	
+
 	@FXML
 	private TableColumn<TableViewUtil, String> tvcDescricao;
 
@@ -110,7 +115,7 @@ public class Dashboard extends Application{
 
 	@FXML
 	private Tab tbMinhaConta;
-	
+
 	private List<TableViewUtil> telefones = new ArrayList();
 	private ObservableList<TableViewUtil> observableTelefones;
 
@@ -150,7 +155,7 @@ public class Dashboard extends Application{
 
 		return municipios;
 	}
-	
+
 	private ArrayList<Telefone> doGetTelefones(int limite)
 	{
 		String strResposta = "";
@@ -239,7 +244,7 @@ public class Dashboard extends Application{
 		tbMeusEnderecos.setDisable(Util.isConvidado());
 		tbMeusTelefones.setDisable(Util.isConvidado());
 		tbMinhaConta.setDisable(Util.isConvidado());
-		
+
 		ArrayList<UF> estados = doGetEstados();
 		for (UF estado : estados)
 		{
@@ -255,10 +260,10 @@ public class Dashboard extends Application{
 		tvcCidade.setCellValueFactory(new PropertyValueFactory("cidade"));
 		tvcCidade.setStyle("-fx-alignment: CENTER;");
 		tvcEmail.setCellValueFactory(new PropertyValueFactory("email"));
-		
+
 		AtualizarGridUltimosTelefones(50);
 	}
-	
+
 	private void AtualizarGridUltimosTelefones(int qntd)
 	{
 		telefones.clear();
@@ -266,9 +271,46 @@ public class Dashboard extends Application{
 		{
 			telefones.add(new TableViewUtil(telefone, telefone.getParceiro(), telefone.getEndereco()));
 		}
-		
+
 		observableTelefones = FXCollections.observableArrayList(telefones);
 		tvTelefones.setItems(observableTelefones);
+		
+		FilteredList<TableViewUtil> filteredData = new FilteredList<>(observableTelefones, b -> true);
+
+		txtPesquisar.textProperty().addListener((observable, oldValue, newValue) -> {
+			filteredData.setPredicate(telefone -> {
+
+				if (newValue == null || newValue.isEmpty()) {
+					return true;
+				}
+
+				String lowerCaseFilter = newValue.toLowerCase();
+
+				if (telefone.getNome().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
+					return true;
+				} else if (telefone.getCidade().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+					return true; 
+				}
+				else if (telefone.getEmail().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+					return true; 
+				}
+				else if (telefone.getEstado().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+					return true; 
+				}
+				else if (telefone.getNumero().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+					return true; 
+				}
+				else if (telefone.getDescricao().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+					return true; 
+				}
+				else  
+					return false; 
+			});
+		});
+
+		SortedList<TableViewUtil> sortedData = new SortedList<>(filteredData);
+		sortedData.comparatorProperty().bind(tvTelefones.comparatorProperty());
+		tvTelefones.setItems(sortedData);
 	}
 
 	@Override

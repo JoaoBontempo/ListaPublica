@@ -65,7 +65,6 @@ public class CadastroTelefone extends Application{
 	{
 		if (validarCampos())
 		{
-			System.out.println(cboxEndereco.getSelectionModel().getSelectedIndex());
 			if (cboxEndereco.getSelectionModel().getSelectedIndex() != 0)
 			{
 				Banco.InserirQuery(String.format("INSERT INTO telefone (id, numero, dono, lugar, descricao) VALUES"
