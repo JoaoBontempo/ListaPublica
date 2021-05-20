@@ -69,7 +69,7 @@ public class CadastroTelefone extends Application{
 			{
 				Banco.InserirQuery(String.format("INSERT INTO telefone (id, numero, dono, lugar, descricao) VALUES"
 						+ " (default, '%s', %s, %s, '%s')", txtNumero.getText(), Util.getContaLogada().getId(), 
-						cboxEndereco.getSelectionModel().getSelectedIndex(), txtDescricao.getText()));
+						enderecos.get(cboxEndereco.getSelectionModel().getSelectedIndex() - 1).getId(), txtDescricao.getText()));
 			}
 			else
 			{

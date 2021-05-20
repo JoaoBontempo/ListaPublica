@@ -29,7 +29,7 @@ namespace ListaPublica.Controllers
                 Endereco endereco = null;
                 try
                 {
-                    if (Banco.reader.GetInt32("endereco.id") != -1)
+                    if (Banco.reader.GetInt32("idE") != -1)
                     {
                         endereco = new Endereco();
                         endereco.bairro = Banco.reader.GetString("bairro");
@@ -43,7 +43,7 @@ namespace ListaPublica.Controllers
                 }
                 catch
                 {
-
+                    endereco = null;
                 }
 
                 Parceiro parceiro = new Parceiro();
