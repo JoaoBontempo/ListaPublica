@@ -192,6 +192,7 @@ public class CadastrarLocal extends Application implements Initializable {
 
 			for(int i =0; i < obj.length(); i++)
 			{
+				System.out.println(obj.getJSONObject(i).toString());
 				estado = mapper.readValue(obj.getJSONObject(i).toString(), UF.class);
 				estados.add(estado);
 			}
@@ -227,8 +228,10 @@ public class CadastrarLocal extends Application implements Initializable {
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		ArrayList<Municipio> municipios = new ArrayList<Municipio>();
 		HttpClient httpClient = HttpClientBuilder.create().build();
+		int ret=idsEstado.get(cmbEstados.getSelectionModel().getSelectedIndex());
+		System.out.println("INDICE RETORNO: "+ret);
 		HttpGet httpGet = new HttpGet(String.format("https://servicodados.ibge.gov.br/api/v1/localidades/estados/%s/municipios",
-				idsEstado.get(cmbEstados.getSelectionModel().getSelectedIndex())));
+		idsEstado.get(cmbEstados.getSelectionModel().getSelectedIndex())));
 
 		HttpResponse response;
 		try {
@@ -272,6 +275,35 @@ public class CadastrarLocal extends Application implements Initializable {
 
 	}
 
+	void setFormatterCpnj() {
+		txtCep.setTextFormatter(new TextFormatter<>(change ->
+	    (change.getControlNewText().matches("([0-9])+")) ? change : null));
+	}
+	
+	void setFormatterNumeroResidencia() {
+		txtNumeroResidencia.setTextFormatter(new TextFormatter<>(change ->
+	    (change.getControlNewText().matches("([0-9])+")) ? change : null));
+	}
+	
+	@FXML
+    void verificarTeclaDeletar(KeyEvent event) {
+		System.out.println( txtCep.getText().length()-1);
+		if(event.getCode().toString().equals("BACK_SPACE") && (txtCep.getText().length()-1) == 0) {
+			txtCep.setTextFormatter(null);
+			txtCep.clear();
+			setFormatterCpnj();
+		}
+    }
+	
+	@FXML
+    void verificarTeclaDeletarNumeroResidencia(KeyEvent event) {
+		if(event.getCode().toString().equals("BACK_SPACE") && txtNumeroResidencia.getLength() == 0) {
+			txtNumeroResidencia.setTextFormatter(null);
+			txtNumeroResidencia.clear();
+			setFormatterNumeroResidencia();
+		}
+    }
+	
 	private void verificaCep() {
 		if(txtCep.getText().isEmpty()) {
 			//Util.MessageBoxShow("Campo vazio", "O campo de cep está vazio.",AlertType.ERROR);
@@ -284,8 +316,8 @@ public class CadastrarLocal extends Application implements Initializable {
 			System.out.println(ret);
 			txtBairro.setText(ret.getString("bairro"));
 			txtRua.setText(ret.getString("logradouro"));
-			//cmbEstados.getSelectionModel().select(ret.getString("uf"));
-			//cmbCidades.getSelectionModel().select(ret.getString(cepSemFormato));
+			cmbEstados.getSelectionModel().select(ret.getString("uf"));
+			cmbCidades.getSelectionModel().select(ret.getString("localidade"));
 		}
 	}
 	
@@ -295,8 +327,9 @@ public class CadastrarLocal extends Application implements Initializable {
 		for (UF estado : estados)
 		{
 			idsEstado.add(estado.getId());
-			cmbEstados.getItems().add(estado.getNome());
+			cmbEstados.getItems().add(estado.getSigla());
 		}
+		System.out.println("Tamanho idEstados: "+idsEstado.size());
 		
 		
 		txtCep.focusedProperty().addListener(new ChangeListener<Boolean>()
@@ -313,12 +346,8 @@ public class CadastrarLocal extends Application implements Initializable {
 		
 		
 		// VERIFICAÇÃO DE ENTRADAS
-	    txtNumeroResidencia.setTextFormatter(new TextFormatter<>(change ->
-	    (change.getControlNewText().matches("([0-9])+")) ? change : null));
-
-	    txtCep.setTextFormatter(new TextFormatter<>(change ->
-	    (change.getControlNewText().matches("([0-9])+")) ? change : null));
-	    
+		setFormatterCpnj();
+		setFormatterNumeroResidencia();
 		
 
 	}
