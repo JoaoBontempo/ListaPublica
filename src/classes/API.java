@@ -41,6 +41,8 @@ public final class API {
 		js.put("cidade", queryFilter.getCidade());
 		js.put("estado", queryFilter.getEstado());
 		js.put("email", queryFilter.getEmail());
+		js.put("descricao", queryFilter.getDescricao());
+
 
 		try {
 			post.setEntity(new StringEntity(js.toString()));

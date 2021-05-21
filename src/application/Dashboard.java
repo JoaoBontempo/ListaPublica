@@ -67,7 +67,7 @@ public class Dashboard extends Application{
 
 	private ArrayList<String> cidadesUtil = new ArrayList<String>(); // ArrayList para a classe Utils.
 
-	private String nome = "*", estado = "*", cidade = "*", numero = "*", email = "*";
+	private String nome = "*", estado = "*", cidade = "*", numero = "*", email = "*", descricao = "*";
 
 	@FXML
 	private TextField txtPesquisar;
@@ -107,6 +107,9 @@ public class Dashboard extends Application{
 
 	@FXML
 	private TextField txtEmail;
+	
+    @FXML
+    private TextField txtDescrição;
 
 	@FXML
 	private Button btnNovoTelefone;
@@ -190,6 +193,7 @@ public class Dashboard extends Application{
 		numero = Validacao.isNullOrEmpty(txtTelefone.getText()) ? "*" : txtTelefone.getText();
 		nome = Validacao.isNullOrEmpty(txtNome.getText()) ? "*" : txtNome.getText();
 		email = Validacao.isNullOrEmpty(txtEmail.getText()) ? "*" : txtEmail.getText();		
+		descricao = Validacao.isNullOrEmpty(txtDescrição.getText()) ? "*" : txtDescrição.getText();
 		cidade = cboxCidades.getSelectionModel().getSelectedIndex() == 0 ? "*" : cboxCidades.getSelectionModel().getSelectedItem();
 		estado = cboxEstados.getSelectionModel().getSelectedIndex() == 0 ? "*" : cboxEstados.getSelectionModel().getSelectedItem();
 	}
@@ -207,7 +211,7 @@ public class Dashboard extends Application{
 	private void AplicarFiltroDeDados()
 	{
 		setQueryParameters();
-		AtualizarGridTelefones(API.doPostTelefone(new TableViewUtil(nome, numero, cidade, estado, email)));
+		AtualizarGridTelefones(API.doPostTelefone(new TableViewUtil(nome, numero, cidade, estado, email, descricao)));
 	}
 
 	private void AtualizarGridTelefones(ArrayList<Telefone> dados)

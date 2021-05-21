@@ -2,13 +2,14 @@ package classes;
 
 public class TableViewUtil {
 	
-	public TableViewUtil(String nome, String numero, String cidade, String estado, String email)
+	public TableViewUtil(String nome, String numero, String cidade, String estado, String email, String descricao)
 	{ 
 		this.email = email;
 		this.nome = nome;
 		this.numero = numero;
 		this.cidade = cidade;
 		this.estado = estado;
+		this.descricao = descricao;
 	}
 	
 	public TableViewUtil(Telefone telefone, Parceiro parceiro, Endereco endereco)

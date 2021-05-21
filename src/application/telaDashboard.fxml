@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="745.0" stylesheets="@application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Dashboard">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="1181.0" stylesheets="@application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Dashboard">
 	<tabs>
 		<Tab text="Lista de lugares/telefones">
 			<content>
@@ -58,21 +58,21 @@
 								<Font name="System Bold" size="18.0" />
 							</font>
 						</Label>
-						<TextField fx:id="txtNome" layoutX="15.0" layoutY="130.0" prefHeight="34.0" prefWidth="482.0" promptText="Filtrar por nome..." styleClass="text-field2" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="248.0" />
-						<Label layoutX="15.0" layoutY="111.0" styleClass="labelVerde" text="Nome" AnchorPane.leftAnchor="15.0">
+						<TextField fx:id="txtNome" layoutX="291.0" layoutY="74.0" prefHeight="34.0" prefWidth="396.0" promptText="Filtrar por nome..." styleClass="text-field2" AnchorPane.leftAnchor="291.0" />
+						<Label layoutX="291.0" layoutY="56.0" styleClass="labelVerde" text="Nome" AnchorPane.leftAnchor="291.0">
 							<font>
 								<Font size="14.0" />
 							</font>
 						</Label>
-						<TextField fx:id="txtTelefone" layoutX="15.0" layoutY="75.0" prefHeight="34.0" prefWidth="249.0" promptText="Filtrar por telefone..." styleClass="text-field2" AnchorPane.leftAnchor="15.0" />
+						<TextField fx:id="txtTelefone" layoutX="15.0" layoutY="75.0" prefHeight="34.0" prefWidth="255.0" promptText="Filtrar por telefone..." styleClass="text-field2" AnchorPane.leftAnchor="15.0" />
 						<Label layoutX="15.0" layoutY="56.0" styleClass="labelVerde" text="Nº de telefone" AnchorPane.leftAnchor="15.0">
 							<font>
 								<Font size="14.0" />
 							</font>
 						</Label>
 						<Separator layoutX="24.0" layoutY="45.0" prefHeight="3.0" prefWidth="703.0" styleClass="separatorHorizontal" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
-						<TextField fx:id="txtEmail" layoutX="280.0" layoutY="74.0" prefHeight="34.0" prefWidth="216.0" promptText="Filtrar por e-mail..." styleClass="text-field2" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="249.0" />
-						<Label layoutX="280.0" layoutY="56.0" styleClass="labelVerde" text="E-mail" AnchorPane.leftAnchor="280.0">
+						<TextField fx:id="txtEmail" layoutX="706.0" layoutY="74.0" prefHeight="34.0" prefWidth="226.0" promptText="Filtrar por e-mail..." styleClass="text-field2" AnchorPane.leftAnchor="706.0" AnchorPane.rightAnchor="249.0" />
+						<Label layoutX="706.0" layoutY="56.0" styleClass="labelVerde" text="E-mail" AnchorPane.leftAnchor="706.0">
 							<font>
 								<Font size="14.0" />
 							</font>
@@ -95,6 +95,12 @@
                      </font>
                   </Label>
                   <Button fx:id="btnAtualizarLimite" layoutX="306.0" layoutY="387.0" mnemonicParsing="false" onAction="#RecuperarUltimos" prefHeight="27.0" prefWidth="109.0" text="Pesquisar" AnchorPane.bottomAnchor="13.0" />
+                  <TextField fx:id="txtDescrição" layoutX="15.0" layoutY="136.0" prefHeight="34.0" prefWidth="917.0" promptText="Filtrar por descrição..." styleClass="text-field2" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="249.0" />
+                  <Label layoutX="15.0" layoutY="118.0" styleClass="labelVerde" text="Descrição">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
 					</children>
 				</AnchorPane>
 			</content>

@@ -23,7 +23,7 @@ namespace ListaPublica.Controllers
                "LEFT JOIN endereco ON telefone.lugar = endereco.id ORDER BY telefone.id DESC LIMIT " + qntd);
         }
 
-        private string retornarQuerySQL(string numero, string nome, string email, string cidade, string estado)
+        private string retornarQuerySQL(string numero, string nome, string email, string cidade, string estado, string descricao)
         {
             string query = "SELECT telefone.*," +
                "parceiro.id as idP, parceiro.nome as nomeP, parceiro.tipo, parceiro.usuario as usuarioP, parceiro.email, parceiro.cpf, parceiro.cnpj, " +
@@ -37,15 +37,17 @@ namespace ListaPublica.Controllers
             email = email.Equals("*") ? "" : String.Format("AND parceiro.email LIKE  '%{0}%'", email);
             cidade = cidade.Equals("*") ? "" : String.Format("AND endereco.cidade = '{0}'", cidade);
             estado = estado.Equals("*") ? "" : String.Format("AND endereco.estado = '{0}'", estado);
+            descricao = descricao.Equals("*") ? "" : String.Format("AND telefone.descricao LIKE '%{0}%' ", descricao);
 
-            query += String.Format("{0} {1} {2} {3} {4} ORDER BY telefone.id DESC", nome, email, estado, cidade, numero);
+
+            query += String.Format("{0} {1} {2} {3} {4} {5} ORDER BY telefone.id DESC", nome, email, estado, cidade, numero, descricao);
             return query;
         }
 
         [HttpPost("getFiltro")]
         public IList<Telefone> getTelefoneFiltro(TableViewUtil dados)
         { 
-            return BuscarInfosBanco(retornarQuerySQL(dados.numero, dados.nome, dados.email, dados.cidade, dados.estado));
+            return BuscarInfosBanco(retornarQuerySQL(dados.numero, dados.nome, dados.email, dados.cidade, dados.estado, dados.descricao));
         }
 
         private IList<Telefone> BuscarInfosBanco(string query)

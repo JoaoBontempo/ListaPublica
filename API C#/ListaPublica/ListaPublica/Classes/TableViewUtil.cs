@@ -12,5 +12,7 @@ namespace ListaPublica.Classes
         public string cidade { get; set; }
         public string estado { get; set; }
         public string email { get; set; }
+        public string descricao { get; set; }
+
     }
 }
