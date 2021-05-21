@@ -82,19 +82,19 @@
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnLimparFiltro" layoutX="611.0" layoutY="386.0" mnemonicParsing="false" onAction="#AplicarFiltroDeDados" text="Limpar filtro" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
-                  <Label layoutX="15.0" layoutY="391.0" styleClass="labelVerde" text="Recuperar útimos" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
+                  <Button fx:id="btnLimparFiltro" layoutX="611.0" layoutY="386.0" mnemonicParsing="false" onAction="#LimparFiltro" prefHeight="27.0" prefWidth="130.0" text="Limpar filtro" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                  <Label layoutX="15.0" layoutY="391.0" styleClass="labelVerde" text="Pesquisar útimos" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
                      <font>
                         <Font size="17.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtLimite_números" alignment="CENTER" layoutX="149.0" layoutY="384.0" prefHeight="34.0" prefWidth="76.0" promptText="Nº limite" AnchorPane.bottomAnchor="10.0" />
+                  <TextField fx:id="txtLimite_de_procura" alignment="CENTER" layoutX="149.0" layoutY="384.0" prefHeight="34.0" prefWidth="76.0" promptText="Nº limite" AnchorPane.bottomAnchor="10.0" />
                   <Label layoutX="232.0" layoutY="391.0" styleClass="labelVerde" text="inseridos" AnchorPane.bottomAnchor="15.0">
                      <font>
                         <Font size="17.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnAtualizarLimite" layoutX="306.0" layoutY="387.0" mnemonicParsing="false" onAction="#AplicarFiltroDeDados" prefHeight="27.0" prefWidth="109.0" text="Recuperar" AnchorPane.bottomAnchor="13.0" />
+                  <Button fx:id="btnAtualizarLimite" layoutX="306.0" layoutY="387.0" mnemonicParsing="false" onAction="#RecuperarUltimos" prefHeight="27.0" prefWidth="109.0" text="Pesquisar" AnchorPane.bottomAnchor="13.0" />
 					</children>
 				</AnchorPane>
 			</content>

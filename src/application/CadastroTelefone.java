@@ -51,12 +51,19 @@ public class CadastroTelefone extends Application{
 		cboxEndereco.getSelectionModel().selectFirst();
 	}
 
-	private boolean validarCampos()
+	private boolean validarCampos() throws SQLException
 	{
 		if (!Validacao.verificarTextField(txtNumero))
 			return false;
 		if (!Validacao.verificarTextField(txtDescricao))
 			return false;
+		
+		ResultSet result = Banco.InserirQueryReader(String.format("SELECT id FROM telefone WHERE telefone.numero = '%s'", txtNumero.getText()));
+		if (result.next())
+		{
+			Util.MessageBoxShow("Cadastro inválido","Este telefone já está cadastrado", AlertType.ERROR);
+			return false;
+		}
 		return true;
 	}
 	

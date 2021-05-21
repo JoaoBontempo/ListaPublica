@@ -127,7 +127,7 @@ public class Dashboard extends Application{
 	private Button btnLimparFiltro;
 
 	@FXML
-	private TextField txtLimite_números;
+	private TextField txtLimite_de_procura;
 
 	@FXML
 	private Button btnAtualizarLimite;
@@ -193,6 +193,14 @@ public class Dashboard extends Application{
 		cidade = cboxCidades.getSelectionModel().getSelectedIndex() == 0 ? "*" : cboxCidades.getSelectionModel().getSelectedItem();
 		estado = cboxEstados.getSelectionModel().getSelectedIndex() == 0 ? "*" : cboxEstados.getSelectionModel().getSelectedItem();
 	}
+	
+	@FXML
+	private void RecuperarUltimos()
+	{
+		if (Validacao.verificarTextField(txtLimite_de_procura))
+			if (Validacao.verificarNumerosTextField(txtLimite_de_procura))
+				AtualizarGridTelefones(API.doGetTelefones(Integer.parseInt(txtLimite_de_procura.getText())));
+	}
 
 	
 	@FXML 
@@ -204,6 +212,12 @@ public class Dashboard extends Application{
 
 	private void AtualizarGridTelefones(ArrayList<Telefone> dados)
 	{
+		if (dados.size() == 0)
+		{
+			Util.MessageBoxShow("Nenhum dado foi encontrado", "Não foi possível encontrar nenhum dado.\n"
+					+ "Tente mudar as informaçoes do filtro", AlertType.WARNING);
+			return;
+		}
 		telefones.clear();
 		for (Telefone telefone : dados)
 		{
@@ -249,6 +263,26 @@ public class Dashboard extends Application{
 		SortedList<TableViewUtil> sortedData = new SortedList<>(filteredData);
 		sortedData.comparatorProperty().bind(tvTelefones.comparatorProperty());
 		tvTelefones.setItems(sortedData);
+	}
+	
+	@FXML
+	private void LimparFiltro()
+	{
+		txtNome.setText("");
+		nome = "*";
+		
+		txtEmail.setText("");
+		email = "*";
+		
+		txtTelefone.setText("");
+		numero = "*";
+		
+		cboxEstados.getSelectionModel().selectFirst();
+		
+		cboxCidades.getItems().clear();
+		cboxCidades.getItems().add("Todas as cidades");
+		cboxCidades.getSelectionModel().selectFirst();
+		
 	}
 
 	@Override
