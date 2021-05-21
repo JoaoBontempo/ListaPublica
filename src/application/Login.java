@@ -66,7 +66,16 @@ public class Login extends Application {
 
 	public void initialize() throws ClassNotFoundException, SQLException
 	{
-		Banco.Conectar();
+		try {
+			Banco.Desconectar();
+		}
+		catch (Exception ex){
+			
+		}
+		finally {
+			
+			Banco.Conectar();
+		}
 	}
 
 	public static void main(String[] args) {

@@ -52,6 +52,9 @@ public class Cadastrar extends Application{
 
 	@FXML
 	private TextField txtNome;
+	
+	@FXML
+	private Label lbLogar;
 
 	@FXML
 	void realizarCadastro(ActionEvent event) {
@@ -76,7 +79,7 @@ public class Cadastrar extends Application{
 		if (!Validacao.verificarTextField(txtConfirmarSenha))
 			return false;
 
-		if(txtUsuario.getText().contains("@") || txtUsuario.getText().matches("[0-9]+")) {
+		if(txtUsuario.getText().contains("@")) {
 			Util.MessageBoxShow("Erro ao Cadastrar", "O Usuário inderido é inválido", AlertType.ERROR);
 			return false;
 		}
@@ -99,31 +102,49 @@ public class Cadastrar extends Application{
 
 	}
 
+	public void initialize() {
+
+	}
+
+	@FXML
+	void RealizarLogin(MouseEvent event) {
+		Login login = new Login();
+		login.start(new Stage());
+		Stage stageAtual = (Stage) lbLogar.getScene().getWindow();
+		stageAtual.close();
+	}
 	void realizarCadastro(boolean tipo) {
-     
+
 		try {
-			
-			if(txtSenha.getText().equals(txtConfirmarSenha.getText()))
-			{
-				if(tipo) {
-					Banco.InserirQuery(String.format("INSERT INTO parceiro(id,nome,usuario,tipo,cnpj,email,senha) VALUES(default,'%s','%s','%s','%s','%s','%s')",
-							txtNome.getText(), txtUsuario.getText(),"1",  txtCPFouCNPJ.getText(), txtEmail.getText(), Util.criptografarSenha(txtSenha.getText())));
-				}
-				else {
+			if(validarCredenciais()) {
 
-					Banco.InserirQuery(String.format("INSERT INTO parceiro(id,nome,usuario,tipo,cpf,email,senha) VALUES(default,'%s','%s','%s','%s','%s','%s')",
-							txtNome.getText(), txtUsuario.getText(),"0",txtCPFouCNPJ.getText(), txtEmail.getText(), Util.criptografarSenha(txtSenha.getText())));
-				}
 
-				Util.MessageBoxShow("Cadastar", "Cadastro realizado com sucesso", AlertType.INFORMATION);
+				if(txtSenha.getText().equals(txtConfirmarSenha.getText()))
+				{
+					if(tipo) {
+						Banco.InserirQuery(String.format("INSERT INTO parceiro(id,nome,usuario,tipo,cnpj,email,senha) VALUES(default,'%s','%s','%s','%s','%s','%s')",
+								txtNome.getText(), txtUsuario.getText(),"1",  txtCPFouCNPJ.getText(), txtEmail.getText(), Util.criptografarSenha(txtSenha.getText())));
+					}
+					else {
+
+						Banco.InserirQuery(String.format("INSERT INTO parceiro(id,nome,usuario,tipo,cpf,email,senha) VALUES(default,'%s','%s','%s','%s','%s','%s')",
+								txtNome.getText(), txtUsuario.getText(),"0",txtCPFouCNPJ.getText(), txtEmail.getText(), Util.criptografarSenha(txtSenha.getText())));
+					}
+
+					Util.MessageBoxShow("Cadastar", "Cadastro realizado com sucesso", AlertType.INFORMATION);
+				}
+				else { 
+
+					Util.MessageBoxShow("Erro ao Cadastrar", "As senhas inseridas não correspondem", AlertType.ERROR);
+					txtConfirmarSenha.requestFocus();
+
+
+
+				}
 			}
-			else { 
-				
-				Util.MessageBoxShow("Erro ao Cadastrar", "As senhas inseridas não correspondem", AlertType.ERROR);
-				txtConfirmarSenha.requestFocus();
+			else {
 
-			 
-			
+				Util.MessageBoxShow("Erro ao Cadastrar", "Alguma credencial ja é existente", AlertType.WARNING);
 			}
 		}
 		catch (Exception ex){
@@ -131,6 +152,30 @@ public class Cadastrar extends Application{
 			Util.MessageBoxShow("Cadastar", "Erro ao Cadastar: " + ex.getMessage(), AlertType.ERROR);
 		}
 
+	}
+
+	private boolean validarCredenciais() throws SQLException{
+
+		ResultSet result;
+
+		if(tipo) 
+		{
+			result = Banco.InserirQueryReader(String.format("SELECT * FROM parceiro WHERE usuario = '%s' OR email = '%s' OR cnpj = '%s'" 
+					, txtUsuario.getText(), txtEmail.getText(), txtCPFouCNPJ.getText()));
+		}
+		else
+		{
+			result = Banco.InserirQueryReader(String.format("SELECT * FROM parceiro WHERE usuario = '%s' OR email = '%s' OR cpf = '%s'" 
+					, txtUsuario.getText(), txtEmail.getText(), txtCPFouCNPJ.getText()));
+
+		}
+		if(result.next())
+		{
+			System.out.print("encontrei");
+			return false;
+		}
+		else
+			return true;
 	}
 
 	@Override
