@@ -14,15 +14,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="745.0" stylesheets="@application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Dashboard">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="745.0" stylesheets="@application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Dashboard">
 	<tabs>
 		<Tab text="Lista de lugares/telefones">
 			<content>
-				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="745.0">
 					<children>
-						<TextField fx:id="txtPesquisar" layoutX="55.0" layoutY="186.0" prefHeight="34.0" prefWidth="530.0" promptText="Pesquisar na tabela..." AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="15.0" />
-						<Separator layoutX="15.0" layoutY="174.0" prefWidth="200.0" styleClass="separatorHorizontal" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
-						<TableView fx:id="tvTelefones" layoutX="14.0" layoutY="232.0" prefHeight="120.0" prefWidth="715.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="232.0">
+						<TextField fx:id="txtPesquisar" layoutX="55.0" layoutY="239.0" prefHeight="34.0" prefWidth="530.0" promptText="Pesquisar na tabela..." AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="15.0" />
+						<Separator layoutX="15.0" layoutY="227.0" prefWidth="200.0" styleClass="separatorHorizontal" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+						<TableView fx:id="tvTelefones" layoutX="14.0" layoutY="285.0" prefHeight="90.0" prefWidth="715.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="285.0">
 							<columns>
 								<TableColumn fx:id="tvcNumero" prefWidth="75.0" text="Número" />
 								<TableColumn fx:id="tvcDescricao" prefWidth="75.0" text="Descrição" />
@@ -35,7 +35,7 @@
 								<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
 							</columnResizePolicy>
 						</TableView>
-						<ImageView fitHeight="33.0" fitWidth="34.0" layoutX="15.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="15.0">
+						<ImageView fitHeight="33.0" fitWidth="34.0" layoutX="15.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="15.0">
 							<image>
 								<Image url="@../Recursos/lupa.png" />
 							</image>
@@ -77,6 +77,24 @@
 								<Font size="14.0" />
 							</font>
 						</Label>
+                  <Button fx:id="btnAplicarFiltro" layoutX="15.0" layoutY="181.0" mnemonicParsing="false" onAction="#AplicarFiltroDeDados" prefHeight="27.0" prefWidth="713.0" text="Aplicar filtro de dados" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnAtualizaFiltro" layoutX="611.0" layoutY="386.0" mnemonicParsing="false" onAction="#AplicarFiltroDeDados" text="Atualizar com filtro" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                  <Label layoutX="15.0" layoutY="391.0" styleClass="labelVerde" text="Recuperar útimos" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtLimite_números" alignment="CENTER" layoutX="149.0" layoutY="384.0" prefHeight="34.0" prefWidth="76.0" promptText="Nº limite" AnchorPane.bottomAnchor="10.0" />
+                  <Label layoutX="232.0" layoutY="391.0" styleClass="labelVerde" text="inseridos" AnchorPane.bottomAnchor="15.0">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btnAtualizarLimite" layoutX="306.0" layoutY="387.0" mnemonicParsing="false" onAction="#AplicarFiltroDeDados" prefHeight="27.0" prefWidth="109.0" text="Recuperar" AnchorPane.bottomAnchor="13.0" />
 					</children>
 				</AnchorPane>
 			</content>

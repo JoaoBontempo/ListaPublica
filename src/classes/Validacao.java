@@ -17,6 +17,17 @@ public final class Validacao {
 			return true;
 		return false;
 	}
+	
+	public static boolean verificarNumerosTextField(TextField txt)
+	{
+		if (!txt.getText().matches("[0-9]+"))
+		{
+			Util.MessageBoxShow("Campo inválido", "O campo '" + txt.getId().substring(3).replace("_", " ") + "' deve conter apenas números.", AlertType.WARNING);
+			txt.requestFocus();
+			return false;
+		}
+		return true;
+	}
 
 	public static boolean verificarTextField(TextField txt)
 	{

@@ -38,6 +38,7 @@ import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -64,6 +65,8 @@ public class Dashboard extends Application{
 	private ArrayList<Integer> idsEstado = new ArrayList<Integer>();
 
 	private ArrayList<String> cidadesUtil = new ArrayList<String>(); // ArrayList para a classe Utils.
+
+	private String nome = "*", estado = "*", cidade = "*", numero = "*", email = "*";
 
 	@FXML
 	private TextField txtPesquisar;
@@ -116,6 +119,18 @@ public class Dashboard extends Application{
 	@FXML
 	private Tab tbMinhaConta;
 
+	@FXML
+	private Button btnAplicarFiltro;
+
+	@FXML
+	private Button btnAtualizaFiltro;
+
+	@FXML
+	private TextField txtLimite_números;
+
+	@FXML
+	private Button btnAtualizarLimite;
+
 	private List<TableViewUtil> telefones = new ArrayList();
 	private ObservableList<TableViewUtil> observableTelefones;
 
@@ -128,7 +143,7 @@ public class Dashboard extends Application{
 		ArrayList<Municipio> municipios = new ArrayList<Municipio>();
 		HttpClient httpClient = HttpClientBuilder.create().build();
 		HttpGet httpGet = new HttpGet(String.format("https://servicodados.ibge.gov.br/api/v1/localidades/estados/%s/municipios",
-				idsEstado.get(cboxEstados.getSelectionModel().getSelectedIndex())));
+				idsEstado.get(cboxEstados.getSelectionModel().getSelectedIndex()-1)));
 
 		HttpResponse response;
 		try {
@@ -156,15 +171,17 @@ public class Dashboard extends Application{
 		return municipios;
 	}
 
-	private ArrayList<Telefone> doGetTelefones(int limite)
+	private ArrayList<Telefone> doGetTelefones(int limite, String url)
 	{
+		if (limite != -1)
+			url+= limite;
 		String strResposta = "";
 
 		ObjectMapper mapper = new ObjectMapper();
 		//mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		ArrayList<Telefone> telefones = new ArrayList<Telefone>();
 		HttpClient httpClient = HttpClientBuilder.create().build();
-		HttpGet httpGet = new HttpGet("http://localhost:5000/ListaPublica/getLast/" + limite);
+		HttpGet httpGet = new HttpGet(url);
 		HttpResponse response;
 		try {
 			response = httpClient.execute(httpGet);
@@ -230,11 +247,19 @@ public class Dashboard extends Application{
 	private void recuperarCidades ()
 	{
 		cboxCidades.getItems().clear();
+		if (cboxEstados.getSelectionModel().getSelectedIndex() == 0)
+		{
+			cboxCidades.getItems().add("Todas as cidades");
+			cboxCidades.getSelectionModel().selectFirst();
+			return;
+		}
+		cboxCidades.getItems().add("Todas as cidades");
 		ArrayList<Municipio> municipios = doGetCidades();
 		for (Municipio municipio : municipios)
 		{
 			cboxCidades.getItems().add(municipio.getNome());
 		}
+		cboxCidades.getSelectionModel().selectFirst();
 	}
 
 	//Método 'onLoad'
@@ -244,13 +269,17 @@ public class Dashboard extends Application{
 		tbMeusEnderecos.setDisable(Util.isConvidado());
 		tbMeusTelefones.setDisable(Util.isConvidado());
 		tbMinhaConta.setDisable(Util.isConvidado());
-
+		
+		cboxEstados.getItems().add("Todos os Estados");
 		ArrayList<UF> estados = doGetEstados();
 		for (UF estado : estados)
 		{
 			idsEstado.add(estado.getId());
-			cboxEstados.getItems().add(estado.getNome());
+			cboxEstados.getItems().add(estado.getSigla());
 		}
+		cboxEstados.getSelectionModel().selectFirst();
+		cboxCidades.getItems().add("Todas as cidades");
+		cboxCidades.getSelectionModel().selectFirst();
 		tvcNumero.setCellValueFactory(new PropertyValueFactory("numero"));
 		tvcNumero.setStyle("-fx-alignment: CENTER;");
 		tvcNome.setCellValueFactory(new PropertyValueFactory("nome"));
@@ -261,20 +290,47 @@ public class Dashboard extends Application{
 		tvcCidade.setStyle("-fx-alignment: CENTER;");
 		tvcEmail.setCellValueFactory(new PropertyValueFactory("email"));
 
-		AtualizarGridUltimosTelefones(50);
+		AtualizarGridTelefones(50,"http://localhost:5000/ListaPublica/getLast/");
 	}
 
-	private void AtualizarGridUltimosTelefones(int qntd)
+	private void setQueryParameters()
+	{
+		numero = Validacao.isNullOrEmpty(txtTelefone.getText()) ? "*" : txtTelefone.getText();
+		nome = Validacao.isNullOrEmpty(txtNome.getText()) ? "*" : txtNome.getText();
+		email = Validacao.isNullOrEmpty(txtEmail.getText()) ? "*" : txtEmail.getText();		
+		cidade = cboxCidades.getSelectionModel().getSelectedIndex() == 0 ? "*" : cboxCidades.getSelectionModel().getSelectedItem();
+		estado = cboxEstados.getSelectionModel().getSelectedIndex() == 0 ? "*" : cboxEstados.getSelectionModel().getSelectedItem();
+	}
+
+	@FXML 
+	private void AplicarFiltroDeDados(ActionEvent e)
+	{
+		Button btn = (Button)e.getSource();
+		setQueryParameters();
+		if (btn.getId().contains("Filtro"))
+			AtualizarGridTelefones(-1, String.format("http://localhost:5000/ListaPublica/getFiltro/%s/%s/%s/%s/%s", numero, nome, email, cidade, estado));
+		else
+			if (Validacao.verificarTextField(txtLimite_números))
+			{
+				if (Validacao.verificarNumerosTextField(txtLimite_números))
+				{
+					AtualizarGridTelefones(Integer.parseInt(txtLimite_números.getText()), String.format("http://localhost:5000/ListaPublica/getFiltro/%s/%s/%s/%s/%s", numero, nome, email, cidade, estado));
+				}
+			}
+
+	}
+
+	private void AtualizarGridTelefones(int qntd, String url)
 	{
 		telefones.clear();
-		for (Telefone telefone : doGetTelefones(qntd))
+		for (Telefone telefone : doGetTelefones(qntd, url))
 		{
 			telefones.add(new TableViewUtil(telefone, telefone.getParceiro(), telefone.getEndereco()));
 		}
 
 		observableTelefones = FXCollections.observableArrayList(telefones);
 		tvTelefones.setItems(observableTelefones);
-		
+
 		FilteredList<TableViewUtil> filteredData = new FilteredList<>(observableTelefones, b -> true);
 
 		txtPesquisar.textProperty().addListener((observable, oldValue, newValue) -> {

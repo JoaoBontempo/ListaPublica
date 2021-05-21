@@ -15,15 +15,44 @@ namespace ListaPublica.Controllers
         [HttpGet("getLast/{qntd}")]
         public IList<Telefone> getLastPhones(int qntd)
         {
-            Banco.AbreConexao();
-            IList<Telefone> telefones = new List<Telefone>();
+            return BuscarInfosBanco("SELECT telefone.*," +
+               "parceiro.id as idP, parceiro.nome as nomeP, parceiro.tipo, parceiro.usuario as usuarioP, parceiro.email, parceiro.cpf, parceiro.cnpj, " +
+               "endereco.id as idE, endereco.rua, endereco.bairro, endereco.cidade, endereco.estado, endereco.nome as nomeE, endereco.numero as numeroE " +
+               "FROM telefone " +
+               "INNER JOIN parceiro ON telefone.dono = parceiro.id " +
+               "LEFT JOIN endereco ON telefone.lugar = endereco.id ORDER BY telefone.id DESC LIMIT " + qntd);
+        }
 
-            Banco.InserirQueryReader("SELECT telefone.*," +
-                "parceiro.id as idP, parceiro.nome as nomeP, parceiro.tipo, parceiro.usuario as usuarioP, parceiro.email, parceiro.cpf, parceiro.cnpj, " +
-                "endereco.id as idE, endereco.rua, endereco.bairro, endereco.cidade, endereco.estado, endereco.nome as nomeE, endereco.numero as numeroE " +
-                "FROM telefone " +
-                "INNER JOIN parceiro ON telefone.dono = parceiro.id " +
-                "LEFT JOIN endereco ON telefone.lugar = endereco.id ORDER BY telefone.id DESC LIMIT " + qntd);
+        private string retornarQuerySQL(string numero, string nome, string email, string cidade, string estado)
+        {
+            string query = "SELECT telefone.*," +
+               "parceiro.id as idP, parceiro.nome as nomeP, parceiro.tipo, parceiro.usuario as usuarioP, parceiro.email, parceiro.cpf, parceiro.cnpj, " +
+               "endereco.id as idE, endereco.rua, endereco.bairro, endereco.cidade, endereco.estado, endereco.nome as nomeE, endereco.numero as numeroE " +
+               "FROM telefone " +
+               "INNER JOIN parceiro ON telefone.dono = parceiro.id " +
+               "LEFT JOIN endereco ON telefone.lugar = endereco.id " +
+               "WHERE telefone.id > 0 ";
+            numero = numero.Equals("*") ? "" : String.Format("AND telefone.numero LIKE '%{0}%' ", numero);
+            nome = nome.Equals("*") ? "" : String.Format("AND parceiro.nome LIKE '%{0}%'", nome);
+            email = email.Equals("*") ? "" : String.Format("AND parceiro.email LIKE  '%{0}%'", email);
+            cidade = cidade.Equals("*") ? "" : String.Format("AND endereco.cidade = '{0}'", cidade);
+            estado = estado.Equals("*") ? "" : String.Format("AND endereco.estado = '{0}'", estado);
+
+            query += String.Format("{0} {1} {2} {3} {4} ORDER BY telefone.id DESC", nome, email, estado, cidade, numero);
+            return query;
+        }
+
+        [HttpGet("getFiltro/{numero}/{nome}/{email}/{cidade}/{estado}")]
+        public IList<Telefone> getTelefoneFiltro(string numero, string nome, string email, string cidade, string estado)
+        { 
+            return BuscarInfosBanco(retornarQuerySQL(numero, nome, email, cidade, estado));
+        }
+
+        private IList<Telefone> BuscarInfosBanco(string query)
+        {
+            IList<Telefone> telefones = new List<Telefone>();
+            Banco.AbreConexao();
+            Banco.InserirQueryReader(query);
             while (Banco.reader.Read())
             {
                 Endereco endereco = null;
