@@ -2,6 +2,15 @@ package classes;
 
 public class TableViewUtil {
 	
+	public TableViewUtil(String nome, String numero, String cidade, String estado, String email)
+	{ 
+		this.email = email;
+		this.nome = nome;
+		this.numero = numero;
+		this.cidade = cidade;
+		this.estado = estado;
+	}
+	
 	public TableViewUtil(Telefone telefone, Parceiro parceiro, Endereco endereco)
 	{
 		if (endereco != null)

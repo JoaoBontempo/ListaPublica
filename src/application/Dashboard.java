@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import API_IBGE.Distrito;
 import API_IBGE.Municipio;
 import API_IBGE.UF;
+import classes.API;
 import classes.Banco;
 import classes.Endereco;
 import classes.Parceiro;
@@ -123,7 +124,7 @@ public class Dashboard extends Application{
 	private Button btnAplicarFiltro;
 
 	@FXML
-	private Button btnAtualizaFiltro;
+	private Button btnLimparFiltro;
 
 	@FXML
 	private TextField txtLimite_números;
@@ -133,115 +134,6 @@ public class Dashboard extends Application{
 
 	private List<TableViewUtil> telefones = new ArrayList();
 	private ObservableList<TableViewUtil> observableTelefones;
-
-	public ArrayList<Municipio> doGetCidades()
-	{
-		String strResposta = "";
-
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		ArrayList<Municipio> municipios = new ArrayList<Municipio>();
-		HttpClient httpClient = HttpClientBuilder.create().build();
-		HttpGet httpGet = new HttpGet(String.format("https://servicodados.ibge.gov.br/api/v1/localidades/estados/%s/municipios",
-				idsEstado.get(cboxEstados.getSelectionModel().getSelectedIndex()-1)));
-
-		HttpResponse response;
-		try {
-			response = httpClient.execute(httpGet);
-			HttpEntity resEnt = response.getEntity();
-			strResposta = EntityUtils.toString(resEnt);
-			JSONArray obj = new JSONArray(strResposta);
-
-			Municipio municipio;
-
-			for(int i =0; i < obj.length(); i++)
-			{
-				municipio = mapper.readValue(obj.getJSONObject(i).toString(), Municipio.class);
-				municipios.add(municipio);
-			}
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception ex)
-		{
-			ex.printStackTrace();
-		}
-
-		return municipios;
-	}
-
-	private ArrayList<Telefone> doGetTelefones(int limite, String url)
-	{
-		if (limite != -1)
-			url+= limite;
-		String strResposta = "";
-
-		ObjectMapper mapper = new ObjectMapper();
-		//mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		ArrayList<Telefone> telefones = new ArrayList<Telefone>();
-		HttpClient httpClient = HttpClientBuilder.create().build();
-		HttpGet httpGet = new HttpGet(url);
-		HttpResponse response;
-		try {
-			response = httpClient.execute(httpGet);
-			HttpEntity resEnt = response.getEntity();
-			strResposta = EntityUtils.toString(resEnt);
-			JSONArray obj = new JSONArray(strResposta);
-
-			Telefone telefone;
-
-			for(int i =0; i < obj.length(); i++)
-			{
-				telefone = mapper.readValue(obj.getJSONObject(i).toString(), Telefone.class);
-				telefones.add(telefone);
-			}
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception ex)
-		{
-			ex.printStackTrace();
-		}
-
-		return telefones;
-	}
-
-	public ArrayList<UF> doGetEstados()
-	{
-		String strResposta = "";
-
-		ObjectMapper mapper = new ObjectMapper();
-		ArrayList<UF> estados = new ArrayList<UF>();
-		HttpClient httpClient = HttpClientBuilder.create().build();
-		HttpGet httpGet = new HttpGet("https://servicodados.ibge.gov.br/api/v1/localidades/estados?OrderBy=nome");
-
-		HttpResponse response;
-		try {
-			response = httpClient.execute(httpGet);
-			HttpEntity resEnt = response.getEntity();
-			strResposta = EntityUtils.toString(resEnt);
-			JSONArray obj = new JSONArray(strResposta);
-
-			UF estado;
-
-			for(int i =0; i < obj.length(); i++)
-			{
-				estado = mapper.readValue(obj.getJSONObject(i).toString(), UF.class);
-				estados.add(estado);
-			}
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception ex)
-		{
-			ex.printStackTrace();
-		}
-
-		return estados;
-	}
 
 	@FXML
 	private void recuperarCidades ()
@@ -254,7 +146,7 @@ public class Dashboard extends Application{
 			return;
 		}
 		cboxCidades.getItems().add("Todas as cidades");
-		ArrayList<Municipio> municipios = doGetCidades();
+		ArrayList<Municipio> municipios = API.doGetCidades(idsEstado.get(cboxEstados.getSelectionModel().getSelectedIndex()-1));
 		for (Municipio municipio : municipios)
 		{
 			cboxCidades.getItems().add(municipio.getNome());
@@ -271,7 +163,7 @@ public class Dashboard extends Application{
 		tbMinhaConta.setDisable(Util.isConvidado());
 		
 		cboxEstados.getItems().add("Todos os Estados");
-		ArrayList<UF> estados = doGetEstados();
+		ArrayList<UF> estados = API.doGetEstados();
 		for (UF estado : estados)
 		{
 			idsEstado.add(estado.getId());
@@ -290,7 +182,7 @@ public class Dashboard extends Application{
 		tvcCidade.setStyle("-fx-alignment: CENTER;");
 		tvcEmail.setCellValueFactory(new PropertyValueFactory("email"));
 
-		AtualizarGridTelefones(50,"http://localhost:5000/ListaPublica/getLast/");
+		AtualizarGridTelefones(API.doGetTelefones(100));
 	}
 
 	private void setQueryParameters()
@@ -302,28 +194,18 @@ public class Dashboard extends Application{
 		estado = cboxEstados.getSelectionModel().getSelectedIndex() == 0 ? "*" : cboxEstados.getSelectionModel().getSelectedItem();
 	}
 
+	
 	@FXML 
-	private void AplicarFiltroDeDados(ActionEvent e)
+	private void AplicarFiltroDeDados()
 	{
-		Button btn = (Button)e.getSource();
 		setQueryParameters();
-		if (btn.getId().contains("Filtro"))
-			AtualizarGridTelefones(-1, String.format("http://localhost:5000/ListaPublica/getFiltro/%s/%s/%s/%s/%s", numero, nome, email, cidade, estado));
-		else
-			if (Validacao.verificarTextField(txtLimite_números))
-			{
-				if (Validacao.verificarNumerosTextField(txtLimite_números))
-				{
-					AtualizarGridTelefones(Integer.parseInt(txtLimite_números.getText()), String.format("http://localhost:5000/ListaPublica/getFiltro/%s/%s/%s/%s/%s", numero, nome, email, cidade, estado));
-				}
-			}
-
+		AtualizarGridTelefones(API.doPostTelefone(new TableViewUtil(nome, numero, cidade, estado, email)));
 	}
 
-	private void AtualizarGridTelefones(int qntd, String url)
+	private void AtualizarGridTelefones(ArrayList<Telefone> dados)
 	{
 		telefones.clear();
-		for (Telefone telefone : doGetTelefones(qntd, url))
+		for (Telefone telefone : dados)
 		{
 			telefones.add(new TableViewUtil(telefone, telefone.getParceiro(), telefone.getEndereco()));
 		}

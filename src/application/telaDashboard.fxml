@@ -28,12 +28,12 @@
 								<TableColumn fx:id="tvcDescricao" prefWidth="75.0" text="Descrição" />
 								<TableColumn fx:id="tvcNome" prefWidth="75.0" text="Nome" />
 								<TableColumn fx:id="tvcEmail" prefWidth="75.0" text="E-mail" />
-								<TableColumn fx:id="tvcCidade" prefWidth="75.0" text="Cidade" />
-								<TableColumn fx:id="tvcEstado" prefWidth="75.0" text="Estado" />
+								<TableColumn fx:id="tvcCidade" prefWidth="173.0" text="Cidade" />
+								<TableColumn fx:id="tvcEstado" prefWidth="64.0" text="Estado" />
 							</columns>
-							<columnResizePolicy>
-								<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-							</columnResizePolicy>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
 						</TableView>
 						<ImageView fitHeight="33.0" fitWidth="34.0" layoutX="15.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="15.0">
 							<image>
@@ -82,7 +82,7 @@
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnAtualizaFiltro" layoutX="611.0" layoutY="386.0" mnemonicParsing="false" onAction="#AplicarFiltroDeDados" text="Atualizar com filtro" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                  <Button fx:id="btnLimparFiltro" layoutX="611.0" layoutY="386.0" mnemonicParsing="false" onAction="#AplicarFiltroDeDados" text="Limpar filtro" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
                   <Label layoutX="15.0" layoutY="391.0" styleClass="labelVerde" text="Recuperar útimos" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
                      <font>
                         <Font size="17.0" />

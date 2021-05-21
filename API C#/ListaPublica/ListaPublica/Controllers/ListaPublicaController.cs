@@ -42,10 +42,10 @@ namespace ListaPublica.Controllers
             return query;
         }
 
-        [HttpGet("getFiltro/{numero}/{nome}/{email}/{cidade}/{estado}")]
-        public IList<Telefone> getTelefoneFiltro(string numero, string nome, string email, string cidade, string estado)
+        [HttpPost("getFiltro")]
+        public IList<Telefone> getTelefoneFiltro(TableViewUtil dados)
         { 
-            return BuscarInfosBanco(retornarQuerySQL(numero, nome, email, cidade, estado));
+            return BuscarInfosBanco(retornarQuerySQL(dados.numero, dados.nome, dados.email, dados.cidade, dados.estado));
         }
 
         private IList<Telefone> BuscarInfosBanco(string query)
