@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="1181.0" stylesheets="@application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Dashboard">
+<TabPane fx:id="TabDash" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="1181.0" stylesheets="@application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Dashboard">
 	<tabs>
 		<Tab text="Lista de lugares/telefones">
 			<content>
@@ -118,40 +118,44 @@
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
 			</content>
 		</Tab>
-		<Tab fx:id="tbMinhaConta" text="Minha conta">
+		<Tab fx:id="tbMinhaConta" onSelectionChanged="#buscarDados" text="Minha conta">
 			<content>
-				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="221.0">
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="430.0" prefWidth="1181.0">
                <children>
-                  <TextField layoutX="37.0" layoutY="53.0" prefHeight="34.0" prefWidth="300.0" />
-                  <TextField layoutX="37.0" layoutY="117.0" prefHeight="34.0" prefWidth="300.0" />
-                  <TextField layoutX="37.0" layoutY="179.0" prefHeight="34.0" prefWidth="300.0" />
-                  <TextField layoutX="37.0" layoutY="242.0" prefHeight="34.0" prefWidth="300.0" />
-                  <TextField layoutX="37.0" layoutY="305.0" prefHeight="34.0" prefWidth="300.0" />
-                  <Label layoutX="43.0" layoutY="31.0" text="Nome" textFill="WHITE">
+                  <TextField fx:id="txtMCNome" disable="true" layoutX="91.0" layoutY="78.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="91.0" />
+                  <TextField fx:id="txtMCUsuario" disable="true" layoutX="91.0" layoutY="142.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="91.0" />
+                  <TextField fx:id="txtMCEmail" layoutX="91.0" layoutY="204.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="91.0" />
+                  <TextField fx:id="txtMCCPFouCNPJ" disable="true" editable="false" layoutX="91.0" layoutY="267.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="91.0" />
+                  <Label layoutX="97.0" layoutY="56.0" text="Nome" textFill="WHITE" AnchorPane.leftAnchor="97.0">
                      <font>
                         <Font name="Candara" size="19.0" />
                      </font>
                   </Label>
-                  <Label layoutX="43.0" layoutY="95.0" text="Usuário" textFill="WHITE">
+                  <Label layoutX="97.0" layoutY="120.0" text="Usuário" textFill="WHITE" AnchorPane.leftAnchor="97.0">
                      <font>
                         <Font name="Candara" size="19.0" />
                      </font>
                   </Label>
-                  <Label layoutX="43.0" layoutY="157.0" text="E-mail" textFill="WHITE">
+                  <Label layoutX="97.0" layoutY="182.0" text="E-mail" textFill="WHITE" AnchorPane.leftAnchor="97.0">
                      <font>
                         <Font name="Candara" size="19.0" />
                      </font>
                   </Label>
-                  <Label layoutX="43.0" layoutY="220.0" text="CPF" textFill="WHITE">
+                  <Label fx:id="lbMCCPFouCNPJ" layoutX="97.0" layoutY="245.0" text="CPF" textFill="WHITE" AnchorPane.leftAnchor="97.0">
                      <font>
                         <Font name="Candara" size="19.0" />
                      </font>
                   </Label>
-                  <Label layoutX="43.0" layoutY="283.0" text="Senha" textFill="WHITE">
+                  <Button fx:id="btnAlterarDados" layoutX="138.0" layoutY="321.0" mnemonicParsing="false" onAction="#AlterarDados" prefHeight="36.0" prefWidth="206.0" text="Alterar Dados" />
+                  <Separator layoutX="483.0" layoutY="34.0" orientation="VERTICAL" prefHeight="356.0" prefWidth="0.0" />
+                  <TextField fx:id="txtMCCodigo" layoutX="562.0" layoutY="179.0" prefHeight="34.0" prefWidth="443.0" promptText="Insira o código de confirmação enviado no E-mail cadastrado" />
+                  <Label layoutX="570.0" layoutY="153.0" text="Código" textFill="WHITE">
                      <font>
                         <Font name="Candara" size="19.0" />
                      </font>
                   </Label>
+                  <Button fx:id="btnConfirmarAlteracao" layoutX="562.0" layoutY="224.0" mnemonicParsing="false" onAction="#ConfirmarCodigoSenha" prefHeight="36.0" prefWidth="205.0" text="Confirmar" />
+                  <Button fx:id="btnAlterarSenha" layoutX="562.0" layoutY="88.0" mnemonicParsing="false" onAction="#AlterarSenha" prefHeight="40.0" prefWidth="313.0" styleClass="text-field2" text="Alterar Senha" textFill="#903939" />
                </children></AnchorPane>
 			</content>
 		</Tab>

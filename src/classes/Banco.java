@@ -56,11 +56,13 @@ public final class Banco {
 
 	public static boolean InserirQuery(String query) throws SQLException {
 		try {
+			
 			if(statement == null) {
 				Conectar();
 			}
 			statement.executeUpdate(query);
 			return true;
+			
 		} catch (Exception e) {
 			System.out.println(e);
 			return false;

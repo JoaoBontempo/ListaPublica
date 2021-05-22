@@ -43,6 +43,7 @@ import javafx.stage.Stage;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -73,6 +74,9 @@ public class Dashboard extends Application{
 	private ArrayList<String> cidadesUtil = new ArrayList<String>(); // ArrayList para a classe Utils.
 
 	private String nome = "*", estado = "*", cidade = "*", numero = "*", email = "*", descricao = "*";
+
+	@FXML
+	private TabPane TabDash;
 
 	@FXML
 	private TextField txtPesquisar;
@@ -112,9 +116,9 @@ public class Dashboard extends Application{
 
 	@FXML
 	private TextField txtEmail;
-	
-    @FXML
-    private TextField txtDescrição;
+
+	@FXML
+	private TextField txtDescrição;
 
 	@FXML
 	private Button btnNovoTelefone;
@@ -140,6 +144,63 @@ public class Dashboard extends Application{
 	@FXML
 	private Button btnAtualizarLimite;
 
+	@FXML
+	private TextField txtMCNome;
+
+	@FXML
+	private TextField txtMCUsuario;
+
+	@FXML
+	private TextField txtMCEmail;
+
+	@FXML
+	private TextField txtMCCPFouCNPJ;
+
+	@FXML
+	private Label lbMCCPFouCNPJ;
+
+
+	@FXML
+	private Button btnAlterarDados;
+
+	@FXML
+	private TextField txtMCCodigo;
+
+	@FXML
+	private Button btnConfirmarAlteracao;
+
+	@FXML
+	private Button btnAlterarSenha;
+
+	@FXML
+	void AlterarDados(ActionEvent event) throws SQLException {
+
+		if(txtMCEmail.getText().equals(Util.getContaLogada().getEmail())) {
+			System.out.println("Iguais");
+			return;
+		}
+
+		if(Validacao.validarEmail(txtMCEmail.getText())) {
+			Banco.InserirQuery(String.format("UPDATE parceiro set email = '%s' where id = %s", txtMCEmail.getText() , Util.getContaLogada().getId()));
+			Util.MessageBoxShow("Alteração de Dados", "Email alterado com sucesso!");
+			Util.getContaLogada().setEmail(txtMCEmail.getText());
+		}
+
+	}
+
+
+
+	@FXML
+	void AlterarSenha(ActionEvent event) {
+
+	}
+
+	@FXML
+	void ConfirmarCodigoSenha(ActionEvent event) {
+
+	}
+
+
 	private List<TableViewUtil> telefones = new ArrayList();
 	private ObservableList<TableViewUtil> observableTelefones;
 
@@ -162,15 +223,16 @@ public class Dashboard extends Application{
 		cboxCidades.getSelectionModel().selectFirst();
 	}
 
-	
+
 	// esse método vai obter o ID do usuário que pertence ao lugar clicado e abrir a janela de Tela, mostrando as infos detalhadas e todos os
 	// telefones associados ao mesmo.
 	@FXML
-    void abrirDescricaoDetalhada(MouseEvent event) {
+	void abrirDescricaoDetalhada(MouseEvent event) {
 		String id="";
-		
-//		DOUBLE CLICK NA LINHA
+
+		//		DOUBLE CLICK NA LINHA
 		if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
+<<<<<<< Updated upstream
             if(tvTelefones.getSelectionModel().getSelectedItem() != null) {
             	// obtém o telefone para obter o id do parceiro e id do local
             	TableViewUtil ret=tvTelefones.getSelectionModel().getSelectedItem();
@@ -186,13 +248,30 @@ public class Dashboard extends Application{
             		String query="select dono,lugar,descricao from telefone where numero LIKE '%"+numero+"%'";
             		query+=descricao == null?";":" and descricao LIKE '%"+descricao+"%';";
             		//System.out.println(query);
+=======
+			if(tvTelefones.getSelectionModel().getSelectedItem() != null) {
+				// obtém o telefone para obter o id do parceiro e id do local
+				TableViewUtil ret=tvTelefones.getSelectionModel().getSelectedItem();
+				String numero=ret.getNumero();
+				String descricao=ret.getDescricao();
+				String idDono=null;
+				String idLugar=null;
+
+
+				try {
+					Banco.Conectar();
+					// primeiro obtenho o id do dono , depois obtenho os telefones associados a ele
+					String query="select dono,lugar,descricao from telefone where numero LIKE '%"+numero+"%'";
+					query+=descricao == null?";":" and descricao LIKE '%"+descricao+"%';";
+					System.out.println(query);
+>>>>>>> Stashed changes
 					Banco.InserirQueryReader(query);
 					Banco.getReader().next();
 					idDono=Banco.getReader().getString("dono");
 					idLugar=Banco.getReader().getString("lugar");
 					UtilDashboard.setIdDono(idDono);
 					UtilDashboard.setIdLugar(idLugar);
-					
+
 					// obtem os telefones
 					query="select distinct endereco.usuario,telefone.numero from endereco INNER JOIN telefone ON endereco.usuario="+idDono+" order by endereco.usuario,telefone.numero;";
 					//System.out.println("Id dono: "+idDono+"\nIdLugar:"+UtilDashboard.getIdLugar()+"\nQuery: "+query);
@@ -206,29 +285,47 @@ public class Dashboard extends Application{
 							exc.printStackTrace();
 						}
 					}
-					
-					
-					
+
+
+
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-            	
-            	try {
+
+				try {
 					TelaLocal tl = new TelaLocal();
 					UtilDashboard.setTbVutil(ret);
 					tl.start(new Stage());
-					
+
 				} catch (Exception e) {
-					
+
 				}
-            	
-            }
-        }
-    }
-	
+
+			}
+		}
+	}
+
+
+	@FXML
+	void buscarDados(Event event) {
+		if(tbMinhaConta.isSelected()) 
+			System.out.println("Tab is Selected");{
+				txtMCNome.setText(Util.getContaLogada().getNome());
+				txtMCUsuario.setText(Util.getContaLogada().getUsuario());
+				txtMCEmail.setText(Util.getContaLogada().getEmail());
+				if(Util.getContaLogada().getTipo()) {
+					lbMCCPFouCNPJ.setText("CNPJ");
+					txtMCCPFouCNPJ.setText(Util.getContaLogada().getCnpj());
+				}
+				else {
+					lbMCCPFouCNPJ.setText("CPF");
+					txtMCCPFouCNPJ.setText(Util.getContaLogada().getCpf());
+				}
+			}
+	}
 	//Método 'onLoad'
 	public void initialize()
 	{
@@ -236,7 +333,7 @@ public class Dashboard extends Application{
 		tbMeusEnderecos.setDisable(Util.isConvidado());
 		tbMeusTelefones.setDisable(Util.isConvidado());
 		tbMinhaConta.setDisable(Util.isConvidado());
-		
+
 		cboxEstados.getItems().add("Todos os Estados");
 		ArrayList<UF> estados = API.doGetEstados();
 		for (UF estado : estados)
@@ -258,6 +355,9 @@ public class Dashboard extends Application{
 		tvcEmail.setCellValueFactory(new PropertyValueFactory("email"));
 
 		AtualizarGridTelefones(API.doGetTelefones(100));
+
+
+
 	}
 
 	private void setQueryParameters()
@@ -269,7 +369,7 @@ public class Dashboard extends Application{
 		cidade = cboxCidades.getSelectionModel().getSelectedIndex() == 0 ? "*" : cboxCidades.getSelectionModel().getSelectedItem();
 		estado = cboxEstados.getSelectionModel().getSelectedIndex() == 0 ? "*" : cboxEstados.getSelectionModel().getSelectedItem();
 	}
-	
+
 	@FXML
 	private void RecuperarUltimos()
 	{
@@ -278,7 +378,7 @@ public class Dashboard extends Application{
 				AtualizarGridTelefones(API.doGetTelefones(Integer.parseInt(txtLimite_de_procura.getText())));
 	}
 
-	
+
 	@FXML 
 	private void AplicarFiltroDeDados()
 	{
@@ -340,25 +440,25 @@ public class Dashboard extends Application{
 		sortedData.comparatorProperty().bind(tvTelefones.comparatorProperty());
 		tvTelefones.setItems(sortedData);
 	}
-	
+
 	@FXML
 	private void LimparFiltro()
 	{
 		txtNome.setText("");
 		nome = "*";
-		
+
 		txtEmail.setText("");
 		email = "*";
-		
+
 		txtTelefone.setText("");
 		numero = "*";
-		
+
 		cboxEstados.getSelectionModel().selectFirst();
-		
+
 		cboxCidades.getItems().clear();
 		cboxCidades.getItems().add("Todas as cidades");
 		cboxCidades.getSelectionModel().selectFirst();
-		
+
 	}
 
 	@Override
@@ -372,6 +472,8 @@ public class Dashboard extends Application{
 			primaryStage.setTitle("Lista Pública - Menu principal");
 			primaryStage.getIcons().add(icon);
 			primaryStage.setMaximized(true);
+			//root.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> System.out.println(newValue) );
+		
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -70,10 +70,10 @@ public class Login extends Application {
 			Banco.Desconectar();
 		}
 		catch (Exception ex){
-			
+
 		}
 		finally {
-			
+
 			Banco.Conectar();
 		}
 	}
@@ -159,12 +159,14 @@ public class Login extends Application {
 
 	private void loginRealizado() throws SQLException
 	{
+		
 		if (!Util.isConvidado())
 		{
 			ResultSet result = Banco.InserirQueryReader("SELECT * FROM parceiro WHERE id = " + id);
 			result.next();
 			Parceiro contaLogada = new Parceiro(result.getInt("id"), result.getInt("tipo"), result.getString("nome"), result.getString("cpf"), result.getString("cnpj"), result.getString("email"), result.getString("usuario"));
 			Util.setContaLogada(contaLogada);
+		    
 		}
 		Dashboard dash = new Dashboard();
 		dash.start(new Stage());
@@ -202,6 +204,14 @@ public class Login extends Application {
 			Util.setConvidado(true);
 			loginRealizado();
 		}
+	}
+	@FXML
+	void esqueciSenha(MouseEvent event) {
+		
+		RecuperarSenha recuperar = new RecuperarSenha();
+		recuperar.start(new Stage());
+		Stage stageAtual = (Stage) lbEsqueciSenha.getScene().getWindow();
+		stageAtual.close();
 	}
 
 }
