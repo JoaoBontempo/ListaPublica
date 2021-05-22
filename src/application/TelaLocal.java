@@ -17,7 +17,9 @@ import org.json.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import classes.API;
+import classes.Banco;
 import classes.Endereco;
+import classes.EnderecoComDescricao;
 import classes.Telefone;
 import classes.UtilDashboard;
 import javafx.application.Application;
@@ -59,6 +61,9 @@ public class TelaLocal extends Application {
     private Label lblCnpj1;
 
     @FXML
+    private TextField txtNome;
+    
+    @FXML
     private TextArea txtDescricao;
 
     @FXML
@@ -66,7 +71,42 @@ public class TelaLocal extends Application {
 
     @FXML
     void obterTelefoneClicado(MouseEvent event) {
-    	System.out.println(lvTelefones.getSelectionModel().getSelectedItem());
+    	// api para obter o endereco a partir do telefone e a descricao
+    	// primeiro pego o id do local
+    	
+    	String telefone=lvTelefones.getSelectionModel().getSelectedItem();
+    	String query="select lugar from telefone where numero='"+telefone+"';";
+    	try {
+    		Banco.Conectar();
+        	Banco.InserirQueryReader(query);
+        	String idEndereco=null;
+        	String descricao="";
+        	if(Banco.getReader().next()) {
+        		idEndereco=Banco.getReader().getString("lugar");
+        	}	
+        	if(idEndereco != null) {
+        		// AGORA QUE OBTIVE O DESCRICAO E ID DO LOCAL, APENAS USO A API PARA BUSCAR INFOS DO ENDERECO DO ID x
+        		System.out.println("ID ENDERECO: "+idEndereco);
+            	HttpGet get=new HttpGet("http://localhost:5000/ListaPublica/getUserAddress/"+idEndereco);
+            	HttpClient cliente=HttpClients.createDefault();
+            	HttpResponse resp=cliente.execute(get);
+            	String retorno=EntityUtils.toString(resp.getEntity());
+            	JSONArray array=new JSONArray(retorno);
+            	JSONObject objeto=array.getJSONObject(0);
+            	System.out.println(objeto.toString());
+            	insereCampos(objeto.get("estado").toString(),objeto.get("bairro").toString(),objeto.get("rua").toString(),
+            			objeto.get("cidade").toString(),objeto.get("numero").toString(),objeto.get("descricao").toString(),
+            			objeto.getString("nome"));
+            	//String estado,String bairro,String rua, String cidade, String numero, String descricao
+        	}
+        	
+        	
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    	}
+    	
+    	
+    	
     }
 	
 	@Override
@@ -100,7 +140,7 @@ public class TelaLocal extends Application {
 		String result;
 
 		ObjectMapper mapper = new ObjectMapper();
-		String url="http://localhost:5000/ListaPublica/getUserAddress/"+UtilDashboard.getIdDono();
+		String url="http://localhost:5000/ListaPublica/getUserAddress/"+UtilDashboard.getIdLugar();
 		System.out.println("URL : "+url);
 		HttpGet get = new HttpGet(url);
 		
@@ -111,29 +151,34 @@ public class TelaLocal extends Application {
 
 			result = EntityUtils.toString(response.getEntity());
 			JSONArray obj = new JSONArray(result);
-			Endereco endereco;
-			ArrayList<Endereco> enderecos = new ArrayList<>();
+			System.out.println(obj.getJSONObject(0).toString());
+			EnderecoComDescricao endereco;
+			ArrayList<EnderecoComDescricao> enderecos = new ArrayList<>();
+
 			for(int i = 0; i < obj.length();i++)
 			{
-				endereco = mapper.readValue(obj.getJSONObject(i).toString()  , Endereco.class);
+				endereco = mapper.readValue(obj.getJSONObject(i).toString()  , EnderecoComDescricao.class);
 				enderecos.add(endereco);
 			}
-			
-			
 			// JOGA OS VALORES NOS CAMPOS
-			txtEstado.setText(enderecos.get(0).getEstado());
-			// txtNomeLocal.setText(enderecos.get(0).getCidade()); <<< NÃO É NECESSARIO
-			txtBairro.setText(enderecos.get(0).getBairro());
-			txtRua.setText(enderecos.get(0).getRua()); 
-			txtCidade.setText(enderecos.get(0).getCidade());
-			//txtTelefone.setText(Integer.toString(enderecos.get(0))); << jogar no listview
+			insereCampos(enderecos.get(0).getEstado(),enderecos.get(0).getBairro(),enderecos.get(0).getRua(),
+					enderecos.get(0).getCidade(), Integer.toString(enderecos.get(0).getNumero()),enderecos.get(0).getDescricao(),
+					enderecos.get(0).getNome());
 			
-			txtNumeroResidencia.setText(Integer.toString(enderecos.get(0).getNumero()));
-
 			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	void insereCampos(String estado,String bairro,String rua, String cidade, String numero, String descricao,String nome) {
+		this.txtBairro.setText(bairro);
+		this.txtRua.setText(rua); 
+		this.txtCidade.setText(cidade);
+		this.txtEstado.setText(estado);
+		this.txtNumeroResidencia.setText(numero);
+		this.txtDescricao.setText(descricao);
+		this.txtNome.setText(nome);
 	}
 	
 	public static void main(String[] args) {

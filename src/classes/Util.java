@@ -22,6 +22,8 @@ public final class Util {
 	
 	private static Parceiro contaLogada;
 	
+	
+	
 	private static boolean convidado = false;
 	
 	public static Parceiro getContaLogada() {

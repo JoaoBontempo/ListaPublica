@@ -30,8 +30,8 @@ public class UtilDashboard {
 		return idLugar;
 	}
 
-	public static void setIdLugar(String idLugar) {
-		idLugar = idLugar;
+	public static void setIdLugar(String idLugar2) {
+		idLugar = idLugar2;
 	}
 
 	public static TableViewUtil getTbVutil() {
