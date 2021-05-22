@@ -185,7 +185,7 @@ public class Dashboard extends Application{
             		// primeiro obtenho o id do dono , depois obtenho os telefones associados a ele
             		String query="select dono,lugar,descricao from telefone where numero LIKE '%"+numero+"%'";
             		query+=descricao == null?";":" and descricao LIKE '%"+descricao+"%';";
-            		System.out.println(query);
+            		//System.out.println(query);
 					Banco.InserirQueryReader(query);
 					Banco.getReader().next();
 					idDono=Banco.getReader().getString("dono");
@@ -195,7 +195,7 @@ public class Dashboard extends Application{
 					
 					// obtem os telefones
 					query="select distinct endereco.usuario,telefone.numero from endereco INNER JOIN telefone ON endereco.usuario="+idDono+" order by endereco.usuario,telefone.numero;";
-					System.out.println("Id dono: "+idDono+"\nIdLugar:"+UtilDashboard.getIdLugar()+"\nQuery: "+query);
+					//System.out.println("Id dono: "+idDono+"\nIdLugar:"+UtilDashboard.getIdLugar()+"\nQuery: "+query);
 					Banco.InserirQueryReader(query);
 
 					UtilDashboard.getTelefones().clear();

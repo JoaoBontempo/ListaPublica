@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,5 +12,6 @@ namespace ListaPublica.Classes
         public string cidade { get; set; }
         public string estado { get; set; }
         public string email { get; set; }
+        public string descricao { get; set; }
     }
 }
