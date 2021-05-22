@@ -22,7 +22,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class Denuncia extends Application {
+public class TelaDenuncia extends Application {
 	
 	@FXML
     private ComboBox<String> cboxMotivo;
@@ -95,9 +95,39 @@ public class Denuncia extends Application {
 	@FXML
 	public void enviarDenuncia()
 	{
+		Util.getDenunciAtual().setTipo(cboxMotivo.getSelectionModel().getSelectedItem() != "Outro" ? cboxMotivo.getSelectionModel().getSelectedItem(): txtOutro_motivo.getText());
+		String conteudo = "Nova denúncia aberta - " + Util.getDenunciAtual().getTipo() + "\n\n";
+		conteudo += "Informações do denunciado: \n"
+				+ "ID: " + Util.getDenunciAtual().getDenunciado().getId() + "\n"
+				+ "Nome: " + Util.getDenunciAtual().getDenunciado().getNome() + "\n"
+				+ Util.getDenunciAtual().getDenunciado().getCnpj() != null ? "CNPJ: " + Util.getDenunciAtual().getDenunciado().getCnpj() :"CPF: " + Util.getDenunciAtual().getDenunciado().getCpf() + "\n"
+				+ "E-mail: " + Util.getDenunciAtual().getDenunciado().getEmail() + "\n"
+				+ "Usuário: " + Util.getDenunciAtual().getDenunciado().getUsuario() + "\n"
+				+ "\nInformações do denunciador: \n"
+				+ "ID: " + Util.getDenunciAtual().getDenunciador().getId() + "\n"
+				+ "Nome: " + Util.getDenunciAtual().getDenunciador().getNome() + "\n"
+				+ Util.getDenunciAtual().getDenunciador().getCnpj() != null ? "CNPJ: " + Util.getDenunciAtual().getDenunciado().getCnpj() :"CPF: " + Util.getDenunciAtual().getDenunciado().getCpf() + "\n"
+				+ "E-mail: " + Util.getDenunciAtual().getDenunciador().getEmail() + "\n"
+				+ "Usuário: " + Util.getDenunciAtual().getDenunciador().getUsuario() + "\n"
+				+ "\nInformações do telefone denunciado: \n"
+				+ "ID: " + Util.getDenunciAtual().getTelefone().getId() + "\n"
+				+ "Número: " + Util.getDenunciAtual().getTelefone().getNumero() + "\n"
+				+ "Descrição: " + Util.getDenunciAtual().getTelefone().getDescricao() + "\n"
+				+ "\nInformações do endereço denunciado: \n"
+				+ "ID: " + Util.getDenunciAtual().getEndereco().getId() + "\n"
+				+ "Rua: " + Util.getDenunciAtual().getEndereco().getRua() + "\n"
+				+ "Número: " + Util.getDenunciAtual().getEndereco().getNumero() + "\n"
+				+ "Bairro: " + Util.getDenunciAtual().getEndereco().getBairro() + "\n"
+				+ "Cidade: " + Util.getDenunciAtual().getEndereco().getBairro() + "\n"
+				+ "Estado: " + Util.getDenunciAtual().getEndereco().getEstado() + "\n"
+				+ "Nome: " + Util.getDenunciAtual().getEndereco().getNome() + "\n"
+				+ "\nInformações da denúncia\n"
+				+ "ID: " + Util.getDenunciAtual().getId() + "\n"
+				+ "Descrição: " + Util.getDenunciAtual().getDescricao() + "\n"
+				+ "Local: " + Util.getDenunciAtual().getLocal();
 		if (verificarCampos())
 		{
-			if(Email.enviarEmail(cboxMotivo.getSelectionModel().getSelectedItem() != "Outro" ? cboxMotivo.getSelectionModel().getSelectedItem(): txtOutro_motivo.getText(), txtDescrição.getText()))
+			if(Email.enviarEmail(Util.getDenunciAtual().getTipo(), conteudo))
 				Util.MessageBoxShow("Denúncia enviada com sucesso!", "Um e-mail com as informações foi enviado para os moderadores.\n"
 						+ "\nSua denúncia será analisada.\n"
 						+ "\nObrigado por contribuir para a melhoria do software!", AlertType.INFORMATION);
@@ -108,7 +138,8 @@ public class Denuncia extends Application {
 	{
 		cboxMotivo.getItems().add("Número inexistente");
 		cboxMotivo.getItems().add("Número e proprietário inconsistentes");
-		cboxMotivo.getItems().add("Informações suspeitas");
+		cboxMotivo.getItems().add("Outra informação inconsistente");
+		cboxMotivo.getItems().add("Palavras ofensivas");
 		cboxMotivo.getItems().add("Outro");
 	}
 	

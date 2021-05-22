@@ -18,9 +18,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import classes.API;
 import classes.Banco;
+import classes.Denuncia;
 import classes.Endereco;
 import classes.EnderecoComDescricao;
 import classes.Telefone;
+import classes.Util;
 import classes.UtilDashboard;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -41,6 +43,8 @@ public class TelaLocal extends Application {
 	// essa variável recebe da dashboard, quando ocorre um double click em um registro do datagrid, para então fazer o processo dos dados
 	private String idBuscarInfos=null;
 	private boolean possuiImagem=false;
+	
+	private int id_endereco;
 	public void setIdBuscarInfos(String id) {this.idBuscarInfos=id;}
 	
 	@FXML
@@ -67,6 +71,9 @@ public class TelaLocal extends Application {
 
     @FXML
     private TextField txtNome;
+    
+    @FXML
+    private Label lbDenunciarLocal;
     
     @FXML
     private TextArea txtDescricao;
@@ -156,6 +163,19 @@ public class TelaLocal extends Application {
 		// caso endereco possua imagem: 487,287
 		
 		pnlTelefones.relocate(487,  287);
+	}
+	
+	@FXML
+	public void MostrarTelaDenuncia()
+	{
+		Denuncia denuncia = new Denuncia();
+		//denuncia.setDenunciado();
+		denuncia.setDenunciador(Util.getContaLogada());
+		denuncia.setLocal("Telefone");
+		denuncia.setStatus(false);
+		Util.setDenunciAtual(denuncia);
+		TelaDenuncia tela = new TelaDenuncia();
+		tela.start(new Stage());
 	}
 
 	void iniciaApi() {

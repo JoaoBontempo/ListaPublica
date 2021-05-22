@@ -44,7 +44,7 @@ public final class Email {
 			email.setFrom(remetente[0]);
 			email.setSubject(titulo); // Jogar "Nova denúncia de parceiro: " + motivo como argumento dessa função
 			email.setMsg(descricao);
-			email.addTo("igor.hscuculha@gmail.com");
+			email.addTo(destinatario);
 			email.send();
 			return true;
 		}

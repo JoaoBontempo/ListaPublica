@@ -83,5 +83,10 @@
             </ListView>
          </center>
       </BorderPane>
+      <Label fx:id="lbDenunciarLocal" layoutX="25.0" layoutY="608.0" onMouseClicked="#MostrarTelaDenuncia" styleClass="labelComLink" text="Denunciar este local" textFill="WHITE" underline="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 public final class Util {
 	
 	private static Parceiro contaLogada;
-	
+	private static Denuncia denunciAtual;
 	
 	
 	private static boolean convidado = false;
@@ -95,5 +95,13 @@ public final class Util {
 
 	public static void setConvidado(boolean value) {
 		convidado = value;
+	}
+
+	public static Denuncia getDenunciAtual() {
+		return denunciAtual;
+	}
+
+	public static void setDenunciAtual(Denuncia denunciAtual) {
+		Util.denunciAtual = denunciAtual;
 	}
 }
