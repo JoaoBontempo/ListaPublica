@@ -13,6 +13,14 @@ public class Endereco {
 	private String cidade;
 	private String estado;
 	private String nome;
+	private String imagem;
+	
+	public String getImagem() {
+		return imagem;
+	}
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
+	}
 	private Parceiro conta;
 	
 	public int getId() {

@@ -33,18 +33,23 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class TelaLocal extends Application {
 
 	// essa variável recebe da dashboard, quando ocorre um double click em um registro do datagrid, para então fazer o processo dos dados
 	private String idBuscarInfos=null;
-	
+	private boolean possuiImagem=false;
 	public void setIdBuscarInfos(String id) {this.idBuscarInfos=id;}
 	
 	@FXML
     private TextField txtNumeroResidencia;
 
+	@FXML
+	private Pane pnlTelefones;
+
+	
     @FXML
     private TextField txtBairro;
 
@@ -93,12 +98,14 @@ public class TelaLocal extends Application {
             	String retorno=EntityUtils.toString(resp.getEntity());
             	JSONArray array=new JSONArray(retorno);
             	JSONObject objeto=array.getJSONObject(0);
+            	if(objeto.getString("imagem").length()>0) {possuiImagem=true;}
             	System.out.println(objeto.toString());
             	insereCampos(objeto.get("estado").toString(),objeto.get("bairro").toString(),objeto.get("rua").toString(),
             			objeto.get("cidade").toString(),objeto.get("numero").toString(),objeto.get("descricao").toString(),
             			objeto.getString("nome"));
             	//String estado,String bairro,String rua, String cidade, String numero, String descricao
         	}
+        	
         	
         	
     	}catch(Exception e) {
@@ -109,7 +116,16 @@ public class TelaLocal extends Application {
     	
     }
 	
-	@Override
+	
+    void trocarPosicaoPane() {
+    	if(!possuiImagem) {
+    		pnlTelefones.relocate(487,  287);
+    	}else {
+    		pnlTelefones.relocate(487,  74);
+    	}
+    }
+    
+    @Override
 	public void start(Stage primaryStage) {
 		try {
 			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("telaLugar.fxml"));
@@ -134,6 +150,12 @@ public class TelaLocal extends Application {
 		
 		// inicia a api
 		iniciaApi();
+		
+		// verifica se o endereço possui imagem, se possuir jogue o pane de telefones para baixo
+		// padrao: 487,74
+		// caso endereco possua imagem: 487,287
+		
+		pnlTelefones.relocate(487,  287);
 	}
 
 	void iniciaApi() {
