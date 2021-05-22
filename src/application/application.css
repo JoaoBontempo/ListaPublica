@@ -135,7 +135,7 @@
 .separatorVertical .line
 {
 	-fx-border-style: solid;
-	-fx-border-color: #0f1c00;
+	-fx-border-color: #575757;
 	-fx-border-width: 1px;
 }
 
@@ -303,4 +303,35 @@
 .table-view .scroll-bar
 {
 	-fx-background-color: #090E11;
+}
+
+
+.list-view {
+    -fx-background-color: #000000;
+    -fx-font-weight: Normal;
+	-fx-font-size: 15px;
+	-fx-font-family: 'Cardano';
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: #434343;
+}
+
+.list-view .list-cell:even{
+	-fx-background-color: rgb(22, 34, 41);
+    -fx-text-fill: white;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #84ff00;
+    -fx-text-fill:#000000;
+}
+
+.list-view .list-cell {
+    -fx-background-color: #000000;
+    -fx-text-fill: white;
+}
+
+.list-view .label {
+    -fx-text-fill: white;
 }

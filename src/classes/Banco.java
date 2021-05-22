@@ -47,7 +47,7 @@ public final class Banco {
 			Util.MessageBoxShow("Erro ao conectar ao banco", erro.getMessage(), AlertType.INFORMATION);
 		}
 	}
-
+	
 	public static ResultSet InserirQueryReader(String query) throws SQLException {
 		resultados = statement.executeQuery(query);
 		statement = conexao.createStatement();

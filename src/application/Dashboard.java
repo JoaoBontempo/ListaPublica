@@ -2,7 +2,9 @@ package application;
 
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -32,6 +34,7 @@ import classes.Parceiro;
 import classes.TableViewUtil;
 import classes.Telefone;
 import classes.Util;
+import classes.UtilDashboard;
 import classes.Validacao;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -54,6 +57,8 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXML;
@@ -157,6 +162,68 @@ public class Dashboard extends Application{
 		cboxCidades.getSelectionModel().selectFirst();
 	}
 
+	
+	// esse método vai obter o ID do usuário que pertence ao lugar clicado e abrir a janela de Tela, mostrando as infos detalhadas e todos os
+	// telefones associados ao mesmo.
+	@FXML
+    void abrirDescricaoDetalhada(MouseEvent event) {
+		String id="";
+		
+//		DOUBLE CLICK NA LINHA
+		if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
+            if(tvTelefones.getSelectionModel().getSelectedItem() != null) {
+            	// obtém o telefone para obter o id do parceiro e id do local
+            	TableViewUtil ret=tvTelefones.getSelectionModel().getSelectedItem();
+            	String numero=ret.getNumero();
+            	String descricao=ret.getDescricao();
+            	String idDono=null;
+            	String idLugar=null;
+            	
+            	
+            	try {
+            		Banco.Conectar();
+            		// primeiro obtenho o id do dono , depois obtenho os telefones associados a ele
+            		String query="select dono,lugar,descricao from telefone where numero LIKE '%"+numero+"%' and descricao LIKE '%"+descricao+"%';";            		
+					Banco.InserirQueryReader(query);
+					Banco.getReader().next();
+					idDono=Banco.getReader().getString("dono");
+					idLugar=Banco.getReader().getString("lugar");
+					query="select endereco.usuario,telefone.numero from endereco INNER JOIN telefone ON endereco.usuario="+idDono+" order by endereco.usuario,telefone.numero;";
+					System.out.println("Id dono: "+idDono+"\nIdLugar:"+idLugar+"\nQuery: "+query);
+					Banco.InserirQueryReader(query);
+
+					
+					while(Banco.getReader().next()){
+						try {
+							UtilDashboard.getTelefones().add(Banco.getReader().getString("numero"));
+						}catch(Exception exc) {
+							exc.printStackTrace();
+						}
+					}
+					
+					UtilDashboard.setIdDono(idDono);
+					UtilDashboard.setIdLugar(idLugar);
+					
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            	
+            	try {
+					TelaLocal tl = new TelaLocal();
+					UtilDashboard.setTbVutil(ret);
+					tl.start(new Stage());
+					
+				} catch (Exception e) {
+					
+				}
+            	
+            }
+        }
+    }
+	
 	//Método 'onLoad'
 	public void initialize()
 	{

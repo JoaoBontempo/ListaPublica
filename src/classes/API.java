@@ -25,6 +25,26 @@ import API_IBGE.UF;
 
 public final class API {
 	
+	// a partir do idTelefone -> id usuario e >id do endereco< 
+	public static Endereco doGetEnderecoGrid(int idTelefone) {
+		HttpClient cliente=HttpClients.createDefault();
+		HttpGet get=new HttpGet();
+		try {
+			HttpResponse resp=cliente.execute(get);
+			String jsonRetorno=EntityUtils.toString(resp.getEntity());
+			//JSONObject objRetorno=new JSONObject(jsonRetorno.toString());
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return null;
+	}
+	
 	public static ArrayList<Telefone> doPostTelefone(TableViewUtil queryFilter)
 	{
 		String result;

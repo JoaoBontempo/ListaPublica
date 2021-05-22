@@ -12,6 +12,14 @@ public class TableViewUtil {
 		this.descricao = descricao;
 	}
 	
+	public TableViewUtil(TableViewUtil tbl) {
+		this.email = tbl.email;
+		this.nome = tbl.nome;
+		this.numero = tbl.numero;
+		this.cidade = tbl.cidade;
+		this.estado = tbl.estado;
+	}
+	
 	public TableViewUtil(Telefone telefone, Parceiro parceiro, Endereco endereco)
 	{
 		if (endereco != null)

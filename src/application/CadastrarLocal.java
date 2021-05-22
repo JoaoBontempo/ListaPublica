@@ -78,6 +78,9 @@ public class CadastrarLocal extends Application implements Initializable {
 	private TextField txtRua;
 
 	@FXML
+    private TextArea txtDescricao;
+	
+	@FXML
 	private TextField txtNumeroResidencia;
 
 	@FXML
@@ -85,9 +88,6 @@ public class CadastrarLocal extends Application implements Initializable {
 
 	@FXML
 	private ComboBox<String> cmbEstados;
-
-	@FXML
-	private TextArea txtDescricao;
 
 	@FXML
     private TextField txtNomeLocal;

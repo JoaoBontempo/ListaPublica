@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="334.0" minWidth="500.0" prefHeight="526.0" prefWidth="943.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TelaLocal">
+   <children>
+      <TextField fx:id="txtNumeroResidencia" editable="false" layoutX="352.0" layoutY="282.0" prefHeight="34.0" prefWidth="49.0" styleClass="text-field2" stylesheets="@application.css" />
+      <Label layoutX="61.0" layoutY="233.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Bairro">
+         <font>
+            <Font name="Candara" size="19.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtBairro" editable="false" layoutX="140.0" layoutY="231.0" prefHeight="34.0" prefWidth="200.0" styleClass="text-field2" stylesheets="@application.css" />
+      <Label layoutX="61.0" layoutY="284.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Rua">
+         <font>
+            <Font name="Candara" size="19.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtRua" editable="false" layoutX="141.0" layoutY="282.0" prefHeight="34.0" prefWidth="200.0" styleClass="text-field2" stylesheets="@application.css" />
+      <Label layoutX="61.0" layoutY="180.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Cidade">
+         <font>
+            <Font name="Candara" size="19.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtCidade" editable="false" layoutX="140.0" layoutY="180.0" prefHeight="34.0" prefWidth="200.0" styleClass="text-field2" stylesheets="@application.css" />
+      <Label layoutX="61.0" layoutY="132.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Estado">
+         <font>
+            <Font name="Candara" size="19.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtEstado" editable="false" layoutX="142.0" layoutY="130.0" prefHeight="34.0" prefWidth="200.0" styleClass="text-field2" stylesheets="@application.css" />
+      <Label fx:id="lblCnpj1" layoutX="174.0" layoutY="356.0" prefHeight="30.0" prefWidth="133.0" styleClass="labelVerde" stylesheets="@application.css" text="Descrição">
+         <font>
+            <Font name="Candara" size="19.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="txtDescricao" editable="false" layoutX="26.0" layoutY="402.0" prefHeight="97.0" prefWidth="427.0" />
+      <Separator layoutX="39.0" layoutY="342.0" prefHeight="3.0" prefWidth="411.0" styleClass="separatorHorizontal" stylesheets="@application.css" />
+      <Label layoutX="159.0" layoutY="81.0" prefHeight="30.0" prefWidth="170.0" styleClass="labelVerde" stylesheets="@application.css" text="Endereço">
+         <font>
+            <Font name="Candara" size="28.0" />
+         </font>
+      </Label>
+      <Separator layoutX="466.0" layoutY="28.0" orientation="VERTICAL" prefHeight="474.0" prefWidth="0.0" styleClass="separatorVertical" stylesheets="@application.css" />
+      <Label layoutX="604.0" layoutY="73.0" prefHeight="30.0" prefWidth="170.0" styleClass="labelVerde" stylesheets="@application.css" text="Telefones">
+         <font>
+            <Font name="Candara" size="28.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="97.0" fitWidth="151.0" layoutX="26.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/logo_contornada.png" />
+         </image>
+      </ImageView>
+      <ListView fx:id="lvTelefones" layoutX="479.0" layoutY="114.0" onMouseClicked="#obterTelefoneClicado" prefHeight="351.0" prefWidth="436.0" stylesheets="@application.css">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ListView>
+   </children>
+</AnchorPane>

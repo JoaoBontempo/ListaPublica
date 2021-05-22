@@ -4,75 +4,77 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="549.0" maxWidth="1171.0" minHeight="327.0" minWidth="500.0" prefHeight="470.0" prefWidth="762.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CadastrarLocal">
+<AnchorPane maxHeight="634.0" maxWidth="1171.0" minHeight="327.0" minWidth="500.0" prefHeight="445.0" prefWidth="787.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CadastrarLocal">
    <children>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="46.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="34.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Recursos/logo_contornada.png" />
          </image>
       </ImageView>
-      <Label layoutX="25.0" layoutY="45.0" prefHeight="29.0" prefWidth="241.0" styleClass="labelVerde" stylesheets="@application.css" text="Cadastro de endereço">
+      <Label layoutX="14.0" layoutY="250.0" prefHeight="29.0" prefWidth="241.0" styleClass="labelVerde" stylesheets="@application.css" text="Cadastro de endereço">
          <font>
-            <Font size="23.0" />
+            <Font name="Candara" size="23.0" />
          </font>
       </Label>
       <Label layoutX="585.0" layoutY="249.0" prefHeight="30.0" prefWidth="104.0" styleClass="labelVerde" stylesheets="@application.css" text="N°">
          <font>
-            <Font size="25.0" />
+            <Font name="Candara" size="25.0" />
          </font>
       </Label>
       <TextField fx:id="txtNumeroResidencia" layoutX="655.0" layoutY="247.0" onKeyPressed="#verificarTeclaDeletarNumeroResidencia" prefHeight="34.0" prefWidth="49.0" styleClass="text-field2" stylesheets="@application.css" />
-      <Label layoutX="298.0" layoutY="201.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Bairro">
+      <Label layoutX="297.0" layoutY="201.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Bairro">
          <font>
-            <Font size="25.0" />
+            <Font name="Candara" size="25.0" />
          </font>
       </Label>
       <TextField fx:id="txtBairro" layoutX="383.0" layoutY="199.0" prefHeight="34.0" prefWidth="319.0" styleClass="text-field2" stylesheets="@application.css" />
-      <Label layoutX="286.0" layoutY="51.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Estado">
+      <Label layoutX="284.0" layoutY="51.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Estado">
          <font>
-            <Font size="25.0" />
+            <Font name="Candara" size="25.0" />
          </font>
       </Label>
       <ComboBox fx:id="cmbEstados" layoutX="379.0" layoutY="50.0" onAction="#recuperarCidades" prefHeight="32.0" prefWidth="319.0" />
-      <Button fx:id="btnCadastrarLocal" layoutX="301.0" layoutY="381.0" mnemonicParsing="false" onAction="#cadastrarEndereco" prefHeight="36.0" prefWidth="399.0" text="Cadastrar endereço">
+      <Button fx:id="btnCadastrarLocal" layoutX="305.0" layoutY="376.0" mnemonicParsing="false" onAction="#cadastrarEndereco" prefHeight="36.0" prefWidth="399.0" text="Cadastrar endereço">
          <font>
             <Font name="Candara" size="18.0" />
          </font>
       </Button>
-      <Label layoutX="285.0" layoutY="100.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Cidade">
+      <Label layoutX="284.0" layoutY="100.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Cidade">
          <font>
-            <Font size="25.0" />
+            <Font name="Candara" size="25.0" />
          </font>
       </Label>
       <ComboBox fx:id="cmbCidades" layoutX="379.0" layoutY="99.0" prefHeight="32.0" prefWidth="319.0" />
-      <Label layoutX="298.0" layoutY="249.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Rua">
+      <Label layoutX="297.0" layoutY="249.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Rua">
          <font>
-            <Font size="25.0" />
+            <Font name="Candara" size="25.0" />
          </font>
       </Label>
       <TextField fx:id="txtRua" layoutX="384.0" layoutY="247.0" prefHeight="34.0" prefWidth="229.0" styleClass="text-field2" stylesheets="@application.css" />
-      <CheckBox fx:id="rbCnpj" layoutX="556.0" layoutY="346.0" mnemonicParsing="false" onAction="#mudarLabelNome" stylesheets="@application.css" text="Sou uma empresa" textFill="#84ff00">
+      <CheckBox fx:id="rbCnpj" layoutX="560.0" layoutY="341.0" mnemonicParsing="false" onAction="#mudarLabelNome" stylesheets="@application.css" text="Sou uma empresa" textFill="#84ff00">
          <font>
             <Font name="Candara" size="15.0" />
          </font>
       </CheckBox>
-      <Label fx:id="lblCnpj" layoutX="298.0" layoutY="298.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Nome">
+      <Label fx:id="lblCnpj" layoutX="297.0" layoutY="298.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Nome">
          <font>
-            <Font size="25.0" />
+            <Font name="Candara" size="25.0" />
          </font>
       </Label>
       <TextField fx:id="txtNomeLocal" layoutX="384.0" layoutY="296.0" prefHeight="34.0" prefWidth="319.0" styleClass="text-field2" stylesheets="@application.css" />
-      <Label layoutX="221.0" layoutY="149.0" prefHeight="30.0" prefWidth="159.0" styleClass="labelVerde" stylesheets="@application.css" text="Cep (Opcional)">
+      <Label layoutX="258.0" layoutY="149.0" prefHeight="30.0" prefWidth="159.0" styleClass="labelVerde" stylesheets="@application.css" text="Cep">
          <font>
-            <Font size="25.0" />
+            <Font name="Candara" size="25.0" />
          </font>
       </Label>
       <TextField fx:id="txtCep" layoutX="384.0" layoutY="147.0" onKeyPressed="#verificarTeclaDeletar" prefHeight="34.0" prefWidth="319.0" styleClass="text-field2" stylesheets="@application.css" />
+      <Separator layoutX="266.0" layoutY="37.0" orientation="VERTICAL" prefHeight="380.0" prefWidth="0.0" styleClass="separatorVertical" stylesheets="@application.css" />
    </children>
 </AnchorPane>

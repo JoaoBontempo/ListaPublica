@@ -1,6 +1,11 @@
 package classes;
 
 public class Endereco {
+	@Override
+	public String toString() {
+		return "Endereco [numero=" + numero + ", rua=" + rua + ", bairro=" + bairro + ", cidade=" + cidade + ", estado="
+				+ estado + ", nome=" + nome + ", conta=" + conta + "]";
+	}
 	private int id;
 	private int numero;
 	private String rua;
