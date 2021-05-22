@@ -40,15 +40,28 @@ namespace SistemaModerador
             this.clnDenunciador = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clnDenunciado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pbxLupa = new System.Windows.Forms.PictureBox();
-            this.txtUsuario = new System.Windows.Forms.TextBox();
+            this.txtPesquisar = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.rbComentario = new System.Windows.Forms.RadioButton();
+            this.rbTelefone = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtTipo = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.rbQualquer = new System.Windows.Forms.RadioButton();
+            this.btnFiltrar = new System.Windows.Forms.Button();
+            this.txtID = new System.Windows.Forms.TextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtDescricao = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btnAtualizar = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rbQualquerStatus = new System.Windows.Forms.RadioButton();
+            this.rbFechado = new System.Windows.Forms.RadioButton();
+            this.rbAberto = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDenuncias)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxLupa)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvDenuncias
@@ -92,14 +105,16 @@ namespace SistemaModerador
             this.dgvDenuncias.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvDenuncias.EnableHeadersVisualStyles = false;
             this.dgvDenuncias.GridColor = System.Drawing.Color.Black;
-            this.dgvDenuncias.Location = new System.Drawing.Point(12, 161);
+            this.dgvDenuncias.Location = new System.Drawing.Point(12, 225);
+            this.dgvDenuncias.MultiSelect = false;
             this.dgvDenuncias.Name = "dgvDenuncias";
+            this.dgvDenuncias.ReadOnly = true;
             this.dgvDenuncias.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dgvDenuncias.RowHeadersVisible = false;
             this.dgvDenuncias.RowTemplate.Height = 25;
             this.dgvDenuncias.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvDenuncias.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDenuncias.Size = new System.Drawing.Size(776, 299);
+            this.dgvDenuncias.Size = new System.Drawing.Size(1038, 202);
             this.dgvDenuncias.TabIndex = 0;
             // 
             // clnId
@@ -142,24 +157,24 @@ namespace SistemaModerador
             // pbxLupa
             // 
             this.pbxLupa.Image = global::SistemaModerador.Properties.Resources.lupa;
-            this.pbxLupa.Location = new System.Drawing.Point(12, 128);
+            this.pbxLupa.Location = new System.Drawing.Point(12, 192);
             this.pbxLupa.Name = "pbxLupa";
             this.pbxLupa.Size = new System.Drawing.Size(30, 27);
             this.pbxLupa.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbxLupa.TabIndex = 1;
             this.pbxLupa.TabStop = false;
             // 
-            // txtUsuario
+            // txtPesquisar
             // 
-            this.txtUsuario.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtPesquisar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtUsuario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
-            this.txtUsuario.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtUsuario.ForeColor = System.Drawing.Color.White;
-            this.txtUsuario.Location = new System.Drawing.Point(48, 128);
-            this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(740, 27);
-            this.txtUsuario.TabIndex = 2;
+            this.txtPesquisar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
+            this.txtPesquisar.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtPesquisar.ForeColor = System.Drawing.Color.White;
+            this.txtPesquisar.Location = new System.Drawing.Point(48, 192);
+            this.txtPesquisar.Name = "txtPesquisar";
+            this.txtPesquisar.Size = new System.Drawing.Size(1002, 27);
+            this.txtPesquisar.TabIndex = 2;
             // 
             // label1
             // 
@@ -172,92 +187,277 @@ namespace SistemaModerador
             this.label1.TabIndex = 4;
             this.label1.Text = "Filtrar denúncias";
             // 
-            // radioButton1
+            // rbComentario
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.radioButton1.FlatAppearance.BorderSize = 0;
-            this.radioButton1.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            this.radioButton1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
-            this.radioButton1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Yellow;
-            this.radioButton1.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.radioButton1.ForeColor = System.Drawing.Color.White;
-            this.radioButton1.Location = new System.Drawing.Point(12, 53);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(108, 23);
-            this.radioButton1.TabIndex = 5;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Comentário";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.rbComentario.AutoSize = true;
+            this.rbComentario.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.rbComentario.FlatAppearance.BorderSize = 0;
+            this.rbComentario.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.rbComentario.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
+            this.rbComentario.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Yellow;
+            this.rbComentario.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.rbComentario.ForeColor = System.Drawing.Color.White;
+            this.rbComentario.Location = new System.Drawing.Point(12, 77);
+            this.rbComentario.Name = "rbComentario";
+            this.rbComentario.Size = new System.Drawing.Size(108, 23);
+            this.rbComentario.TabIndex = 5;
+            this.rbComentario.Text = "Comentário";
+            this.rbComentario.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // rbTelefone
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.radioButton2.FlatAppearance.BorderSize = 0;
-            this.radioButton2.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            this.radioButton2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
-            this.radioButton2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Yellow;
-            this.radioButton2.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.radioButton2.ForeColor = System.Drawing.Color.White;
-            this.radioButton2.Location = new System.Drawing.Point(12, 82);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(86, 23);
-            this.radioButton2.TabIndex = 6;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Telefone";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.rbTelefone.AutoSize = true;
+            this.rbTelefone.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.rbTelefone.FlatAppearance.BorderSize = 0;
+            this.rbTelefone.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.rbTelefone.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
+            this.rbTelefone.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Yellow;
+            this.rbTelefone.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.rbTelefone.ForeColor = System.Drawing.Color.White;
+            this.rbTelefone.Location = new System.Drawing.Point(12, 103);
+            this.rbTelefone.Name = "rbTelefone";
+            this.rbTelefone.Size = new System.Drawing.Size(86, 23);
+            this.rbTelefone.TabIndex = 6;
+            this.rbTelefone.Text = "Telefone";
+            this.rbTelefone.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(131, 55);
+            this.label2.Location = new System.Drawing.Point(265, 33);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 19);
             this.label2.TabIndex = 7;
             this.label2.Text = "Tipo";
             // 
-            // textBox1
+            // txtTipo
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtTipo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
-            this.textBox1.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBox1.ForeColor = System.Drawing.Color.White;
-            this.textBox1.Location = new System.Drawing.Point(131, 80);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(257, 27);
-            this.textBox1.TabIndex = 8;
+            this.txtTipo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
+            this.txtTipo.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtTipo.ForeColor = System.Drawing.Color.White;
+            this.txtTipo.Location = new System.Drawing.Point(265, 55);
+            this.txtTipo.Name = "txtTipo";
+            this.txtTipo.Size = new System.Drawing.Size(474, 27);
+            this.txtTipo.TabIndex = 8;
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(34)))), ((int)(((byte)(41)))));
-            this.panel1.Location = new System.Drawing.Point(120, 48);
+            this.panel1.Location = new System.Drawing.Point(120, 51);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(2, 60);
+            this.panel1.Size = new System.Drawing.Size(2, 80);
             this.panel1.TabIndex = 9;
+            // 
+            // rbQualquer
+            // 
+            this.rbQualquer.AutoSize = true;
+            this.rbQualquer.Checked = true;
+            this.rbQualquer.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.rbQualquer.FlatAppearance.BorderSize = 0;
+            this.rbQualquer.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.rbQualquer.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
+            this.rbQualquer.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Yellow;
+            this.rbQualquer.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.rbQualquer.ForeColor = System.Drawing.Color.White;
+            this.rbQualquer.Location = new System.Drawing.Point(12, 52);
+            this.rbQualquer.Name = "rbQualquer";
+            this.rbQualquer.Size = new System.Drawing.Size(91, 23);
+            this.rbQualquer.TabIndex = 10;
+            this.rbQualquer.TabStop = true;
+            this.rbQualquer.Text = "Qualquer";
+            this.rbQualquer.UseVisualStyleBackColor = true;
+            // 
+            // btnFiltrar
+            // 
+            this.btnFiltrar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFiltrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(15)))), ((int)(((byte)(0)))));
+            this.btnFiltrar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFiltrar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.btnFiltrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFiltrar.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnFiltrar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.btnFiltrar.Location = new System.Drawing.Point(12, 143);
+            this.btnFiltrar.Name = "btnFiltrar";
+            this.btnFiltrar.Size = new System.Drawing.Size(1038, 30);
+            this.btnFiltrar.TabIndex = 11;
+            this.btnFiltrar.Text = "Filtrar informações";
+            this.btnFiltrar.UseVisualStyleBackColor = false;
+            // 
+            // txtID
+            // 
+            this.txtID.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
+            this.txtID.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtID.ForeColor = System.Drawing.Color.White;
+            this.txtID.Location = new System.Drawing.Point(131, 55);
+            this.txtID.Name = "txtID";
+            this.txtID.Size = new System.Drawing.Size(117, 27);
+            this.txtID.TabIndex = 13;
+            // 
+            // panel2
+            // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(34)))), ((int)(((byte)(41)))));
+            this.panel2.Location = new System.Drawing.Point(12, 182);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1038, 2);
+            this.panel2.TabIndex = 10;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(131, 33);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(97, 19);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "ID - Denúncia";
+            // 
+            // txtDescricao
+            // 
+            this.txtDescricao.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtDescricao.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
+            this.txtDescricao.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtDescricao.ForeColor = System.Drawing.Color.White;
+            this.txtDescricao.Location = new System.Drawing.Point(131, 107);
+            this.txtDescricao.Name = "txtDescricao";
+            this.txtDescricao.Size = new System.Drawing.Size(919, 27);
+            this.txtDescricao.TabIndex = 15;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(131, 85);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(75, 19);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Descrição";
+            // 
+            // btnAtualizar
+            // 
+            this.btnAtualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAtualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(15)))), ((int)(((byte)(0)))));
+            this.btnAtualizar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAtualizar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.btnAtualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAtualizar.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnAtualizar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.btnAtualizar.Location = new System.Drawing.Point(12, 433);
+            this.btnAtualizar.Name = "btnAtualizar";
+            this.btnAtualizar.Size = new System.Drawing.Size(185, 30);
+            this.btnAtualizar.TabIndex = 20;
+            this.btnAtualizar.Text = "Ver últimas denúncias";
+            this.btnAtualizar.UseVisualStyleBackColor = false;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.rbQualquerStatus);
+            this.groupBox1.Controls.Add(this.rbFechado);
+            this.groupBox1.Controls.Add(this.rbAberto);
+            this.groupBox1.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.groupBox1.ForeColor = System.Drawing.Color.White;
+            this.groupBox1.Location = new System.Drawing.Point(745, 33);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(305, 49);
+            this.groupBox1.TabIndex = 21;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Status";
+            // 
+            // rbQualquerStatus
+            // 
+            this.rbQualquerStatus.AutoSize = true;
+            this.rbQualquerStatus.Checked = true;
+            this.rbQualquerStatus.FlatAppearance.BorderColor = System.Drawing.Color.Blue;
+            this.rbQualquerStatus.FlatAppearance.BorderSize = 0;
+            this.rbQualquerStatus.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.rbQualquerStatus.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
+            this.rbQualquerStatus.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Yellow;
+            this.rbQualquerStatus.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.rbQualquerStatus.ForeColor = System.Drawing.Color.White;
+            this.rbQualquerStatus.Location = new System.Drawing.Point(6, 22);
+            this.rbQualquerStatus.Name = "rbQualquerStatus";
+            this.rbQualquerStatus.Size = new System.Drawing.Size(91, 23);
+            this.rbQualquerStatus.TabIndex = 24;
+            this.rbQualquerStatus.TabStop = true;
+            this.rbQualquerStatus.Text = "Qualquer";
+            this.rbQualquerStatus.UseVisualStyleBackColor = true;
+            // 
+            // rbFechado
+            // 
+            this.rbFechado.AutoSize = true;
+            this.rbFechado.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.rbFechado.FlatAppearance.BorderSize = 0;
+            this.rbFechado.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.rbFechado.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
+            this.rbFechado.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Yellow;
+            this.rbFechado.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.rbFechado.ForeColor = System.Drawing.Color.White;
+            this.rbFechado.Location = new System.Drawing.Point(217, 22);
+            this.rbFechado.Name = "rbFechado";
+            this.rbFechado.Size = new System.Drawing.Size(84, 23);
+            this.rbFechado.TabIndex = 23;
+            this.rbFechado.Text = "Fechada";
+            this.rbFechado.UseVisualStyleBackColor = true;
+            // 
+            // rbAberto
+            // 
+            this.rbAberto.AutoSize = true;
+            this.rbAberto.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.rbAberto.FlatAppearance.BorderSize = 0;
+            this.rbAberto.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.rbAberto.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
+            this.rbAberto.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Yellow;
+            this.rbAberto.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.rbAberto.ForeColor = System.Drawing.Color.White;
+            this.rbAberto.Location = new System.Drawing.Point(120, 22);
+            this.rbAberto.Name = "rbAberto";
+            this.rbAberto.Size = new System.Drawing.Size(74, 23);
+            this.rbAberto.TabIndex = 22;
+            this.rbAberto.Text = "Aberta";
+            this.rbAberto.UseVisualStyleBackColor = true;
             // 
             // TelaPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
-            this.ClientSize = new System.Drawing.Size(800, 472);
+            this.ClientSize = new System.Drawing.Size(1062, 472);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.btnAtualizar);
+            this.Controls.Add(this.txtDescricao);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.txtID);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.btnFiltrar);
+            this.Controls.Add(this.rbQualquer);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtTipo);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.radioButton1);
+            this.Controls.Add(this.rbTelefone);
+            this.Controls.Add(this.rbComentario);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtUsuario);
+            this.Controls.Add(this.txtPesquisar);
             this.Controls.Add(this.pbxLupa);
             this.Controls.Add(this.dgvDenuncias);
             this.Name = "TelaPrincipal";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TelaPrincipal";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.dgvDenuncias)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxLupa)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -273,12 +473,24 @@ namespace SistemaModerador
         private System.Windows.Forms.DataGridViewTextBoxColumn clnDenunciador;
         private System.Windows.Forms.DataGridViewTextBoxColumn clnDenunciado;
         private System.Windows.Forms.PictureBox pbxLupa;
-        private System.Windows.Forms.TextBox txtUsuario;
+        private System.Windows.Forms.TextBox txtPesquisar;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton rbComentario;
+        private System.Windows.Forms.RadioButton rbTelefone;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtTipo;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RadioButton rbQualquer;
+        private System.Windows.Forms.Button btnFiltrar;
+        private System.Windows.Forms.TextBox txtID;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtDescricao;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnAtualizar;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton rbQualquerStatus;
+        private System.Windows.Forms.RadioButton rbFechado;
+        private System.Windows.Forms.RadioButton rbAberto;
     }
 }

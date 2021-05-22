@@ -32,7 +32,7 @@ namespace SistemaModerador
             this.txtUsuario = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtSenha = new System.Windows.Forms.TextBox();
             this.btnLogar = new System.Windows.Forms.Button();
             this.pbxLogo = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbxLogo)).BeginInit();
@@ -70,16 +70,16 @@ namespace SistemaModerador
             this.label2.TabIndex = 3;
             this.label2.Text = "Senha";
             // 
-            // textBox2
+            // txtSenha
             // 
-            this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
-            this.textBox2.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBox2.ForeColor = System.Drawing.Color.White;
-            this.textBox2.Location = new System.Drawing.Point(12, 237);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.PasswordChar = '*';
-            this.textBox2.Size = new System.Drawing.Size(244, 27);
-            this.textBox2.TabIndex = 2;
+            this.txtSenha.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
+            this.txtSenha.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtSenha.ForeColor = System.Drawing.Color.White;
+            this.txtSenha.Location = new System.Drawing.Point(12, 237);
+            this.txtSenha.Name = "txtSenha";
+            this.txtSenha.PasswordChar = '*';
+            this.txtSenha.Size = new System.Drawing.Size(244, 27);
+            this.txtSenha.TabIndex = 2;
             // 
             // btnLogar
             // 
@@ -95,6 +95,7 @@ namespace SistemaModerador
             this.btnLogar.TabIndex = 4;
             this.btnLogar.Text = "Logar";
             this.btnLogar.UseVisualStyleBackColor = false;
+            this.btnLogar.Click += new System.EventHandler(this.btnLogar_Click);
             // 
             // pbxLogo
             // 
@@ -115,13 +116,14 @@ namespace SistemaModerador
             this.Controls.Add(this.pbxLogo);
             this.Controls.Add(this.btnLogar);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.txtSenha);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtUsuario);
             this.MaximizeBox = false;
             this.Name = "frmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login - Moderador";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmLogin_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pbxLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -133,7 +135,7 @@ namespace SistemaModerador
         private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtSenha;
         private System.Windows.Forms.Button btnLogar;
         private System.Windows.Forms.PictureBox pbxLogo;
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SistemaModerador.Classes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,15 @@ namespace SistemaModerador
         public TelaPrincipal()
         {
             InitializeComponent();
+        }
+
+        private void AtualizarGridDenuncias(string query)
+        {
+            Banco.InserirQueryReader(query);
+            while(Banco.reader.Read())
+            {
+                Denuncia denuncia = new Denuncia();
+            }
         }
     }
 }
