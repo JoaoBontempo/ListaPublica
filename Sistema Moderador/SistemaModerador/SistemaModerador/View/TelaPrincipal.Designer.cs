@@ -33,12 +33,6 @@ namespace SistemaModerador
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvDenuncias = new System.Windows.Forms.DataGridView();
-            this.clnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clnLocal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clnDescricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clnDenunciador = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clnDenunciado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pbxLupa = new System.Windows.Forms.PictureBox();
             this.txtPesquisar = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -59,6 +53,13 @@ namespace SistemaModerador
             this.rbQualquerStatus = new System.Windows.Forms.RadioButton();
             this.rbFechado = new System.Windows.Forms.RadioButton();
             this.rbAberto = new System.Windows.Forms.RadioButton();
+            this.clnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnLocal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnDescricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnDenunciador = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnDenunciado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDenuncias)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxLupa)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -67,7 +68,7 @@ namespace SistemaModerador
             // dgvDenuncias
             // 
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
@@ -93,11 +94,12 @@ namespace SistemaModerador
             this.clnTipo,
             this.clnLocal,
             this.clnDescricao,
+            this.clnStatus,
             this.clnDenunciador,
             this.clnDenunciado});
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(34)))), ((int)(((byte)(41)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
@@ -116,43 +118,6 @@ namespace SistemaModerador
             this.dgvDenuncias.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvDenuncias.Size = new System.Drawing.Size(1038, 202);
             this.dgvDenuncias.TabIndex = 0;
-            // 
-            // clnId
-            // 
-            this.clnId.HeaderText = "ID";
-            this.clnId.Name = "clnId";
-            this.clnId.ReadOnly = true;
-            this.clnId.Visible = false;
-            // 
-            // clnTipo
-            // 
-            this.clnTipo.HeaderText = "Tipo";
-            this.clnTipo.Name = "clnTipo";
-            this.clnTipo.ReadOnly = true;
-            // 
-            // clnLocal
-            // 
-            this.clnLocal.HeaderText = "Local";
-            this.clnLocal.Name = "clnLocal";
-            this.clnLocal.ReadOnly = true;
-            // 
-            // clnDescricao
-            // 
-            this.clnDescricao.HeaderText = "Descrição";
-            this.clnDescricao.Name = "clnDescricao";
-            this.clnDescricao.ReadOnly = true;
-            // 
-            // clnDenunciador
-            // 
-            this.clnDenunciador.HeaderText = "Denunciador";
-            this.clnDenunciador.Name = "clnDenunciador";
-            this.clnDenunciador.ReadOnly = true;
-            // 
-            // clnDenunciado
-            // 
-            this.clnDenunciado.HeaderText = "Denunciado";
-            this.clnDenunciado.Name = "clnDenunciado";
-            this.clnDenunciado.ReadOnly = true;
             // 
             // pbxLupa
             // 
@@ -357,6 +322,7 @@ namespace SistemaModerador
             this.btnAtualizar.TabIndex = 20;
             this.btnAtualizar.Text = "Ver últimas denúncias";
             this.btnAtualizar.UseVisualStyleBackColor = false;
+            this.btnAtualizar.Click += new System.EventHandler(this.btnAtualizar_Click);
             // 
             // groupBox1
             // 
@@ -426,6 +392,49 @@ namespace SistemaModerador
             this.rbAberto.Text = "Aberta";
             this.rbAberto.UseVisualStyleBackColor = true;
             // 
+            // clnId
+            // 
+            this.clnId.HeaderText = "ID";
+            this.clnId.Name = "clnId";
+            this.clnId.ReadOnly = true;
+            this.clnId.Visible = false;
+            // 
+            // clnTipo
+            // 
+            this.clnTipo.HeaderText = "Tipo";
+            this.clnTipo.Name = "clnTipo";
+            this.clnTipo.ReadOnly = true;
+            // 
+            // clnLocal
+            // 
+            this.clnLocal.HeaderText = "Local";
+            this.clnLocal.Name = "clnLocal";
+            this.clnLocal.ReadOnly = true;
+            // 
+            // clnDescricao
+            // 
+            this.clnDescricao.HeaderText = "Descrição";
+            this.clnDescricao.Name = "clnDescricao";
+            this.clnDescricao.ReadOnly = true;
+            // 
+            // clnStatus
+            // 
+            this.clnStatus.HeaderText = "Status";
+            this.clnStatus.Name = "clnStatus";
+            this.clnStatus.ReadOnly = true;
+            // 
+            // clnDenunciador
+            // 
+            this.clnDenunciador.HeaderText = "Denunciador";
+            this.clnDenunciador.Name = "clnDenunciador";
+            this.clnDenunciador.ReadOnly = true;
+            // 
+            // clnDenunciado
+            // 
+            this.clnDenunciado.HeaderText = "Denunciado";
+            this.clnDenunciado.Name = "clnDenunciado";
+            this.clnDenunciado.ReadOnly = true;
+            // 
             // TelaPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -454,6 +463,7 @@ namespace SistemaModerador
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TelaPrincipal";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TelaPrincipal_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDenuncias)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxLupa)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -466,12 +476,6 @@ namespace SistemaModerador
         #endregion
 
         private System.Windows.Forms.DataGridView dgvDenuncias;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clnId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clnTipo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clnLocal;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clnDescricao;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clnDenunciador;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clnDenunciado;
         private System.Windows.Forms.PictureBox pbxLupa;
         private System.Windows.Forms.TextBox txtPesquisar;
         private System.Windows.Forms.Label label1;
@@ -492,5 +496,12 @@ namespace SistemaModerador
         private System.Windows.Forms.RadioButton rbQualquerStatus;
         private System.Windows.Forms.RadioButton rbFechado;
         private System.Windows.Forms.RadioButton rbAberto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clnId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clnTipo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clnLocal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clnDescricao;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clnStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clnDenunciador;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clnDenunciado;
     }
 }
