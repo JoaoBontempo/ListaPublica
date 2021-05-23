@@ -51,6 +51,8 @@ namespace SistemaModerador
                 {
                     if (ValidarHash(txtSenha.Text, Banco.reader.GetString("senha")))
                     {
+                        this.Hide();
+                        Util.moderador = txtUsuario.Text;
                         logado = true;
                         TelaPrincipal tp = new TelaPrincipal();
                         tp.ShowDialog();

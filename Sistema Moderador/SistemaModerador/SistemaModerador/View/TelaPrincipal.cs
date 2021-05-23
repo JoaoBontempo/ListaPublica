@@ -1,4 +1,5 @@
 ﻿using SistemaModerador.Classes;
+using SistemaModerador.View;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -58,6 +59,13 @@ namespace SistemaModerador
         private void TelaPrincipal_FormClosing(object sender, FormClosingEventArgs e)
         {
             Banco.FecharBanco();
+        }
+
+        private void dgvDenuncias_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            frmDenunciaIndividual fdi = new frmDenunciaIndividual(Convert.ToInt32(dgvDenuncias.Rows[e.RowIndex].Cells[0].Value.ToString()));
+            fdi.ShowDialog();
+            AtualizarGridDenuncias(queryGeral);
         }
     }
 }
