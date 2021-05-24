@@ -11,6 +11,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane minHeight="334.0" minWidth="500.0" prefHeight="645.0" prefWidth="930.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TelaLocal">
@@ -52,7 +53,7 @@
             <Font name="Candara" size="28.0" />
          </font>
       </Label>
-      <Separator layoutX="466.0" layoutY="28.0" orientation="VERTICAL" prefHeight="474.0" prefWidth="0.0" styleClass="separatorVertical" stylesheets="@application.css" />
+      <Separator layoutX="466.0" layoutY="28.0" orientation="VERTICAL" prefHeight="564.0" prefWidth="0.0" styleClass="separatorVertical" stylesheets="@application.css" />
       <ImageView fitHeight="97.0" fitWidth="151.0" layoutX="26.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Recursos/logo_contornada.png" />
@@ -64,7 +65,7 @@
          </font>
       </Label>
       <TextField fx:id="txtNome" editable="false" layoutX="141.0" layoutY="331.0" prefHeight="34.0" prefWidth="200.0" styleClass="text-field2" stylesheets="@application.css" />
-      <BorderPane fx:id="pnlTelefones" layoutX="487.0" layoutY="76.0" prefHeight="524.0" prefWidth="411.0">
+      <BorderPane fx:id="pnlTelefones" layoutX="487.0" layoutY="249.0" prefHeight="351.0" prefWidth="411.0">
          <top>
             <Label prefHeight="30.0" prefWidth="170.0" styleClass="labelVerde" stylesheets="@application.css" text="Telefones" BorderPane.alignment="CENTER">
                <font>
@@ -88,5 +89,13 @@
             <Font size="14.0" />
          </font>
       </Label>
+      <Pane fx:id="pnlImagem" layoutX="493.0" layoutY="30.0" prefHeight="213.0" prefWidth="411.0">
+         <children>
+            <ImageView fx:id="imgLocal" fitHeight="204.0" fitWidth="400.0" layoutX="7.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></ImageView>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

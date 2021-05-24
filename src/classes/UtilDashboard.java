@@ -9,6 +9,15 @@ public class UtilDashboard {
 	private static String idDono;
 	private static String idLugar;
 	private static ArrayList<String> telefones=new ArrayList<>();
+	private static String numeroTelefone;
+	
+	public static String getNumeroTelefone() {
+		return numeroTelefone;
+	}
+
+	public static void setNumeroTelefone(String numeroTelefone) {
+		UtilDashboard.numeroTelefone = numeroTelefone;
+	}
 
 	public static ArrayList<String> getTelefones() {
 		return telefones;

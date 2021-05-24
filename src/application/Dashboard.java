@@ -66,8 +66,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
-
-public class Dashboard extends Application{
+public class Dashboard extends Application {
 
 	private ArrayList<Integer> idsEstado = new ArrayList<Integer>();
 
@@ -159,7 +158,6 @@ public class Dashboard extends Application{
 	@FXML
 	private Label lbMCCPFouCNPJ;
 
-
 	@FXML
 	private Button btnAlterarDados;
 
@@ -175,20 +173,19 @@ public class Dashboard extends Application{
 	@FXML
 	void AlterarDados(ActionEvent event) throws SQLException {
 
-		if(txtMCEmail.getText().equals(Util.getContaLogada().getEmail())) {
+		if (txtMCEmail.getText().equals(Util.getContaLogada().getEmail())) {
 			System.out.println("Iguais");
 			return;
 		}
 
-		if(Validacao.validarEmail(txtMCEmail.getText())) {
-			Banco.InserirQuery(String.format("UPDATE parceiro set email = '%s' where id = %s", txtMCEmail.getText() , Util.getContaLogada().getId()));
+		if (Validacao.validarEmail(txtMCEmail.getText())) {
+			Banco.InserirQuery(String.format("UPDATE parceiro set email = '%s' where id = %s", txtMCEmail.getText(),
+					Util.getContaLogada().getId()));
 			Util.MessageBoxShow("Alteração de Dados", "Email alterado com sucesso!");
 			Util.getContaLogada().setEmail(txtMCEmail.getText());
 		}
 
 	}
-
-
 
 	@FXML
 	void AlterarSenha(ActionEvent event) {
@@ -200,31 +197,28 @@ public class Dashboard extends Application{
 
 	}
 
-
 	private List<TableViewUtil> telefones = new ArrayList();
 	private ObservableList<TableViewUtil> observableTelefones;
 
 	@FXML
-	private void recuperarCidades ()
-	{
+	private void recuperarCidades() {
 		cboxCidades.getItems().clear();
-		if (cboxEstados.getSelectionModel().getSelectedIndex() == 0)
-		{
+		if (cboxEstados.getSelectionModel().getSelectedIndex() == 0) {
 			cboxCidades.getItems().add("Todas as cidades");
 			cboxCidades.getSelectionModel().selectFirst();
 			return;
 		}
 		cboxCidades.getItems().add("Todas as cidades");
-		ArrayList<Municipio> municipios = API.doGetCidades(idsEstado.get(cboxEstados.getSelectionModel().getSelectedIndex()-1));
-		for (Municipio municipio : municipios)
-		{
+		ArrayList<Municipio> municipios = API
+				.doGetCidades(idsEstado.get(cboxEstados.getSelectionModel().getSelectedIndex() - 1));
+		for (Municipio municipio : municipios) {
 			cboxCidades.getItems().add(municipio.getNome());
 		}
 		cboxCidades.getSelectionModel().selectFirst();
 	}
 
-
-	// esse método vai obter o ID do usuário que pertence ao lugar clicado e abrir a janela de Tela, mostrando as infos detalhadas e todos os
+	// esse método vai obter o ID do usuário que pertence ao lugar clicado e abrir a
+	// janela de Tela, mostrando as infos detalhadas e todos os
 	// telefones associados ao mesmo.
 	@FXML
 	void abrirDescricaoDetalhada(MouseEvent event) {
@@ -232,7 +226,6 @@ public class Dashboard extends Application{
 
 		//		DOUBLE CLICK NA LINHA
 		if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
-<<<<<<< Updated upstream
             if(tvTelefones.getSelectionModel().getSelectedItem() != null) {
             	// obtém o telefone para obter o id do parceiro e id do local
             	TableViewUtil ret=tvTelefones.getSelectionModel().getSelectedItem();
@@ -240,43 +233,42 @@ public class Dashboard extends Application{
             	String descricao=ret.getDescricao();
             	String idDono=null;
             	String idLugar=null;
-            	
-            	
-            	try {
-            		Banco.Conectar();
-            		// primeiro obtenho o id do dono , depois obtenho os telefones associados a ele
-            		String query="select dono,lugar,descricao from telefone where numero LIKE '%"+numero+"%'";
-            		query+=descricao == null?";":" and descricao LIKE '%"+descricao+"%';";
-            		//System.out.println(query);
-=======
-			if(tvTelefones.getSelectionModel().getSelectedItem() != null) {
-				// obtém o telefone para obter o id do parceiro e id do local
-				TableViewUtil ret=tvTelefones.getSelectionModel().getSelectedItem();
-				String numero=ret.getNumero();
-				String descricao=ret.getDescricao();
-				String idDono=null;
-				String idLugar=null;
-
-
+            	String query="";
+//            	try {
+//            		Banco.Conectar();
+//            		// primeiro obtenho o id do dono , depois obtenho os telefones associados a ele
+//            		query="select dono,lugar,descricao from telefone where numero LIKE '%"+numero+"%'";
+//            		query+=descricao == null?";":" and descricao LIKE '%"+descricao+"%';";
+//            		//System.out.println(query);
+//					if(tvTelefones.getSelectionModel().getSelectedItem() != null) {
+//						// obtém o telefone para obter o id do parceiro e id do local
+//						ret=tvTelefones.getSelectionModel().getSelectedItem();
+//						numero=ret.getNumero();
+//						descricao=ret.getDescricao();
+//						idDono=null;
+//						idLugar=null;
+//					}
+//				}catch(Exception e){e.printStackTrace();}
+				
 				try {
 					Banco.Conectar();
 					// primeiro obtenho o id do dono , depois obtenho os telefones associados a ele
-					String query="select dono,lugar,descricao from telefone where numero LIKE '%"+numero+"%'";
+					query="select dono,lugar,descricao from telefone where numero LIKE '%"+numero+"%'";
 					query+=descricao == null?";":" and descricao LIKE '%"+descricao+"%';";
 					System.out.println(query);
->>>>>>> Stashed changes
+					
 					Banco.InserirQueryReader(query);
 					Banco.getReader().next();
 					idDono=Banco.getReader().getString("dono");
-					idLugar=Banco.getReader().getString("lugar");
 					UtilDashboard.setIdDono(idDono);
-					UtilDashboard.setIdLugar(idLugar);
-
+					UtilDashboard.setNumeroTelefone(ret.getNumero());
+					
 					// obtem os telefones
-					query="select distinct endereco.usuario,telefone.numero from endereco INNER JOIN telefone ON endereco.usuario="+idDono+" order by endereco.usuario,telefone.numero;";
+					//query="select distinct endereco.usuario,telefone.numero from endereco INNER JOIN telefone ON endereco.usuario="+idDono+" order by endereco.usuario,telefone.numero;";
+					query="select numero from telefone where dono="+idDono+";";
 					//System.out.println("Id dono: "+idDono+"\nIdLugar:"+UtilDashboard.getIdLugar()+"\nQuery: "+query);
 					Banco.InserirQueryReader(query);
-
+					
 					UtilDashboard.getTelefones().clear();
 					while(Banco.getReader().next()){
 						try {
@@ -285,50 +277,39 @@ public class Dashboard extends Application{
 							exc.printStackTrace();
 						}
 					}
-
-
-
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				try {
 					TelaLocal tl = new TelaLocal();
 					UtilDashboard.setTbVutil(ret);
 					tl.start(new Stage());
 
-				} catch (Exception e) {
-
+				} catch (Exception e1) {
+					e1.printStackTrace(); 					
 				}
-
-			}
+            }
 		}
-	}
+
+    }
 
 
 	@FXML
 	void buscarDados(Event event) {
-		if(tbMinhaConta.isSelected()) 
-			System.out.println("Tab is Selected");{
-				txtMCNome.setText(Util.getContaLogada().getNome());
-				txtMCUsuario.setText(Util.getContaLogada().getUsuario());
-				txtMCEmail.setText(Util.getContaLogada().getEmail());
-				if(Util.getContaLogada().getTipo()) {
-					lbMCCPFouCNPJ.setText("CNPJ");
-					txtMCCPFouCNPJ.setText(Util.getContaLogada().getCnpj());
-				}
-				else {
-					lbMCCPFouCNPJ.setText("CPF");
-					txtMCCPFouCNPJ.setText(Util.getContaLogada().getCpf());
-				}
+		if (tbMinhaConta.isSelected())
+			System.out.println("Tab is Selected");
+		{
+			txtMCNome.setText(Util.getContaLogada().getNome());
+			txtMCUsuario.setText(Util.getContaLogada().getUsuario());
+			txtMCEmail.setText(Util.getContaLogada().getEmail());
+			if (Util.getContaLogada().getTipo()) {
+				lbMCCPFouCNPJ.setText("CNPJ");
+				txtMCCPFouCNPJ.setText(Util.getContaLogada().getCnpj());
+			} else {
+				lbMCCPFouCNPJ.setText("CPF");
+				txtMCCPFouCNPJ.setText(Util.getContaLogada().getCpf());
 			}
+		}
 	}
-	//Método 'onLoad'
-	public void initialize()
-	{
+
+	// Método 'onLoad'
+	public void initialize() {
 
 		tbMeusEnderecos.setDisable(Util.isConvidado());
 		tbMeusTelefones.setDisable(Util.isConvidado());
@@ -336,8 +317,7 @@ public class Dashboard extends Application{
 
 		cboxEstados.getItems().add("Todos os Estados");
 		ArrayList<UF> estados = API.doGetEstados();
-		for (UF estado : estados)
-		{
+		for (UF estado : estados) {
 			idsEstado.add(estado.getId());
 			cboxEstados.getItems().add(estado.getSigla());
 		}
@@ -356,47 +336,41 @@ public class Dashboard extends Application{
 
 		AtualizarGridTelefones(API.doGetTelefones(100));
 
-
-
 	}
 
-	private void setQueryParameters()
-	{
+	private void setQueryParameters() {
 		numero = Validacao.isNullOrEmpty(txtTelefone.getText()) ? "*" : txtTelefone.getText();
 		nome = Validacao.isNullOrEmpty(txtNome.getText()) ? "*" : txtNome.getText();
-		email = Validacao.isNullOrEmpty(txtEmail.getText()) ? "*" : txtEmail.getText();		
+		email = Validacao.isNullOrEmpty(txtEmail.getText()) ? "*" : txtEmail.getText();
 		descricao = Validacao.isNullOrEmpty(txtDescrição.getText()) ? "*" : txtDescrição.getText();
-		cidade = cboxCidades.getSelectionModel().getSelectedIndex() == 0 ? "*" : cboxCidades.getSelectionModel().getSelectedItem();
-		estado = cboxEstados.getSelectionModel().getSelectedIndex() == 0 ? "*" : cboxEstados.getSelectionModel().getSelectedItem();
+		cidade = cboxCidades.getSelectionModel().getSelectedIndex() == 0 ? "*"
+				: cboxCidades.getSelectionModel().getSelectedItem();
+		estado = cboxEstados.getSelectionModel().getSelectedIndex() == 0 ? "*"
+				: cboxEstados.getSelectionModel().getSelectedItem();
 	}
 
 	@FXML
-	private void RecuperarUltimos()
-	{
+	private void RecuperarUltimos() {
 		if (Validacao.verificarTextField(txtLimite_de_procura))
 			if (Validacao.verificarNumerosTextField(txtLimite_de_procura))
 				AtualizarGridTelefones(API.doGetTelefones(Integer.parseInt(txtLimite_de_procura.getText())));
 	}
 
-
-	@FXML 
-	private void AplicarFiltroDeDados()
-	{
+	@FXML
+	private void AplicarFiltroDeDados() {
 		setQueryParameters();
 		AtualizarGridTelefones(API.doPostTelefone(new TableViewUtil(nome, numero, cidade, estado, email, descricao)));
 	}
 
-	private void AtualizarGridTelefones(ArrayList<Telefone> dados)
-	{
-		if (dados.size() == 0)
-		{
-			Util.MessageBoxShow("Nenhum dado foi encontrado", "Não foi possível encontrar nenhum dado.\n"
-					+ "Tente mudar as informaçoes do filtro", AlertType.WARNING);
+	private void AtualizarGridTelefones(ArrayList<Telefone> dados) {
+		if (dados.size() == 0) {
+			Util.MessageBoxShow("Nenhum dado foi encontrado",
+					"Não foi possível encontrar nenhum dado.\n" + "Tente mudar as informaçoes do filtro",
+					AlertType.WARNING);
 			return;
 		}
 		telefones.clear();
-		for (Telefone telefone : dados)
-		{
+		for (Telefone telefone : dados) {
 			telefones.add(new TableViewUtil(telefone, telefone.getParceiro(), telefone.getEndereco()));
 		}
 
@@ -414,25 +388,20 @@ public class Dashboard extends Application{
 
 				String lowerCaseFilter = newValue.toLowerCase();
 
-				if (telefone.getNome().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
+				if (telefone.getNome().toLowerCase().indexOf(lowerCaseFilter) != -1) {
 					return true;
 				} else if (telefone.getCidade().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-					return true; 
-				}
-				else if (telefone.getEmail().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-					return true; 
-				}
-				else if (telefone.getEstado().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-					return true; 
-				}
-				else if (telefone.getNumero().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-					return true; 
-				}
-				else if (telefone.getDescricao().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-					return true; 
-				}
-				else  
-					return false; 
+					return true;
+				} else if (telefone.getEmail().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+					return true;
+				} else if (telefone.getEstado().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+					return true;
+				} else if (telefone.getNumero().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+					return true;
+				} else if (telefone.getDescricao().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+					return true;
+				} else
+					return false;
 			});
 		});
 
@@ -442,8 +411,7 @@ public class Dashboard extends Application{
 	}
 
 	@FXML
-	private void LimparFiltro()
-	{
+	private void LimparFiltro() {
 		txtNome.setText("");
 		nome = "*";
 
@@ -464,18 +432,19 @@ public class Dashboard extends Application{
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			TabPane root = (TabPane)FXMLLoader.load(getClass().getResource("telaDashboard.fxml"));
+			TabPane root = (TabPane) FXMLLoader.load(getClass().getClassLoader().getResource("application/telaDashboard.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			Image icon = new Image("Recursos/logo.png");
+			Image icon = new Image("/Recursos/logo.png");
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Lista Pública - Menu principal");
 			primaryStage.getIcons().add(icon);
 			primaryStage.setMaximized(true);
-			//root.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> System.out.println(newValue) );
-		
+			// root.getSelectionModel().selectedItemProperty().addListener((v, oldValue,
+			// newValue) -> System.out.println(newValue) );
+
 			primaryStage.show();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -484,15 +453,13 @@ public class Dashboard extends Application{
 		launch(args);
 	}
 
-	public Stage getStage()
-	{
+	public Stage getStage() {
 		Stage stage = (Stage) txtPesquisar.getScene().getWindow();
 		return stage;
 	}
 
 	@FXML
-	public void showNovoTelefone()
-	{
+	public void showNovoTelefone() {
 		CadastroTelefone ct = new CadastroTelefone();
 		ct.start(new Stage());
 	}
