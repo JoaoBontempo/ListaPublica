@@ -53,20 +53,20 @@ namespace SistemaModerador.View
             this.txtIDD1 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.txtIDDenuncia = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.txtTipo = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.txtDescDenuncia = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnVerEndereco = new System.Windows.Forms.Button();
+            this.txtDescTel = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.txtNumeroTel = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.txtIdTel = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.txtDescTel = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.btnVerEndereco = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.txtDescDenuncia = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtTipo = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtIDDenuncia = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.btnEnviarEmail = new System.Windows.Forms.Button();
             this.btnExcluirDenunciado = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -383,73 +383,53 @@ namespace SistemaModerador.View
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Informações da denúncia";
             // 
-            // txtIDDenuncia
+            // panel1
             // 
-            this.txtIDDenuncia.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
-            this.txtIDDenuncia.Font = new System.Drawing.Font("Century", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtIDDenuncia.ForeColor = System.Drawing.Color.White;
-            this.txtIDDenuncia.Location = new System.Drawing.Point(44, 41);
-            this.txtIDDenuncia.Name = "txtIDDenuncia";
-            this.txtIDDenuncia.ReadOnly = true;
-            this.txtIDDenuncia.Size = new System.Drawing.Size(129, 23);
-            this.txtIDDenuncia.TabIndex = 17;
-            this.txtIDDenuncia.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(34)))), ((int)(((byte)(41)))));
+            this.panel1.Location = new System.Drawing.Point(365, 30);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(2, 240);
+            this.panel1.TabIndex = 35;
             // 
-            // label11
+            // btnVerEndereco
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Candara", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(7, 46);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(19, 15);
-            this.label11.TabIndex = 16;
-            this.label11.Text = "ID";
+            this.btnVerEndereco.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnVerEndereco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(15)))), ((int)(((byte)(0)))));
+            this.btnVerEndereco.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnVerEndereco.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.btnVerEndereco.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVerEndereco.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnVerEndereco.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.btnVerEndereco.Location = new System.Drawing.Point(387, 242);
+            this.btnVerEndereco.Name = "btnVerEndereco";
+            this.btnVerEndereco.Size = new System.Drawing.Size(339, 30);
+            this.btnVerEndereco.TabIndex = 34;
+            this.btnVerEndereco.Text = "Ver informações do endereço";
+            this.btnVerEndereco.UseVisualStyleBackColor = false;
+            this.btnVerEndereco.Click += new System.EventHandler(this.btnVerEndereco_Click);
             // 
-            // txtTipo
+            // txtDescTel
             // 
-            this.txtTipo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
-            this.txtTipo.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtTipo.ForeColor = System.Drawing.Color.White;
-            this.txtTipo.Location = new System.Drawing.Point(44, 69);
-            this.txtTipo.Name = "txtTipo";
-            this.txtTipo.ReadOnly = true;
-            this.txtTipo.Size = new System.Drawing.Size(302, 26);
-            this.txtTipo.TabIndex = 19;
+            this.txtDescTel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
+            this.txtDescTel.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtDescTel.ForeColor = System.Drawing.Color.White;
+            this.txtDescTel.Location = new System.Drawing.Point(387, 122);
+            this.txtDescTel.Multiline = true;
+            this.txtDescTel.Name = "txtDescTel";
+            this.txtDescTel.ReadOnly = true;
+            this.txtDescTel.Size = new System.Drawing.Size(339, 113);
+            this.txtDescTel.TabIndex = 33;
             // 
-            // label12
+            // label14
             // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Candara", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label12.ForeColor = System.Drawing.Color.White;
-            this.label12.Location = new System.Drawing.Point(7, 75);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(31, 15);
-            this.label12.TabIndex = 18;
-            this.label12.Text = "Tipo";
-            // 
-            // txtDescDenuncia
-            // 
-            this.txtDescDenuncia.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
-            this.txtDescDenuncia.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtDescDenuncia.ForeColor = System.Drawing.Color.White;
-            this.txtDescDenuncia.Location = new System.Drawing.Point(7, 122);
-            this.txtDescDenuncia.Multiline = true;
-            this.txtDescDenuncia.Name = "txtDescDenuncia";
-            this.txtDescDenuncia.ReadOnly = true;
-            this.txtDescDenuncia.Size = new System.Drawing.Size(339, 150);
-            this.txtDescDenuncia.TabIndex = 21;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Candara", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label13.ForeColor = System.Drawing.Color.White;
-            this.label13.Location = new System.Drawing.Point(7, 104);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(60, 15);
-            this.label13.TabIndex = 20;
-            this.label13.Text = "Descrição";
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Candara", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label14.ForeColor = System.Drawing.Color.White;
+            this.label14.Location = new System.Drawing.Point(387, 104);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(60, 15);
+            this.label14.TabIndex = 32;
+            this.label14.Text = "Descrição";
             // 
             // txtNumeroTel
             // 
@@ -496,53 +476,73 @@ namespace SistemaModerador.View
             this.label18.TabIndex = 24;
             this.label18.Text = "ID Telefone";
             // 
-            // txtDescTel
+            // txtDescDenuncia
             // 
-            this.txtDescTel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
-            this.txtDescTel.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtDescTel.ForeColor = System.Drawing.Color.White;
-            this.txtDescTel.Location = new System.Drawing.Point(387, 122);
-            this.txtDescTel.Multiline = true;
-            this.txtDescTel.Name = "txtDescTel";
-            this.txtDescTel.ReadOnly = true;
-            this.txtDescTel.Size = new System.Drawing.Size(339, 113);
-            this.txtDescTel.TabIndex = 33;
+            this.txtDescDenuncia.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
+            this.txtDescDenuncia.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtDescDenuncia.ForeColor = System.Drawing.Color.White;
+            this.txtDescDenuncia.Location = new System.Drawing.Point(7, 122);
+            this.txtDescDenuncia.Multiline = true;
+            this.txtDescDenuncia.Name = "txtDescDenuncia";
+            this.txtDescDenuncia.ReadOnly = true;
+            this.txtDescDenuncia.Size = new System.Drawing.Size(339, 150);
+            this.txtDescDenuncia.TabIndex = 21;
             // 
-            // label14
+            // label13
             // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Candara", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label14.ForeColor = System.Drawing.Color.White;
-            this.label14.Location = new System.Drawing.Point(387, 104);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(60, 15);
-            this.label14.TabIndex = 32;
-            this.label14.Text = "Descrição";
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Candara", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label13.ForeColor = System.Drawing.Color.White;
+            this.label13.Location = new System.Drawing.Point(7, 104);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(60, 15);
+            this.label13.TabIndex = 20;
+            this.label13.Text = "Descrição";
             // 
-            // btnVerEndereco
+            // txtTipo
             // 
-            this.btnVerEndereco.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnVerEndereco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(15)))), ((int)(((byte)(0)))));
-            this.btnVerEndereco.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnVerEndereco.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            this.btnVerEndereco.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVerEndereco.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnVerEndereco.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            this.btnVerEndereco.Location = new System.Drawing.Point(387, 242);
-            this.btnVerEndereco.Name = "btnVerEndereco";
-            this.btnVerEndereco.Size = new System.Drawing.Size(339, 30);
-            this.btnVerEndereco.TabIndex = 34;
-            this.btnVerEndereco.Text = "Ver informações do endereço";
-            this.btnVerEndereco.UseVisualStyleBackColor = false;
-            this.btnVerEndereco.Click += new System.EventHandler(this.btnVerEndereco_Click);
+            this.txtTipo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
+            this.txtTipo.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtTipo.ForeColor = System.Drawing.Color.White;
+            this.txtTipo.Location = new System.Drawing.Point(44, 69);
+            this.txtTipo.Name = "txtTipo";
+            this.txtTipo.ReadOnly = true;
+            this.txtTipo.Size = new System.Drawing.Size(302, 26);
+            this.txtTipo.TabIndex = 19;
             // 
-            // panel1
+            // label12
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(34)))), ((int)(((byte)(41)))));
-            this.panel1.Location = new System.Drawing.Point(365, 30);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(2, 240);
-            this.panel1.TabIndex = 35;
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Candara", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label12.ForeColor = System.Drawing.Color.White;
+            this.label12.Location = new System.Drawing.Point(7, 75);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(31, 15);
+            this.label12.TabIndex = 18;
+            this.label12.Text = "Tipo";
+            // 
+            // txtIDDenuncia
+            // 
+            this.txtIDDenuncia.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
+            this.txtIDDenuncia.Font = new System.Drawing.Font("Century", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtIDDenuncia.ForeColor = System.Drawing.Color.White;
+            this.txtIDDenuncia.Location = new System.Drawing.Point(44, 41);
+            this.txtIDDenuncia.Name = "txtIDDenuncia";
+            this.txtIDDenuncia.ReadOnly = true;
+            this.txtIDDenuncia.Size = new System.Drawing.Size(129, 23);
+            this.txtIDDenuncia.TabIndex = 17;
+            this.txtIDDenuncia.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Candara", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label11.ForeColor = System.Drawing.Color.White;
+            this.label11.Location = new System.Drawing.Point(7, 46);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(19, 15);
+            this.label11.TabIndex = 16;
+            this.label11.Text = "ID";
             // 
             // btnEnviarEmail
             // 
@@ -576,6 +576,7 @@ namespace SistemaModerador.View
             this.btnExcluirDenunciado.TabIndex = 37;
             this.btnExcluirDenunciado.Text = "Excluir informações do denunciado";
             this.btnExcluirDenunciado.UseVisualStyleBackColor = false;
+            this.btnExcluirDenunciado.Click += new System.EventHandler(this.btnExcluirDenunciado_Click);
             // 
             // panel2
             // 
@@ -638,6 +639,7 @@ namespace SistemaModerador.View
             this.btnExcluirDenunciante.TabIndex = 42;
             this.btnExcluirDenunciante.Text = "Excluir informações do denunciante";
             this.btnExcluirDenunciante.UseVisualStyleBackColor = false;
+            this.btnExcluirDenunciante.Click += new System.EventHandler(this.btnExcluirDenunciante_Click);
             // 
             // frmDenunciaIndividual
             // 

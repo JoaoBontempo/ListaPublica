@@ -14,7 +14,7 @@ namespace SistemaModerador.View
     public partial class frmDenunciaIndividual : Form
     {
         private int idEndereco, idDenuncia;
-        private string query = "SELECT denuncia.descricao, denuncia.tipo," +
+        private string query = "SELECT denuncia.descricao, denuncia.tipo, denuncia.status_, " +
         "Pdenunciado.id as idD1, Pdenunciado.nome as nomeD1, Pdenunciado.tipo as tipoD1, Pdenunciado.usuario as usuarioD1, Pdenunciado.email as emailD1, Pdenunciado.cpf as cpfD1, Pdenunciado.cnpj as cpnjD1," +
         "Pdenunciador.id as idD2, Pdenunciador.nome as nomeD2, Pdenunciador.tipo as tipoD2, Pdenunciador.usuario as usuarioD2, Pdenunciador.email as emailD2, Pdenunciador.cpf as cpfD2, Pdenunciador.cnpj as cnpjD2," +
         "endereco.id as idE," +
@@ -48,6 +48,40 @@ namespace SistemaModerador.View
             ee.ShowDialog();
         }
 
+        private void ExcluirInformacoes(string parceiro)
+        {
+            if (DialogResult.Yes.Equals(MessageBox.Show("Tem certeza que deseja excluir as informações?", String.Format("Todas as informações do {0} serão excluídas, incluindo:" +
+               "\n\n- Telefones" +
+               "\n- Endereços" +
+               "\n- Esta denúncia" +
+               "\n- A conta do {0}." +
+               "\n\nDeseja prosseguir?", parceiro), MessageBoxButtons.YesNo, MessageBoxIcon.Question)))
+            {
+                TextBox textBox;
+                if (parceiro.Equals("denunciado"))
+                    textBox = txtIDD1;
+                else
+                    textBox = txtIDD2;
+
+                Banco.InserirQuery("DELETE FROM denuncia WHERE id = " + idDenuncia);
+                Banco.InserirQuery("DELETE FROM telefone WHERE dono = " + textBox.Text);
+                Banco.InserirQuery("DELETE FROM endereco WHERE usuario = " + textBox.Text);
+                Banco.InserirQuery("DELETE FROM	parceiro WHERE id = " + textBox.Text);
+
+                MessageBox.Show(String.Format("As informações do {0} foram excluídas com sucesso.", parceiro));
+            }
+        }
+
+        private void btnExcluirDenunciado_Click(object sender, EventArgs e)
+        {
+            ExcluirInformacoes("denunciado");  
+        }
+
+        private void btnExcluirDenunciante_Click(object sender, EventArgs e)
+        {
+            ExcluirInformacoes("denunciante");
+        }
+
         public frmDenunciaIndividual(int idDenuncia)
         {
             InitializeComponent();
@@ -57,6 +91,8 @@ namespace SistemaModerador.View
 
             Banco.InserirQueryReader(query);
             Banco.reader.Read();
+
+            btnFecharDenuncia.Visible = Banco.reader.GetInt32("status_") == 0 ? true : false;
 
             //Pegando id do endereço
             try
