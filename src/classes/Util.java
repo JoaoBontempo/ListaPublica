@@ -58,28 +58,22 @@ public final class Util {
 //		}
 		
 		
-		FileInputStream in = new FileInputStream("C:\\Users\\Igor\\Desktop\\exemplo.jpg");
-		Banco.inserirImagem("endereco", in, 2);
-		in.close();
-//		
-//		String diretorioRaiz="C:\\lista";
-//		String diretorioPadraoLocal="C:\\lista\\locais";
-//		String diretorioPadraoUsuarios="C:\\lista\\usuarios";
-//		File fileLocal=new File(diretorioPadraoLocal);
-//		File fileUsuario=new File(diretorioPadraoUsuarios);
-//		File fileDiretorioRaiz=new File(diretorioRaiz);
-//		
-//		fileDiretorioRaiz.mkdir();
-//		fileLocal.mkdir();
-//		fileUsuario.mkdir();
-//		
-//		String salvarEm=local==true?diretorioPadraoLocal:diretorioPadraoUsuarios;
-//		salvarEm+="\\"+nomeArquivo;
-//		
-//		try(BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(salvarEm))){
-//			bout.write(conteudo, 0, conteudo.length);
-//		}
-//		
+		String diretorioRaiz="C:\\lista";
+		String diretorioPadraoLocal="C:\\lista\\locais";
+		String diretorioPadraoUsuarios="C:\\lista\\usuarios";
+		File fileLocal=new File(diretorioPadraoLocal);
+		File fileUsuario=new File(diretorioPadraoUsuarios);
+		File fileDiretorioRaiz=new File(diretorioRaiz);
+		
+		fileDiretorioRaiz.mkdir();
+		fileLocal.mkdir();
+		fileUsuario.mkdir();
+		
+		String salvarEm=local==true?diretorioPadraoLocal:diretorioPadraoUsuarios;
+		salvarEm+="\\"+nomeArquivo;
+
+		
+		
 		return true;
 		
 		

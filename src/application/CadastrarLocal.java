@@ -3,8 +3,11 @@ package application;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -116,11 +119,22 @@ public class CadastrarLocal extends Application implements Initializable {
 	}
 	
 	void limparTela() {
+		txtCaminhoImagem.clear();
 		txtNomeLocal.clear();
 		txtBairro.clear();
 		txtNumeroResidencia.clear();
 		txtRua.clear();
 		txtCep.clear();
+	}
+	
+	String converterStringParaBase64(String caminho) {
+		String base64="";
+		try {
+			base64=Base64.getEncoder().encodeToString(Files.readAllBytes(Path.of(caminho)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return base64;
 	}
 	
 	@FXML
@@ -152,11 +166,13 @@ public class CadastrarLocal extends Application implements Initializable {
 				return;
 			}
 		}		
-		
+		String anexoImagem=txtCaminhoImagem.getText();
 		String query=
-				String.format("insert into endereco values (default,'%s','%s','%s','%s','%s','%s',1)",
+				String.format("insert into endereco values (default,'%s','%s','%s','%s','%s','%s',1,'%s')",
 						txtRua.getText(),txtNumeroResidencia.getText(),txtBairro.getText(),cmbEstados.getSelectionModel().getSelectedItem(),
-						cmbCidades.getSelectionModel().getSelectedItem(),txtNomeLocal.getText());
+						cmbCidades.getSelectionModel().getSelectedItem(),txtNomeLocal.getText(),
+						anexoImagem.length()>0?converterStringParaBase64(anexoImagem):"");
+		System.out.println("Query de cadastro: "+query);
 		try {
 			if(Banco.InserirQuery(query)) {
 				Util.MessageBoxShow("Cadastro realizado", "O seu novo endereço foi cadastrado com sucesso.",AlertType.INFORMATION);
