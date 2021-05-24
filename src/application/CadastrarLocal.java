@@ -1,5 +1,6 @@
 package application;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -52,6 +53,7 @@ import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class CadastrarLocal extends Application implements Initializable {
@@ -59,6 +61,17 @@ public class CadastrarLocal extends Application implements Initializable {
 	
 	private boolean campoCpfCnpj = false; // false=Cpf
 
+	Stage primaryStage;
+	
+	@FXML
+    private Label lblCnpj1;
+
+    @FXML
+    private TextField txtCaminhoImagem;
+
+    @FXML
+    private Button btnEscolherArquivo;
+	
 	@FXML
 	private ComboBox<String> cmbTipo;
 
@@ -208,6 +221,20 @@ public class CadastrarLocal extends Application implements Initializable {
 		return estados;
 	}
     
+    
+    @FXML
+    void escolherImagem(ActionEvent event) {
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle("Defina uma imagem do local");
+    	fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                new FileChooser.ExtensionFilter("PNG", "*.png"));
+    	File imagemEscolhida=fileChooser.showOpenDialog(this.primaryStage);
+    	txtCaminhoImagem.setText(imagemEscolhida.getAbsolutePath());
+    	
+    	
+    }
+    
     @FXML
 	private void recuperarCidades ()
 	{
@@ -261,6 +288,7 @@ public class CadastrarLocal extends Application implements Initializable {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		this.primaryStage=primaryStage;
 		AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("telaCadastroLugar.fxml"));
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());

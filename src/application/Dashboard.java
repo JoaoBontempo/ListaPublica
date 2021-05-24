@@ -217,6 +217,18 @@ public class Dashboard extends Application {
 		cboxCidades.getSelectionModel().selectFirst();
 	}
 
+	 @FXML
+	 void FormCadastrarEndereco(ActionEvent event) {
+		 try {
+			 CadastrarLocal cadastro=new CadastrarLocal();
+			 cadastro.start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	 }
+	
+	
 	// esse método vai obter o ID do usuário que pertence ao lugar clicado e abrir a
 	// janela de Tela, mostrando as infos detalhadas e todos os
 	// telefones associados ao mesmo.
