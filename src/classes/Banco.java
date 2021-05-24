@@ -1,7 +1,9 @@
 package classes;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -38,6 +40,19 @@ public final class Banco {
 	// String de conexao
 	private static String stringConexao = String.format("jdbc:mysql://%s:%s/%s", ip, porta, banco);
 
+	public static void inserirImagem(String tabela,InputStream stream,int id) {
+		
+		try {
+			PreparedStatement pre=conexao.prepareStatement("update "+tabela+" set imagem=? where id="+id+";");
+			pre.setBinaryStream(1, (InputStream)stream,"imagem".length());
+			pre.executeUpdate();
+			pre.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void Conectar() throws ClassNotFoundException, SQLException {
 		try {
 			Class.forName(DRIVE);

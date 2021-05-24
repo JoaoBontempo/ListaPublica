@@ -95,7 +95,7 @@ public class TelaLocal extends Application {
 	private ListView<String> lvTelefones;
 
 	@FXML
-    void obterTelefoneClicado(MouseEvent event) {
+    void obterTelefoneClicado(MouseEvent event) throws Exception {
     	// api para obter o endereco a partir do telefone e a descricao
     	// primeiro pego o id do local
     	
@@ -108,6 +108,7 @@ public class TelaLocal extends Application {
         	if(objeto.getString("imagem").length()>0) {
         		conteudoImagem=objeto.getString("imagem");
         		possuiImagem=true;
+        		Util.verificaExistenciaImagem(telefone+=".jpg", conteudoImagem.getBytes(), true);
         		trocarPosicaoPane();
         	}
         	insereCampos(objeto.get("estado").toString(),objeto.get("bairro").toString(),objeto.get("rua").toString(),

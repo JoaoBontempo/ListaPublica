@@ -1,7 +1,13 @@
 package classes;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.http.HttpClient;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -23,7 +29,6 @@ public final class Util {
 	private static Parceiro contaLogada;
 	private static Denuncia denunciAtual;
 	
-	
 	private static boolean convidado = false;
 	
 	public static Parceiro getContaLogada() {
@@ -33,7 +38,53 @@ public final class Util {
 	public static void setContaLogada(Parceiro contaLogada) {
 		Util.contaLogada = contaLogada;
 	}
-
+	
+	public static boolean verificaExistenciaImagem(String nomeArquivo,byte[] conteudo,boolean local) throws Exception {
+		// diretório padrão= C:\\img\\locais
+		//					 C:\\img\\usuarios
+		// local=False = pasta de usuario
+		// local=True  = pasta de local
+		List<String> extensoesPermitidas;
+		extensoesPermitidas=Arrays.asList(".jpg",".png");
+		
+//		Pattern extens = Pattern.compile("([\\w\\-]+)");
+//		Matcher match=extens.matcher(nomeArquivo);
+//		System.out.println("Matches :"+match.matches());
+//		if(match.matches()) {
+//			System.out.println("GROUp 1:"+match.group(1));
+//			if(!extensoesPermitidas.contains(match.group(1))) {
+//				throw new Exception("Extensão do arquivo inválida. Não é do tipo jpg.");
+//			}
+//		}
+		
+		
+		FileInputStream in = new FileInputStream("C:\\Users\\Igor\\Desktop\\exemplo.jpg");
+		Banco.inserirImagem("endereco", in, 2);
+		in.close();
+//		
+//		String diretorioRaiz="C:\\lista";
+//		String diretorioPadraoLocal="C:\\lista\\locais";
+//		String diretorioPadraoUsuarios="C:\\lista\\usuarios";
+//		File fileLocal=new File(diretorioPadraoLocal);
+//		File fileUsuario=new File(diretorioPadraoUsuarios);
+//		File fileDiretorioRaiz=new File(diretorioRaiz);
+//		
+//		fileDiretorioRaiz.mkdir();
+//		fileLocal.mkdir();
+//		fileUsuario.mkdir();
+//		
+//		String salvarEm=local==true?diretorioPadraoLocal:diretorioPadraoUsuarios;
+//		salvarEm+="\\"+nomeArquivo;
+//		
+//		try(BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(salvarEm))){
+//			bout.write(conteudo, 0, conteudo.length);
+//		}
+//		
+		return true;
+		
+		
+	}
+	
 	public static Alert MessageBoxShow(String titulo, String conteudo, AlertType tipo)
 	{
 		Alert alert = new Alert(tipo);
