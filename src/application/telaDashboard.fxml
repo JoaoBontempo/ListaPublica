@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -13,6 +14,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <TabPane fx:id="TabDash" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="1181.0" stylesheets="@application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Dashboard">
@@ -155,15 +157,43 @@
                      </font>
                   </Label>
                   <Button fx:id="btnAlterarDados" layoutX="138.0" layoutY="321.0" mnemonicParsing="false" onAction="#AlterarDados" prefHeight="36.0" prefWidth="206.0" text="Alterar Dados" />
+
                   <Separator layoutX="483.0" layoutY="34.0" orientation="VERTICAL" prefHeight="356.0" prefWidth="0.0" />
                   <Label layoutX="578.0" layoutY="172.0" text="Código" textFill="WHITE">
+
+                  <Separator layoutX="655.0" layoutY="36.0" orientation="VERTICAL" prefHeight="356.0" prefWidth="0.0" />
+                  <TextField fx:id="txtMCCodigo" layoutX="692.0" layoutY="172.0" prefHeight="34.0" prefWidth="443.0" promptText="Insira o código de confirmação enviado no E-mail cadastrado" />
+                  <Label layoutX="700.0" layoutY="146.0" text="Código" textFill="WHITE">
+
                      <font>
                         <Font name="Candara" size="19.0" />
                      </font>
                   </Label>
+
                   <Button fx:id="btnConfirmarAlteracao" layoutX="570.0" layoutY="243.0" mnemonicParsing="false" onAction="#ConfirmarCodigoSenha" prefHeight="36.0" prefWidth="205.0" text="Confirmar" />
                   <Button fx:id="btnAlterarSenha" layoutX="570.0" layoutY="107.0" mnemonicParsing="false" onAction="#AlterarSenha" prefHeight="40.0" prefWidth="313.0" styleClass="text-field2" text="Alterar Senha" textFill="#903939" />
                   <PasswordField fx:id="txtMCCodigo" layoutX="570.0" layoutY="195.0" prefHeight="34.0" prefWidth="404.0" promptText="Insira o código de confirmação enviado no E-mail cadastrado" />
+
+                  <Button fx:id="btnConfirmarAlteracao" layoutX="692.0" layoutY="227.0" mnemonicParsing="false" onAction="#ConfirmarCodigoSenha" prefHeight="36.0" prefWidth="205.0" text="Confirmar" />
+                  <Button fx:id="btnAlterarSenha" layoutX="692.0" layoutY="92.0" mnemonicParsing="false" onAction="#AlterarSenha" prefHeight="40.0" prefWidth="313.0" styleClass="text-field2" text="Alterar Senha" textFill="#903939" />
+                  <Label fx:id="lblTrocarFotoPerfil" layoutX="474.0" layoutY="157.0" onMouseClicked="#TrocarFotoPerfil" prefHeight="22.0" prefWidth="175.0" styleClass="labelVerde" stylesheets="@application.css" text="Trocar foto de perfil" textFill="WHITE">
+                     <font>
+                        <Font name="Candara Bold" size="19.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+                  <Pane layoutX="492.0" layoutY="40.0" prefHeight="110.0" prefWidth="139.0" style="-fx-border-color: #000000; -fx-background-color: #000; -fx-border-width: 2px;">
+                     <children>
+                        <ImageView fx:id="imgIconePerfil" fitHeight="76.0" fitWidth="149.0" layoutX="3.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Recursos/logo_contornada.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+
                </children></AnchorPane>
 			</content>
 		</Tab>

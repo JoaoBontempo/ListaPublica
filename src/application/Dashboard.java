@@ -1,6 +1,9 @@
 package application;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -41,6 +44,7 @@ import classes.Validacao;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -61,6 +65,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -77,6 +82,8 @@ public class Dashboard extends Application {
 
 	private String nome = "*", estado = "*", cidade = "*", numero = "*", email = "*", descricao = "*";
 
+	private Stage primaryStage;
+	
 	@FXML
 	private TabPane TabDash;
 
@@ -171,8 +178,51 @@ public class Dashboard extends Application {
 	private Button btnConfirmarAlteracao;
 
 	@FXML
+    private ImageView imgIconePerfil;
+	
+	@FXML
 	private Button btnAlterarSenha;
 
+	@FXML
+    private Label lblTrocarFotoPerfil;
+	
+	 @FXML
+	 void TrocarFotoPerfil(MouseEvent event) {
+		FileChooser fileChooser = new FileChooser();
+	    fileChooser.setTitle("Defina uma imagem do local");
+	    fileChooser.getExtensionFilters().addAll(
+	                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+	                new FileChooser.ExtensionFilter("PNG", "*.png"),
+	                new FileChooser.ExtensionFilter("ICO", "*.ico"));
+	    File imagemEscolhida=fileChooser.showOpenDialog(this.primaryStage);
+	    String base=Util.converterStringParaBase64(Path.of(imagemEscolhida.getAbsolutePath()).toString());
+	    try {
+			Banco.InserirQuery("update parceiro set imagem='"+base+" where id ="+Util.getContaLogada().getId());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	    
+	 }
+	
+	void verificaIconeUsuario() {
+		int id=Util.getContaLogada().getId();
+		boolean possuiIcone=false;
+		try {
+			Banco.InserirQueryReader("select imagem from parceiro where id="+id);
+			if(Banco.getReader().next()) {
+				String imagem=Banco.getReader().getString("imagem");
+				if(imagem.length()>0) {possuiIcone=true;}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(possuiIcone) {
+			imgIconePerfil.setImage(new Image("C:\\lista\\usuarios\\profile.png"));
+		}
+		
+	}
+	
 	@FXML
 	void AlterarDados(ActionEvent event) throws SQLException {
 
@@ -193,7 +243,6 @@ public class Dashboard extends Application {
 	private String Codigo = "";
 	@FXML
 	void AlterarSenha(ActionEvent event) {
-
 		Codigo = RecuperarSenha.gerarCodigo(0, "", new Random().nextInt(9));
 
 		if(Email.enviarEmail("O seu código de acesso é " + Codigo,
@@ -201,7 +250,6 @@ public class Dashboard extends Application {
 			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o código de alteração ao seu E-mail! ");
 			txtMCCodigo.requestFocus();
 		}
-
 	}
 
 	@FXML
@@ -465,6 +513,7 @@ public class Dashboard extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			TabPane root = (TabPane) FXMLLoader.load(getClass().getClassLoader().getResource("application/telaDashboard.fxml"));
+			this.primaryStage=primaryStage;
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Image icon = new Image("/Recursos/logo.png");

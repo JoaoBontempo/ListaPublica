@@ -6,7 +6,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -39,6 +44,17 @@ public final class Util {
 		Util.contaLogada = contaLogada;
 	}
 	
+	public static String converterStringParaBase64(String caminho) {
+		String base64="";
+		try {
+			base64=Base64.getEncoder().encodeToString(Files.readAllBytes(Path.of(caminho)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return base64;
+	}
+	
+	
 	public static boolean verificaExistenciaImagem(String nomeArquivo,byte[] conteudo,boolean local) throws Exception {
 		// diretório padrão= C:\\img\\locais
 		//					 C:\\img\\usuarios
@@ -57,7 +73,6 @@ public final class Util {
 //			}
 //		}
 		
-		
 		String diretorioRaiz="C:\\lista";
 		String diretorioPadraoLocal="C:\\lista\\locais";
 		String diretorioPadraoUsuarios="C:\\lista\\usuarios";
@@ -71,12 +86,11 @@ public final class Util {
 		
 		String salvarEm=local==true?diretorioPadraoLocal:diretorioPadraoUsuarios;
 		salvarEm+="\\"+nomeArquivo;
+		System.out.println("Salvar em: "+salvarEm);
 
-		
-		
+		byte[] retorno = Base64.getDecoder().decode(conteudo);
+		Files.write(Path.of(salvarEm), retorno, StandardOpenOption.CREATE);
 		return true;
-		
-		
 	}
 	
 	public static Alert MessageBoxShow(String titulo, String conteudo, AlertType tipo)

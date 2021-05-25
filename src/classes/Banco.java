@@ -1,12 +1,19 @@
 package classes;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Base64;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -14,14 +21,14 @@ import javafx.scene.control.Alert.AlertType;
 public final class Banco {
 
 	// Credenciais do banco
-	private static String ip = "dblistapublica.ccenmvdsqpiw.us-east-2.rds.amazonaws.com";
-	//private static String ip = "127.0.0.1";
+	//private static String ip = "dblistapublica.ccenmvdsqpiw.us-east-2.rds.amazonaws.com";
+	private static String ip = "127.0.0.1";
 	private static String banco = "db_lista_publica";
 
-	private static String usuario = "gerenciamento";
-	private static String senha = "S3nh4F0rt3";
-	//private static String usuario = "root";
-	//private static String senha = "P@ssw0rd";
+	//private static String usuario = "gerenciamento";
+	//private static String senha = "S3nh4F0rt3";
+	private static String usuario = "root";
+	private static String senha = "P@ssw0rd";
 
 	private static String porta = "3306";
 
@@ -40,7 +47,7 @@ public final class Banco {
 	// String de conexao
 	private static String stringConexao = String.format("jdbc:mysql://%s:%s/%s", ip, porta, banco);
 
-	public static void inserirImagem(String tabela,InputStream stream,int id) {
+	public static void atualizarImagem(String tabela,InputStream stream,int id) {
 		
 		try {
 			PreparedStatement pre=conexao.prepareStatement("update "+tabela+" set imagem=? where id="+id+";");
@@ -52,6 +59,7 @@ public final class Banco {
 			e.printStackTrace();
 		}
 	}
+
 	
 	public static void Conectar() throws ClassNotFoundException, SQLException {
 		try {

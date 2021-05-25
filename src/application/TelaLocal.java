@@ -1,8 +1,10 @@
 package application;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +52,9 @@ public class TelaLocal extends Application {
 	private boolean possuiImagem = false;
 	private int id_endereco;
 	private String conteudoImagem = "";
-
+	private String fileName="";
+	private Stage primaryStage;
+	
 	public void setIdBuscarInfos(String id) {
 		this.idBuscarInfos = id;
 	}
@@ -95,6 +99,19 @@ public class TelaLocal extends Application {
 	private ListView<String> lvTelefones;
 
 	@FXML
+    void AbrirImagemBaixada(MouseEvent event) {
+		File diretorio= new File("C:\\lista\\locais\\"+fileName);
+		if(diretorio.exists()) {
+			try {
+				Process process = Runtime.getRuntime().exec("cmd /c start "+diretorio.getAbsolutePath());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+    }
+	
+	@FXML
     void obterTelefoneClicado(MouseEvent event) throws Exception {
     	// api para obter o endereco a partir do telefone e a descricao
     	// primeiro pego o id do local
@@ -105,11 +122,14 @@ public class TelaLocal extends Application {
         	String url="http://localhost:5000/ListaPublica/getUserAddress/"+telefone;
         	JSONArray array=requisicaoGenerica(url); // passo o telefone e a api vai obter o id do local e fazer uma requisicao nesse id
     		JSONObject objeto=array.getJSONObject(0);
+    		System.out.println(objeto.toString());
         	if(objeto.getString("imagem").length()>0) {
         		conteudoImagem=objeto.getString("imagem");
         		possuiImagem=true;
-        		Util.verificaExistenciaImagem(telefone+=".jpg", conteudoImagem.getBytes(), true);
+        		fileName=telefone+=".jpg";
+        		Util.verificaExistenciaImagem(fileName, conteudoImagem.getBytes(), true);
         		trocarPosicaoPane();
+        		imgLocal.setImage(new Image("file:///C:/lista/locais/"+fileName));
         	}
         	insereCampos(objeto.get("estado").toString(),objeto.get("bairro").toString(),objeto.get("rua").toString(),
         			objeto.get("cidade").toString(),objeto.get("numero").toString(),objeto.get("descricao").toString(),
@@ -137,6 +157,7 @@ public class TelaLocal extends Application {
 		try {
 			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("telaLugar.fxml"));
 
+			
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Image icon = new Image("Recursos/logo.png");
@@ -155,6 +176,7 @@ public class TelaLocal extends Application {
 		// obtenho os valores do arraylist da tela anterior e jogo no ListView
 		lvTelefones.getItems().addAll(UtilDashboard.getTelefones());
 
+		
 		// inicia a api
 		iniciaApi();
 
@@ -179,6 +201,7 @@ public class TelaLocal extends Application {
 	}
 
 	JSONArray requisicaoGenerica(String url) {
+		System.out.println("URL: "+url);
 		ObjectMapper mapper = new ObjectMapper();
 		String link = url;
 		HttpGet get = new HttpGet(url);
@@ -193,6 +216,7 @@ public class TelaLocal extends Application {
 			System.out.println(obj.getJSONObject(0).toString());
 			return obj;
 		} catch (JSONException | IOException e) {
+			e.printStackTrace();
 			// não faça nada.
 		}
 		return obj;
@@ -200,7 +224,8 @@ public class TelaLocal extends Application {
 
 	void iniciaApi() {
 		String result;
-
+		
+			
 		ObjectMapper mapper = new ObjectMapper();
 		String url = "http://localhost:5000/ListaPublica/getUserAddress/" + UtilDashboard.getNumeroTelefone();
 		HttpGet get = new HttpGet(url);

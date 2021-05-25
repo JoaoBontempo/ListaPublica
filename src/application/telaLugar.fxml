@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -48,24 +49,19 @@
       </Label>
       <TextArea fx:id="txtDescricao" editable="false" layoutX="29.0" layoutY="465.0" prefHeight="97.0" prefWidth="427.0" />
       <Separator layoutX="39.0" layoutY="399.0" prefHeight="3.0" prefWidth="411.0" styleClass="separatorHorizontal" stylesheets="@application.css" />
-      <Label layoutX="159.0" layoutY="81.0" prefHeight="30.0" prefWidth="170.0" styleClass="labelVerde" stylesheets="@application.css" text="Endereço">
+      <Label layoutX="160.0" layoutY="56.0" prefHeight="30.0" prefWidth="170.0" styleClass="labelVerde" stylesheets="@application.css" text="Endereço">
          <font>
             <Font name="Candara" size="28.0" />
          </font>
       </Label>
       <Separator layoutX="466.0" layoutY="28.0" orientation="VERTICAL" prefHeight="564.0" prefWidth="0.0" styleClass="separatorVertical" stylesheets="@application.css" />
-      <ImageView fitHeight="97.0" fitWidth="151.0" layoutX="26.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Recursos/logo_contornada.png" />
-         </image>
-      </ImageView>
       <Label layoutX="29.0" layoutY="333.0" prefHeight="30.0" prefWidth="113.0" styleClass="labelVerde" stylesheets="@application.css" text="Nome/Cnpj">
          <font>
             <Font name="Candara" size="19.0" />
          </font>
       </Label>
       <TextField fx:id="txtNome" editable="false" layoutX="141.0" layoutY="331.0" prefHeight="34.0" prefWidth="200.0" styleClass="text-field2" stylesheets="@application.css" />
-      <BorderPane fx:id="pnlTelefones" layoutX="487.0" layoutY="249.0" prefHeight="351.0" prefWidth="411.0">
+      <BorderPane fx:id="pnlTelefones" layoutX="487.0" layoutY="262.0" prefHeight="338.0" prefWidth="411.0">
          <top>
             <Label prefHeight="30.0" prefWidth="170.0" styleClass="labelVerde" stylesheets="@application.css" text="Telefones" BorderPane.alignment="CENTER">
                <font>
@@ -89,12 +85,19 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Pane fx:id="pnlImagem" layoutX="493.0" layoutY="30.0" prefHeight="213.0" prefWidth="411.0">
+      <Pane fx:id="pnlImagem" layoutX="489.0" layoutY="28.0" prefHeight="223.0" prefWidth="427.0">
          <children>
-            <ImageView fx:id="imgLocal" fitHeight="204.0" fitWidth="400.0" layoutX="7.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgLocal" fitHeight="180.0" fitWidth="342.0" layoutX="68.0" layoutY="14.0" onMouseClicked="#AbrirImagemBaixada" pickOnBounds="true" preserveRatio="true">
                <cursor>
                   <Cursor fx:constant="HAND" />
-               </cursor></ImageView>
+               </cursor>
+               <image>
+                  <Image url="@../Recursos/logo_contornada.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D minX="200.0" minY="200.0" />
+               </viewport>
+            </ImageView>
          </children>
       </Pane>
    </children>

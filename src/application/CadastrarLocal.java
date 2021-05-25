@@ -127,16 +127,6 @@ public class CadastrarLocal extends Application implements Initializable {
 		txtCep.clear();
 	}
 	
-	String converterStringParaBase64(String caminho) {
-		String base64="";
-		try {
-			base64=Base64.getEncoder().encodeToString(Files.readAllBytes(Path.of(caminho)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return base64;
-	}
-	
 	@FXML
     void cadastrarEndereco(ActionEvent event) {
 		if(txtBairro.getText().isEmpty()) {
@@ -171,7 +161,7 @@ public class CadastrarLocal extends Application implements Initializable {
 				String.format("insert into endereco values (default,'%s','%s','%s','%s','%s','%s',1,'%s')",
 						txtRua.getText(),txtNumeroResidencia.getText(),txtBairro.getText(),cmbEstados.getSelectionModel().getSelectedItem(),
 						cmbCidades.getSelectionModel().getSelectedItem(),txtNomeLocal.getText(),
-						anexoImagem.length()>0?converterStringParaBase64(anexoImagem):"");
+						anexoImagem.length()>0?Util.converterStringParaBase64(anexoImagem):"");
 		System.out.println("Query de cadastro: "+query);
 		try {
 			if(Banco.InserirQuery(query)) {
