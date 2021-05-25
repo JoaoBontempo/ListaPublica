@@ -60,7 +60,7 @@ public class TrocarSenha extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Lista Pública - Trocar senha");
-			primaryStage.show();
+			primaryStage.showAndWait();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

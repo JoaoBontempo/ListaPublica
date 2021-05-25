@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -29,6 +30,7 @@ import API_IBGE.Municipio;
 import API_IBGE.UF;
 import classes.API;
 import classes.Banco;
+import classes.Email;
 import classes.Endereco;
 import classes.Parceiro;
 import classes.TableViewUtil;
@@ -45,6 +47,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Button;
@@ -162,7 +165,7 @@ public class Dashboard extends Application {
 	private Button btnAlterarDados;
 
 	@FXML
-	private TextField txtMCCodigo;
+	private PasswordField txtMCCodigo;
 
 	@FXML
 	private Button btnConfirmarAlteracao;
@@ -187,14 +190,30 @@ public class Dashboard extends Application {
 
 	}
 
+	private String Codigo = "";
 	@FXML
 	void AlterarSenha(ActionEvent event) {
+
+		Codigo = RecuperarSenha.gerarCodigo(0, "", new Random().nextInt(9));
+
+		if(Email.enviarEmail("O seu código de acesso é " + Codigo,
+				"Troca de Senha", Util.getContaLogada().getEmail())) {
+			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o código de alteração ao seu E-mail! ");
+			txtMCCodigo.requestFocus();
+		}
 
 	}
 
 	@FXML
 	void ConfirmarCodigoSenha(ActionEvent event) {
 
+		if(txtMCCodigo.getText().equals(Codigo)) {
+
+			TrocarSenha trocarSenha = new TrocarSenha();
+			trocarSenha.setEmail(Util.getContaLogada().getEmail());
+			trocarSenha.start(new Stage());
+
+		}
 	}
 
 	private List<TableViewUtil> telefones = new ArrayList();
@@ -217,18 +236,18 @@ public class Dashboard extends Application {
 		cboxCidades.getSelectionModel().selectFirst();
 	}
 
-	 @FXML
-	 void FormCadastrarEndereco(ActionEvent event) {
-		 try {
-			 CadastrarLocal cadastro=new CadastrarLocal();
-			 cadastro.start(new Stage());
+	@FXML
+	void FormCadastrarEndereco(ActionEvent event) {
+		try {
+			CadastrarLocal cadastro=new CadastrarLocal();
+			cadastro.start(new Stage());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	 }
-	
-	
+	}
+
+
 	// esse método vai obter o ID do usuário que pertence ao lugar clicado e abrir a
 	// janela de Tela, mostrando as infos detalhadas e todos os
 	// telefones associados ao mesmo.
@@ -238,49 +257,49 @@ public class Dashboard extends Application {
 
 		//		DOUBLE CLICK NA LINHA
 		if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
-            if(tvTelefones.getSelectionModel().getSelectedItem() != null) {
-            	// obtém o telefone para obter o id do parceiro e id do local
-            	TableViewUtil ret=tvTelefones.getSelectionModel().getSelectedItem();
-            	String numero=ret.getNumero();
-            	String descricao=ret.getDescricao();
-            	String idDono=null;
-            	String idLugar=null;
-            	String query="";
-//            	try {
-//            		Banco.Conectar();
-//            		// primeiro obtenho o id do dono , depois obtenho os telefones associados a ele
-//            		query="select dono,lugar,descricao from telefone where numero LIKE '%"+numero+"%'";
-//            		query+=descricao == null?";":" and descricao LIKE '%"+descricao+"%';";
-//            		//System.out.println(query);
-//					if(tvTelefones.getSelectionModel().getSelectedItem() != null) {
-//						// obtém o telefone para obter o id do parceiro e id do local
-//						ret=tvTelefones.getSelectionModel().getSelectedItem();
-//						numero=ret.getNumero();
-//						descricao=ret.getDescricao();
-//						idDono=null;
-//						idLugar=null;
-//					}
-//				}catch(Exception e){e.printStackTrace();}
-				
+			if(tvTelefones.getSelectionModel().getSelectedItem() != null) {
+				// obtém o telefone para obter o id do parceiro e id do local
+				TableViewUtil ret=tvTelefones.getSelectionModel().getSelectedItem();
+				String numero=ret.getNumero();
+				String descricao=ret.getDescricao();
+				String idDono=null;
+				String idLugar=null;
+				String query="";
+				//            	try {
+				//            		Banco.Conectar();
+				//            		// primeiro obtenho o id do dono , depois obtenho os telefones associados a ele
+				//            		query="select dono,lugar,descricao from telefone where numero LIKE '%"+numero+"%'";
+				//            		query+=descricao == null?";":" and descricao LIKE '%"+descricao+"%';";
+				//            		//System.out.println(query);
+				//					if(tvTelefones.getSelectionModel().getSelectedItem() != null) {
+				//						// obtém o telefone para obter o id do parceiro e id do local
+				//						ret=tvTelefones.getSelectionModel().getSelectedItem();
+				//						numero=ret.getNumero();
+				//						descricao=ret.getDescricao();
+				//						idDono=null;
+				//						idLugar=null;
+				//					}
+				//				}catch(Exception e){e.printStackTrace();}
+
 				try {
 					Banco.Conectar();
 					// primeiro obtenho o id do dono , depois obtenho os telefones associados a ele
 					query="select dono,lugar,descricao from telefone where numero LIKE '%"+numero+"%'";
 					query+=descricao == null?";":" and descricao LIKE '%"+descricao+"%';";
 					System.out.println(query);
-					
+
 					Banco.InserirQueryReader(query);
 					Banco.getReader().next();
 					idDono=Banco.getReader().getString("dono");
 					UtilDashboard.setIdDono(idDono);
 					UtilDashboard.setNumeroTelefone(ret.getNumero());
-					
+
 					// obtem os telefones
 					//query="select distinct endereco.usuario,telefone.numero from endereco INNER JOIN telefone ON endereco.usuario="+idDono+" order by endereco.usuario,telefone.numero;";
 					query="select numero from telefone where dono="+idDono+";";
 					//System.out.println("Id dono: "+idDono+"\nIdLugar:"+UtilDashboard.getIdLugar()+"\nQuery: "+query);
 					Banco.InserirQueryReader(query);
-					
+
 					UtilDashboard.getTelefones().clear();
 					while(Banco.getReader().next()){
 						try {
@@ -296,16 +315,16 @@ public class Dashboard extends Application {
 				} catch (Exception e1) {
 					e1.printStackTrace(); 					
 				}
-            }
+			}
 		}
 
-    }
+	}
 
 
 	@FXML
 	void buscarDados(Event event) {
+
 		if (tbMinhaConta.isSelected())
-			System.out.println("Tab is Selected");
 		{
 			txtMCNome.setText(Util.getContaLogada().getNome());
 			txtMCUsuario.setText(Util.getContaLogada().getUsuario());
@@ -319,6 +338,7 @@ public class Dashboard extends Application {
 			}
 		}
 	}
+
 
 	// Método 'onLoad'
 	public void initialize() {
@@ -452,8 +472,9 @@ public class Dashboard extends Application {
 			primaryStage.setTitle("Lista Pública - Menu principal");
 			primaryStage.getIcons().add(icon);
 			primaryStage.setMaximized(true);
-			// root.getSelectionModel().selectedItemProperty().addListener((v, oldValue,
-			// newValue) -> System.out.println(newValue) );
+			//root.getSelectionModel().selectedItemProperty().addListener((v, oldValue,
+			//	newValue) -> System.out.println(newValue));
+
 
 			primaryStage.show();
 		} catch (Exception e) {

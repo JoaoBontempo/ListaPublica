@@ -17,7 +17,7 @@ public final class Email {
 	static {
 		try
 		{
-			email.setHostName("smtp.live.com");
+			email.setHostName("smtp.gmail.com");
 			//email.setSmtpPort(465);
 			email.setSmtpPort(465);
 			//email.setAuthenticator(new DefaultAuthenticator(remetente[0], remetente[1]));
@@ -73,8 +73,8 @@ public final class Email {
 			email.setFrom(remetente[0]);
 			email.setSubject(titulo); // Jogar "Nova denúncia de parceiro: " + motivo como argumento dessa função
 			email.setMsg(descricao);
-			email.addTo("igor.hscuculha@gmail.com");
-			email.send();
+			email.addTo(destinatario);
+			email.send(); 
 			return true;
 		}
 		catch (Exception erro)

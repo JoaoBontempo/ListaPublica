@@ -137,9 +137,7 @@ public class Cadastrar extends Application{
 
 					Util.MessageBoxShow("Erro ao Cadastrar", "As senhas inseridas não correspondem", AlertType.ERROR);
 					txtConfirmarSenha.requestFocus();
-
-
-
+					
 				}
 			}
 			else {
