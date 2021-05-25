@@ -21,14 +21,14 @@ import javafx.scene.control.Alert.AlertType;
 public final class Banco {
 
 	// Credenciais do banco
-	//private static String ip = "dblistapublica.ccenmvdsqpiw.us-east-2.rds.amazonaws.com";
-	private static String ip = "127.0.0.1";
+	private static String ip = "dblistapublica.ccenmvdsqpiw.us-east-2.rds.amazonaws.com";
+	//private static String ip = "127.0.0.1";
 	private static String banco = "db_lista_publica";
 
-	//private static String usuario = "gerenciamento";
-	//private static String senha = "S3nh4F0rt3";
-	private static String usuario = "root";
-	private static String senha = "P@ssw0rd";
+	private static String usuario = "gerenciamento";
+	private static String senha = "S3nh4F0rt3";
+	//private static String usuario = "root";
+	//private static String senha = "P@ssw0rd";
 
 	private static String porta = "3306";
 

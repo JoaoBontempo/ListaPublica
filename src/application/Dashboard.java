@@ -127,7 +127,7 @@ public class Dashboard extends Application {
 	private TextField txtEmail;
 
 	@FXML
-	private TextField txtDescriï¿½ï¿½o;
+	private TextField txtDescrição;
 
 	@FXML
 	private Button btnNovoTelefone;
@@ -245,9 +245,9 @@ public class Dashboard extends Application {
 	void AlterarSenha(ActionEvent event) {
 		Codigo = RecuperarSenha.gerarCodigo(0, "", new Random().nextInt(9));
 
-		if(Email.enviarEmail("O seu cï¿½digo de acesso ï¿½ " + Codigo,
+		if(Email.enviarEmail("O seu código de acesso é " + Codigo,
 				"Troca de Senha", Util.getContaLogada().getEmail())) {
-			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o cï¿½digo de alteraï¿½ï¿½o ao seu E-mail! ");
+			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o código de alteração ao seu E-mail! ");
 			txtMCCodigo.requestFocus();
 		}
 	}
@@ -296,7 +296,7 @@ public class Dashboard extends Application {
 	}
 
 
-	// esse mï¿½todo vai obter o ID do usuï¿½rio que pertence ao lugar clicado e abrir a
+	// esse método vai obter o ID do usuário que pertence ao lugar clicado e abrir a
 	// janela de Tela, mostrando as infos detalhadas e todos os
 	// telefones associados ao mesmo.
 	@FXML
@@ -321,7 +321,7 @@ public class Dashboard extends Application {
 //            		query+=descricao == null?";":" and descricao LIKE '%"+descricao+"%';";
 //            		//System.out.println(query);
 //					if(tvTelefones.getSelectionModel().getSelectedItem() != null) {
-//						// obtï¿½m o telefone para obter o id do parceiro e id do local
+//						// obtém o telefone para obter o id do parceiro e id do local
 //						ret=tvTelefones.getSelectionModel().getSelectedItem();
 //						numero=ret.getNumero();
 //						descricao=ret.getDescricao();
@@ -424,7 +424,7 @@ public class Dashboard extends Application {
 		numero = Validacao.isNullOrEmpty(txtTelefone.getText()) ? "*" : txtTelefone.getText();
 		nome = Validacao.isNullOrEmpty(txtNome.getText()) ? "*" : txtNome.getText();
 		email = Validacao.isNullOrEmpty(txtEmail.getText()) ? "*" : txtEmail.getText();
-		descricao = Validacao.isNullOrEmpty(txtDescriï¿½ï¿½o.getText()) ? "*" : txtDescriï¿½ï¿½o.getText();
+		descricao = Validacao.isNullOrEmpty(txtDescrição.getText()) ? "*" : txtDescrição.getText();
 		cidade = cboxCidades.getSelectionModel().getSelectedIndex() == 0 ? "*"
 				: cboxCidades.getSelectionModel().getSelectedItem();
 		estado = cboxEstados.getSelectionModel().getSelectedIndex() == 0 ? "*"
@@ -447,7 +447,7 @@ public class Dashboard extends Application {
 	private void AtualizarGridTelefones(ArrayList<Telefone> dados) {
 		if (dados.size() == 0) {
 			Util.MessageBoxShow("Nenhum dado foi encontrado",
-					"Nï¿½o foi possï¿½vel encontrar nenhum dado.\n" + "Tente mudar as informaï¿½oes do filtro",
+					"Não foi possível encontrar nenhum dado.\n" + "Tente mudar as informações do filtro",
 					AlertType.WARNING);
 			return;
 		}
@@ -520,7 +520,7 @@ public class Dashboard extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Image icon = new Image("/Recursos/logo.png");
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("Lista Pï¿½blica - Menu principal");
+			primaryStage.setTitle("Lista Pública - Menu principal");
 			primaryStage.getIcons().add(icon);
 			primaryStage.setMaximized(true);
 			//root.getSelectionModel().selectedItemProperty().addListener((v, oldValue,

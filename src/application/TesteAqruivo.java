@@ -15,7 +15,7 @@ public class TesteAqruivo {
 		try {
 			Banco.Conectar();//inserirImagem
 			InputStream is = new FileInputStream(new File("C:\\Users\\Igor\\Desktop\\exemplo.jpg"));
-			Banco.inserirImagem("parceiro" ,is, Util.getContaLogada().getId());
+			//Banco.inserirImagem("parceiro" ,is, Util.getContaLogada().getId());
 			
 		} catch (ClassNotFoundException | SQLException | FileNotFoundException e) {
 			// TODO Auto-generated catch block
