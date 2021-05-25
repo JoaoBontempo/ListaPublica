@@ -20,8 +20,8 @@ public final class Email {
 			email.setHostName("smtp.gmail.com");
 			//email.setSmtpPort(465);
 			email.setSmtpPort(465);
-			//email.setAuthenticator(new DefaultAuthenticator(remetente[0], remetente[1]));
-			email.setAuthenticator(new DefaultAuthenticator("testandoessaporra099@outlook.com.br", "Str0ngP@ssw0rd"));
+			email.setAuthenticator(new DefaultAuthenticator(remetente[0], remetente[1]));
+			//email.setAuthenticator(new DefaultAuthenticator("testandoessaporra099@outlook.com.br", "Str0ngP@ssw0rd"));
 			email.setSSLOnConnect(true);
 		}
 		catch (Exception e)

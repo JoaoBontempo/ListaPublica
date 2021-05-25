@@ -10,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
@@ -30,16 +32,17 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public final class Util {
-	
+
 	private static Parceiro contaLogada;
 	private static Denuncia denunciAtual;
-	
+	private static String telefoneAtual;
+
 	private static boolean convidado = false;
-	
+
 	public static Parceiro getContaLogada() {
 		return contaLogada;
 	}
-	
+
 	public static void setContaLogada(Parceiro contaLogada) {
 		Util.contaLogada = contaLogada;
 	}
@@ -55,8 +58,59 @@ public final class Util {
 	}
 	
 	
+
+	public static void RecuperarInformacoesEndereco(int id) throws SQLException
+	{
+		try
+		{
+			Endereco endereco = new Endereco();
+			endereco.setId(id);
+			ResultSet result = Banco.InserirQueryReader("SELECT * FROM endereco WHERE id = " + id);
+			result.next();
+			endereco.setRua(result.getString("rua"));
+			endereco.setBairro(result.getString("bairro"));
+			endereco.setNumero(result.getInt("numero"));
+			endereco.setCidade(result.getString("cidade"));
+			endereco.setEstado(result.getString("estado"));
+			endereco.setNome(result.getString("nome"));
+			denunciAtual.setEndereco(endereco);
+		}
+		catch (Exception erro)
+		{
+			
+		}
+	}
+
+	public static void RecuperarInformacoesDenunciado(int id) throws SQLException
+	{
+		Parceiro parceiro = new Parceiro();
+		ResultSet result = Banco.InserirQueryReader("SELECT * FROM parceiro WHERE id = " + id);
+		result.next();
+		parceiro.setId(id);
+		parceiro.setNome(result.getString("nome"));
+		parceiro.setEmail(result.getString("email"));
+		parceiro.setTipo(result.getInt("tipo"));
+		if (parceiro.getTipo())
+			parceiro.setCpf(result.getString("cpf"));
+		else
+			parceiro.setCnpj(result.getString("cnpj"));
+		parceiro.setUsuario(result.getString("usuario"));
+		denunciAtual.setDenunciado(parceiro);
+	}
+
+	public static void RecuperarInformacoesTelefoneAtual() throws SQLException
+	{
+		Telefone telefone = new Telefone();
+		ResultSet result = Banco.InserirQueryReader("SELECT * FROM telefone WHERE numero = '" + telefoneAtual+"'");
+		result.next();
+		telefone.setId(result.getInt("id"));
+		telefone.setDescricao(result.getString("descricao"));
+		telefone.setNumero(telefoneAtual);
+		denunciAtual.setTelefone(telefone);
+	}
+
 	public static boolean verificaExistenciaImagem(String nomeArquivo,byte[] conteudo,boolean local) throws Exception {
-		// diretório padrão= C:\\img\\locais
+		// diretï¿½rio padrï¿½o= C:\\img\\locais
 		//					 C:\\img\\usuarios
 		// local=False = pasta de usuario
 		// local=True  = pasta de local
@@ -69,21 +123,33 @@ public final class Util {
 //		if(match.matches()) {
 //			System.out.println("GROUp 1:"+match.group(1));
 //			if(!extensoesPermitidas.contains(match.group(1))) {
-//				throw new Exception("Extensão do arquivo inválida. Não é do tipo jpg.");
+//				throw new Exception("Extensï¿½o do arquivo invï¿½lida. Nï¿½o ï¿½ do tipo jpg.");
 //			}
 //		}
 		
+
+		//		Pattern extens = Pattern.compile("([\\w\\-]+)");
+		//		Matcher match=extens.matcher(nomeArquivo);
+		//		System.out.println("Matches :"+match.matches());
+		//		if(match.matches()) {
+		//			System.out.println("GROUp 1:"+match.group(1));
+		//			if(!extensoesPermitidas.contains(match.group(1))) {
+		//				throw new Exception("Extensï¿½o do arquivo invï¿½lida. Nï¿½o ï¿½ do tipo jpg.");
+		//			}
+		//		}
+
+
 		String diretorioRaiz="C:\\lista";
 		String diretorioPadraoLocal="C:\\lista\\locais";
 		String diretorioPadraoUsuarios="C:\\lista\\usuarios";
 		File fileLocal=new File(diretorioPadraoLocal);
 		File fileUsuario=new File(diretorioPadraoUsuarios);
 		File fileDiretorioRaiz=new File(diretorioRaiz);
-		
+
 		fileDiretorioRaiz.mkdir();
 		fileLocal.mkdir();
 		fileUsuario.mkdir();
-		
+
 		String salvarEm=local==true?diretorioPadraoLocal:diretorioPadraoUsuarios;
 		salvarEm+="\\"+nomeArquivo;
 		System.out.println("Salvar em: "+salvarEm);
@@ -92,7 +158,7 @@ public final class Util {
 		Files.write(Path.of(salvarEm), retorno, StandardOpenOption.CREATE);
 		return true;
 	}
-	
+
 	public static Alert MessageBoxShow(String titulo, String conteudo, AlertType tipo)
 	{
 		Alert alert = new Alert(tipo);
@@ -105,14 +171,14 @@ public final class Util {
 		alert.showAndWait();
 		return alert;
 	}
-	
+
 	public static ButtonType MessageBoxShow(String titulo, String conteudo)
 	{
 		Alert alert = MessageBoxShow(titulo, conteudo, AlertType.CONFIRMATION);
 		return alert.getResult();
 		//return alert;
 	}
-	
+
 	public static JSONObject obtemInfosApiCep(String cep) {
 		cep=cep.replace('.', '\0').replace('/', '\0');
 		String webSite="https://viacep.com.br/ws/"+cep+"/json/";
@@ -131,17 +197,17 @@ public final class Util {
 			e.printStackTrace();
 		}
 		return obj;
-		
-		
+
+
 	}
-	
+
 	public static String criptografarSenha(String senha)
 	{
-		
+
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder.encode(senha);
 	}
-	
+
 	public static boolean verificarSenha(String senha, String hash)
 	{
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -162,5 +228,13 @@ public final class Util {
 
 	public static void setDenunciAtual(Denuncia denunciAtual) {
 		Util.denunciAtual = denunciAtual;
+	}
+
+	public static String getTelefoneAtual() {
+		return telefoneAtual;
+	}
+
+	public static void setTelefoneAtual(String telefoneAtual) {
+		Util.telefoneAtual = telefoneAtual;
 	}
 }

@@ -118,6 +118,7 @@ public class TelaLocal extends Application {
     	
     	try {
     		String telefone=lvTelefones.getSelectionModel().getSelectedItem();
+    		Util.setTelefoneAtual(telefone);
         	//String query="select lugar,dono from telefone where numero='"+telefone+"';";
         	String url="http://localhost:5000/ListaPublica/getUserAddress/"+telefone;
         	JSONArray array=requisicaoGenerica(url); // passo o telefone e a api vai obter o id do local e fazer uma requisicao nesse id
@@ -131,6 +132,7 @@ public class TelaLocal extends Application {
         		trocarPosicaoPane();
         		imgLocal.setImage(new Image("file:///C:/lista/locais/"+fileName));
         	}
+        	UtilDashboard.setIdDono(objeto.getString("id"));
         	insereCampos(objeto.get("estado").toString(),objeto.get("bairro").toString(),objeto.get("rua").toString(),
         			objeto.get("cidade").toString(),objeto.get("numero").toString(),objeto.get("descricao").toString(),
         			objeto.getString("nome"));

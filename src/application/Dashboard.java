@@ -127,7 +127,7 @@ public class Dashboard extends Application {
 	private TextField txtEmail;
 
 	@FXML
-	private TextField txtDescrição;
+	private TextField txtDescriï¿½ï¿½o;
 
 	@FXML
 	private Button btnNovoTelefone;
@@ -234,7 +234,7 @@ public class Dashboard extends Application {
 		if (Validacao.validarEmail(txtMCEmail.getText())) {
 			Banco.InserirQuery(String.format("UPDATE parceiro set email = '%s' where id = %s", txtMCEmail.getText(),
 					Util.getContaLogada().getId()));
-			Util.MessageBoxShow("Alteração de Dados", "Email alterado com sucesso!");
+			Util.MessageBoxShow("Alteraï¿½ï¿½o de Dados", "Email alterado com sucesso!");
 			Util.getContaLogada().setEmail(txtMCEmail.getText());
 		}
 
@@ -245,9 +245,9 @@ public class Dashboard extends Application {
 	void AlterarSenha(ActionEvent event) {
 		Codigo = RecuperarSenha.gerarCodigo(0, "", new Random().nextInt(9));
 
-		if(Email.enviarEmail("O seu código de acesso é " + Codigo,
+		if(Email.enviarEmail("O seu cï¿½digo de acesso ï¿½ " + Codigo,
 				"Troca de Senha", Util.getContaLogada().getEmail())) {
-			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o código de alteração ao seu E-mail! ");
+			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o cï¿½digo de alteraï¿½ï¿½o ao seu E-mail! ");
 			txtMCCodigo.requestFocus();
 		}
 	}
@@ -296,7 +296,7 @@ public class Dashboard extends Application {
 	}
 
 
-	// esse método vai obter o ID do usuário que pertence ao lugar clicado e abrir a
+	// esse mï¿½todo vai obter o ID do usuï¿½rio que pertence ao lugar clicado e abrir a
 	// janela de Tela, mostrando as infos detalhadas e todos os
 	// telefones associados ao mesmo.
 	@FXML
@@ -305,30 +305,31 @@ public class Dashboard extends Application {
 
 		//		DOUBLE CLICK NA LINHA
 		if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
-			if(tvTelefones.getSelectionModel().getSelectedItem() != null) {
-				// obtém o telefone para obter o id do parceiro e id do local
-				TableViewUtil ret=tvTelefones.getSelectionModel().getSelectedItem();
-				String numero=ret.getNumero();
-				String descricao=ret.getDescricao();
-				String idDono=null;
-				String idLugar=null;
-				String query="";
-				//            	try {
-				//            		Banco.Conectar();
-				//            		// primeiro obtenho o id do dono , depois obtenho os telefones associados a ele
-				//            		query="select dono,lugar,descricao from telefone where numero LIKE '%"+numero+"%'";
-				//            		query+=descricao == null?";":" and descricao LIKE '%"+descricao+"%';";
-				//            		//System.out.println(query);
-				//					if(tvTelefones.getSelectionModel().getSelectedItem() != null) {
-				//						// obtém o telefone para obter o id do parceiro e id do local
-				//						ret=tvTelefones.getSelectionModel().getSelectedItem();
-				//						numero=ret.getNumero();
-				//						descricao=ret.getDescricao();
-				//						idDono=null;
-				//						idLugar=null;
-				//					}
-				//				}catch(Exception e){e.printStackTrace();}
-
+            if(tvTelefones.getSelectionModel().getSelectedItem() != null) {
+            	// obtï¿½m o telefone para obter o id do parceiro e id do local
+            	TableViewUtil ret=tvTelefones.getSelectionModel().getSelectedItem();
+            	Util.setTelefoneAtual(ret.getNumero());
+            	String numero=ret.getNumero();
+            	String descricao=ret.getDescricao();
+            	String idDono=null;
+            	String idLugar=null;
+            	String query="";
+//            	try {
+//            		Banco.Conectar();
+//            		// primeiro obtenho o id do dono , depois obtenho os telefones associados a ele
+//            		query="select dono,lugar,descricao from telefone where numero LIKE '%"+numero+"%'";
+//            		query+=descricao == null?";":" and descricao LIKE '%"+descricao+"%';";
+//            		//System.out.println(query);
+//					if(tvTelefones.getSelectionModel().getSelectedItem() != null) {
+//						// obtï¿½m o telefone para obter o id do parceiro e id do local
+//						ret=tvTelefones.getSelectionModel().getSelectedItem();
+//						numero=ret.getNumero();
+//						descricao=ret.getDescricao();
+//						idDono=null;
+//						idLugar=null;
+//					}
+//				}catch(Exception e){e.printStackTrace();}
+				
 				try {
 					Banco.Conectar();
 					// primeiro obtenho o id do dono , depois obtenho os telefones associados a ele
@@ -339,6 +340,7 @@ public class Dashboard extends Application {
 					Banco.InserirQueryReader(query);
 					Banco.getReader().next();
 					idDono=Banco.getReader().getString("dono");
+					UtilDashboard.setIdLugar(String.valueOf(Banco.getReader().getInt("lugar")));
 					UtilDashboard.setIdDono(idDono);
 					UtilDashboard.setNumeroTelefone(ret.getNumero());
 
@@ -388,7 +390,7 @@ public class Dashboard extends Application {
 	}
 
 
-	// Método 'onLoad'
+	// Mï¿½todo 'onLoad'
 	public void initialize() {
 
 		tbMeusEnderecos.setDisable(Util.isConvidado());
@@ -422,7 +424,7 @@ public class Dashboard extends Application {
 		numero = Validacao.isNullOrEmpty(txtTelefone.getText()) ? "*" : txtTelefone.getText();
 		nome = Validacao.isNullOrEmpty(txtNome.getText()) ? "*" : txtNome.getText();
 		email = Validacao.isNullOrEmpty(txtEmail.getText()) ? "*" : txtEmail.getText();
-		descricao = Validacao.isNullOrEmpty(txtDescrição.getText()) ? "*" : txtDescrição.getText();
+		descricao = Validacao.isNullOrEmpty(txtDescriï¿½ï¿½o.getText()) ? "*" : txtDescriï¿½ï¿½o.getText();
 		cidade = cboxCidades.getSelectionModel().getSelectedIndex() == 0 ? "*"
 				: cboxCidades.getSelectionModel().getSelectedItem();
 		estado = cboxEstados.getSelectionModel().getSelectedIndex() == 0 ? "*"
@@ -445,7 +447,7 @@ public class Dashboard extends Application {
 	private void AtualizarGridTelefones(ArrayList<Telefone> dados) {
 		if (dados.size() == 0) {
 			Util.MessageBoxShow("Nenhum dado foi encontrado",
-					"Não foi possível encontrar nenhum dado.\n" + "Tente mudar as informaçoes do filtro",
+					"Nï¿½o foi possï¿½vel encontrar nenhum dado.\n" + "Tente mudar as informaï¿½oes do filtro",
 					AlertType.WARNING);
 			return;
 		}
@@ -518,7 +520,7 @@ public class Dashboard extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Image icon = new Image("/Recursos/logo.png");
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("Lista Pública - Menu principal");
+			primaryStage.setTitle("Lista Pï¿½blica - Menu principal");
 			primaryStage.getIcons().add(icon);
 			primaryStage.setMaximized(true);
 			//root.getSelectionModel().selectedItemProperty().addListener((v, oldValue,

@@ -1,7 +1,11 @@
 package application;
 
+import java.sql.SQLException;
+
+import classes.Banco;
 import classes.Email;
 import classes.Util;
+import classes.UtilDashboard;
 import classes.Validacao;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -23,22 +27,22 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class TelaDenuncia extends Application {
-	
+
 	@FXML
-    private ComboBox<String> cboxMotivo;
+	private ComboBox<String> cboxMotivo;
 
-    @FXML
-    private TextArea txtDescrição;
+	@FXML
+	private TextArea txtDescrição;
 
-    @FXML
-    private Button btnDenuncia;
-    
-    @FXML
-    private TextField txtOutro_motivo;
-    
-    @FXML
-    private Label lbOutro;
-	
+	@FXML
+	private Button btnDenuncia;
+
+	@FXML
+	private TextField txtOutro_motivo;
+
+	@FXML
+	private Label lbOutro;
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -49,14 +53,14 @@ public class TelaDenuncia extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Lista Pública - Login");
 			primaryStage.getIcons().add(icon);
-		    primaryStage.setResizable(false);
+			primaryStage.setResizable(false);
 			primaryStage.show();
-			
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private boolean verificarCampos()
 	{
 		if (cboxMotivo.getSelectionModel().getSelectedIndex() == -1)
@@ -71,7 +75,7 @@ public class TelaDenuncia extends Application {
 			return false;
 		return true;
 	}
-	
+
 	@FXML
 	private void changeCboxMotivos()
 	{
@@ -91,49 +95,89 @@ public class TelaDenuncia extends Application {
 			txtOutro_motivo.setCursor(Cursor.DEFAULT);
 		}
 	}
-	
+
 	@FXML
-	public void enviarDenuncia()
+	public void enviarDenuncia() throws SQLException
 	{
-		Util.getDenunciAtual().setTipo(cboxMotivo.getSelectionModel().getSelectedItem() != "Outro" ? cboxMotivo.getSelectionModel().getSelectedItem(): txtOutro_motivo.getText());
-		String conteudo = "Nova denúncia aberta - " + Util.getDenunciAtual().getTipo() + "\n\n";
-		conteudo += "Informações do denunciado: \n"
-				+ "ID: " + Util.getDenunciAtual().getDenunciado().getId() + "\n"
-				+ "Nome: " + Util.getDenunciAtual().getDenunciado().getNome() + "\n"
-				+ Util.getDenunciAtual().getDenunciado().getCnpj() != null ? "CNPJ: " + Util.getDenunciAtual().getDenunciado().getCnpj() :"CPF: " + Util.getDenunciAtual().getDenunciado().getCpf() + "\n"
-				+ "E-mail: " + Util.getDenunciAtual().getDenunciado().getEmail() + "\n"
-				+ "Usuário: " + Util.getDenunciAtual().getDenunciado().getUsuario() + "\n"
-				+ "\nInformações do denunciador: \n"
-				+ "ID: " + Util.getDenunciAtual().getDenunciador().getId() + "\n"
-				+ "Nome: " + Util.getDenunciAtual().getDenunciador().getNome() + "\n"
-				+ Util.getDenunciAtual().getDenunciador().getCnpj() != null ? "CNPJ: " + Util.getDenunciAtual().getDenunciado().getCnpj() :"CPF: " + Util.getDenunciAtual().getDenunciado().getCpf() + "\n"
-				+ "E-mail: " + Util.getDenunciAtual().getDenunciador().getEmail() + "\n"
-				+ "Usuário: " + Util.getDenunciAtual().getDenunciador().getUsuario() + "\n"
-				+ "\nInformações do telefone denunciado: \n"
-				+ "ID: " + Util.getDenunciAtual().getTelefone().getId() + "\n"
-				+ "Número: " + Util.getDenunciAtual().getTelefone().getNumero() + "\n"
-				+ "Descrição: " + Util.getDenunciAtual().getTelefone().getDescricao() + "\n"
-				+ "\nInformações do endereço denunciado: \n"
-				+ "ID: " + Util.getDenunciAtual().getEndereco().getId() + "\n"
-				+ "Rua: " + Util.getDenunciAtual().getEndereco().getRua() + "\n"
-				+ "Número: " + Util.getDenunciAtual().getEndereco().getNumero() + "\n"
-				+ "Bairro: " + Util.getDenunciAtual().getEndereco().getBairro() + "\n"
-				+ "Cidade: " + Util.getDenunciAtual().getEndereco().getBairro() + "\n"
-				+ "Estado: " + Util.getDenunciAtual().getEndereco().getEstado() + "\n"
-				+ "Nome: " + Util.getDenunciAtual().getEndereco().getNome() + "\n"
-				+ "\nInformações da denúncia\n"
-				+ "ID: " + Util.getDenunciAtual().getId() + "\n"
-				+ "Descrição: " + Util.getDenunciAtual().getDescricao() + "\n"
-				+ "Local: " + Util.getDenunciAtual().getLocal();
 		if (verificarCampos())
 		{
-			if(Email.enviarEmail(Util.getDenunciAtual().getTipo(), conteudo))
+			Util.RecuperarInformacoesEndereco(Integer.parseInt(UtilDashboard.getIdLugar()));
+			Util.RecuperarInformacoesTelefoneAtual();
+			Util.RecuperarInformacoesDenunciado(Integer.parseInt(UtilDashboard.getIdDono()));
+			Util.getDenunciAtual().setTipo(cboxMotivo.getSelectionModel().getSelectedItem() != "Outro" ? cboxMotivo.getSelectionModel().getSelectedItem(): txtOutro_motivo.getText());
+			//String conteudo = "Nova denúncia aberta - " + Util.getDenunciAtual().getTipo() + "\n";
+			/*conteudo += "\nInformações do denunciado:"
+			+ "ID: " + Util.getDenunciAtual().getDenunciado().getId() + "\n"
+			+ "Nome: " + Util.getDenunciAtual().getDenunciado().getNome() + "\n"
+			+ Util.getDenunciAtual().getDenunciado().getCnpj() == null ? "CPF: " + Util.getDenunciAtual().getDenunciado().getCpf() : "CNPJ: " + Util.getDenunciAtual().getDenunciado().getCnpj()+ "\n"
+			+ "E-mail: " + Util.getDenunciAtual().getDenunciado().getEmail() + "\n"
+			+ "Usuário: " + Util.getDenunciAtual().getDenunciado().getUsuario() + "\n"
+			+ "\nInformações do denunciador:"
+			+ "ID: " + Util.getContaLogada().getId() + "\n"
+			+ "Nome: " + Util.getContaLogada().getNome() + "\n"
+			+ Util.getContaLogada().getCnpj() == null ? "CPF: " + Util.getContaLogada().getCpf() : "CNPJ: " + Util.getContaLogada().getCnpj()+ "\n"
+			+ "E-mail: " + Util.getContaLogada().getEmail() + "\n"
+			+ "Usuário: " + Util.getContaLogada().getUsuario() + "\n"
+			+ "\nInformações do telefone denunciado: \n"
+			+ "ID: " + Util.getDenunciAtual().getTelefone().getId() + "\n"
+			+ "Número: " + Util.getDenunciAtual().getTelefone().getNumero() + "\n"
+			+ "Descrição: " + Util.getDenunciAtual().getTelefone().getDescricao() + "\n";*/
+			String conteudo = String.format("Nova denúncia aberta - %s"
+					+ "\n"
+					+ "Informações do denunciado: "
+					+ "\nID: %s"
+					+ "\nNome: %s"
+					+ "\n%s"
+					+ "E-mail: %s"
+					+ "Usuário: %s", 
+					Util.getDenunciAtual().getTipo(),
+					Util.getDenunciAtual().getDenunciado().getId(), 
+					Util.getDenunciAtual().getDenunciado().getNome(),
+					Util.getDenunciAtual().getDenunciado().getTipo() ? "CNPJ: " + Util.getDenunciAtual().getDenunciado().getCnpj(): "CPF: " + Util.getDenunciAtual().getDenunciado().getCpf(),
+					Util.getDenunciAtual().getDenunciado().getEmail(),
+					Util.getDenunciAtual().getDenunciado().getUsuario());
+			try
+			{
+				conteudo += "\nInformações do endereço denunciado: \n"
+						+ "ID: " + Util.getDenunciAtual().getEndereco().getId() + "\n"
+						+ "Rua: " + Util.getDenunciAtual().getEndereco().getRua() + "\n"
+						+ "Número: " + Util.getDenunciAtual().getEndereco().getNumero() + "\n"
+						+ "Bairro: " + Util.getDenunciAtual().getEndereco().getBairro() + "\n"
+						+ "Cidade: " + Util.getDenunciAtual().getEndereco().getBairro() + "\n"
+						+ "Estado: " + Util.getDenunciAtual().getEndereco().getEstado() + "\n"
+						+ "Nome: " + Util.getDenunciAtual().getEndereco().getNome() + "\n"
+						+ "\nInformações da denúncia\n"
+						+ "ID: " + Util.getDenunciAtual().getId() + "\n"
+						+ "Descrição: " + Util.getDenunciAtual().getDescricao() + "\n"
+						+ "Local: " + Util.getDenunciAtual().getLocal();
+			}
+			catch (Exception erro)
+			{
+				conteudo += "\n\nNenhum endereço está atribuído a este telefone.";
+			}
+			System.out.println(conteudo);
+			try
+			{
+				Banco.InserirQuery(String.format("INSERT INTO denuncia (id, descricao, tipo, local_, denunciado, denunciador, status_, tel, end_) "
+						+ "VALUES (default, '%s', '%s', %s, %s, %s, 0, %s, %s)", 
+						Util.getDenunciAtual().getDescricao(), Util.getDenunciAtual().getTipo(), Util.getDenunciAtual().getLocal(), Util.getDenunciAtual().getDenunciado().getId(),
+						Util.getDenunciAtual().getDenunciador().getId(), Util.getDenunciAtual().getTelefone().getId(), Util.getDenunciAtual().getEndereco().getId()));
+			}
+			catch (Exception erro)
+			{
+				Banco.InserirQuery(String.format("INSERT INTO denuncia (id, descricao, tipo, local_, denunciado, denunciador, status_, tel) "
+						+ "VALUES (default, '%s', '%s', %s, %s, %s, 0, %s)", 
+						Util.getDenunciAtual().getDescricao(), Util.getDenunciAtual().getTipo(), Util.getDenunciAtual().getLocal(), Util.getDenunciAtual().getDenunciado().getId(),
+						Util.getDenunciAtual().getDenunciador().getId(), Util.getDenunciAtual().getTelefone().getId()));
+			}
+
+			if(Email.enviarEmail(conteudo, "Nova denúncia de parceiro: " +Util.getDenunciAtual().getTipo()))
 				Util.MessageBoxShow("Denúncia enviada com sucesso!", "Um e-mail com as informações foi enviado para os moderadores.\n"
 						+ "\nSua denúncia será analisada.\n"
 						+ "\nObrigado por contribuir para a melhoria do software!", AlertType.INFORMATION);
 		}
 	}
-	
+
 	public void initialize()
 	{
 		cboxMotivo.getItems().add("Número inexistente");
@@ -142,7 +186,7 @@ public class TelaDenuncia extends Application {
 		cboxMotivo.getItems().add("Palavras ofensivas");
 		cboxMotivo.getItems().add("Outro");
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
