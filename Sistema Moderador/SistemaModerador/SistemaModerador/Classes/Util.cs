@@ -8,6 +8,8 @@ namespace SistemaModerador.Classes
 {
     public class Util
     {
-        public static string moderador; 
+        public static string moderador;
+        public static string email;
+        public static bool isCodigo = false;
     }
 }

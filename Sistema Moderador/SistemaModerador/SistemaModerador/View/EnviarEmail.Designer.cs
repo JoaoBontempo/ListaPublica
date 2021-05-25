@@ -222,7 +222,7 @@ namespace SistemaModerador.View
             this.MaximizeBox = false;
             this.Name = "EnviarEmail";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "EnviarEmail";
+            this.Text = "Responder por E-mail";
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.ResumeLayout(false);

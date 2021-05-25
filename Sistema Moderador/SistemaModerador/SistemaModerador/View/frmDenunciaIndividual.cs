@@ -50,25 +50,45 @@ namespace SistemaModerador.View
 
         private void ExcluirInformacoes(string parceiro)
         {
-            if (DialogResult.Yes.Equals(MessageBox.Show("Tem certeza que deseja excluir as informações?", String.Format("Todas as informações do {0} serão excluídas, incluindo:" +
+            if (DialogResult.Yes.Equals(MessageBox.Show(String.Format("Todas as informações do {0} serão excluídas, incluindo:" +
                "\n\n- Telefones" +
                "\n- Endereços" +
                "\n- Esta denúncia" +
                "\n- A conta do {0}." +
-               "\n\nDeseja prosseguir?", parceiro), MessageBoxButtons.YesNo, MessageBoxIcon.Question)))
+               "\n\nDeseja prosseguir?", parceiro), "Tem certeza que deseja excluir as informações?", MessageBoxButtons.YesNo, MessageBoxIcon.Question)))
             {
-                TextBox textBox;
-                if (parceiro.Equals("denunciado"))
-                    textBox = txtIDD1;
-                else
-                    textBox = txtIDD2;
+                frmConfirmacao confirmacao = new frmConfirmacao();
+                confirmacao.ShowDialog();
 
-                Banco.InserirQuery("DELETE FROM denuncia WHERE id = " + idDenuncia);
-                Banco.InserirQuery("DELETE FROM telefone WHERE dono = " + textBox.Text);
-                Banco.InserirQuery("DELETE FROM endereco WHERE usuario = " + textBox.Text);
-                Banco.InserirQuery("DELETE FROM	parceiro WHERE id = " + textBox.Text);
+                switch (confirmacao.getResposta())
+                {
+                    case -1:
+                        MessageBox.Show("A operação foi cancelada.");
+                        break;
 
-                MessageBox.Show(String.Format("As informações do {0} foram excluídas com sucesso.", parceiro));
+                    case 0:
+                        MessageBox.Show("O código de confirmação está incorreto! O sistema será fechado");
+                        Banco.FecharBanco();
+                        this.Close();
+                        Application.Exit();
+                        break;
+
+                    case 1:
+                        TextBox textBox;
+                        if (parceiro.Equals("denunciado"))
+                            textBox = txtIDD1;
+                        else
+                            textBox = txtIDD2;
+
+                        Banco.InserirQuery("DELETE FROM denuncia WHERE id = " + idDenuncia);
+                        Banco.InserirQuery("DELETE FROM telefone WHERE dono = " + textBox.Text);
+                        Banco.InserirQuery("DELETE FROM endereco WHERE usuario = " + textBox.Text);
+                        Banco.InserirQuery("DELETE FROM	parceiro WHERE id = " + textBox.Text);
+
+                        MessageBox.Show(String.Format("As informações do {0} foram excluídas com sucesso.", parceiro));
+                        this.Close();
+                        break;
+                }
             }
         }
 

@@ -33,11 +33,18 @@ namespace SistemaModerador.Classes
             }
             conteudo.Priority = MailPriority.High;
             conteudo.Subject = titulo;
-            conteudo.Body = descricao + "\n\n" +
-                "Lista Pública de Telefones" +
-                "\nEquipe moderadora - Moderador: " + Util.moderador;
+            if (!Util.isCodigo)
+                conteudo.Body = descricao + "\n\n" +
+                    "Lista Pública de Telefones" +
+                    "\nEquipe moderadora - Moderador: " + Util.moderador;
+            else
+                conteudo.Body = descricao;
+            
             smtp.Send(conteudo);
-            MessageBox.Show("E-mail enviado com sucesso!");
+            if (!Util.isCodigo)
+                MessageBox.Show("E-mail enviado com sucesso!");
+
+            Util.isCodigo = false;
         }
     }
 }

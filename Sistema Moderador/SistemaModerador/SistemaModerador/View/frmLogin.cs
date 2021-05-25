@@ -53,6 +53,7 @@ namespace SistemaModerador
                     {
                         this.Hide();
                         Util.moderador = txtUsuario.Text;
+                        Util.email = Banco.reader.GetString("email");
                         logado = true;
                         TelaPrincipal tp = new TelaPrincipal();
                         tp.ShowDialog();
