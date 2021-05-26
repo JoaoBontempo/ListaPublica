@@ -122,9 +122,9 @@
     -fx-background-color: #090E11;
 }
 
+
 .labelVerde
 {
-	-fx-font-family: 'Candara';
 	-fx-text-fill: #84ff00;
 	-fx-alignment: center;
 }
