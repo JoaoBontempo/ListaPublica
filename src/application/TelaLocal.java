@@ -175,6 +175,7 @@ public class TelaLocal extends Application {
 	}
 
 	public void initialize() throws Exception {
+		lbDenunciarLocal.setDisable(Util.isConvidado());
 		// obtenho os valores do arraylist da tela anterior e jogo no ListView
 		lvTelefones.getItems().addAll(UtilDashboard.getTelefones());
 
