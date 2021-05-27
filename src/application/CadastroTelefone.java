@@ -9,15 +9,19 @@ import classes.Endereco;
 import classes.Util;
 import classes.Validacao;
 import javafx.application.Application;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class CadastroTelefone extends Application{
@@ -57,7 +61,7 @@ public class CadastroTelefone extends Application{
 			return false;
 		if (!Validacao.verificarTextField(txtDescricao))
 			return false;
-		
+
 		ResultSet result = Banco.InserirQueryReader(String.format("SELECT id FROM telefone WHERE telefone.numero = '%s'", txtNumero.getText()));
 		if (result.next())
 		{
@@ -66,7 +70,7 @@ public class CadastroTelefone extends Application{
 		}
 		return true;
 	}
-	
+
 	@FXML
 	public void cadastrarTelefone() throws SQLException
 	{
@@ -87,7 +91,11 @@ public class CadastroTelefone extends Application{
 		}
 	}
 
+	public Event evento;
 
+	public void getEvent(Event evento) {
+		this.evento = evento;
+	}
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -99,6 +107,9 @@ public class CadastroTelefone extends Application{
 			primaryStage.setTitle("Lista Pública - Cadastrar novo telefone");
 			primaryStage.getIcons().add(icon);
 			primaryStage.setResizable(false);
+			primaryStage.initModality(Modality.WINDOW_MODAL);
+			primaryStage.initOwner(
+					((Node)evento.getSource()).getScene().getWindow());
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
