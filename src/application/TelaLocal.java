@@ -227,7 +227,7 @@ public class TelaLocal extends Application {
 	@FXML
 	void abrirDescricaoDetalhada(MouseEvent event) {
 		//		DOUBLE CLICK NA LINHA
-		if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
+		if (event.getButton().equals(MouseButton.PRIMARY)){
 	            if(tvTelefone.getSelectionModel().getSelectedItem() != null) {
 	            	TelefoneNumero numero=tvTelefone.getSelectionModel().getSelectedItem();
 
@@ -236,11 +236,17 @@ public class TelaLocal extends Application {
 	            		Util.setTelefoneAtual(telefone);
 	            		
 	                	String url="http://localhost:5000/ListaPublica/getUserAddress/"+telefone;
+	                	JSONArray array=null;
+	                	JSONObject objeto=null;
+	                	try {
+	                		array=requisicaoGenerica(url); // passo o telefone e a api vai obter o id do local e fazer uma requisicao nesse id
+		            		objeto=array.getJSONObject(0);
+		            		id_endereco=objeto.getInt("id");
+		            		id_telefone=Util.RecuperarIdTelefonePorTelefone(telefone);
+	                	}catch(Exception e) {
+	                		Util.MessageBoxShow("Telefone sem endereço", "O telefone solicitado não possui nenhum endereço atribuido");
+	                	}
 	                	
-	                	JSONArray array=requisicaoGenerica(url); // passo o telefone e a api vai obter o id do local e fazer uma requisicao nesse id
-	            		JSONObject objeto=array.getJSONObject(0);
-	            		id_endereco=objeto.getInt("id");
-	            		id_telefone=Util.RecuperarIdTelefonePorTelefone(telefone);
 	            		
 	            		System.out.println(objeto.toString());
 	                	if(objeto.getString("imagem").length()>0) {
@@ -250,10 +256,17 @@ public class TelaLocal extends Application {
 	                		Util.verificaExistenciaImagem(fileName, conteudoImagem.getBytes(), true);
 	                		imgLocal.setImage(new Image("file:///C:/lista/locais/"+fileName));
 	                	}
-	                	UtilDashboard.setIdDono(objeto.getString("id"));
+	                	//UtilDashboard.setIdDono(objeto.getString("id"));
 	                	insereCampos(objeto.get("estado").toString(),objeto.get("bairro").toString(),objeto.get("rua").toString(),
 	                			objeto.get("cidade").toString(),objeto.get("numero").toString(),objeto.get("descricao").toString(),
 	                			objeto.getString("nome"));
+	                	List<ComentarioTable> comentarios=Util.RecuperarComentariosEndereco(id_telefone); // Esse utilDashboard será usado apenas ao entrar no form
+	            		if(comentarios != null) {
+	            			ObservableList<ComentarioTable> observableComentario =
+		            				FXCollections.observableArrayList(comentarios);	
+	            			tvComentarios.setItems(observableComentario);
+	            		}
+	                	
 	            	}catch(JSONException | NullPointerException e) {
 	            		// não faça nada, pois se entrar aqui é pq o array não tem posições, então ignore.
 	            	} catch (Exception e) {
@@ -273,6 +286,7 @@ public class TelaLocal extends Application {
 		
 		caracteresProibidosComentario=Arrays.asList("'");
 		tvcTelefone.setCellValueFactory(new PropertyValueFactory("numero"));
+		
 		// verifica se está logado ou não (caso esteja logado apareça o pane de textbox e button)
 		if(Util.getContaLogada() != null) {
 			pnlEnviarComentario.setVisible(true);
@@ -287,12 +301,13 @@ public class TelaLocal extends Application {
 		
 
 		// verifica se o endereço possui comentário associado
-		List<ComentarioTable> comentarios=Util.RecuperarComentariosEndereco(Integer.parseInt(UtilDashboard.getIdLugar())); // Esse utilDashboard será usado apenas ao entrar no form
+		List<ComentarioTable> comentarios=Util.RecuperarComentariosEndereco(id_telefone); // Esse utilDashboard será usado apenas ao entrar no form
 		ObservableList<ComentarioTable> observableComentario =
 				FXCollections.observableArrayList(comentarios);
 		tvcUsuario.setCellValueFactory(new PropertyValueFactory("usuario"));
 		tvcComentario.setCellValueFactory(new PropertyValueFactory("comentario"));
 		tvcData.setCellValueFactory(new PropertyValueFactory("dataComentario"));
+		
 		
 		tvComentarios.setItems(observableComentario);
 		
@@ -325,7 +340,6 @@ public class TelaLocal extends Application {
 
 			String result = EntityUtils.toString(response.getEntity());
 			obj = new JSONArray(result);
-			System.out.println(obj.getJSONObject(0).toString());
 			return obj;
 		} catch (JSONException | IOException e) {
 			e.printStackTrace();
