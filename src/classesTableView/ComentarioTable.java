@@ -5,16 +5,26 @@ import java.time.LocalDate;
 public class ComentarioTable {
 	private String usuario;
 	private String comentario;
-	private LocalDate data;
+	private String dataComentario;
 	
 	public ComentarioTable() {
 		super();
 	}
-	public ComentarioTable(String usuario, String comentario, LocalDate data) {
+	@Override
+	public String toString() {
+		return "ComentarioTable [usuario=" + usuario + ", comentario=" + comentario + ", data=" + dataComentario + "]";
+	}
+	public ComentarioTable(String usuario, String comentario, String data) {
 		super();
 		this.usuario = usuario;
 		this.comentario = comentario;
-		this.data = data;
+		this.dataComentario = data;
+	}
+	public String getDataComentario() {
+		return dataComentario;
+	}
+	public void setDataComentario(String dataComentario) {
+		this.dataComentario = dataComentario;
 	}
 	public String getUsuario() {
 		return usuario;

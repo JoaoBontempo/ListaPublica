@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +35,7 @@ import classes.Telefone;
 import classes.TelefoneNumero;
 import classes.Util;
 import classes.UtilDashboard;
+import classesTableView.ComentarioTable;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -64,6 +67,7 @@ public class TelaLocal extends Application {
 	private String idBuscarInfos = null;
 	private boolean possuiImagem = false;
 	private int id_endereco;
+	private int id_telefone;
 	private String conteudoImagem = "";
 	private String fileName="";
 	private Stage primaryStage;
@@ -100,6 +104,14 @@ public class TelaLocal extends Application {
 	@FXML
     private ListView<String> lvComentarios;
 	
+	@FXML
+	private TableColumn<ComentarioTable, String> tvcUsuario;
+
+	@FXML
+	private TableColumn<ComentarioTable, String> tvcComentario;
+
+	@FXML
+	private TableColumn<ComentarioTable, String> tvcData;
 	
 	@FXML
 	private ImageView imgLocal;
@@ -135,6 +147,9 @@ public class TelaLocal extends Application {
 	private ListView<String> lvTelefones;
 
 	@FXML
+    private TableView<ComentarioTable> tvComentarios;
+	
+	@FXML
     void RealizarComentario(ActionEvent event) {
 		String comentario=txtComentario.getText();
 		if(comentario.length()<=0) {
@@ -148,24 +163,27 @@ public class TelaLocal extends Application {
 			}
 		}
 		try {
-			Banco.InserirQuery("insert into comentarios values(default,"+UtilDashboard.getIdTelefone()+","+Util.getContaLogada().getId()+","+
-			"'"+comentario+"'");
-			atualizarComentarios(id_endereco);
+			String query="insert into comentarios values(default,"+UtilDashboard.getIdTelefone()+","+Util.getContaLogada().getId()+","+
+					"'"+LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+"','"+comentario+"');";
+			System.out.println(query);
+			Banco.InserirQuery(query);
+			atualizarComentarios();
+			txtComentario.clear();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
 	
-	private void atualizarComentarios(int id_endereco) {
-		// esse método vai atualizar todos os comentários do id X para o listview
+	private void atualizarComentarios() {
 		
-		//List<Comentario> comentarios=Util.RecuperarComentariosEndereco(id_endereco);
-		lvComentarios.getItems().clear();
-//		if(comentarios!=null) {
-//			comentarios.forEach(e-> lvComentarios.getItems().add(Util.RecuperarNomeUsuarioPorId(e.getIdParceiro()) +" disse : "+
-//		e.getComentario()));
-//		}
+		List<ComentarioTable> comentarios=Util.RecuperarComentariosEndereco(this.id_telefone);
+		ObservableList<ComentarioTable> observableComentario =
+				FXCollections.observableArrayList(comentarios);
+		if(comentarios!=null) {
+			tvComentarios.getItems().clear();
+			tvComentarios.setItems(observableComentario);
+		}
 		
 	}
 
@@ -216,10 +234,14 @@ public class TelaLocal extends Application {
 	            	try {
 	            		String telefone=numero.getNumero();
 	            		Util.setTelefoneAtual(telefone);
+	            		
 	                	String url="http://localhost:5000/ListaPublica/getUserAddress/"+telefone;
+	                	
 	                	JSONArray array=requisicaoGenerica(url); // passo o telefone e a api vai obter o id do local e fazer uma requisicao nesse id
 	            		JSONObject objeto=array.getJSONObject(0);
 	            		id_endereco=objeto.getInt("id");
+	            		id_telefone=Util.RecuperarIdTelefonePorTelefone(telefone);
+	            		
 	            		System.out.println(objeto.toString());
 	                	if(objeto.getString("imagem").length()>0) {
 	                		conteudoImagem=objeto.getString("imagem");
@@ -247,6 +269,8 @@ public class TelaLocal extends Application {
 	public void initialize() throws Exception {
 		lbDenunciarLocal.setDisable(Util.isConvidado());
 
+		id_telefone=UtilDashboard.getIdTelefone();
+		
 		caracteresProibidosComentario=Arrays.asList("'");
 		tvcTelefone.setCellValueFactory(new PropertyValueFactory("numero"));
 		// verifica se está logado ou não (caso esteja logado apareça o pane de textbox e button)
@@ -261,15 +285,16 @@ public class TelaLocal extends Application {
 				FXCollections.observableArrayList(UtilDashboard.getTelefones());
 		tvTelefone.setItems(observableTelefones);
 		
-		
-		
 
 		// verifica se o endereço possui comentário associado
-		//List<Comentario> comentarios=Util.RecuperarComentariosEndereco(Integer.parseInt(UtilDashboard.getIdLugar())); // Esse utilDashboard será usado apenas ao entrar no form
-//		if(comentarios!=null) {
-//			//comentarios.forEach(e-> lvComentarios.getItems().add(Util.RecuperarNomeUsuarioPorId(e.getIdParceiro()) +" disse : "+e.getComentario()));
-//		}
+		List<ComentarioTable> comentarios=Util.RecuperarComentariosEndereco(Integer.parseInt(UtilDashboard.getIdLugar())); // Esse utilDashboard será usado apenas ao entrar no form
+		ObservableList<ComentarioTable> observableComentario =
+				FXCollections.observableArrayList(comentarios);
+		tvcUsuario.setCellValueFactory(new PropertyValueFactory("usuario"));
+		tvcComentario.setCellValueFactory(new PropertyValueFactory("comentario"));
+		tvcData.setCellValueFactory(new PropertyValueFactory("dataComentario"));
 		
+		tvComentarios.setItems(observableComentario);
 		
 		// inicia a api
 		iniciaApi();
@@ -311,8 +336,6 @@ public class TelaLocal extends Application {
 
 	void iniciaApi() {
 		String result;
-		
-			
 		ObjectMapper mapper = new ObjectMapper();
 		String url = "http://localhost:5000/ListaPublica/getUserAddress/" + UtilDashboard.getNumeroTelefone();
 		HttpGet get = new HttpGet(url);
@@ -324,7 +347,6 @@ public class TelaLocal extends Application {
 
 			result = EntityUtils.toString(response.getEntity());
 			JSONArray obj = new JSONArray(result);
-			System.out.println(obj.getJSONObject(0).toString());
 			EnderecoComDescricao endereco;
 			ArrayList<EnderecoComDescricao> enderecos = new ArrayList<>();
 

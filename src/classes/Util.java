@@ -12,9 +12,13 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -88,15 +92,16 @@ public final class Util {
 	public static List<ComentarioTable> RecuperarComentariosEndereco(int idTelefone) {
 		List<ComentarioTable> comentarios=null;
 		try {
-			Banco.InserirQueryReader("select * from comentarios where idEndereco="+idTelefone);
+			Banco.InserirQueryReader("select c.idTelefone,c.idParceiro,c.dataHorario,c.comentario,p.usuario from comentarios as c,parceiro as p where idTelefone="+idTelefone+" and p.id=c.idParceiro;");
 			comentarios=new ArrayList<ComentarioTable>();
 			while(Banco.getReader().next()) {
-				Banco.InserirQuery("");
+				SimpleDateFormat dt=new SimpleDateFormat("dd/MM/yyyy");
+				String data=dt.format(new Date(Banco.getReader().getString("dataHorario").replace("-","/").split("\s")[0]));
 				
-//				ComentarioTable c=new ComentarioTable(
-//						Banco.getReader().getString("comentario"),Banco.getReader().getString("dataHorario"));
-				//comentarios.add(c);
-				
+				ComentarioTable c=new ComentarioTable(Banco.getReader().getString("usuario"),
+						Banco.getReader().getString("comentario"),data);
+				comentarios.add(c);
+				System.out.println(c);
 			}
 			return comentarios;
 		} catch (SQLException e) {
