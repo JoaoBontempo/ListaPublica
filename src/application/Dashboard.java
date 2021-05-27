@@ -60,7 +60,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -193,18 +192,6 @@ public class Dashboard extends Application {
 	@FXML
 	private Button btnAlterarSenha;
 
-    @FXML
-    private ComboBox<?> cbxMostrarTelefones;
-
-    @FXML
-    private BorderPane pnlInformacoes;
-
-    @FXML
-    private Label lbInformacoes;
-
-    @FXML
-    private ListView<?> lvInformacoes;
-
 	@FXML
     private Label lblTrocarFotoPerfil;
 	
@@ -278,12 +265,8 @@ public class Dashboard extends Application {
 		if (Validacao.validarEmail(txtMCEmail.getText())) {
 			Banco.InserirQuery(String.format("UPDATE parceiro set email = '%s' where id = %s", txtMCEmail.getText(),
 					Util.getContaLogada().getId()));
-			Util.MessageBoxShow("Alteração de Dados", "Email alterado com sucesso!");
+			Util.MessageBoxShow("Alteraï¿½ï¿½o de Dados", "Email alterado com sucesso!");
 			Util.getContaLogada().setEmail(txtMCEmail.getText());
-			Util.MessageBoxShow("Alteração de Dados", "Email inserido é inválido!", Alert.AlertType.WARNING);
-		}
-		else {
-			
 		}
 
 	}
@@ -291,7 +274,7 @@ public class Dashboard extends Application {
 	private String Codigo = "";
 	@FXML
 	void AlterarSenha(ActionEvent event) {
-		Codigo = RecuperarSenha.gerarCodigo(0, "", 6);
+		Codigo = RecuperarSenha.gerarCodigo(0, "", new Random().nextInt(9));
 
 		if(Email.enviarEmail("O seu código de acesso é " + Codigo,
 				"Troca de Senha", Util.getContaLogada().getEmail())) {
@@ -306,7 +289,7 @@ public class Dashboard extends Application {
 		if(txtMCCodigo.getText().equals(Codigo)) {
 
 			TrocarSenha trocarSenha = new TrocarSenha();
-			trocarSenha.getEvent(event);
+			trocarSenha.setEmail(Util.getContaLogada().getEmail());
 			trocarSenha.start(new Stage());
 
 		}
@@ -336,7 +319,6 @@ public class Dashboard extends Application {
 	void FormCadastrarEndereco(ActionEvent event) {
 		try {
 			CadastrarLocal cadastro=new CadastrarLocal();
-			cadastro.getEvent(event);
 			cadastro.start(new Stage());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -577,11 +559,10 @@ public class Dashboard extends Application {
 		Stage stage = (Stage) txtPesquisar.getScene().getWindow();
 		return stage;
 	}
-	
+
 	@FXML
-	public void showNovoTelefone(Event event) {
+	public void showNovoTelefone() {
 		CadastroTelefone ct = new CadastroTelefone();
-		ct.getEvent(event);	
 		ct.start(new Stage());
 	}
 }

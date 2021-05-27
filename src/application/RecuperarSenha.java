@@ -21,10 +21,8 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class RecuperarSenha extends Application {
@@ -141,7 +139,7 @@ public class RecuperarSenha extends Application {
 		if(builder.equals(codigoGerado)) {
 			// form trocar senha
 			TrocarSenha telaTrocarSenha = new TrocarSenha();
-			//telaTrocarSenha.setEmail(txtEmailPrincipal.getText());
+			telaTrocarSenha.setEmail(txtEmailPrincipal.getText());
 			telaTrocarSenha.start(new Stage());
 			
 			Stage stageAtual = (Stage) btnConfirmarCodigo.getScene().getWindow();
@@ -216,13 +214,7 @@ public class RecuperarSenha extends Application {
 	void txtNumeroUm(ActionEvent event) {
 
 	}
-	
-	public MouseEvent evento;
-	
-    public void getEvent(MouseEvent evento) {
-    	this.evento = evento;
-    }
-    
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -233,14 +225,9 @@ public class RecuperarSenha extends Application {
 
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Lista Pública - Esqueci a senha");
-         
+
 			primaryStage.getIcons().add(icon);
-		    primaryStage.initModality(Modality.WINDOW_MODAL);
-			primaryStage.initOwner(
-			        ((Node)evento.getSource()).getScene().getWindow());
-			    primaryStage.show();
-			
-			 
+			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

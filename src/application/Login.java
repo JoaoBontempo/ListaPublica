@@ -8,9 +8,7 @@ import classes.Parceiro;
 import classes.Util;
 import classes.Validacao;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.stage.Stage;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -65,7 +63,7 @@ public class Login extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void initialize() throws ClassNotFoundException, SQLException
 	{
 //		try {
@@ -207,22 +205,13 @@ public class Login extends Application {
 			loginRealizado();
 		}
 	}
-
 	@FXML
 	void esqueciSenha(MouseEvent event) {
 		
 		RecuperarSenha recuperar = new RecuperarSenha();
-		recuperar.getEvent(event);		
 		recuperar.start(new Stage());
-<<<<<<< Updated upstream
 //		Stage stageAtual = (Stage) lbEsqueciSenha.getScene().getWindow();
 //		stageAtual.close();
-=======
-		//Stage stageAtual = (Stage) lbEsqueciSenha.getScene().getWindow();
-		//stageAtual.close();
-		
-		//fechar a tela resulta na perca do owner do evento
->>>>>>> Stashed changes
 	}
 
 }

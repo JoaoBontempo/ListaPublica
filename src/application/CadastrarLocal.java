@@ -36,7 +36,6 @@ import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -58,34 +57,27 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class CadastrarLocal extends Application implements Initializable {
 	private ArrayList<Integer> idsEstado = new ArrayList<Integer>();
-
+	
 	private boolean campoCpfCnpj = false; // false=Cpf
 
 	Stage primaryStage;
-
+	
 	@FXML
-	private Label lblCnpj1;
+    private Label lblCnpj1;
 
-	@FXML
-	private TextField txtCaminhoImagem;
+    @FXML
+    private TextField txtCaminhoImagem;
 
-	@FXML
-	private Button btnEscolherArquivo;
-
-<<<<<<< Updated upstream
     @FXML
     private ComboBox<String> cmbCidades;
     
     @FXML
     private Button btnEscolherArquivo;
 	
-=======
->>>>>>> Stashed changes
 	@FXML
 	private ComboBox<String> cmbTipo;
 
@@ -93,11 +85,11 @@ public class CadastrarLocal extends Application implements Initializable {
 	private TextField txtEmail;
 
 	@FXML
-	private TextField txtCep;
-
-	@FXML
+    private TextField txtCep;
+	
+	 @FXML
 	private Label lblCnpj;
-
+	
 	@FXML
 	private TextField txtTipo;
 
@@ -105,8 +97,8 @@ public class CadastrarLocal extends Application implements Initializable {
 	private TextField txtRua;
 
 	@FXML
-	private TextArea txtDescricao;
-
+    private TextArea txtDescricao;
+	
 	@FXML
 	private TextField txtNumeroResidencia;
 
@@ -117,8 +109,8 @@ public class CadastrarLocal extends Application implements Initializable {
 	private ComboBox<String> cmbEstados;
 
 	@FXML
-	private TextField txtNomeLocal;
-
+    private TextField txtNomeLocal;
+	
 	@FXML
 	private ImageView imgFotoLocal;
 
@@ -126,7 +118,7 @@ public class CadastrarLocal extends Application implements Initializable {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
+	
 	void limparTela() {
 		txtCaminhoImagem.clear();
 		txtNomeLocal.clear();
@@ -135,9 +127,9 @@ public class CadastrarLocal extends Application implements Initializable {
 		txtRua.clear();
 		txtCep.clear();
 	}
-
+	
 	@FXML
-	void cadastrarEndereco(ActionEvent event) {
+    void cadastrarEndereco(ActionEvent event) {
 		if(txtBairro.getText().isEmpty()) {
 			Util.MessageBoxShow("Campo vazio", "Preencha o bairro corretamente", AlertType.ERROR);
 			return;
@@ -184,23 +176,23 @@ public class CadastrarLocal extends Application implements Initializable {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
+    }
 
-	@FXML
-	void mudarLabelNome(ActionEvent event) {
-		CheckBox chk = (CheckBox)event.getSource();
-		if(chk.isSelected()) {
-			lblCnpj.setText("CNPJ");
-		}else {
-			lblCnpj.setText("Nome");
-		}
-	}
+    @FXML
+    void mudarLabelNome(ActionEvent event) {
+    	CheckBox chk = (CheckBox)event.getSource();
+    	if(chk.isSelected()) {
+    		lblCnpj.setText("CNPJ");
+    	}else {
+    		lblCnpj.setText("Nome");
+    	}
+    }
 
 
-
+    
 
 	// API
-	public ArrayList<UF> doGetEstados()
+    public ArrayList<UF> doGetEstados()
 	{
 		String strResposta = "";
 
@@ -235,7 +227,6 @@ public class CadastrarLocal extends Application implements Initializable {
 
 		return estados;
 	}
-<<<<<<< Updated upstream
     
     
     @FXML
@@ -250,24 +241,6 @@ public class CadastrarLocal extends Application implements Initializable {
     }
     
     @FXML
-=======
-
-
-	@FXML
-	void escolherImagem(ActionEvent event) {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Defina uma imagem do local");
-		fileChooser.getExtensionFilters().addAll(
-				new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-				new FileChooser.ExtensionFilter("PNG", "*.png"));
-		File imagemEscolhida=fileChooser.showOpenDialog(this.primaryStage);
-		txtCaminhoImagem.setText(imagemEscolhida.getAbsolutePath());
-
-
-	}
-
-	@FXML
->>>>>>> Stashed changes
 	private void recuperarCidades ()
 	{
 		cmbCidades.getItems().clear();
@@ -277,8 +250,8 @@ public class CadastrarLocal extends Application implements Initializable {
 			cmbCidades.getItems().add(municipio.getNome());
 		}
 	}
-
-
+    
+    
 	public ArrayList<Municipio> doGetCidades()
 	{
 		String strResposta = "";
@@ -290,7 +263,7 @@ public class CadastrarLocal extends Application implements Initializable {
 		int ret=idsEstado.get(cmbEstados.getSelectionModel().getSelectedIndex());
 		System.out.println("INDICE RETORNO: "+ret);
 		HttpGet httpGet = new HttpGet(String.format("https://servicodados.ibge.gov.br/api/v1/localidades/estados/%s/municipios",
-				idsEstado.get(cmbEstados.getSelectionModel().getSelectedIndex())));
+		idsEstado.get(cmbEstados.getSelectionModel().getSelectedIndex())));
 
 		HttpResponse response;
 		try {
@@ -317,11 +290,7 @@ public class CadastrarLocal extends Application implements Initializable {
 
 		return municipios;
 	}
-	public Event evento;
 
-	public void getEvent(Event evento) {
-		this.evento = evento;
-	}
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage=primaryStage;
@@ -335,42 +304,39 @@ public class CadastrarLocal extends Application implements Initializable {
 		primaryStage.setMaximized(false);
 		primaryStage.setTitle("Lista Pública - Cadastro de local");
 		primaryStage.getIcons().add(icon);
-		primaryStage.initModality(Modality.WINDOW_MODAL);
-		primaryStage.initOwner(
-				((Node)evento.getSource()).getScene().getWindow());
 		primaryStage.show();
 
 	}
 
 	void setFormatterCpnj() {
 		txtCep.setTextFormatter(new TextFormatter<>(change ->
-		(change.getControlNewText().matches("([0-9])+")) ? change : null));
+	    (change.getControlNewText().matches("([0-9])+")) ? change : null));
 	}
-
+	
 	void setFormatterNumeroResidencia() {
 		txtNumeroResidencia.setTextFormatter(new TextFormatter<>(change ->
-		(change.getControlNewText().matches("([0-9])+")) ? change : null));
+	    (change.getControlNewText().matches("([0-9])+")) ? change : null));
 	}
-
+	
 	@FXML
-	void verificarTeclaDeletar(KeyEvent event) {
+    void verificarTeclaDeletar(KeyEvent event) {
 		System.out.println( txtCep.getText().length()-1);
 		if(event.getCode().toString().equals("BACK_SPACE") && (txtCep.getText().length()-1) == 0) {
 			txtCep.setTextFormatter(null);
 			txtCep.clear();
 			setFormatterCpnj();
 		}
-	}
-
+    }
+	
 	@FXML
-	void verificarTeclaDeletarNumeroResidencia(KeyEvent event) {
+    void verificarTeclaDeletarNumeroResidencia(KeyEvent event) {
 		if(event.getCode().toString().equals("BACK_SPACE") && txtNumeroResidencia.getLength() == 0) {
 			txtNumeroResidencia.setTextFormatter(null);
 			txtNumeroResidencia.clear();
 			setFormatterNumeroResidencia();
 		}
-	}
-
+    }
+	
 	private void verificaCep() {
 		if(txtCep.getText().isEmpty()) {
 			//Util.MessageBoxShow("Campo vazio", "O campo de cep está vazio.",AlertType.ERROR);
@@ -387,7 +353,7 @@ public class CadastrarLocal extends Application implements Initializable {
 			cmbCidades.getSelectionModel().select(ret.getString("localidade"));
 		}
 	}
-
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ArrayList<UF> estados = doGetEstados();
@@ -397,25 +363,25 @@ public class CadastrarLocal extends Application implements Initializable {
 			cmbEstados.getItems().add(estado.getSigla());
 		}
 		System.out.println("Tamanho idEstados: "+idsEstado.size());
-
-
+		
+		
 		txtCep.focusedProperty().addListener(new ChangeListener<Boolean>()
 		{
-			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
-			{
-				if (!newPropertyValue)
-					verificaCep();
-			}
+		    @Override
+		    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+		    {
+		        if (!newPropertyValue)
+		        	verificaCep();
+		    }
 
-
+			
 		});
-
-
+		
+		
 		// VERIFICAÇÃO DE ENTRADAS
 		setFormatterCpnj();
 		setFormatterNumeroResidencia();
-
+		
 
 	}
 

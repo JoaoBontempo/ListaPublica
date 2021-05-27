@@ -8,20 +8,16 @@ import classes.Util;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class TrocarSenha extends Application {
-	//private String email;
+	private String email;
 
 	@FXML
     private TextField txtNovaSenha;
@@ -29,9 +25,9 @@ public class TrocarSenha extends Application {
     @FXML
     private TextField txtRedigiteSenha;
     
-    //public void setEmail(String email) {
-    //	this.email=email;
-    //}
+    public void setEmail(String email) {
+    	this.email=email;
+    }
 
     @FXML
     void CadastrarNovaSenha(ActionEvent event) {
@@ -41,14 +37,10 @@ public class TrocarSenha extends Application {
     	}
     	if(txtNovaSenha.getText().equals(txtRedigiteSenha.getText())) {
 			try {
-<<<<<<< Updated upstream
 				String query=String.format("UPDATE parceiro SET senha=%s WHERE email=%s;",Util.criptografarSenha(txtNovaSenha.getText()),
 						email);
 				System.out.println("Query troca : "+query);
 				Banco.InserirQuery(query);
-=======
-				Banco.InserirQuery(String.format("UPDATE parceiro SET senha='%s' WHERE id=%s",Util.criptografarSenha(txtNovaSenha.getText()),Util.getContaLogada().getId()));
->>>>>>> Stashed changes
 				Util.MessageBoxShow("Senha alterada", "Senha alterada com sucesso.", AlertType.INFORMATION);
 				Stage stageAtual = (Stage) txtNovaSenha.getScene().getWindow();
 				stageAtual.close();
@@ -61,10 +53,6 @@ public class TrocarSenha extends Application {
     		Util.MessageBoxShow("Senhas divergentes", "As senhas digitadas estão divergentes", AlertType.ERROR);
     	}
     }
-    ActionEvent evento;
-    public void getEvent(ActionEvent evento) {
-    	this.evento = evento;
-    }
     
     @Override
 	public void start(Stage primaryStage) {
@@ -74,10 +62,7 @@ public class TrocarSenha extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Lista Pública - Trocar senha");
-			primaryStage.initModality(Modality.WINDOW_MODAL);
-			primaryStage.initOwner(
-					((Node)evento.getSource()).getScene().getWindow());
-			primaryStage.show();
+			primaryStage.showAndWait();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

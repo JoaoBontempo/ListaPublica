@@ -62,8 +62,7 @@ public class Cadastrar extends Application{
 		if(ValidarCampos()) 
 			realizarCadastro(tipo);
 	}
-	
-  
+
 	public boolean tipo = false;
 	boolean ValidarCampos() {
 
