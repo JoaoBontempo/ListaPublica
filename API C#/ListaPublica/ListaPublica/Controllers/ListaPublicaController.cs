@@ -26,40 +26,70 @@ namespace ListaPublica.Controllers
 
         // Obtem o endereco do id X
         // id=id do local
-        [HttpGet("getUserAddress/{id}")]
-        public IList<EnderecoComDescricao> getUserAddress(int id)
+        [HttpGet("getUserAddress/{telefone}")]
+        public IList<EnderecoComDescricao> getUserAddress(String telefone)
         {
-            IList<EnderecoComDescricao> enderecos = new List<EnderecoComDescricao>();
-            string query = "select distinct e.rua,e.numero,e.bairro,e.estado,e.cidade,e.nome,t.descricao,t.dono from endereco as e , telefone as t INNER JOIN endereco ON(t.dono=endereco.usuario) WHERE e.id = "+id+";";
-            Banco.AbreConexao();
-            Banco.InserirQueryReader(query);
+            telefone = telefone.Replace("-", "");
 
-            while (Banco.reader.Read())
+            IList<EnderecoComDescricao> enderecos = new List<EnderecoComDescricao>();
+            //string query = "select distinct e.rua,e.numero,e.bairro,e.estado,e.cidade,e.nome,e.imagem,t.descricao,t.dono,t.numero"
+            //  +" from endereco as e , telefone as t INNER JOIN endereco ON(t.dono="+idDono+") WHERE t.numero LIKE '%"+telefone+"%';";
+
+            string queryObtemIdLocal = "select lugar from telefone where numero='" + telefone + "';"; // obtem o id do local associado ao telefone X
+
+            Banco.AbreConexao();
+            Banco.InserirQueryReader(queryObtemIdLocal);
+            Banco.reader.Read();
+            if (Banco.reader.HasRows)
             {
-                EnderecoComDescricao endereco = null;
-                try
+                string idLocal = Banco.reader.GetString("lugar");
+                // query para obter informações sobre o determinado lugar
+                string query = String.Format("select distinct e.id,e.rua,e.numero,e.bairro,e.estado,e.cidade,e.nome,e.imagem,t.descricao from "
+                    + " endereco as e, (select descricao from telefone where lugar={0}) as t where id={0};", idLocal);
+                Console.WriteLine(query);
+                Banco.InserirQueryReader(query);
+
+                while (Banco.reader.Read())
                 {
+                    EnderecoComDescricao endereco = null;
                     try
                     {
-                        endereco = new EnderecoComDescricao();
-                        endereco.bairro = Banco.reader.GetString("bairro");
-                        endereco.cidade = Banco.reader.GetString("cidade");
-                        endereco.estado = Banco.reader.GetString("estado");
-                        endereco.numero = Banco.reader.GetInt32("numero");
-                        endereco.rua = Banco.reader.GetString("rua");
-                        endereco.nome = Banco.reader.GetString("nome");
-                        endereco.descricao = Banco.reader.GetString("descricao");
+                        try
+                        {
+                            endereco = new EnderecoComDescricao();
+                            endereco.bairro = Banco.reader.GetString("bairro");
+                            endereco.cidade = Banco.reader.GetString("cidade");
+                            endereco.estado = Banco.reader.GetString("estado");
+                            endereco.numero = Banco.reader.GetInt32("numero");
+                            endereco.rua = Banco.reader.GetString("rua");
+                            endereco.nome = Banco.reader.GetString("nome");
+                            endereco.descricao = Banco.reader.GetString("descricao");
+                            try
+                            {
+                                endereco.imagem = Banco.reader.GetString("imagem");
+                                Console.WriteLine(endereco.imagem);
+                            }
+                            catch
+                            {
+                                endereco.imagem = "";
+                            }
+
+                        }
+                        catch (Exception e)
+                        {
+
+                        }
+                        enderecos.Add(endereco);
                     }
-                    catch (Exception e) {
-                        endereco.descricao = "";
+                    catch (Exception e)
+                    {
+                        endereco = null;
                     }
-                    enderecos.Add(endereco);
                 }
-                catch (Exception e)
-                {
-                    endereco = null;
-                }
+
             }
+
+
             return enderecos;
         }
 
