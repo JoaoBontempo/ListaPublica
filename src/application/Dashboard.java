@@ -1,6 +1,8 @@
 package application;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,6 +40,7 @@ import classes.Endereco;
 import classes.Parceiro;
 import classes.TableViewUtil;
 import classes.Telefone;
+import classes.TelefoneNumero;
 import classes.Util;
 import classes.UtilDashboard;
 import classes.Validacao;
@@ -69,7 +72,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -96,6 +105,9 @@ public class Dashboard extends Application {
 	@FXML
 	private TableColumn<TableViewUtil, String> tvcNumero;
 
+	@FXML
+    private ImageView imgIconePerfil;
+	
 	@FXML
 	private TableColumn<TableViewUtil, String> tvcNome;
 
@@ -134,7 +146,7 @@ public class Dashboard extends Application {
 
 	@FXML
 	private Tab tbMeusTelefones;
-
+	
 	@FXML
 	private Tab tbMeusEnderecos;
 
@@ -176,9 +188,6 @@ public class Dashboard extends Application {
 
 	@FXML
 	private Button btnConfirmarAlteracao;
-
-	@FXML
-    private ImageView imgIconePerfil;
 	
 	@FXML
 	private Button btnAlterarSenha;
@@ -195,31 +204,53 @@ public class Dashboard extends Application {
 	                new FileChooser.ExtensionFilter("PNG", "*.png"),
 	                new FileChooser.ExtensionFilter("ICO", "*.ico"));
 	    File imagemEscolhida=fileChooser.showOpenDialog(this.primaryStage);
-	    String base=Util.converterStringParaBase64(Path.of(imagemEscolhida.getAbsolutePath()).toString());
+	    // armazeno o arquivo na pasta 
 	    try {
-			Banco.InserirQuery("update parceiro set imagem='"+base+" where id ="+Util.getContaLogada().getId());
+	    	String diretorioTmp="C:\\lista\\usuarios\\"+imagemEscolhida.getName();
+			Files.copy(Path.of(imagemEscolhida.getAbsolutePath()), new FileOutputStream(diretorioTmp));
+			String base=Util.converterStringParaBase64(Path.of(imagemEscolhida.getAbsolutePath()).toString());
+			Banco.InserirQuery("update parceiro set imagem='"+base+"' where id ="+Util.getContaLogada().getId());
+			imgIconePerfil.setImage(new Image("file://"+diretorioTmp));
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    
 	 }
+
 	
 	void verificaIconeUsuario() {
-		int id=Util.getContaLogada().getId();
+		int id=-1;
+		try {
+			id=Util.getContaLogada().getId();	
+		}catch(NullPointerException e) {
+			// usuário está no modo convidado
+			return;
+		}
 		boolean possuiIcone=false;
 		try {
 			Banco.InserirQueryReader("select imagem from parceiro where id="+id);
 			if(Banco.getReader().next()) {
 				String imagem=Banco.getReader().getString("imagem");
-				if(imagem.length()>0) {possuiIcone=true;}
+				
+				if(imagem.length()>0) {
+					possuiIcone=true;
+					Util.verificaExistenciaImagem("profile.jpg", imagem.getBytes(), false);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		if(possuiIcone) {
-			imgIconePerfil.setImage(new Image("C:\\lista\\usuarios\\profile.png"));
-		}
+		imgIconePerfil.setImage(new Image("file://C:/lista/usuarios/profile.jpg"));
 		
 	}
 	
@@ -314,24 +345,8 @@ public class Dashboard extends Application {
             	String idDono=null;
             	String idLugar=null;
             	String query="";
-//            	try {
-//            		Banco.Conectar();
-//            		// primeiro obtenho o id do dono , depois obtenho os telefones associados a ele
-//            		query="select dono,lugar,descricao from telefone where numero LIKE '%"+numero+"%'";
-//            		query+=descricao == null?";":" and descricao LIKE '%"+descricao+"%';";
-//            		//System.out.println(query);
-//					if(tvTelefones.getSelectionModel().getSelectedItem() != null) {
-//						// obtém o telefone para obter o id do parceiro e id do local
-//						ret=tvTelefones.getSelectionModel().getSelectedItem();
-//						numero=ret.getNumero();
-//						descricao=ret.getDescricao();
-//						idDono=null;
-//						idLugar=null;
-//					}
-//				}catch(Exception e){e.printStackTrace();}
 				
 				try {
-					Banco.Conectar();
 					// primeiro obtenho o id do dono , depois obtenho os telefones associados a ele
 					query="select dono,lugar,descricao from telefone where numero LIKE '%"+numero+"%'";
 					query+=descricao == null?";":" and descricao LIKE '%"+descricao+"%';";
@@ -343,7 +358,8 @@ public class Dashboard extends Application {
 					UtilDashboard.setIdLugar(String.valueOf(Banco.getReader().getInt("lugar")));
 					UtilDashboard.setIdDono(idDono);
 					UtilDashboard.setNumeroTelefone(ret.getNumero());
-
+					UtilDashboard.setIdTelefone(Util.RecuperarIdTelefonePorTelefone(ret.getNumero()));
+					
 					// obtem os telefones
 					//query="select distinct endereco.usuario,telefone.numero from endereco INNER JOIN telefone ON endereco.usuario="+idDono+" order by endereco.usuario,telefone.numero;";
 					query="select numero from telefone where dono="+idDono+";";
@@ -353,7 +369,7 @@ public class Dashboard extends Application {
 					UtilDashboard.getTelefones().clear();
 					while(Banco.getReader().next()){
 						try {
-							UtilDashboard.getTelefones().add(Banco.getReader().getString("numero"));
+							UtilDashboard.getTelefones().add(new TelefoneNumero(Banco.getReader().getString("numero")));
 						}catch(Exception exc) {
 							exc.printStackTrace();
 						}
@@ -392,7 +408,9 @@ public class Dashboard extends Application {
 
 	// Mï¿½todo 'onLoad'
 	public void initialize() {
-
+		verificaIconeUsuario();
+		//imgIconePerfil.setImage(new Image("file://C:\\lista\\usuarios\\profile.jpg"));
+		
 		tbMeusEnderecos.setDisable(Util.isConvidado());
 		tbMeusTelefones.setDisable(Util.isConvidado());
 		tbMinhaConta.setDisable(Util.isConvidado());

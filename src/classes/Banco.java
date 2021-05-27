@@ -21,14 +21,14 @@ import javafx.scene.control.Alert.AlertType;
 public final class Banco {
 
 	// Credenciais do banco
-	private static String ip = "dblistapublica.ccenmvdsqpiw.us-east-2.rds.amazonaws.com";
-	//private static String ip = "127.0.0.1";
+	//private static String ip = "dblistapublica.ccenmvdsqpiw.us-east-2.rds.amazonaws.com";
+	private static String ip = "127.0.0.1";
 	private static String banco = "db_lista_publica";
 
-	private static String usuario = "gerenciamento";
-	private static String senha = "S3nh4F0rt3";
-	//private static String usuario = "root";
-	//private static String senha = "P@ssw0rd";
+	//private static String usuario = "gerenciamento";
+	//private static String senha = "S3nh4F0rt3";
+	private static String usuario = "root";
+	private static String senha = "P@ssw0rd";
 
 	private static String porta = "3306";
 
@@ -47,31 +47,36 @@ public final class Banco {
 	// String de conexao
 	private static String stringConexao = String.format("jdbc:mysql://%s:%s/%s", ip, porta, banco);
 
-	public static void atualizarImagem(String tabela,InputStream stream,int id) {
-		
-		try {
-			PreparedStatement pre=conexao.prepareStatement("update "+tabela+" set imagem=? where id="+id+";");
-			pre.setBinaryStream(1, (InputStream)stream,"imagem".length());
-			pre.executeUpdate();
-			pre.close();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	
-	public static void Conectar() throws ClassNotFoundException, SQLException {
+	static {
 		try {
 			Class.forName(DRIVE);
 			conexao = DriverManager.getConnection(stringConexao, usuario, senha);
 			statement = conexao.createStatement();
-		} catch (Exception erro) {
-			Util.MessageBoxShow("Erro ao conectar ao banco", erro.getMessage(), AlertType.INFORMATION);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 	}
 	
+//	public static void Conectar() throws ClassNotFoundException, SQLException {
+//		try {
+//			if(conexao == null) {
+//				Class.forName(DRIVE);
+//				conexao = DriverManager.getConnection(stringConexao, usuario, senha);
+//				statement = conexao.createStatement();
+//			}
+//			
+//		} catch (Exception erro) {
+//			Util.MessageBoxShow("Erro ao conectar ao banco", erro.getMessage(), AlertType.INFORMATION);
+//		}
+//	}
+	
 	public static ResultSet InserirQueryReader(String query) throws SQLException {
+
 		resultados = statement.executeQuery(query);
 		statement = conexao.createStatement();
 		return resultados;
@@ -79,10 +84,6 @@ public final class Banco {
 
 	public static boolean InserirQuery(String query) throws SQLException {
 		try {
-			
-			if(statement == null) {
-				Conectar();
-			}
 			statement.executeUpdate(query);
 			return true;
 			

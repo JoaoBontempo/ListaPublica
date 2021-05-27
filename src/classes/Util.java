@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
@@ -25,6 +26,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import classesTableView.ComentarioTable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -43,6 +45,8 @@ public final class Util {
 		return contaLogada;
 	}
 
+	
+	
 	public static void setContaLogada(Parceiro contaLogada) {
 		Util.contaLogada = contaLogada;
 	}
@@ -56,9 +60,51 @@ public final class Util {
 		}
 		return base64;
 	}
-	
-	
 
+	public static int RecuperarIdTelefonePorTelefone(String telefone) {
+		try {
+			Banco.InserirQueryReader("select id from telefone where numero="+telefone+";");
+			if(Banco.getReader().next()) {
+				return Banco.getReader().getInt("id");
+			}
+		}catch(Exception e) {
+			return -1;
+		}
+		return -1;
+	}
+	
+	public static String RecuperarNomeUsuarioPorId(int id) {
+		try {
+			Banco.InserirQueryReader("select usuario from parceiro where id="+id+";");
+			if(Banco.getReader().next()) {
+				return Banco.getReader().getString("usuario");
+			}
+		}catch(Exception e) {
+			return null;
+		}
+		return null;
+	}
+	
+	public static List<ComentarioTable> RecuperarComentariosEndereco(int idTelefone) {
+		List<ComentarioTable> comentarios=null;
+		try {
+			Banco.InserirQueryReader("select * from comentarios where idEndereco="+idTelefone);
+			comentarios=new ArrayList<ComentarioTable>();
+			while(Banco.getReader().next()) {
+				Banco.InserirQuery("");
+				
+//				ComentarioTable c=new ComentarioTable(
+//						Banco.getReader().getString("comentario"),Banco.getReader().getString("dataHorario"));
+				//comentarios.add(c);
+				
+			}
+			return comentarios;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public static void RecuperarInformacoesEndereco(int id) throws SQLException
 	{
 		try

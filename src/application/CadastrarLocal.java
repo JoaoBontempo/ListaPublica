@@ -73,6 +73,9 @@ public class CadastrarLocal extends Application implements Initializable {
     private TextField txtCaminhoImagem;
 
     @FXML
+    private ComboBox<String> cmbCidades;
+    
+    @FXML
     private Button btnEscolherArquivo;
 	
 	@FXML
@@ -111,8 +114,6 @@ public class CadastrarLocal extends Application implements Initializable {
 	@FXML
 	private ImageView imgFotoLocal;
 
-	@FXML
-	private ComboBox<String> cmbCidades;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -158,9 +159,9 @@ public class CadastrarLocal extends Application implements Initializable {
 		}		
 		String anexoImagem=txtCaminhoImagem.getText();
 		String query=
-				String.format("insert into endereco values (default,'%s','%s','%s','%s','%s','%s',1,'%s')",
+				String.format("insert into endereco values (default,'%s','%s','%s','%s','%s','%s',%d,'%s')",
 						txtRua.getText(),txtNumeroResidencia.getText(),txtBairro.getText(),cmbEstados.getSelectionModel().getSelectedItem(),
-						cmbCidades.getSelectionModel().getSelectedItem(),txtNomeLocal.getText(),
+						cmbCidades.getSelectionModel().getSelectedItem(),Util.getContaLogada().getId(),txtNomeLocal.getText(),
 						anexoImagem.length()>0?Util.converterStringParaBase64(anexoImagem):"");
 		System.out.println("Query de cadastro: "+query);
 		try {
@@ -237,8 +238,6 @@ public class CadastrarLocal extends Application implements Initializable {
                 new FileChooser.ExtensionFilter("PNG", "*.png"));
     	File imagemEscolhida=fileChooser.showOpenDialog(this.primaryStage);
     	txtCaminhoImagem.setText(imagemEscolhida.getAbsolutePath());
-    	
-    	
     }
     
     @FXML

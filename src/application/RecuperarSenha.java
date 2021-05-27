@@ -102,9 +102,7 @@ public class RecuperarSenha extends Application {
 	@FXML
 	void inserirDigito(KeyEvent event) {
 		// faz verificações simples primeiro (TAB)
-		
-		
-		
+
 		Node no=(Node)event.getSource();
 		String textChamou = no.getId();
 		switch (textChamou) {
@@ -153,12 +151,16 @@ public class RecuperarSenha extends Application {
 		}
 	}
 	
+	
 	@FXML
 	void VerificarEntradaEmail(ActionEvent event) {
 		if (!txtEmailPrincipal.getText().contains("@")) {
 			JOptionPane.showMessageDialog(null, "Verifique seu e-mail e tente novamente.");
 			return;
 		}
+		
+		
+		
 		if(codigoEnviado) {
 			// verificar como implementar essa verificação depois
 			Util.MessageBoxShow("Código já enviado","O código ja foi enviado uma vez para o e-mail.",AlertType.WARNING);

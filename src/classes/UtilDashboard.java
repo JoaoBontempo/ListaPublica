@@ -8,8 +8,19 @@ public class UtilDashboard {
 	private static TableViewUtil tbVutil;
 	private static String idDono;
 	private static String idLugar;
-	private static ArrayList<String> telefones=new ArrayList<>();
+	private static int idTelefone;
+	private static ArrayList<TelefoneNumero> telefones=new ArrayList<>();
 	private static String numeroTelefone;
+	
+	public static int getIdTelefone() {
+		return idTelefone;
+	}
+
+	public static void setIdTelefone(int idTelefone) {
+		UtilDashboard.idTelefone = idTelefone;
+	}
+
+	
 	
 	public static String getNumeroTelefone() {
 		return numeroTelefone;
@@ -19,11 +30,12 @@ public class UtilDashboard {
 		UtilDashboard.numeroTelefone = numeroTelefone;
 	}
 
-	public static ArrayList<String> getTelefones() {
+
+	public static ArrayList<TelefoneNumero> getTelefones() {
 		return telefones;
 	}
 
-	public static void setTelefones(ArrayList<String> telefones) {
+	public static void setTelefones(ArrayList<TelefoneNumero> telefones) {
 		UtilDashboard.telefones = telefones;
 	}
 

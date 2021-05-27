@@ -37,8 +37,10 @@ public class TrocarSenha extends Application {
     	}
     	if(txtNovaSenha.getText().equals(txtRedigiteSenha.getText())) {
 			try {
-				Banco.InserirQuery(String.format("UPDATE parceiro SET senha=%s WHERE email=%s",Util.criptografarSenha(txtNovaSenha.getText()),
-						email));
+				String query=String.format("UPDATE parceiro SET senha=%s WHERE email=%s;",Util.criptografarSenha(txtNovaSenha.getText()),
+						email);
+				System.out.println("Query troca : "+query);
+				Banco.InserirQuery(query);
 				Util.MessageBoxShow("Senha alterada", "Senha alterada com sucesso.", AlertType.INFORMATION);
 				Stage stageAtual = (Stage) txtNovaSenha.getScene().getWindow();
 				stageAtual.close();

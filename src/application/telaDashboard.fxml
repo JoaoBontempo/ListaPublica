@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -128,7 +129,7 @@
 		</Tab>
 		<Tab fx:id="tbMinhaConta" onSelectionChanged="#buscarDados" text="Minha conta">
 			<content>
-				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="430.0" prefWidth="1181.0">
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="492.0" prefWidth="1173.0">
                <children>
                   <TextField fx:id="txtMCNome" disable="true" layoutX="155.0" layoutY="83.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="155.0" />
                   <TextField fx:id="txtMCUsuario" disable="true" layoutX="155.0" layoutY="147.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="155.0" />
@@ -164,12 +165,11 @@
                   <Button fx:id="btnConfirmarAlteracao" layoutX="570.0" layoutY="243.0" mnemonicParsing="false" onAction="#ConfirmarCodigoSenha" prefHeight="36.0" prefWidth="205.0" text="Confirmar" />
                   <Button fx:id="btnAlterarSenha" layoutX="570.0" layoutY="107.0" mnemonicParsing="false" onAction="#AlterarSenha" prefHeight="40.0" prefWidth="313.0" styleClass="text-field2" text="Alterar Senha" textFill="#903939" />
                   <PasswordField fx:id="txtMCCodigo" layoutX="570.0" layoutY="195.0" prefHeight="34.0" prefWidth="404.0" promptText="Insira o código de confirmação enviado no E-mail cadastrado" />
-                  <Label fx:id="lblTrocarFotoPerfil" layoutX="17.0" layoutY="106.0" onMouseClicked="#TrocarFotoPerfil" prefHeight="22.0" prefWidth="105.0" styleClass="labelVerde" stylesheets="@application.css" text="Trocar foto de perfil" textFill="WHITE" />
-                  <ImageView fx:id="imgIconePerfil" fitHeight="76.0" fitWidth="149.0" layoutX="3.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Recursos/logo_contornada.png" />
-                           </image>
-                        </ImageView>
+                  <Label fx:id="lblTrocarFotoPerfil" layoutX="26.0" layoutY="114.0" onMouseClicked="#TrocarFotoPerfil" prefHeight="22.0" prefWidth="105.0" styleClass="labelVerde" stylesheets="@application.css" text="Trocar foto de perfil" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Label>
+                  <ImageView fx:id="imgIconePerfil" fitHeight="150.0" fitWidth="200.0" layoutX="712.0" layoutY="297.0" pickOnBounds="true" preserveRatio="true" />
                </children></AnchorPane>
 			</content>
 		</Tab>

@@ -5,7 +5,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -23,26 +25,37 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import classes.API;
 import classes.Banco;
+import classes.Comentario;
 import classes.Denuncia;
 import classes.Endereco;
 import classes.EnderecoComDescricao;
 import classes.Telefone;
+import classes.TelefoneNumero;
 import classes.Util;
 import classes.UtilDashboard;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
 
 public class TelaLocal extends Application {
 
@@ -54,6 +67,7 @@ public class TelaLocal extends Application {
 	private String conteudoImagem = "";
 	private String fileName="";
 	private Stage primaryStage;
+	private List<String> caracteresProibidosComentario=new ArrayList<String>();
 	
 	public void setIdBuscarInfos(String id) {
 		this.idBuscarInfos = id;
@@ -63,11 +77,30 @@ public class TelaLocal extends Application {
 	private TextField txtNumeroResidencia;
 
 	@FXML
+    private TableColumn<TelefoneNumero, String> tvcTelefone;
+	
+	@FXML
+    private TableView<TelefoneNumero> tvTelefone;
+	
+	@FXML
 	private Pane pnlTelefones;
 
 	@FXML
 	private Pane pnlImagem;
 
+	@FXML
+    private Pane pnlComentarios;
+	
+	@FXML
+    private TextField txtComentario;
+
+    @FXML
+    private Button btnEnviarComentario;
+	
+	@FXML
+    private ListView<String> lvComentarios;
+	
+	
 	@FXML
 	private ImageView imgLocal;
 
@@ -80,6 +113,9 @@ public class TelaLocal extends Application {
 	@FXML
 	private TextField txtCidade;
 
+	 @FXML
+	private Pane pnlEnviarComentario;
+	
 	@FXML
 	private TextField txtEstado;
 
@@ -99,6 +135,41 @@ public class TelaLocal extends Application {
 	private ListView<String> lvTelefones;
 
 	@FXML
+    void RealizarComentario(ActionEvent event) {
+		String comentario=txtComentario.getText();
+		if(comentario.length()<=0) {
+			Util.MessageBoxShow("Comentário inválido", "Digite um comentário antes de confirmar");
+			return;
+		}
+		for(char ch:comentario.toCharArray()) {
+			if(caracteresProibidosComentario.contains(Character.toString(ch))) {
+				Util.MessageBoxShow("Comentário com caracteres proibidos", "O comentário possui o seguinte caractere inválido: "+ch+". Remova e tente novamente.");
+				return;	
+			}
+		}
+		try {
+			Banco.InserirQuery("insert into comentarios values(default,"+UtilDashboard.getIdTelefone()+","+Util.getContaLogada().getId()+","+
+			"'"+comentario+"'");
+			atualizarComentarios(id_endereco);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+	
+	private void atualizarComentarios(int id_endereco) {
+		// esse método vai atualizar todos os comentários do id X para o listview
+		
+		//List<Comentario> comentarios=Util.RecuperarComentariosEndereco(id_endereco);
+		lvComentarios.getItems().clear();
+//		if(comentarios!=null) {
+//			comentarios.forEach(e-> lvComentarios.getItems().add(Util.RecuperarNomeUsuarioPorId(e.getIdParceiro()) +" disse : "+
+//		e.getComentario()));
+//		}
+		
+	}
+
+	@FXML
     void AbrirImagemBaixada(MouseEvent event) {
 		File diretorio= new File("C:\\lista\\locais\\"+fileName);
 		if(diretorio.exists()) {
@@ -111,54 +182,13 @@ public class TelaLocal extends Application {
 		
     }
 	
-	@FXML
-    void obterTelefoneClicado(MouseEvent event) throws Exception {
-    	// api para obter o endereco a partir do telefone e a descricao
-    	// primeiro pego o id do local
-    	
-    	try {
-    		String telefone=lvTelefones.getSelectionModel().getSelectedItem();
-    		Util.setTelefoneAtual(telefone);
-        	//String query="select lugar,dono from telefone where numero='"+telefone+"';";
-        	String url="http://localhost:5000/ListaPublica/getUserAddress/"+telefone;
-        	JSONArray array=requisicaoGenerica(url); // passo o telefone e a api vai obter o id do local e fazer uma requisicao nesse id
-    		JSONObject objeto=array.getJSONObject(0);
-    		System.out.println(objeto.toString());
-        	if(objeto.getString("imagem").length()>0) {
-        		conteudoImagem=objeto.getString("imagem");
-        		possuiImagem=true;
-        		fileName=telefone+=".jpg";
-        		Util.verificaExistenciaImagem(fileName, conteudoImagem.getBytes(), true);
-        		trocarPosicaoPane();
-        		imgLocal.setImage(new Image("file:///C:/lista/locais/"+fileName));
-        	}
-        	UtilDashboard.setIdDono(objeto.getString("id"));
-        	insereCampos(objeto.get("estado").toString(),objeto.get("bairro").toString(),objeto.get("rua").toString(),
-        			objeto.get("cidade").toString(),objeto.get("numero").toString(),objeto.get("descricao").toString(),
-        			objeto.getString("nome"));
-    	}catch(JSONException | NullPointerException e) {
-    		// não faça nada, pois se entrar aqui é pq o array não tem posições, então ignore.
-    	}
-    	
 
-	}
-
-	void trocarPosicaoPane() {
-		if (possuiImagem) {
-			pnlTelefones.relocate(487, 287);
-			pnlImagem.setVisible(true);
-			imgLocal.setImage(new Image("Recursos/logo.png", 400, 204, true, true));
-		} else {
-			pnlImagem.setVisible(false);
-			pnlTelefones.relocate(487, 74);
-		}
-	}
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("telaLugar.fxml"));
-
+			
 			
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -166,29 +196,83 @@ public class TelaLocal extends Application {
 
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Lista Pública - Informações detalhadas do local");
-
+			
 			primaryStage.getIcons().add(icon);
 			primaryStage.show();
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	@FXML
+	void abrirDescricaoDetalhada(MouseEvent event) {
+		//		DOUBLE CLICK NA LINHA
+		if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
+	            if(tvTelefone.getSelectionModel().getSelectedItem() != null) {
+	            	TelefoneNumero numero=tvTelefone.getSelectionModel().getSelectedItem();
+
+	            	try {
+	            		String telefone=numero.getNumero();
+	            		Util.setTelefoneAtual(telefone);
+	                	String url="http://localhost:5000/ListaPublica/getUserAddress/"+telefone;
+	                	JSONArray array=requisicaoGenerica(url); // passo o telefone e a api vai obter o id do local e fazer uma requisicao nesse id
+	            		JSONObject objeto=array.getJSONObject(0);
+	            		id_endereco=objeto.getInt("id");
+	            		System.out.println(objeto.toString());
+	                	if(objeto.getString("imagem").length()>0) {
+	                		conteudoImagem=objeto.getString("imagem");
+	                		possuiImagem=true;
+	                		fileName=telefone+=".jpg";
+	                		Util.verificaExistenciaImagem(fileName, conteudoImagem.getBytes(), true);
+	                		imgLocal.setImage(new Image("file:///C:/lista/locais/"+fileName));
+	                	}
+	                	UtilDashboard.setIdDono(objeto.getString("id"));
+	                	insereCampos(objeto.get("estado").toString(),objeto.get("bairro").toString(),objeto.get("rua").toString(),
+	                			objeto.get("cidade").toString(),objeto.get("numero").toString(),objeto.get("descricao").toString(),
+	                			objeto.getString("nome"));
+	            	}catch(JSONException | NullPointerException e) {
+	            		// não faça nada, pois se entrar aqui é pq o array não tem posições, então ignore.
+	            	} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	            	
+	            	
+	            }
+            }
+	}
+	
 	public void initialize() throws Exception {
 		lbDenunciarLocal.setDisable(Util.isConvidado());
-		// obtenho os valores do arraylist da tela anterior e jogo no ListView
-		lvTelefones.getItems().addAll(UtilDashboard.getTelefones());
 
+		caracteresProibidosComentario=Arrays.asList("'");
+		tvcTelefone.setCellValueFactory(new PropertyValueFactory("numero"));
+		// verifica se está logado ou não (caso esteja logado apareça o pane de textbox e button)
+		if(Util.getContaLogada() != null) {
+			pnlEnviarComentario.setVisible(true);
+		}else {
+			pnlEnviarComentario.setVisible(false);
+		}
+		
+		// obtenho os valores do arraylist da tela anterior e jogo no ListView
+		ObservableList<TelefoneNumero> observableTelefones =
+				FXCollections.observableArrayList(UtilDashboard.getTelefones());
+		tvTelefone.setItems(observableTelefones);
+		
+		
+		
+
+		// verifica se o endereço possui comentário associado
+		//List<Comentario> comentarios=Util.RecuperarComentariosEndereco(Integer.parseInt(UtilDashboard.getIdLugar())); // Esse utilDashboard será usado apenas ao entrar no form
+//		if(comentarios!=null) {
+//			//comentarios.forEach(e-> lvComentarios.getItems().add(Util.RecuperarNomeUsuarioPorId(e.getIdParceiro()) +" disse : "+e.getComentario()));
+//		}
+		
 		
 		// inicia a api
 		iniciaApi();
-
-		// verifica se o endereço possui imagem, se possuir jogue o pane de telefones
-		// para baixo
-		// padrao: 487,74
-		// caso endereco possua imagem: 487,287
-		trocarPosicaoPane();
-
 	}
 
 	@FXML
@@ -248,7 +332,6 @@ public class TelaLocal extends Application {
 				endereco = mapper.readValue(obj.getJSONObject(i).toString(), EnderecoComDescricao.class);
 				if(endereco.getImagem().length()>0) {
 					possuiImagem=true;
-					trocarPosicaoPane();
 				}
 				enderecos.add(endereco);
 			}

@@ -66,16 +66,16 @@ public class Login extends Application {
 
 	public void initialize() throws ClassNotFoundException, SQLException
 	{
-		try {
-			Banco.Desconectar();
-		}
-		catch (Exception ex){
-
-		}
-		finally {
-
-			Banco.Conectar();
-		}
+//		try {
+//			Banco.Desconectar();
+//		}
+//		catch (Exception ex){
+//
+//		}
+//		finally {
+//
+//			Banco.Conectar();
+//		}
 	}
 
 	public static void main(String[] args) {
@@ -136,7 +136,7 @@ public class Login extends Application {
 			}
 		}
 		ResultSet result = Banco.InserirQueryReader(String.format("SELECT %s, senha, id FROM parceiro WHERE %s = '%s'", tipo.toLowerCase(), tipo.toLowerCase(), txtUsuario.getText()));
-		//result.next();
+		
 		if (!result.next())
 		{
 			Util.MessageBoxShow("Falha ao realizar login", tipo + " não encontrado", AlertType.ERROR);
@@ -210,8 +210,8 @@ public class Login extends Application {
 		
 		RecuperarSenha recuperar = new RecuperarSenha();
 		recuperar.start(new Stage());
-		Stage stageAtual = (Stage) lbEsqueciSenha.getScene().getWindow();
-		stageAtual.close();
+//		Stage stageAtual = (Stage) lbEsqueciSenha.getScene().getWindow();
+//		stageAtual.close();
 	}
 
 }
