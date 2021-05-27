@@ -36,6 +36,7 @@ import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -57,6 +58,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class CadastrarLocal extends Application implements Initializable {
@@ -290,7 +292,12 @@ public class CadastrarLocal extends Application implements Initializable {
 
 		return municipios;
 	}
+	public Event evento;
 
+	public void getEvent(Event evento) {
+		this.evento = evento;
+	}
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage=primaryStage;
@@ -304,6 +311,11 @@ public class CadastrarLocal extends Application implements Initializable {
 		primaryStage.setMaximized(false);
 		primaryStage.setTitle("Lista Pública - Cadastro de local");
 		primaryStage.getIcons().add(icon);
+		
+		//setar tela modal e tela que chamou 
+		primaryStage.initModality(Modality.WINDOW_MODAL);
+		primaryStage.initOwner(((Node)evento.getSource()).getScene().getWindow());
+		
 		primaryStage.show();
 
 	}

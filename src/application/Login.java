@@ -209,6 +209,7 @@ public class Login extends Application {
 	void esqueciSenha(MouseEvent event) {
 		
 		RecuperarSenha recuperar = new RecuperarSenha();
+		recuperar.getEvent(event);
 		recuperar.start(new Stage());
 //		Stage stageAtual = (Stage) lbEsqueciSenha.getScene().getWindow();
 //		stageAtual.close();

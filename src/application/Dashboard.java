@@ -290,6 +290,7 @@ public class Dashboard extends Application {
 
 			TrocarSenha trocarSenha = new TrocarSenha();
 			trocarSenha.setEmail(Util.getContaLogada().getEmail());
+			trocarSenha.getEvent(event);
 			trocarSenha.start(new Stage());
 
 		}
@@ -319,6 +320,7 @@ public class Dashboard extends Application {
 	void FormCadastrarEndereco(ActionEvent event) {
 		try {
 			CadastrarLocal cadastro=new CadastrarLocal();
+			cadastro.getEvent(event);
 			cadastro.start(new Stage());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -561,8 +563,9 @@ public class Dashboard extends Application {
 	}
 
 	@FXML
-	public void showNovoTelefone() {
+	public void showNovoTelefone(Event evento) {
 		CadastroTelefone ct = new CadastroTelefone();
+		ct.getEvent(evento);
 		ct.start(new Stage());
 	}
 }

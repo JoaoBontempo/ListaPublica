@@ -8,12 +8,15 @@ import classes.Util;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class TrocarSenha extends Application {
@@ -54,6 +57,12 @@ public class TrocarSenha extends Application {
     	}
     }
     
+    public Event evento;
+
+	public void getEvent(Event evento) {
+		this.evento = evento;
+	}
+	
     @Override
 	public void start(Stage primaryStage) {
 		try {
@@ -62,7 +71,12 @@ public class TrocarSenha extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Lista Pública - Trocar senha");
-			primaryStage.showAndWait();
+			
+			//setar tela modal e tela que chamou 
+			primaryStage.initModality(Modality.WINDOW_MODAL);
+			primaryStage.initOwner(((Node)evento.getSource()).getScene().getWindow());
+			
+			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

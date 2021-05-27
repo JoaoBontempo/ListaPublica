@@ -12,6 +12,7 @@ import classes.Email;
 import classes.Util;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -21,17 +22,19 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class RecuperarSenha extends Application {
 	private boolean codigoEnviado=false;
 	private String codigoGerado="";
-	
-    @FXML
-    private Button btnConfirmarCodigo;
-	
+
+	@FXML
+	private Button btnConfirmarCodigo;
+
 	@FXML
 	private TextField txtEmailPrincipal;
 
@@ -63,7 +66,7 @@ public class RecuperarSenha extends Application {
 			VerificarEntradaEmail(null);
 		}
 	}
-	
+
 	/**
 	 * Essa função irá gerar randomicamente uma sequência de números de X tamanho 
 	 * 
@@ -73,13 +76,13 @@ public class RecuperarSenha extends Application {
 	 * @return
 	 */
 	public static String gerarCodigo(int contador, String valorAtual, int tamanhoMaximo){
-      if(contador == tamanhoMaximo) return valorAtual;
-      return gerarCodigo(++contador,valorAtual+=( new Random().nextInt(9)),tamanhoMaximo);
+		if(contador == tamanhoMaximo) return valorAtual;
+		return gerarCodigo(++contador,valorAtual+=( new Random().nextInt(9)),tamanhoMaximo);
 	}
 
-	
+
 	void validarCamposTxt(String texto,TextField textField) {
-		
+
 		if(texto.length()>1) {
 			JOptionPane.showMessageDialog(null, "Digite apenas um número no campo.");
 			Character textoPadrao=textField.getText().toString().charAt(0);
@@ -106,23 +109,23 @@ public class RecuperarSenha extends Application {
 		Node no=(Node)event.getSource();
 		String textChamou = no.getId();
 		switch (textChamou) {
-			case "txtNumeroUm":
-				validarCamposTxt(txtNumeroUm.getText(),txtNumeroUm);
-				break;
-			case "txtNumeroDois":
-				validarCamposTxt(txtNumeroDois.getText(),txtNumeroDois);
-				break;
-			case "txtNumeroTres":
-				validarCamposTxt(txtNumeroTres.getText(),txtNumeroTres);
-				break;
-			case "txtNumeroQuatro":
-				validarCamposTxt(txtNumeroQuatro.getText(),txtNumeroQuatro);
-				break;
-			case "txtNumeroCinco":
-				validarCamposTxt(txtNumeroCinco.getText(),txtNumeroCinco);
-				break;
-			default:
-				break;
+		case "txtNumeroUm":
+			validarCamposTxt(txtNumeroUm.getText(),txtNumeroUm);
+			break;
+		case "txtNumeroDois":
+			validarCamposTxt(txtNumeroDois.getText(),txtNumeroDois);
+			break;
+		case "txtNumeroTres":
+			validarCamposTxt(txtNumeroTres.getText(),txtNumeroTres);
+			break;
+		case "txtNumeroQuatro":
+			validarCamposTxt(txtNumeroQuatro.getText(),txtNumeroQuatro);
+			break;
+		case "txtNumeroCinco":
+			validarCamposTxt(txtNumeroCinco.getText(),txtNumeroCinco);
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -141,33 +144,33 @@ public class RecuperarSenha extends Application {
 			TrocarSenha telaTrocarSenha = new TrocarSenha();
 			telaTrocarSenha.setEmail(txtEmailPrincipal.getText());
 			telaTrocarSenha.start(new Stage());
-			
+
 			Stage stageAtual = (Stage) btnConfirmarCodigo.getScene().getWindow();
 			stageAtual.close();
-			
+
 		}else {
 			Util.MessageBoxShow("Código errado", "Confirme novamente o código digitado e tente novamente", 
 					AlertType.ERROR);
 		}
 	}
-	
-	
+
+
 	@FXML
 	void VerificarEntradaEmail(ActionEvent event) {
 		if (!txtEmailPrincipal.getText().contains("@")) {
 			JOptionPane.showMessageDialog(null, "Verifique seu e-mail e tente novamente.");
 			return;
 		}
-		
-		
-		
+
+
+
 		if(codigoEnviado) {
 			// verificar como implementar essa verificação depois
 			Util.MessageBoxShow("Código já enviado","O código ja foi enviado uma vez para o e-mail.",AlertType.WARNING);
 			return;
 		}
 		// deixa para caso tenha tempo
-			// se após o @ não tiver ao menos dois caracteres, dê o aviso novamente.
+		// se após o @ não tiver ao menos dois caracteres, dê o aviso novamente.
 
 		// se chegou aqui então ok. Gere o código, armazene, Envie o código e mostre o panel para colocar os
 		codigoGerado=gerarCodigo(0,"",5);
@@ -189,7 +192,7 @@ public class RecuperarSenha extends Application {
 		// ja deixa o botao de confirmar como falso
 		btnConfirmarCodigo.setVisible(false);
 	}
-	
+
 	@FXML
 	void txtNumeroCinco(ActionEvent event) {
 
@@ -214,7 +217,11 @@ public class RecuperarSenha extends Application {
 	void txtNumeroUm(ActionEvent event) {
 
 	}
+	public MouseEvent evento;
 
+	public void getEvent(MouseEvent evento) {
+		this.evento = evento;
+	}
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -227,6 +234,11 @@ public class RecuperarSenha extends Application {
 			primaryStage.setTitle("Lista Pública - Esqueci a senha");
 
 			primaryStage.getIcons().add(icon);
+			
+			//setar tela modal e tela que chamou 
+			primaryStage.initModality(Modality.WINDOW_MODAL);
+			primaryStage.initOwner(((Node)evento.getSource()).getScene().getWindow());
+			
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
