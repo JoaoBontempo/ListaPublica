@@ -237,11 +237,13 @@ public class Dashboard extends Application {
 			Banco.InserirQueryReader("select imagem from parceiro where id="+id);
 			if(Banco.getReader().next()) {
 				String imagem=Banco.getReader().getString("imagem");
-				
-				if(imagem.length()>0) {
-					possuiIcone=true;
-					Util.verificaExistenciaImagem("profile.jpg", imagem.getBytes(), false);
+				if(imagem != null) {
+					if(imagem.length()>0) {
+						possuiIcone=true;
+						Util.verificaExistenciaImagem("profile.jpg", imagem.getBytes(), false);
+					}	
 				}
+				
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -250,7 +252,10 @@ public class Dashboard extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		imgIconePerfil.setImage(new Image("file://C:/lista/usuarios/profile.jpg"));
+		if(possuiIcone) {
+			imgIconePerfil.setImage(new Image("file://C:/lista/usuarios/profile.jpg"));
+		}
+		
 		
 	}
 	
