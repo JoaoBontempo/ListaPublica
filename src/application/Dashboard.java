@@ -506,7 +506,8 @@ public class Dashboard extends Application {
 	}
 
 	public void  AtualizarCbxTelefones() throws SQLException {
-
+		if (Util.isConvidado())
+			return;
 		ResultSet result = Banco.InserirQueryReader("SELECT telefone.*, endereco.nome FROM telefone LEFT JOIN endereco ON endereco.id = telefone.lugar WHERE telefone.dono = " 
 				+ Util.getContaLogada().getId());
 
