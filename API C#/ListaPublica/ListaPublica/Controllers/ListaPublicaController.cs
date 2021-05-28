@@ -29,8 +29,6 @@ namespace ListaPublica.Controllers
         [HttpGet("getUserAddress/{telefone}")]
         public IList<EnderecoComDescricao> getUserAddress(String telefone)
         {
-            telefone = telefone.Replace("-", "");
-
             IList<EnderecoComDescricao> enderecos = new List<EnderecoComDescricao>();
             //string query = "select distinct e.rua,e.numero,e.bairro,e.estado,e.cidade,e.nome,e.imagem,t.descricao,t.dono,t.numero"
             //  +" from endereco as e , telefone as t INNER JOIN endereco ON(t.dono="+idDono+") WHERE t.numero LIKE '%"+telefone+"%';";
@@ -42,10 +40,19 @@ namespace ListaPublica.Controllers
             Banco.reader.Read();
             if (Banco.reader.HasRows)
             {
-                string idLocal = Banco.reader.GetString("lugar");
+                string idLocal = "";
+                try
+                {
+                    idLocal = Banco.reader.GetString("lugar");
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+
                 // query para obter informações sobre o determinado lugar
                 string query = String.Format("select distinct e.id,e.rua,e.numero,e.bairro,e.estado,e.cidade,e.nome,e.imagem,t.descricao from "
-                    + " endereco as e, (select descricao from telefone where lugar={0}) as t where id={0};", idLocal);
+                    + " endereco as e, (select descricao from telefone where lugar={0} and numero='" + telefone + "') as t where id={0};", idLocal);
                 Console.WriteLine(query);
                 Banco.InserirQueryReader(query);
 

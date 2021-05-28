@@ -351,7 +351,14 @@ public class TelaLocal extends Application {
 	void iniciaApi() {
 		String result;
 		ObjectMapper mapper = new ObjectMapper();
-		String url = "http://localhost:5000/ListaPublica/getUserAddress/" + UtilDashboard.getNumeroTelefone();
+		String telefone="";
+		
+		// jogar a função abaixo
+		
+		//telefone=UtilDashboard.getNumeroTelefone().replace(" ","&");
+		
+		
+		String url = "http://localhost:5000/ListaPublica/getUserAddress/" + telefone;
 		HttpGet get = new HttpGet(url);
 
 		try {
