@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -149,6 +150,12 @@ public class TelaLocal extends Application {
 	@FXML
     private TableView<ComentarioTable> tvComentarios;
 	
+    @FXML
+    private ImageView imgWhatsApp;
+
+    @FXML
+    private Label lbWhatsApp;
+	
 	@FXML
     void RealizarComentario(ActionEvent event) {
 		String comentario=txtComentario.getText();
@@ -174,6 +181,12 @@ public class TelaLocal extends Application {
 			e.printStackTrace();
 		}
     }
+	
+	@FXML
+	public void ChamarNumeroWhatsApp() throws IOException, URISyntaxException
+	{
+		Util.ChamarNumeroWhatsApp(Util.FormatarSetTelefone(Util.getTelefoneAtual()));
+	}
 	
 	private void atualizarComentarios() {
 		
@@ -234,7 +247,7 @@ public class TelaLocal extends Application {
 	            	try {
 	            		String telefone=numero.getNumero();
 	            		Util.setTelefoneAtual(telefone);
-	            		
+	            		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", Util.FormatarGetTelefone(Util.getTelefoneAtual())));
 	                	String url="http://localhost:5000/ListaPublica/getUserAddress/"+telefone;
 	                	JSONArray array=null;
 	                	JSONObject objeto=null;
@@ -313,6 +326,7 @@ public class TelaLocal extends Application {
 		
 		// inicia a api
 		iniciaApi();
+		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", Util.FormatarGetTelefone(Util.FormatarSetTelefone(Util.getTelefoneAtual()))));
 	}
 
 	@FXML

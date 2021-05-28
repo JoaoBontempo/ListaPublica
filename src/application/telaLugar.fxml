@@ -117,5 +117,11 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
+      <ImageView fx:id="imgWhatsApp" fitHeight="30.0" fitWidth="36.0" layoutX="489.0" layoutY="663.0" onMouseClicked="#ChamarNumeroWhatsApp" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: Hand;">
+         <image>
+            <Image url="@../Recursos/whatsLogo.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lbWhatsApp" layoutX="525.0" layoutY="667.0" onMouseClicked="#ChamarNumeroWhatsApp" styleClass="labelComLink" text="Chamar {numero} no WhatsApp" textFill="WHITE" />
    </children>
 </AnchorPane>

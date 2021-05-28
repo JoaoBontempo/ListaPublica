@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
@@ -138,6 +139,11 @@ public final class Util {
 		telefone = telefone.replace(")", "");
 		telefone = telefone.replace(" ", "");
 		return telefone;
+	}
+	
+	public static void ChamarNumeroWhatsApp(String numero) throws IOException, URISyntaxException
+	{
+		java.awt.Desktop.getDesktop().browse( new java.net.URI("https://api.whatsapp.com/send?phone=55"+numero));
 	}
 	
 	public static String FormatarGetTelefone(String telefone)
