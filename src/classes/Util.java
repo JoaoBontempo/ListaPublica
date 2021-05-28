@@ -131,6 +131,20 @@ public final class Util {
 			
 		}
 	}
+	
+	public static String FormatarSetTelefone(String telefone)
+	{
+		telefone = telefone.replace("(", "");
+		telefone = telefone.replace(")", "");
+		return telefone;
+	}
+	
+	public static String FormatarGetTelefone(String telefone)
+	{
+		String ddd = telefone.substring(0,2);
+		telefone = telefone.replace(ddd, "");
+		return String.format("(%s) %s", ddd, telefone);
+	}
 
 	public static void RecuperarInformacoesDenunciado(int id) throws SQLException
 	{

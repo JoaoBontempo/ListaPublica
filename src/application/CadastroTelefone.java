@@ -64,6 +64,16 @@ public class CadastroTelefone extends Application{
 			return false;
 		if (!Validacao.verificarTextField(txtNumero))
 			return false;
+		if (!Validacao.verificarNumerosTextField(txtDDD))
+			return false;
+		if (!Validacao.verificarNumerosTextField(txtNumero))
+			return false;
+		if (txtDDD.getText().length() > 2)
+		{
+			Util.MessageBoxShow("Campo inválido", "O campo 'DDD' deve conter de 1 a 2 números apenas.", AlertType.ERROR);
+			txtDDD.requestFocus();
+			return false;
+		}
 		if (!Validacao.verificarTextField(txtDescrição))
 			return false;
 		
@@ -76,11 +86,6 @@ public class CadastroTelefone extends Application{
 		return true;
 	}
 	
-	private String formatarTelefone(String ddd, String numero)
-	{
-		return String.format("(%s) %s", ddd, numero); 
-	}
-	
 	@FXML
 	public void cadastrarTelefone() throws SQLException
 	{
@@ -89,13 +94,13 @@ public class CadastroTelefone extends Application{
 			if (cboxEndereco.getSelectionModel().getSelectedIndex() != 0)
 			{
 				Banco.InserirQuery(String.format("INSERT INTO telefone (id, numero, dono, lugar, descricao) VALUES"
-						+ " (default, '%s', %s, %s, '%s')", formatarTelefone(txtDDD.getText(), txtNumero.getText()), Util.getContaLogada().getId(), 
+						+ " (default, '%s', %s, %s, '%s')", txtDDD.getText() + txtNumero.getText(), Util.getContaLogada().getId(), 
 						enderecos.get(cboxEndereco.getSelectionModel().getSelectedIndex() - 1).getId(), txtDescrição.getText()));
 			}
 			else
 			{
 				Banco.InserirQuery(String.format("INSERT INTO telefone (id, numero, dono, descricao) VALUES"
-						+ " (default, '%s', %s, '%s')", formatarTelefone(txtDDD.getText(), txtNumero.getText()), Util.getContaLogada().getId(), txtDescrição.getText()));
+						+ " (default, '%s', %s, '%s')", txtDDD.getText() + txtNumero.getText(), Util.getContaLogada().getId(), txtDescrição.getText()));
 			}
 			Util.MessageBoxShow("Cadastro realizado!", "Seu novo telefone foi cadastrado com sucesso!", AlertType.INFORMATION);
 		}

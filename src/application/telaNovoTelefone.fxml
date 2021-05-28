@@ -44,7 +44,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <TextField fx:id="txtDDD" layoutX="15.0" layoutY="208.0" prefHeight="34.0" prefWidth="80.0" styleClass="text-field2" AnchorPane.leftAnchor="15.0" />
+      <TextField fx:id="txtDDD" alignment="CENTER" layoutX="15.0" layoutY="208.0" prefHeight="34.0" prefWidth="80.0" styleClass="text-field2" AnchorPane.leftAnchor="15.0" />
       <Label layoutX="15.0" layoutY="189.0" styleClass="labelVerde" text="DDD">
          <font>
             <Font size="14.0" />
