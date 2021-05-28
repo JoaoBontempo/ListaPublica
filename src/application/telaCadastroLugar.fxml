@@ -27,13 +27,13 @@
             <Font name="Candara" size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="txtNumeroResidencia" layoutX="655.0" layoutY="247.0" onKeyPressed="#verificarTeclaDeletarNumeroResidencia" prefHeight="34.0" prefWidth="49.0" styleClass="text-field" stylesheets="@application.css" />
+      <TextField fx:id="txtNumeroResidencia" layoutX="655.0" layoutY="247.0" onKeyPressed="#verificarTeclaDeletarNumeroResidencia" prefHeight="34.0" prefWidth="49.0" styleClass="text-field2" stylesheets="@application.css" />
       <Label layoutX="297.0" layoutY="201.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Bairro">
          <font>
             <Font name="Candara" size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="txtBairro" layoutX="383.0" layoutY="199.0" prefHeight="34.0" prefWidth="319.0" promptText="Preencha seu bairro" styleClass="text-field" stylesheets="@application.css" />
+      <TextField fx:id="txtBairro" layoutX="383.0" layoutY="199.0" prefHeight="34.0" prefWidth="319.0" promptText="Preencha seu bairro" styleClass="text-field2" stylesheets="@application.css" />
       <Label layoutX="284.0" layoutY="51.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Estado">
          <font>
             <Font name="Candara" size="25.0" />
@@ -56,27 +56,27 @@
             <Font name="Candara" size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="txtRua" layoutX="384.0" layoutY="247.0" prefHeight="34.0" prefWidth="229.0" promptText="Preencha com o nome de sua rua" styleClass="text-field" stylesheets="@application.css" />
+      <TextField fx:id="txtRua" layoutX="384.0" layoutY="247.0" prefHeight="34.0" prefWidth="229.0" promptText="Preencha com o nome de sua rua" styleClass="text-field2" stylesheets="@application.css" />
       <Label fx:id="lblCnpj" layoutX="297.0" layoutY="298.0" prefHeight="30.0" prefWidth="81.0" styleClass="labelVerde" stylesheets="@application.css" text="Nome">
          <font>
             <Font name="Candara" size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="txtNomeLocal" layoutX="384.0" layoutY="296.0" prefHeight="34.0" prefWidth="319.0" promptText="Preencha com o nome da residência/estabelecimento" styleClass="text-field" stylesheets="@application.css" />
+      <TextField fx:id="txtNomeLocal" layoutX="384.0" layoutY="296.0" prefHeight="34.0" prefWidth="319.0" promptText="Preencha com o nome da residência/estabelecimento" styleClass="text-field2" stylesheets="@application.css" />
       <Label layoutX="258.0" layoutY="149.0" prefHeight="30.0" prefWidth="159.0" styleClass="labelVerde" stylesheets="@application.css" text="Cep">
          <font>
             <Font name="Candara" size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="txtCep" layoutX="384.0" layoutY="147.0" onKeyPressed="#verificarTeclaDeletar" prefHeight="34.0" prefWidth="319.0" promptText="Preenchimento opcional" styleClass="text-field" stylesheets="@application.css" />
+      <TextField fx:id="txtCep" layoutX="384.0" layoutY="147.0" onKeyPressed="#verificarTeclaDeletar" prefHeight="34.0" prefWidth="319.0" promptText="Preenchimento opcional" styleClass="text-field2" stylesheets="@application.css" />
       <Separator layoutX="266.0" layoutY="37.0" orientation="VERTICAL" prefHeight="380.0" prefWidth="0.0" styleClass="separatorVertical" stylesheets="@application.css" />
       <Label fx:id="lblCnpj1" layoutX="274.0" layoutY="352.0" prefHeight="30.0" prefWidth="220.0" styleClass="labelVerde" stylesheets="@application.css" text="Imagem (Opcional)">
          <font>
             <Font name="Candara" size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="txtCaminhoImagem" layoutX="496.0" layoutY="350.0" prefHeight="34.0" prefWidth="148.0" promptText="Clique para escolher o arquivo de imagem" styleClass="text-field" stylesheets="@application.css" />
-      <Button fx:id="btnEscolherArquivo" layoutX="649.0" layoutY="349.0" mnemonicParsing="false" onAction="#escolherImagem" prefHeight="36.0" prefWidth="49.0" style="-fx-background-color: #fff; -fx-border-color: #84ff00;" text="...">
+      <TextField fx:id="txtCaminhoImagem" layoutX="496.0" layoutY="350.0" prefHeight="34.0" prefWidth="148.0" promptText="Clique para escolher o arquivo de imagem" styleClass="text-field2" stylesheets="@application.css" />
+      <Button fx:id="btnEscolherArquivo" layoutX="649.0" layoutY="349.0" mnemonicParsing="false" onAction="#escolherImagem" prefHeight="36.0" prefWidth="49.0" text="...">
          <font>
             <Font name="Candara" size="18.0" />
          </font>

@@ -79,6 +79,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -190,10 +191,17 @@ public class Dashboard extends Application {
 	private Button btnConfirmarAlteracao;
 	
 	@FXML
+    private VBox vbVerticalBox;
+
+	@FXML
 	private Button btnAlterarSenha;
 
 	@FXML
     private Label lblTrocarFotoPerfil;
+
+	@FXML
+    private BorderPane pnlImagem;
+	
 	
 	 @FXML
 	 void TrocarFotoPerfil(MouseEvent event) {
@@ -210,7 +218,8 @@ public class Dashboard extends Application {
 			Files.copy(Path.of(imagemEscolhida.getAbsolutePath()), new FileOutputStream(diretorioTmp));
 			String base=Util.converterStringParaBase64(Path.of(imagemEscolhida.getAbsolutePath()).toString());
 			Banco.InserirQuery("update parceiro set imagem='"+base+"' where id ="+Util.getContaLogada().getId());
-			imgIconePerfil.setImage(new Image("file://"+diretorioTmp));
+			imgIconePerfil.setImage(new Image(new File(diretorioTmp).toURI().toString(), 150, 150, false, false));
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
@@ -252,10 +261,10 @@ public class Dashboard extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//file://C:/lista/usuarios/profile.jpg
 		if(possuiIcone) {
-			imgIconePerfil.setImage(new Image("file://C:/lista/usuarios/profile.jpg"));
+			imgIconePerfil.setImage(new Image(new File("C:\\lista\\usuarios\\profile.jpg").toURI().toString(), 150, 150, false, false));
 		}
-		
 		
 	}
 	
@@ -364,6 +373,7 @@ public class Dashboard extends Application {
 					idDono=Banco.getReader().getString("dono");
 					UtilDashboard.setIdLugar(String.valueOf(Banco.getReader().getInt("lugar")));
 					UtilDashboard.setIdDono(idDono);
+					System.out.println("Num: "+ret.getNumero());
 					UtilDashboard.setNumeroTelefone(ret.getNumero());
 					UtilDashboard.setIdTelefone(Util.RecuperarIdTelefonePorTelefone(ret.getNumero()));
 					

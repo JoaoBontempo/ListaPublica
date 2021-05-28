@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane fx:id="TabDash" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="1181.0" stylesheets="@application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Dashboard">
+<TabPane fx:id="TabDash" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="1181.0" stylesheets="@application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Dashboard">
 	<tabs>
 		<Tab text="Lista de lugares/telefones">
 			<content>
@@ -179,12 +179,16 @@
                   <Button fx:id="btnConfirmarAlteracao" layoutX="570.0" layoutY="243.0" mnemonicParsing="false" onAction="#ConfirmarCodigoSenha" prefHeight="36.0" prefWidth="205.0" text="Confirmar" />
                   <Button fx:id="btnAlterarSenha" layoutX="570.0" layoutY="107.0" mnemonicParsing="false" onAction="#AlterarSenha" prefHeight="40.0" prefWidth="313.0" styleClass="text-field2" text="Alterar Senha" textFill="#903939" />
                   <PasswordField fx:id="txtMCCodigo" layoutX="570.0" layoutY="195.0" prefHeight="34.0" prefWidth="404.0" promptText="Insira o código de confirmação enviado no E-mail cadastrado" />
-                  <Label fx:id="lblTrocarFotoPerfil" layoutX="17.0" layoutY="106.0" onMouseClicked="#TrocarFotoPerfil" prefHeight="22.0" prefWidth="105.0" styleClass="labelVerde" stylesheets="@application.css" text="Trocar foto de perfil" textFill="WHITE" />
-                  <ImageView fx:id="imgIconePerfil" fitHeight="76.0" fitWidth="149.0" layoutX="3.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Recursos/logo_contornada.png" />
-                           </image>
-                        </ImageView>
+                  <Label fx:id="lblTrocarFotoPerfil" layoutX="14.0" layoutY="106.0" onMouseClicked="#TrocarFotoPerfil" prefHeight="22.0" prefWidth="133.0" styleClass="labelVerde" stylesheets="@application.css" text="Trocar foto de perfil" textFill="WHITE" />
+                  <BorderPane fx:id="pnlImagem" layoutX="14.0" layoutY="17.0" prefHeight="84.0" prefWidth="132.0">
+                     <center>
+                        <ImageView fx:id="imgIconePerfil" fitHeight="76.0" fitWidth="149.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                 <image>
+                                    <Image url="@../Recursos/logo_contornada.png" />
+                                 </image>
+                              </ImageView>
+                     </center>
+                  </BorderPane>
                </children></AnchorPane>
 			</content>
 		</Tab>

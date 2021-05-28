@@ -161,9 +161,9 @@ public class CadastrarLocal extends Application implements Initializable {
 		}		
 		String anexoImagem=txtCaminhoImagem.getText();
 		String query=
-				String.format("insert into endereco values (default,'%s','%s','%s','%s','%s','%s',%d,'%s')",
+				String.format("insert into endereco values (default,'%s',%s,'%s','%s','%s','%s',%s,'%s')",
 						txtRua.getText(),txtNumeroResidencia.getText(),txtBairro.getText(),cmbEstados.getSelectionModel().getSelectedItem(),
-						cmbCidades.getSelectionModel().getSelectedItem(),Util.getContaLogada().getId(),txtNomeLocal.getText(),
+						cmbCidades.getSelectionModel().getSelectedItem(),txtNomeLocal.getText(),Integer.toString(Util.getContaLogada().getId()),
 						anexoImagem.length()>0?Util.converterStringParaBase64(anexoImagem):"");
 		System.out.println("Query de cadastro: "+query);
 		try {
