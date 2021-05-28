@@ -19,7 +19,7 @@ namespace SistemaModerador
     {
         private string tipo = String.Empty, descricao = String.Empty;
         private int id = -1, status = -1, local = -1;
-        const string queryGeral = "SELECT denuncia.id, denuncia.descricao, denuncia.tipo, denuncia.local_, denuncia.status_, denuncia.denunciado, denuncia.denunciador, " +
+        const string queryGeral = "SELECT denuncia.id, denuncia.descricao, denuncia.tipo, denuncia.status_, denuncia.denunciado, denuncia.denunciador, " +
                                   "Pdenunciado.nome as nomeD1, " +
                                   "Pdenunciador.nome as nomeD2 " +
                                   "FROM denuncia " +
@@ -29,6 +29,9 @@ namespace SistemaModerador
         public TelaPrincipal()
         {
             InitializeComponent();
+            dgvDenuncias.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvDenuncias.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvDenuncias.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             AtualizarGridDenuncias(queryGeral + "ORDER BY denuncia.id DESC");
         }
 
@@ -47,14 +50,13 @@ namespace SistemaModerador
                 Denuncia denuncia = new Denuncia();
                 denuncia.id = Banco.reader.GetInt32("id");
                 denuncia.descricao = Banco.reader.GetString("descricao");
-                denuncia.local = Convert.ToBoolean(Banco.reader.GetInt32("local_"));
                 denuncia.tipo = Banco.reader.GetString("tipo");
                 denuncia.status = Convert.ToBoolean(Banco.reader.GetInt32("status_"));
                 denuncias.Add(denuncia);
 
                 dgvDenuncias.Rows.Add(new string[] { denuncia.id.ToString(),
-                    denuncia.tipo, denuncia.local == true ? "Telefone" : "Comentário",
-                    denuncia.descricao, denuncia.status ==  true ? "Fechada" : "Aberta", Banco.reader.GetString("nomeD2"), Banco.reader.GetString("nomeD1")});
+                    denuncia.tipo, denuncia.descricao, denuncia.status ==  true ? "Fechada" : "Aberta", 
+                    Banco.reader.GetString("nomeD2"), Banco.reader.GetString("nomeD1")});
             }
         }
 
@@ -114,29 +116,11 @@ namespace SistemaModerador
                 status = 1;
         }
 
-        private void rbQualquer_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbQualquer.Checked)
-                local = -1;
-        }
-
-        private void rbComentario_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbComentario.Checked)
-                local = 0;
-        }
-
-        private void rbTelefone_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbTelefone.Checked)
-                local = 1;
-        }
-
         private void dgvDenuncias_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             frmDenunciaIndividual fdi = new frmDenunciaIndividual(Convert.ToInt32(dgvDenuncias.Rows[e.RowIndex].Cells[0].Value.ToString()));
             fdi.ShowDialog();
-            AtualizarGridDenuncias(queryGeral);
+            AtualizarGridDenuncias(queryGeral + "ORDER BY denuncia.id DESC");
         }
         
         private string MontarQueryFiltro(int id, int local, int status, string tipo, string descricao)
@@ -145,20 +129,18 @@ namespace SistemaModerador
             string idQ = id == -1 ? String.Empty : String.Format("AND denuncia.id = {0}", id);
             if (id != -1)
             {
-                rbQualquer.Checked = true;
                 rbQualquerStatus.Checked = true;
                 txtDescricao.Text = "";
                 txtTipo.Text = "";
                 return query += idQ + " ORDER BY denuncia.id DESC";
             }
 
-            string localQ = local < 0 ? String.Empty : String.Format("AND denuncia.local_ = {0}", local.ToString());
             string statusQ = status < 0 ? String.Empty : String.Format("AND denuncia.status_ = {0}", status.ToString());
             tipo = String.IsNullOrEmpty(tipo) ? tipo : String.Format("AND denuncia.tipo LIKE '%{0}%'", tipo);
             descricao = String.IsNullOrEmpty(descricao) ? descricao : String.Format("AND denuncia.descricao LIKE '%{0}%'", descricao);
 
-            Clipboard.SetText(query + String.Format("{0} {1} {2} {3} ORDER BY denuncia.id DESC", localQ, statusQ, tipo, descricao));
-            return query + String.Format("{0} {1} {2} {3} ORDER BY denuncia.id DESC", localQ, statusQ, tipo, descricao);
+            Clipboard.SetText(query + String.Format("{0} {1} {2} ORDER BY denuncia.id DESC", statusQ, tipo, descricao));
+            return query + String.Format("{0} {1} {2} ORDER BY denuncia.id DESC", statusQ, tipo, descricao);
         }
 
         private void txtPesquisar_TextChanged(object sender, EventArgs e)

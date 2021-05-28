@@ -29,26 +29,15 @@ namespace SistemaModerador
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvDenuncias = new System.Windows.Forms.DataGridView();
-            this.clnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clnLocal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clnDescricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clnStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clnDenunciador = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clnDenunciado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pbxLupa = new System.Windows.Forms.PictureBox();
             this.txtPesquisar = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.rbComentario = new System.Windows.Forms.RadioButton();
-            this.rbTelefone = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
             this.txtTipo = new System.Windows.Forms.TextBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.rbQualquer = new System.Windows.Forms.RadioButton();
             this.btnFiltrar = new System.Windows.Forms.Button();
             this.txtID = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -60,6 +49,12 @@ namespace SistemaModerador
             this.rbQualquerStatus = new System.Windows.Forms.RadioButton();
             this.rbFechado = new System.Windows.Forms.RadioButton();
             this.rbAberto = new System.Windows.Forms.RadioButton();
+            this.clnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnDescricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnDenunciador = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnDenunciado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDenuncias)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxLupa)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -69,12 +64,12 @@ namespace SistemaModerador
             // 
             this.dgvDenuncias.AllowUserToAddRows = false;
             this.dgvDenuncias.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
-            this.dgvDenuncias.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            this.dgvDenuncias.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvDenuncias.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -82,31 +77,30 @@ namespace SistemaModerador
             this.dgvDenuncias.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
             this.dgvDenuncias.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvDenuncias.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvDenuncias.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvDenuncias.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvDenuncias.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDenuncias.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.clnId,
             this.clnTipo,
-            this.clnLocal,
             this.clnDescricao,
             this.clnStatus,
             this.clnDenunciador,
             this.clnDenunciado});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(34)))), ((int)(((byte)(41)))));
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvDenuncias.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(34)))), ((int)(((byte)(41)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvDenuncias.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvDenuncias.EnableHeadersVisualStyles = false;
             this.dgvDenuncias.GridColor = System.Drawing.Color.Black;
             this.dgvDenuncias.Location = new System.Drawing.Point(12, 225);
@@ -118,52 +112,9 @@ namespace SistemaModerador
             this.dgvDenuncias.RowTemplate.Height = 25;
             this.dgvDenuncias.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvDenuncias.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDenuncias.Size = new System.Drawing.Size(1038, 202);
+            this.dgvDenuncias.Size = new System.Drawing.Size(945, 184);
             this.dgvDenuncias.TabIndex = 0;
             this.dgvDenuncias.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDenuncias_CellDoubleClick);
-            // 
-            // clnId
-            // 
-            this.clnId.HeaderText = "ID";
-            this.clnId.Name = "clnId";
-            this.clnId.ReadOnly = true;
-            this.clnId.Visible = false;
-            // 
-            // clnTipo
-            // 
-            this.clnTipo.HeaderText = "Tipo";
-            this.clnTipo.Name = "clnTipo";
-            this.clnTipo.ReadOnly = true;
-            // 
-            // clnLocal
-            // 
-            this.clnLocal.HeaderText = "Local";
-            this.clnLocal.Name = "clnLocal";
-            this.clnLocal.ReadOnly = true;
-            // 
-            // clnDescricao
-            // 
-            this.clnDescricao.HeaderText = "Descrição";
-            this.clnDescricao.Name = "clnDescricao";
-            this.clnDescricao.ReadOnly = true;
-            // 
-            // clnStatus
-            // 
-            this.clnStatus.HeaderText = "Status";
-            this.clnStatus.Name = "clnStatus";
-            this.clnStatus.ReadOnly = true;
-            // 
-            // clnDenunciador
-            // 
-            this.clnDenunciador.HeaderText = "Denunciante";
-            this.clnDenunciador.Name = "clnDenunciador";
-            this.clnDenunciador.ReadOnly = true;
-            // 
-            // clnDenunciado
-            // 
-            this.clnDenunciado.HeaderText = "Denunciado";
-            this.clnDenunciado.Name = "clnDenunciado";
-            this.clnDenunciado.ReadOnly = true;
             // 
             // pbxLupa
             // 
@@ -184,7 +135,7 @@ namespace SistemaModerador
             this.txtPesquisar.ForeColor = System.Drawing.Color.White;
             this.txtPesquisar.Location = new System.Drawing.Point(48, 192);
             this.txtPesquisar.Name = "txtPesquisar";
-            this.txtPesquisar.Size = new System.Drawing.Size(1002, 27);
+            this.txtPesquisar.Size = new System.Drawing.Size(909, 27);
             this.txtPesquisar.TabIndex = 2;
             this.txtPesquisar.TextChanged += new System.EventHandler(this.txtPesquisar_TextChanged);
             // 
@@ -199,48 +150,12 @@ namespace SistemaModerador
             this.label1.TabIndex = 4;
             this.label1.Text = "Filtrar denúncias";
             // 
-            // rbComentario
-            // 
-            this.rbComentario.AutoSize = true;
-            this.rbComentario.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.rbComentario.FlatAppearance.BorderSize = 0;
-            this.rbComentario.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            this.rbComentario.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
-            this.rbComentario.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Yellow;
-            this.rbComentario.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.rbComentario.ForeColor = System.Drawing.Color.White;
-            this.rbComentario.Location = new System.Drawing.Point(12, 77);
-            this.rbComentario.Name = "rbComentario";
-            this.rbComentario.Size = new System.Drawing.Size(108, 23);
-            this.rbComentario.TabIndex = 5;
-            this.rbComentario.Text = "Comentário";
-            this.rbComentario.UseVisualStyleBackColor = true;
-            this.rbComentario.CheckedChanged += new System.EventHandler(this.rbComentario_CheckedChanged);
-            // 
-            // rbTelefone
-            // 
-            this.rbTelefone.AutoSize = true;
-            this.rbTelefone.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.rbTelefone.FlatAppearance.BorderSize = 0;
-            this.rbTelefone.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            this.rbTelefone.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
-            this.rbTelefone.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Yellow;
-            this.rbTelefone.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.rbTelefone.ForeColor = System.Drawing.Color.White;
-            this.rbTelefone.Location = new System.Drawing.Point(12, 103);
-            this.rbTelefone.Name = "rbTelefone";
-            this.rbTelefone.Size = new System.Drawing.Size(86, 23);
-            this.rbTelefone.TabIndex = 6;
-            this.rbTelefone.Text = "Telefone";
-            this.rbTelefone.UseVisualStyleBackColor = true;
-            this.rbTelefone.CheckedChanged += new System.EventHandler(this.rbTelefone_CheckedChanged);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(265, 33);
+            this.label2.Location = new System.Drawing.Point(135, 33);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 19);
             this.label2.TabIndex = 7;
@@ -253,39 +168,11 @@ namespace SistemaModerador
             this.txtTipo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
             this.txtTipo.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtTipo.ForeColor = System.Drawing.Color.White;
-            this.txtTipo.Location = new System.Drawing.Point(265, 55);
+            this.txtTipo.Location = new System.Drawing.Point(135, 55);
             this.txtTipo.Name = "txtTipo";
-            this.txtTipo.Size = new System.Drawing.Size(474, 27);
+            this.txtTipo.Size = new System.Drawing.Size(511, 27);
             this.txtTipo.TabIndex = 8;
             this.txtTipo.TextChanged += new System.EventHandler(this.txtTipo_TextChanged);
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(34)))), ((int)(((byte)(41)))));
-            this.panel1.Location = new System.Drawing.Point(120, 51);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(2, 80);
-            this.panel1.TabIndex = 9;
-            // 
-            // rbQualquer
-            // 
-            this.rbQualquer.AutoSize = true;
-            this.rbQualquer.Checked = true;
-            this.rbQualquer.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.rbQualquer.FlatAppearance.BorderSize = 0;
-            this.rbQualquer.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            this.rbQualquer.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
-            this.rbQualquer.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Yellow;
-            this.rbQualquer.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.rbQualquer.ForeColor = System.Drawing.Color.White;
-            this.rbQualquer.Location = new System.Drawing.Point(12, 52);
-            this.rbQualquer.Name = "rbQualquer";
-            this.rbQualquer.Size = new System.Drawing.Size(91, 23);
-            this.rbQualquer.TabIndex = 10;
-            this.rbQualquer.TabStop = true;
-            this.rbQualquer.Text = "Qualquer";
-            this.rbQualquer.UseVisualStyleBackColor = true;
-            this.rbQualquer.CheckedChanged += new System.EventHandler(this.rbQualquer_CheckedChanged);
             // 
             // btnFiltrar
             // 
@@ -299,7 +186,7 @@ namespace SistemaModerador
             this.btnFiltrar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
             this.btnFiltrar.Location = new System.Drawing.Point(12, 143);
             this.btnFiltrar.Name = "btnFiltrar";
-            this.btnFiltrar.Size = new System.Drawing.Size(1038, 30);
+            this.btnFiltrar.Size = new System.Drawing.Size(945, 30);
             this.btnFiltrar.TabIndex = 11;
             this.btnFiltrar.Text = "Filtrar informações";
             this.btnFiltrar.UseVisualStyleBackColor = false;
@@ -310,7 +197,7 @@ namespace SistemaModerador
             this.txtID.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
             this.txtID.Font = new System.Drawing.Font("Century", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtID.ForeColor = System.Drawing.Color.White;
-            this.txtID.Location = new System.Drawing.Point(131, 55);
+            this.txtID.Location = new System.Drawing.Point(12, 55);
             this.txtID.Name = "txtID";
             this.txtID.Size = new System.Drawing.Size(117, 27);
             this.txtID.TabIndex = 13;
@@ -324,7 +211,7 @@ namespace SistemaModerador
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(34)))), ((int)(((byte)(41)))));
             this.panel2.Location = new System.Drawing.Point(12, 182);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1038, 2);
+            this.panel2.Size = new System.Drawing.Size(945, 2);
             this.panel2.TabIndex = 10;
             // 
             // label3
@@ -332,7 +219,7 @@ namespace SistemaModerador
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(131, 33);
+            this.label3.Location = new System.Drawing.Point(12, 33);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(97, 19);
             this.label3.TabIndex = 12;
@@ -345,9 +232,9 @@ namespace SistemaModerador
             this.txtDescricao.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
             this.txtDescricao.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtDescricao.ForeColor = System.Drawing.Color.White;
-            this.txtDescricao.Location = new System.Drawing.Point(131, 107);
+            this.txtDescricao.Location = new System.Drawing.Point(12, 107);
             this.txtDescricao.Name = "txtDescricao";
-            this.txtDescricao.Size = new System.Drawing.Size(919, 27);
+            this.txtDescricao.Size = new System.Drawing.Size(945, 27);
             this.txtDescricao.TabIndex = 15;
             this.txtDescricao.TextChanged += new System.EventHandler(this.txtDescricao_TextChanged);
             // 
@@ -356,7 +243,7 @@ namespace SistemaModerador
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(131, 85);
+            this.label4.Location = new System.Drawing.Point(12, 85);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(75, 19);
             this.label4.TabIndex = 14;
@@ -371,7 +258,7 @@ namespace SistemaModerador
             this.btnAtualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAtualizar.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnAtualizar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            this.btnAtualizar.Location = new System.Drawing.Point(12, 433);
+            this.btnAtualizar.Location = new System.Drawing.Point(12, 415);
             this.btnAtualizar.Name = "btnAtualizar";
             this.btnAtualizar.Size = new System.Drawing.Size(185, 30);
             this.btnAtualizar.TabIndex = 20;
@@ -387,7 +274,7 @@ namespace SistemaModerador
             this.groupBox1.Controls.Add(this.rbAberto);
             this.groupBox1.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox1.ForeColor = System.Drawing.Color.White;
-            this.groupBox1.Location = new System.Drawing.Point(745, 33);
+            this.groupBox1.Location = new System.Drawing.Point(652, 33);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(305, 49);
             this.groupBox1.TabIndex = 21;
@@ -450,12 +337,54 @@ namespace SistemaModerador
             this.rbAberto.UseVisualStyleBackColor = true;
             this.rbAberto.CheckedChanged += new System.EventHandler(this.rbAberto_CheckedChanged);
             // 
+            // clnId
+            // 
+            this.clnId.HeaderText = "ID";
+            this.clnId.Name = "clnId";
+            this.clnId.ReadOnly = true;
+            this.clnId.Visible = false;
+            // 
+            // clnTipo
+            // 
+            this.clnTipo.FillWeight = 70F;
+            this.clnTipo.HeaderText = "Tipo";
+            this.clnTipo.Name = "clnTipo";
+            this.clnTipo.ReadOnly = true;
+            // 
+            // clnDescricao
+            // 
+            this.clnDescricao.FillWeight = 120F;
+            this.clnDescricao.HeaderText = "Descrição";
+            this.clnDescricao.Name = "clnDescricao";
+            this.clnDescricao.ReadOnly = true;
+            // 
+            // clnStatus
+            // 
+            this.clnStatus.FillWeight = 25F;
+            this.clnStatus.HeaderText = "Status";
+            this.clnStatus.Name = "clnStatus";
+            this.clnStatus.ReadOnly = true;
+            // 
+            // clnDenunciador
+            // 
+            this.clnDenunciador.FillWeight = 70F;
+            this.clnDenunciador.HeaderText = "Denunciante";
+            this.clnDenunciador.Name = "clnDenunciador";
+            this.clnDenunciador.ReadOnly = true;
+            // 
+            // clnDenunciado
+            // 
+            this.clnDenunciado.FillWeight = 70F;
+            this.clnDenunciado.HeaderText = "Denunciado";
+            this.clnDenunciado.Name = "clnDenunciado";
+            this.clnDenunciado.ReadOnly = true;
+            // 
             // TelaPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
-            this.ClientSize = new System.Drawing.Size(1062, 472);
+            this.ClientSize = new System.Drawing.Size(969, 454);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnAtualizar);
             this.Controls.Add(this.txtDescricao);
@@ -464,12 +393,8 @@ namespace SistemaModerador
             this.Controls.Add(this.txtID);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnFiltrar);
-            this.Controls.Add(this.rbQualquer);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.txtTipo);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.rbTelefone);
-            this.Controls.Add(this.rbComentario);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtPesquisar);
             this.Controls.Add(this.pbxLupa);
@@ -494,12 +419,8 @@ namespace SistemaModerador
         private System.Windows.Forms.PictureBox pbxLupa;
         private System.Windows.Forms.TextBox txtPesquisar;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RadioButton rbComentario;
-        private System.Windows.Forms.RadioButton rbTelefone;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtTipo;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.RadioButton rbQualquer;
         private System.Windows.Forms.Button btnFiltrar;
         private System.Windows.Forms.TextBox txtID;
         private System.Windows.Forms.Panel panel2;
@@ -513,7 +434,6 @@ namespace SistemaModerador
         private System.Windows.Forms.RadioButton rbAberto;
         private System.Windows.Forms.DataGridViewTextBoxColumn clnId;
         private System.Windows.Forms.DataGridViewTextBoxColumn clnTipo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clnLocal;
         private System.Windows.Forms.DataGridViewTextBoxColumn clnDescricao;
         private System.Windows.Forms.DataGridViewTextBoxColumn clnStatus;
         private System.Windows.Forms.DataGridViewTextBoxColumn clnDenunciador;

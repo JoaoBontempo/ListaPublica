@@ -9,12 +9,11 @@ namespace SistemaModerador.Classes
 {
     public class Denuncia
     {
-        public Denuncia(int id, string descricao, string tipo, bool local, bool status)
+        public Denuncia(int id, string descricao, string tipo, bool status)
         {
             this.id = id;
             this.descricao = descricao;
             this.tipo = tipo;
-            this.local = local;
             this.status = status;
         }
 
@@ -26,7 +25,6 @@ namespace SistemaModerador.Classes
         public int id { get; set; }
         public string descricao { get; set; }
         public string tipo { get; set; }
-        public bool local { get; set; }
         public bool status { get; set; }
         public Parceiro denunciado { get; set; }
         public Parceiro denunciador { get; set; }
