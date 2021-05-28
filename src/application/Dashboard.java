@@ -404,7 +404,7 @@ public class Dashboard extends Application {
 				// obt�m o telefone para obter o id do parceiro e id do local
 				TableViewUtil ret=tvTelefones.getSelectionModel().getSelectedItem();
 				Util.setTelefoneAtual(ret.getNumero());
-				String numero=ret.getNumero();
+				String numero=Util.FormatarSetTelefone(ret.getNumero());
 				String descricao=ret.getDescricao();
 				String idDono=null;
 				String idLugar=null;
@@ -421,9 +421,9 @@ public class Dashboard extends Application {
 					idDono=Banco.getReader().getString("dono");
 					UtilDashboard.setIdLugar(String.valueOf(Banco.getReader().getInt("lugar")));
 					UtilDashboard.setIdDono(idDono);
-					System.out.println("Num: "+ret.getNumero());
-					UtilDashboard.setNumeroTelefone(ret.getNumero());
-					UtilDashboard.setIdTelefone(Util.RecuperarIdTelefonePorTelefone(ret.getNumero()));
+					System.out.println("Num: "+numero);
+					UtilDashboard.setNumeroTelefone(numero);
+					UtilDashboard.setIdTelefone(Util.RecuperarIdTelefonePorTelefone(numero));
 
 					// obtem os telefones
 					//query="select distinct endereco.usuario,telefone.numero from endereco INNER JOIN telefone ON endereco.usuario="+idDono+" order by endereco.usuario,telefone.numero;";

@@ -136,13 +136,16 @@ public final class Util {
 	{
 		telefone = telefone.replace("(", "");
 		telefone = telefone.replace(")", "");
+		telefone = telefone.replace(" ", "");
 		return telefone;
 	}
 	
 	public static String FormatarGetTelefone(String telefone)
 	{
+		if (telefone.length() <= 1)
+			return telefone;
 		String ddd = telefone.substring(0,2);
-		telefone = telefone.replace(ddd, "");
+		telefone = telefone.substring(2, telefone.length());
 		return String.format("(%s) %s", ddd, telefone);
 	}
 

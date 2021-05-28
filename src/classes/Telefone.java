@@ -8,7 +8,7 @@ public class Telefone {
 	private String descricao;
 	
 	public String getNumero() {
-		return Util.FormatarGetTelefone(numero);
+		return numero;
 	}
 	public void setNumero(String numero) {
 		this.numero = numero;

@@ -52,7 +52,7 @@ public class TableViewUtil {
 		this.nome = nome;
 	}
 	public String getNumero() {
-		return numero;
+		return Util.FormatarGetTelefone(numero);
 	}
 	public void setNumero(String numero) {
 		this.numero = numero;
