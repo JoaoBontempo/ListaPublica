@@ -29,7 +29,11 @@ public class CadastroTelefone extends Application{
 	private TextField txtNumero;
 
 	@FXML
-	private TextField txtDescricao;
+	private TextField txtDescrição;
+	
+	@FXML
+	private TextField txtDDD;
+
 
 	@FXML
 	private ComboBox<String> cboxEndereco;
@@ -56,9 +60,11 @@ public class CadastroTelefone extends Application{
 
 	private boolean validarCampos() throws SQLException
 	{
+		if (!Validacao.verificarTextField(txtDDD))
+			return false;
 		if (!Validacao.verificarTextField(txtNumero))
 			return false;
-		if (!Validacao.verificarTextField(txtDescricao))
+		if (!Validacao.verificarTextField(txtDescrição))
 			return false;
 		
 		ResultSet result = Banco.InserirQueryReader(String.format("SELECT id FROM telefone WHERE telefone.numero = '%s'", txtNumero.getText()));
@@ -70,6 +76,11 @@ public class CadastroTelefone extends Application{
 		return true;
 	}
 	
+	private String formatarTelefone(String ddd, String numero)
+	{
+		return String.format("(%s) %s", ddd, numero); 
+	}
+	
 	@FXML
 	public void cadastrarTelefone() throws SQLException
 	{
@@ -78,13 +89,13 @@ public class CadastroTelefone extends Application{
 			if (cboxEndereco.getSelectionModel().getSelectedIndex() != 0)
 			{
 				Banco.InserirQuery(String.format("INSERT INTO telefone (id, numero, dono, lugar, descricao) VALUES"
-						+ " (default, '%s', %s, %s, '%s')", txtNumero.getText(), Util.getContaLogada().getId(), 
-						enderecos.get(cboxEndereco.getSelectionModel().getSelectedIndex() - 1).getId(), txtDescricao.getText()));
+						+ " (default, '%s', %s, %s, '%s')", formatarTelefone(txtDDD.getText(), txtNumero.getText()), Util.getContaLogada().getId(), 
+						enderecos.get(cboxEndereco.getSelectionModel().getSelectedIndex() - 1).getId(), txtDescrição.getText()));
 			}
 			else
 			{
 				Banco.InserirQuery(String.format("INSERT INTO telefone (id, numero, dono, descricao) VALUES"
-						+ " (default, '%s', %s, '%s')", txtNumero.getText(), Util.getContaLogada().getId(), txtDescricao.getText()));
+						+ " (default, '%s', %s, '%s')", formatarTelefone(txtDDD.getText(), txtNumero.getText()), Util.getContaLogada().getId(), txtDescrição.getText()));
 			}
 			Util.MessageBoxShow("Cadastro realizado!", "Seu novo telefone foi cadastrado com sucesso!", AlertType.INFORMATION);
 		}
