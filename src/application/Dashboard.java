@@ -40,6 +40,7 @@ import classes.Endereco;
 import classes.Parceiro;
 import classes.TableViewUtil;
 import classes.Telefone;
+import classes.TelefoneList;
 import classes.TelefoneNumero;
 import classes.Util;
 import classes.UtilDashboard;
@@ -60,6 +61,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -90,10 +92,12 @@ public class Dashboard extends Application {
 
 	private ArrayList<String> cidadesUtil = new ArrayList<String>(); // ArrayList para a classe Utils.
 
+	private ArrayList<TelefoneList> dadosTelefone = new ArrayList<TelefoneList>();
+
 	private String nome = "*", estado = "*", cidade = "*", numero = "*", email = "*", descricao = "*";
 
 	private Stage primaryStage;
-	
+
 	@FXML
 	private TabPane TabDash;
 
@@ -107,8 +111,8 @@ public class Dashboard extends Application {
 	private TableColumn<TableViewUtil, String> tvcNumero;
 
 	@FXML
-    private ImageView imgIconePerfil;
-	
+	private ImageView imgIconePerfil;
+
 	@FXML
 	private TableColumn<TableViewUtil, String> tvcNome;
 
@@ -131,6 +135,9 @@ public class Dashboard extends Application {
 	private ComboBox<String> cboxCidades;
 
 	@FXML
+	private ComboBox<String> cboxSelecionarTelefone;
+
+	@FXML
 	private TextField txtNome;
 
 	@FXML
@@ -147,7 +154,7 @@ public class Dashboard extends Application {
 
 	@FXML
 	private Tab tbMeusTelefones;
-	
+
 	@FXML
 	private Tab tbMeusEnderecos;
 
@@ -189,7 +196,7 @@ public class Dashboard extends Application {
 
 	@FXML
 	private Button btnConfirmarAlteracao;
-	
+
 	@FXML
     private VBox vbVerticalBox;
 
@@ -202,19 +209,60 @@ public class Dashboard extends Application {
 	@FXML
     private BorderPane pnlImagem;
 	
+	@FXML
+	private BorderPane pnlinformacoes;
+
+	@FXML
+	private Button btnAlterar;
+
+	@FXML
+	private Button btnExcluirTel;
+
+	@FXML
+	private ListView<String> lvInfo;
+
+	@FXML
+	void AlterarTelefone(ActionEvent event) {
+        
+	}
+
 	
-	 @FXML
-	 void TrocarFotoPerfil(MouseEvent event) {
+	@FXML
+	void ExcluirTelefone(ActionEvent event) {
+       
+	}
+
+	@FXML
+	void SelecionarTelefone(ActionEvent event) {
+
+		lvInfo.getItems().clear();
+
+		for(TelefoneList telefone : dadosTelefone ) {
+
+			if(cboxSelecionarTelefone.getSelectionModel().getSelectedItem().equals(telefone.getNumero())){
+
+				lvInfo.getItems().add("Nome: " + telefone.getNome());
+				lvInfo.getItems().add("Descrição: " + telefone.getDescricao());
+
+				break;
+			}
+		}
+	}
+
+
+
+	@FXML
+	void TrocarFotoPerfil(MouseEvent event) {
 		FileChooser fileChooser = new FileChooser();
-	    fileChooser.setTitle("Defina uma imagem do local");
-	    fileChooser.getExtensionFilters().addAll(
-	                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-	                new FileChooser.ExtensionFilter("PNG", "*.png"),
-	                new FileChooser.ExtensionFilter("ICO", "*.ico"));
-	    File imagemEscolhida=fileChooser.showOpenDialog(this.primaryStage);
-	    // armazeno o arquivo na pasta 
-	    try {
-	    	String diretorioTmp="C:\\lista\\usuarios\\"+imagemEscolhida.getName();
+		fileChooser.setTitle("Defina uma imagem do local");
+		fileChooser.getExtensionFilters().addAll(
+				new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+				new FileChooser.ExtensionFilter("PNG", "*.png"),
+				new FileChooser.ExtensionFilter("ICO", "*.ico"));
+		File imagemEscolhida=fileChooser.showOpenDialog(this.primaryStage);
+		// armazeno o arquivo na pasta 
+		try {
+			String diretorioTmp="C:\\lista\\usuarios\\"+imagemEscolhida.getName();
 			Files.copy(Path.of(imagemEscolhida.getAbsolutePath()), new FileOutputStream(diretorioTmp));
 			String base=Util.converterStringParaBase64(Path.of(imagemEscolhida.getAbsolutePath()).toString());
 			Banco.InserirQuery("update parceiro set imagem='"+base+"' where id ="+Util.getContaLogada().getId());
@@ -229,10 +277,10 @@ public class Dashboard extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    
-	 }
 
-	
+	}
+
+
 	void verificaIconeUsuario() {
 		int id=-1;
 		try {
@@ -252,7 +300,7 @@ public class Dashboard extends Application {
 						Util.verificaExistenciaImagem("profile.jpg", imagem.getBytes(), false);
 					}	
 				}
-				
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -265,9 +313,9 @@ public class Dashboard extends Application {
 		if(possuiIcone) {
 			imgIconePerfil.setImage(new Image(new File("C:\\lista\\usuarios\\profile.jpg").toURI().toString(), 150, 150, false, false));
 		}
-		
+
 	}
-	
+
 	@FXML
 	void AlterarDados(ActionEvent event) throws SQLException {
 
@@ -352,16 +400,16 @@ public class Dashboard extends Application {
 
 		//		DOUBLE CLICK NA LINHA
 		if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
-            if(tvTelefones.getSelectionModel().getSelectedItem() != null) {
-            	// obtï¿½m o telefone para obter o id do parceiro e id do local
-            	TableViewUtil ret=tvTelefones.getSelectionModel().getSelectedItem();
-            	Util.setTelefoneAtual(ret.getNumero());
-            	String numero=ret.getNumero();
-            	String descricao=ret.getDescricao();
-            	String idDono=null;
-            	String idLugar=null;
-            	String query="";
-				
+			if(tvTelefones.getSelectionModel().getSelectedItem() != null) {
+				// obtï¿½m o telefone para obter o id do parceiro e id do local
+				TableViewUtil ret=tvTelefones.getSelectionModel().getSelectedItem();
+				Util.setTelefoneAtual(ret.getNumero());
+				String numero=ret.getNumero();
+				String descricao=ret.getDescricao();
+				String idDono=null;
+				String idLugar=null;
+				String query="";
+
 				try {
 					// primeiro obtenho o id do dono , depois obtenho os telefones associados a ele
 					query="select dono,lugar,descricao from telefone where numero LIKE '%"+numero+"%'";
@@ -376,7 +424,7 @@ public class Dashboard extends Application {
 					System.out.println("Num: "+ret.getNumero());
 					UtilDashboard.setNumeroTelefone(ret.getNumero());
 					UtilDashboard.setIdTelefone(Util.RecuperarIdTelefonePorTelefone(ret.getNumero()));
-					
+
 					// obtem os telefones
 					//query="select distinct endereco.usuario,telefone.numero from endereco INNER JOIN telefone ON endereco.usuario="+idDono+" order by endereco.usuario,telefone.numero;";
 					query="select numero from telefone where dono="+idDono+";";
@@ -424,10 +472,10 @@ public class Dashboard extends Application {
 
 
 	// Mï¿½todo 'onLoad'
-	public void initialize() {
+	public void initialize() throws SQLException {
 		verificaIconeUsuario();
 		//imgIconePerfil.setImage(new Image("file://C:\\lista\\usuarios\\profile.jpg"));
-		
+
 		tbMeusEnderecos.setDisable(Util.isConvidado());
 		tbMeusTelefones.setDisable(Util.isConvidado());
 		tbMinhaConta.setDisable(Util.isConvidado());
@@ -451,7 +499,30 @@ public class Dashboard extends Application {
 		tvcCidade.setStyle("-fx-alignment: CENTER;");
 		tvcEmail.setCellValueFactory(new PropertyValueFactory("email"));
 
+
+		AtualizarCbxTelefones();
 		AtualizarGridTelefones(API.doGetTelefones(100));
+
+	}
+
+	public void  AtualizarCbxTelefones() throws SQLException {
+
+		ResultSet result = Banco.InserirQueryReader("SELECT telefone.*, endereco.nome FROM telefone LEFT JOIN endereco ON endereco.id = telefone.lugar WHERE telefone.dono = " 
+				+ Util.getContaLogada().getId());
+
+
+		while(result.next()) {
+
+			TelefoneList telefone = new TelefoneList();
+
+			telefone.setNumero(result.getString("numero"));
+			telefone.setDescricao(result.getString("descricao"));
+			telefone.setNome(result.getString("nome"));
+
+
+			dadosTelefone.add(telefone);
+			cboxSelecionarTelefone.getItems().add(result.getString("numero"));
+		}
 
 	}
 

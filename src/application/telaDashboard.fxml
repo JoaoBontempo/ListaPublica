@@ -112,9 +112,9 @@
 			<content>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnNovoTelefone" layoutX="28.0" layoutY="97.0" mnemonicParsing="false" onAction="#showNovoTelefone" prefHeight="34.0" prefWidth="210.0" text="Novo telefone" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="97.0" />
-                  <ComboBox fx:id="cbxSelecionarTelefone" layoutX="29.0" layoutY="53.0" prefHeight="32.0" prefWidth="208.0" promptText="selecione um telefone" AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="53.0" />
-                  <BorderPane fx:id="pnlinformacoes" layoutX="258.0" layoutY="16.0" prefHeight="391.0" prefWidth="902.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="258.0" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="16.0">
+                  <Button fx:id="btnNovoTelefone" layoutX="28.0" layoutY="174.0" mnemonicParsing="false" onAction="#showNovoTelefone" prefHeight="34.0" prefWidth="210.0" text="Novo telefone" AnchorPane.leftAnchor="28.0" />
+                  <ComboBox fx:id="cboxSelecionarTelefone" layoutX="29.0" layoutY="135.0" onAction="#SelecionarTelefone" prefHeight="32.0" prefWidth="208.0" promptText="selecione um telefone" AnchorPane.leftAnchor="28.0" />
+                  <BorderPane fx:id="pnlinformacoes" layoutX="258.0" layoutY="16.0" prefHeight="394.0" prefWidth="909.0" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="258.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="16.0">
                      <top>
                         <Label styleClass="labelVerde" stylesheets="@application.css" text="Informações" BorderPane.alignment="CENTER">
                            <font>
@@ -123,9 +123,11 @@
                         </Label>
                      </top>
                      <center>
-                        <ListView fx:id="lvInfo" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                        <ListView fx:id="lvInfo" prefHeight="348.0" prefWidth="902.0" BorderPane.alignment="CENTER" />
                      </center>
                   </BorderPane>
+                  <Button fx:id="btnAlterar" layoutX="28.0" layoutY="215.0" mnemonicParsing="false" onAction="#AlterarTelefone" prefHeight="34.0" prefWidth="210.0" text="Alterar " AnchorPane.leftAnchor="28.0" />
+                  <Button fx:id="btnExcluirTel" layoutX="28.0" layoutY="257.0" mnemonicParsing="false" onAction="#ExcluirTelefone" prefHeight="34.0" prefWidth="210.0" text="Excluir " AnchorPane.leftAnchor="28.0" />
                </children></AnchorPane>
 			</content>
 		</Tab>
