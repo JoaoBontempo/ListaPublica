@@ -74,6 +74,8 @@ namespace SistemaModerador.View
             this.label16 = new System.Windows.Forms.Label();
             this.pbxLogo = new System.Windows.Forms.PictureBox();
             this.btnExcluirDenunciante = new System.Windows.Forms.Button();
+            this.btnExcluirTelefone = new System.Windows.Forms.Button();
+            this.btnExcluirEndereco = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -595,7 +597,7 @@ namespace SistemaModerador.View
             this.btnFecharDenuncia.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFecharDenuncia.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnFecharDenuncia.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            this.btnFecharDenuncia.Location = new System.Drawing.Point(767, 218);
+            this.btnFecharDenuncia.Location = new System.Drawing.Point(767, 374);
             this.btnFecharDenuncia.Name = "btnFecharDenuncia";
             this.btnFecharDenuncia.Size = new System.Drawing.Size(232, 30);
             this.btnFecharDenuncia.TabIndex = 39;
@@ -617,7 +619,7 @@ namespace SistemaModerador.View
             // pbxLogo
             // 
             this.pbxLogo.Image = global::SistemaModerador.Properties.Resources.logo_contornada;
-            this.pbxLogo.Location = new System.Drawing.Point(774, 290);
+            this.pbxLogo.Location = new System.Drawing.Point(762, 410);
             this.pbxLogo.Name = "pbxLogo";
             this.pbxLogo.Size = new System.Drawing.Size(244, 128);
             this.pbxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -641,12 +643,48 @@ namespace SistemaModerador.View
             this.btnExcluirDenunciante.UseVisualStyleBackColor = false;
             this.btnExcluirDenunciante.Click += new System.EventHandler(this.btnExcluirDenunciante_Click);
             // 
+            // btnExcluirTelefone
+            // 
+            this.btnExcluirTelefone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExcluirTelefone.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(15)))), ((int)(((byte)(0)))));
+            this.btnExcluirTelefone.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnExcluirTelefone.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.btnExcluirTelefone.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExcluirTelefone.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnExcluirTelefone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.btnExcluirTelefone.Location = new System.Drawing.Point(767, 218);
+            this.btnExcluirTelefone.Name = "btnExcluirTelefone";
+            this.btnExcluirTelefone.Size = new System.Drawing.Size(232, 30);
+            this.btnExcluirTelefone.TabIndex = 43;
+            this.btnExcluirTelefone.Text = "Excluir telefone";
+            this.btnExcluirTelefone.UseVisualStyleBackColor = false;
+            this.btnExcluirTelefone.Click += new System.EventHandler(this.btnExcluirTelefone_Click);
+            // 
+            // btnExcluirEndereco
+            // 
+            this.btnExcluirEndereco.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExcluirEndereco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(15)))), ((int)(((byte)(0)))));
+            this.btnExcluirEndereco.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnExcluirEndereco.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.btnExcluirEndereco.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExcluirEndereco.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnExcluirEndereco.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.btnExcluirEndereco.Location = new System.Drawing.Point(767, 254);
+            this.btnExcluirEndereco.Name = "btnExcluirEndereco";
+            this.btnExcluirEndereco.Size = new System.Drawing.Size(232, 30);
+            this.btnExcluirEndereco.TabIndex = 44;
+            this.btnExcluirEndereco.Text = "Excluir endereço";
+            this.btnExcluirEndereco.UseVisualStyleBackColor = false;
+            this.btnExcluirEndereco.Click += new System.EventHandler(this.btnExcluirEndereco_Click);
+            // 
             // frmDenunciaIndividual
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
             this.ClientSize = new System.Drawing.Size(1011, 550);
+            this.Controls.Add(this.btnExcluirEndereco);
+            this.Controls.Add(this.btnExcluirTelefone);
             this.Controls.Add(this.btnExcluirDenunciante);
             this.Controls.Add(this.pbxLogo);
             this.Controls.Add(this.label16);
@@ -720,5 +758,7 @@ namespace SistemaModerador.View
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.PictureBox pbxLogo;
         private System.Windows.Forms.Button btnExcluirDenunciante;
+        private System.Windows.Forms.Button btnExcluirTelefone;
+        private System.Windows.Forms.Button btnExcluirEndereco;
     }
 }

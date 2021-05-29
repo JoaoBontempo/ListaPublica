@@ -102,6 +102,52 @@ namespace SistemaModerador.View
             ExcluirInformacoes("denunciante");
         }
 
+        private void btnExcluirTelefone_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Tem certeza que deseja excluir esse telefone?" +
+                "\n-Os comentários deste telefone serão excluídos" +
+                "\n-Todas as denúncias deste telefone", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question).Equals(DialogResult.Yes))
+            {
+                frmConfirmacao confirmacao = new frmConfirmacao();
+                confirmacao.ShowDialog();
+
+                switch (confirmacao.getResposta())
+                {
+                    case -1:
+                        MessageBox.Show("A operação foi cancelada.");
+                        break;
+
+                    case 0:
+                        MessageBox.Show("O código de confirmação está incorreto! O sistema será fechado");
+                        Banco.FecharBanco();
+                        this.Close();
+                        Application.Exit();
+                        break;
+
+                    case 1:
+                        Banco.InserirQuery("DELETE FROM denuncia WHERE tel = " + txtIdTel.Text);
+                        Banco.InserirQuery("DELETE FROM comentarios WHERE idTelefone = " + txtIdTel.Text);
+                        Banco.InserirQuery("DELETE FROM telefone WHERE id = " + txtIdTel.Text);
+                        MessageBox.Show("O telefone foi excluído com sucesso! A denúncia será fechada!");
+                        this.Close();
+                        break;
+                }
+            }
+        }
+
+
+        private void btnExcluirEndereco_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Tem certeza que deseja excluir esse endereço?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question).Equals(DialogResult.Yes))
+            {
+                Banco.InserirQuery("DELETE FROM endereco WHERE id = " + idEndereco);
+                MessageBox.Show("Endereço excluído com sucesso!");
+                btnExcluirEndereco.Visible = false;
+                btnVerEndereco.Visible = false;
+                txtDescTel.Size = new Size(339, 150);
+            }
+        }
+
         public frmDenunciaIndividual(int idDenuncia)
         {
             InitializeComponent();
@@ -121,6 +167,7 @@ namespace SistemaModerador.View
             }
             catch
             {
+                btnExcluirEndereco.Visible = false;
                 btnVerEndereco.Visible = false;
                 txtDescTel.Size = new Size(339, 150);
             }
