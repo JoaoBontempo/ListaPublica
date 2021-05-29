@@ -56,6 +56,39 @@ public final class Util {
 		Util.contaLogada = contaLogada;
 	}
 	
+	public static int recuperarIdDonoAtravesTelefone(String telefone) {
+		String query="select dono from telefone where numero='"+telefone+"';";
+		try {
+			Banco.InserirQueryReader(query);
+			if(Banco.getReader().next()) {
+				return Banco.getReader().getInt("dono");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return -1;
+	}
+	
+	public static Parceiro recuperarValoresUsuarioTelaLocal(int idDono) {
+		if(idDono<0)return null;
+		Parceiro p=null;
+		try {
+			Banco.InserirQueryReader("select usuario,email,nome from parceiro where id="+idDono);
+			if(Banco.getReader().next()) {
+				p=new Parceiro(Banco.getReader().getString("nome"),Banco.getReader().getString("email"),
+						Banco.getReader().getString("usuario"));
+				return p;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
 	public static String converterStringParaBase64(String caminho) {
 		String base64="";
 		try {
@@ -188,30 +221,6 @@ public final class Util {
 		//					 C:\\img\\usuarios
 		// local=False = pasta de usuario
 		// local=True  = pasta de local
-		List<String> extensoesPermitidas;
-		extensoesPermitidas=Arrays.asList(".jpg",".png");
-		
-//		Pattern extens = Pattern.compile("([\\w\\-]+)");
-//		Matcher match=extens.matcher(nomeArquivo);
-//		System.out.println("Matches :"+match.matches());
-//		if(match.matches()) {
-//			System.out.println("GROUp 1:"+match.group(1));
-//			if(!extensoesPermitidas.contains(match.group(1))) {
-//				throw new Exception("Extens�o do arquivo inv�lida. N�o � do tipo jpg.");
-//			}
-//		}
-		
-
-		//		Pattern extens = Pattern.compile("([\\w\\-]+)");
-		//		Matcher match=extens.matcher(nomeArquivo);
-		//		System.out.println("Matches :"+match.matches());
-		//		if(match.matches()) {
-		//			System.out.println("GROUp 1:"+match.group(1));
-		//			if(!extensoesPermitidas.contains(match.group(1))) {
-		//				throw new Exception("Extens�o do arquivo inv�lida. N�o � do tipo jpg.");
-		//			}
-		//		}
-
 
 		String diretorioRaiz="C:\\lista";
 		String diretorioPadraoLocal="C:\\lista\\locais";
@@ -226,7 +235,6 @@ public final class Util {
 
 		String salvarEm=local==true?diretorioPadraoLocal:diretorioPadraoUsuarios;
 		salvarEm+="\\"+nomeArquivo;
-		System.out.println("Salvar em: "+salvarEm);
 
 		byte[] retorno = Base64.getDecoder().decode(conteudo);
 		Files.write(Path.of(salvarEm), retorno, StandardOpenOption.CREATE);

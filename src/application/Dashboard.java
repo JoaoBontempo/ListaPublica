@@ -263,10 +263,15 @@ public class Dashboard extends Application {
 		// armazeno o arquivo na pasta 
 		try {
 			String diretorioTmp="C:\\lista\\usuarios\\"+imagemEscolhida.getName();
+			File arquivoEscolhido=new File(diretorioTmp);
+			if(arquivoEscolhido.length() > (4194304L) ) {
+				Util.MessageBoxShow("Imagem muito grande", "A imagem é maior que 4Mb.");
+				return;
+			}
 			Files.copy(Path.of(imagemEscolhida.getAbsolutePath()), new FileOutputStream(diretorioTmp));
 			String base=Util.converterStringParaBase64(Path.of(imagemEscolhida.getAbsolutePath()).toString());
 			Banco.InserirQuery("update parceiro set imagem='"+base+"' where id ="+Util.getContaLogada().getId());
-			imgIconePerfil.setImage(new Image(new File(diretorioTmp).toURI().toString(), 150, 150, false, false));
+			imgIconePerfil.setImage(new Image(new File(diretorioTmp).toURI().toString(), 400, 400, false, false));
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -311,7 +316,7 @@ public class Dashboard extends Application {
 		}
 		//file://C:/lista/usuarios/profile.jpg
 		if(possuiIcone) {
-			imgIconePerfil.setImage(new Image(new File("C:\\lista\\usuarios\\profile.jpg").toURI().toString(), 150, 150, false, false));
+			imgIconePerfil.setImage(new Image(new File("C:\\lista\\usuarios\\profile.jpg").toURI().toString(), 400, 400, false, false));
 		}
 
 	}
@@ -421,7 +426,6 @@ public class Dashboard extends Application {
 					idDono=Banco.getReader().getString("dono");
 					UtilDashboard.setIdLugar(String.valueOf(Banco.getReader().getInt("lugar")));
 					UtilDashboard.setIdDono(idDono);
-					System.out.println("Num: "+numero);
 					UtilDashboard.setNumeroTelefone(numero);
 					UtilDashboard.setIdTelefone(Util.RecuperarIdTelefonePorTelefone(numero));
 
