@@ -10,6 +10,7 @@ import classes.Util;
 import classes.Validacao;
 import javafx.application.Application;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -22,6 +23,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class CadastroTelefone extends Application{
 
@@ -111,6 +113,8 @@ public class CadastroTelefone extends Application{
 	public void getEvent(Event evento) {
 		this.evento = evento;
 	}
+	
+	private ComboBox<String> cbx;
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -122,11 +126,24 @@ public class CadastroTelefone extends Application{
 			primaryStage.setTitle("Lista Pública - Cadastrar novo telefone");
 			primaryStage.getIcons().add(icon);
 			primaryStage.setResizable(false);
-			
 			//setar tela modal e tela que chamou 
 			primaryStage.initModality(Modality.WINDOW_MODAL);
 			primaryStage.initOwner(((Node)evento.getSource()).getScene().getWindow());
-			
+			Dashboard dash = new Dashboard();
+			primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+	            @Override
+	            public void handle(WindowEvent t) {
+	                t.consume();
+                    
+	                try {
+						dash.AtualizarCbxTelefones();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	                System.exit(0);
+	            }
+	        });
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

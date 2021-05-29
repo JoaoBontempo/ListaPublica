@@ -59,6 +59,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -198,17 +199,17 @@ public class Dashboard extends Application {
 	private Button btnConfirmarAlteracao;
 
 	@FXML
-    private VBox vbVerticalBox;
+	private VBox vbVerticalBox;
 
 	@FXML
 	private Button btnAlterarSenha;
 
 	@FXML
-    private Label lblTrocarFotoPerfil;
+	private Label lblTrocarFotoPerfil;
 
 	@FXML
-    private BorderPane pnlImagem;
-	
+	private BorderPane pnlImagem;
+
 	@FXML
 	private BorderPane pnlinformacoes;
 
@@ -223,26 +224,51 @@ public class Dashboard extends Application {
 
 	@FXML
 	void AlterarTelefone(ActionEvent event) {
-        
+
 	}
 
-	
+	public int setID;
 	@FXML
-	void ExcluirTelefone(ActionEvent event) {
-       
+	void ExcluirTelefone(ActionEvent event) throws SQLException {
+
+		if(Util.MessageBoxShow(" Excluir número" , "Tem certeza que deseja excluir o telefone " 
+				+ cboxSelecionarTelefone.getSelectionModel().getSelectedItem() + " ?").equals(ButtonType.OK)){
+            
+			SelecaoTelefone();
+			System.out.println(setID);
+			ResultSet result =  Banco.InserirQueryReader("SELECT id FROM denuncia WHERE denuncia.tel = " + setID);
+			
+			while(result.next()){
+				
+				Banco.InserirQuery("DELETE FROM denuncia WHERE id = " + result.getInt("id"));
+				System.out.print("Analise");
+			}
+        
+			if(Banco.InserirQuery("DELETE FROM telefone WHERE id = " + setID)) {
+				
+				Util.MessageBoxShow("", "Telefone excluido com sucesso");
+                AtualizarCbxTelefones();
+                lvInfo.getItems().clear();
+				
+			}
+		}
 	}
 
 	@FXML
 	void SelecionarTelefone(ActionEvent event) {
 
-		lvInfo.getItems().clear();
+		SelecaoTelefone();
+	}
 
+	public void SelecaoTelefone() {
+		lvInfo.getItems().clear();
 		for(TelefoneList telefone : dadosTelefone ) {
 
 			if(cboxSelecionarTelefone.getSelectionModel().getSelectedItem().equals(telefone.getNumero())){
 
-				lvInfo.getItems().add("Nome: " + telefone.getNome());
+				lvInfo.getItems().add("Nome do Local: " + telefone.getNome());
 				lvInfo.getItems().add("Descrição: " + telefone.getDescricao());
+				setID = telefone.getID();
 
 				break;
 			}
@@ -271,8 +297,13 @@ public class Dashboard extends Application {
 			Files.copy(Path.of(imagemEscolhida.getAbsolutePath()), new FileOutputStream(diretorioTmp));
 			String base=Util.converterStringParaBase64(Path.of(imagemEscolhida.getAbsolutePath()).toString());
 			Banco.InserirQuery("update parceiro set imagem='"+base+"' where id ="+Util.getContaLogada().getId());
+
 			imgIconePerfil.setImage(new Image(new File(diretorioTmp).toURI().toString(), 400, 400, false, false));
 			
+
+			imgIconePerfil.setImage(new Image(new File(diretorioTmp).toURI().toString(), 150, 150, false, false));
+
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
@@ -332,7 +363,7 @@ public class Dashboard extends Application {
 		if (Validacao.validarEmail(txtMCEmail.getText())) {
 			Banco.InserirQuery(String.format("UPDATE parceiro set email = '%s' where id = %s", txtMCEmail.getText(),
 					Util.getContaLogada().getId()));
-			Util.MessageBoxShow("Alteraï¿½ï¿½o de Dados", "Email alterado com sucesso!");
+			Util.MessageBoxShow("Alteração de Dados", "Email alterado com sucesso!");
 			Util.getContaLogada().setEmail(txtMCEmail.getText());
 		}
 
@@ -457,7 +488,7 @@ public class Dashboard extends Application {
 
 
 	@FXML
-	void buscarDados(Event event) {
+	void buscarDados(Event event) throws SQLException {
 
 		if (tbMinhaConta.isSelected())
 		{
@@ -471,6 +502,11 @@ public class Dashboard extends Application {
 				lbMCCPFouCNPJ.setText("CPF");
 				txtMCCPFouCNPJ.setText(Util.getContaLogada().getCpf());
 			}
+		}
+		
+		if(tbMeusTelefones.isSelected())
+		{
+			AtualizarCbxTelefones();
 		}
 	}
 
@@ -515,7 +551,7 @@ public class Dashboard extends Application {
 		ResultSet result = Banco.InserirQueryReader("SELECT telefone.*, endereco.nome FROM telefone LEFT JOIN endereco ON endereco.id = telefone.lugar WHERE telefone.dono = " 
 				+ Util.getContaLogada().getId());
 
-
+        cboxSelecionarTelefone.getItems().clear();  
 		while(result.next()) {
 
 			TelefoneList telefone = new TelefoneList();
@@ -523,6 +559,7 @@ public class Dashboard extends Application {
 			telefone.setNumero(result.getString("numero"));
 			telefone.setDescricao(result.getString("descricao"));
 			telefone.setNome(result.getString("nome"));
+			telefone.setID(result.getInt("id"));
 
 
 			dadosTelefone.add(telefone);
