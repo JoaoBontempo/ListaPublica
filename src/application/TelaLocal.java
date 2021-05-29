@@ -257,7 +257,7 @@ public class TelaLocal extends Application {
 		            		id_endereco=objeto.getInt("id");
 		            		id_telefone=Util.RecuperarIdTelefonePorTelefone(telefone);
 	                	}catch(Exception e) {
-	                		Util.MessageBoxShow("Telefone sem endereço", "O telefone solicitado não possui nenhum endereço atribuido");
+	                		telefoneSemEndereco();
 	                	}
 	                	
 	            		
@@ -292,6 +292,19 @@ public class TelaLocal extends Application {
             }
 	}
 	
+	private void telefoneSemEndereco() {
+		txtEstado.setText("N/D");
+		txtCidade.setText("N/D");
+		txtBairro.setText("N/D");
+		txtRua.setText("N/D");
+		txtNumeroResidencia.setText("N/D");
+		txtNome.setText("N/D");
+		txtDescricao.setText("N/D");
+		txtComentario.setText("N/D");
+		tvComentarios.getItems().clear();
+		
+	}
+
 	public void initialize() throws Exception {
 		lbDenunciarLocal.setDisable(Util.isConvidado());
 
@@ -363,24 +376,28 @@ public class TelaLocal extends Application {
 	}
 
 	void iniciaApi() {
-		String result;
+		
 		ObjectMapper mapper = new ObjectMapper();
 		String telefone="";
 		
 		// jogar a função abaixo
-		
-		//telefone=UtilDashboard.getNumeroTelefone().replace(" ","&");
+		telefone=Util.FormatarSetTelefone(UtilDashboard.getNumeroTelefone());
 		
 		
 		String url = "http://localhost:5000/ListaPublica/getUserAddress/" + telefone;
 		HttpGet get = new HttpGet(url);
 
 		try {
+			String result="";
 			HttpClient httpClient = HttpClients.createDefault();
 			HttpResponse response;
 			response = httpClient.execute(get);
-
-			result = EntityUtils.toString(response.getEntity());
+			
+			try {
+				result = EntityUtils.toString(response.getEntity());	
+			}catch(IllegalArgumentException e) {
+			}
+			
 			JSONArray obj = new JSONArray(result);
 			EnderecoComDescricao endereco;
 			ArrayList<EnderecoComDescricao> enderecos = new ArrayList<>();

@@ -170,8 +170,8 @@ public class Login extends Application {
 		}
 		Dashboard dash = new Dashboard();
 		dash.start(new Stage());
-		Stage stageAtual = (Stage) btnLogar.getScene().getWindow();
-		stageAtual.close();
+//		Stage stageAtual = (Stage) btnLogar.getScene().getWindow();
+//		stageAtual.close();
 	}
 
 	@FXML

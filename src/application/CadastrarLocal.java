@@ -128,6 +128,7 @@ public class CadastrarLocal extends Application implements Initializable {
 		txtNumeroResidencia.clear();
 		txtRua.clear();
 		txtCep.clear();
+		txtNumeroResidencia.clear();
 	}
 	
 	@FXML
