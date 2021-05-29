@@ -32,6 +32,7 @@ import classes.Comentario;
 import classes.Denuncia;
 import classes.Endereco;
 import classes.EnderecoComDescricao;
+import classes.Parceiro;
 import classes.Telefone;
 import classes.TelefoneNumero;
 import classes.Util;
@@ -55,6 +56,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.scene.control.TableColumn;
@@ -105,6 +107,24 @@ public class TelaLocal extends Application {
 	@FXML
     private ListView<String> lvComentarios;
 	
+	@FXML
+    private TextField txtNomeUsuario;
+
+    @FXML
+    private TextField txtNomeCompleto;
+
+    @FXML
+    private TextField txtEmail;
+
+    @FXML
+    private BorderPane pnlBorderImagem;
+    
+    @FXML
+    private BorderPane pnlImagemDono;
+
+    @FXML
+    private ImageView imgProprietario;
+    
 	@FXML
 	private TableColumn<ComentarioTable, String> tvcUsuario;
 
@@ -237,15 +257,62 @@ public class TelaLocal extends Application {
 		}
 	}
 
+	void buscarInfosDono(int idDono) {
+		// esse método obtem os campos nome,usuario e email do dono referente ao numero do telefone e atribui os valores nos respectivos campos
+		Parceiro ret=Util.recuperarValoresUsuarioTelaLocal(idDono);
+		if(ret!=null) {
+			txtNomeUsuario.setText(ret.getUsuario());
+			txtEmail.setText(ret.getEmail());
+			txtNomeCompleto.setText(ret.getNome());
+		}
+	}
+	
+	void buscarTodasImagens() {
+		// esse método vai buscar as imagens de usuário e do endereço e atribuir as ImageView
+		
+		try {
+			Banco.InserirQueryReader("select imagem from parceiro where id="+id);
+			if(Banco.getReader().next()) {
+				String imagem=Banco.getReader().getString("imagem");
+				if(imagem != null) {
+					if(imagem.length()>0) {
+						Util.verificaExistenciaImagem("profile.jpg", imagem.getBytes(), false);
+						imgProprietario.setImage(new Image(new File("C:\\lista\\usuarios\\profile.jpg").toURI().toString(), 400, 400, false, false));
+					}	
+				}
+				
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
 	@FXML
 	void abrirDescricaoDetalhada(MouseEvent event) {
 		//		DOUBLE CLICK NA LINHA
 		if (event.getButton().equals(MouseButton.PRIMARY)){
 	            if(tvTelefone.getSelectionModel().getSelectedItem() != null) {
 	            	TelefoneNumero numero=tvTelefone.getSelectionModel().getSelectedItem();
-
+	            	
 	            	try {
 	            		String telefone=numero.getNumero();
+	            		int idDono=Util.recuperarIdDonoAtravesTelefone(telefone);
 	            		Util.setTelefoneAtual(telefone);
 	            		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", Util.FormatarGetTelefone(Util.getTelefoneAtual())));
 	                	String url="http://localhost:5000/ListaPublica/getUserAddress/"+telefone;
@@ -279,6 +346,10 @@ public class TelaLocal extends Application {
 		            				FXCollections.observableArrayList(comentarios);	
 	            			tvComentarios.setItems(observableComentario);
 	            		}
+	            		
+	            		// BUSCA AS INFOS DE USUARIO (DONO)
+//	            		JSONObject objetoParceiro=new JSONObject(objeto.get("parceiro"));
+	            		buscarInfosDono(idDono);
 	                	
 	            	}catch(JSONException | NullPointerException e) {
 	            		// não faça nada, pois se entrar aqui é pq o array não tem posições, então ignore.
@@ -301,6 +372,9 @@ public class TelaLocal extends Application {
 		txtNome.setText("N/D");
 		txtDescricao.setText("N/D");
 		txtComentario.setText("N/D");
+		txtNomeCompleto.setText("N/D");
+		txtNomeUsuario.setText("N/D");
+		txtEmail.setText("N/D");
 		tvComentarios.getItems().clear();
 		
 	}

@@ -9,6 +9,14 @@ public class Parceiro {
 		
 	}
 	
+	// construtor usado para o form telaLugar
+	public Parceiro(String nome, String email, String usuario) {
+		super();
+		this.nome = nome;
+		this.email = email;
+		this.usuario = usuario;
+	}
+
 	public Parceiro(int id, Object tipo, String nome, String cpf, String cnpj, String email, String usuario)
 	{
 		this.setId(id);
