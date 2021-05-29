@@ -174,15 +174,15 @@ public class TelaDenuncia extends Application {
 			}			
 			try
 			{
-				Banco.InserirQuery(String.format("INSERT INTO denuncia (id, descricao, tipo, local_, denunciado, denunciador, status_, tel, end_) "
-						+ "VALUES (default, '%s', '%s', %s, %s, %s, 0, %s, %s)", 
+				Banco.InserirQuery(String.format("INSERT INTO denuncia (id, descricao, tipo, denunciado, denunciador, status_, tel, end_) "
+						+ "VALUES (default, '%s', '%s', %s, %s, 0, %s, %s)", 
 						txtDescrição.getText(), Util.getDenunciAtual().getTipo(), 1, Util.getDenunciAtual().getDenunciado().getId(),
 						Util.getContaLogada().getId(), Util.getDenunciAtual().getTelefone().getId(), Util.getDenunciAtual().getEndereco().getId()));
 			}
 			catch (Exception erro)
 			{
-				Banco.InserirQuery(String.format("INSERT INTO denuncia (id, descricao, tipo, local_, denunciado, denunciador, status_, tel) "
-						+ "VALUES (default, '%s', '%s', %s, %s, %s, 0, %s)", 
+				Banco.InserirQuery(String.format("INSERT INTO denuncia (id, descricao, tipo, denunciado, denunciador, status_, tel) "
+						+ "VALUES (default, '%s', '%s', %s, %s, 0, %s)", 
 						txtDescrição.getText(), Util.getDenunciAtual().getTipo(), 1, Util.getDenunciAtual().getDenunciado().getId(),
 						Util.getContaLogada().getId(), Util.getDenunciAtual().getTelefone().getId()));
 			}

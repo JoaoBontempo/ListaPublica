@@ -175,7 +175,7 @@ public final class Util {
 	public static void RecuperarInformacoesTelefoneAtual() throws SQLException
 	{
 		Telefone telefone = new Telefone();
-		ResultSet result = Banco.InserirQueryReader("SELECT * FROM telefone WHERE numero = '" + telefoneAtual+"'");
+		ResultSet result = Banco.InserirQueryReader("SELECT * FROM telefone WHERE numero = '" + Util.FormatarSetTelefone(telefoneAtual)+"'");
 		result.next();
 		telefone.setId(result.getInt("id"));
 		telefone.setDescricao(result.getString("descricao"));
