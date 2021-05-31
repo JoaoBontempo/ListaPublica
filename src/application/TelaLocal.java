@@ -267,6 +267,7 @@ public class TelaLocal extends Application {
 		}
 	}
 	
+	/*
 	void buscarTodasImagens() {
 		// esse método vai buscar as imagens de usuário e do endereço e atribuir as ImageView
 		
@@ -289,7 +290,7 @@ public class TelaLocal extends Application {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 
 		
 		
@@ -301,7 +302,7 @@ public class TelaLocal extends Application {
 		
 		
 		
-	}
+	
 	
 	@FXML
 	void abrirDescricaoDetalhada(MouseEvent event) {
