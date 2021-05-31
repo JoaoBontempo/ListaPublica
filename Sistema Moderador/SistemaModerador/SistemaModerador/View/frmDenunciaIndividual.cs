@@ -80,6 +80,7 @@ namespace SistemaModerador.View
                         else
                             textBox = txtIDD2;
 
+                        Banco.InserirQuery("DELETE FROM comentarios WHERE idParceiro = " + textBox.Text);
                         Banco.InserirQuery("DELETE FROM denuncia WHERE id = " + idDenuncia);
                         Banco.InserirQuery("DELETE FROM telefone WHERE dono = " + textBox.Text);
                         Banco.InserirQuery("DELETE FROM endereco WHERE usuario = " + textBox.Text);

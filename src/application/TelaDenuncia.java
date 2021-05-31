@@ -176,22 +176,22 @@ public class TelaDenuncia extends Application {
 			{
 				System.out.println(String.format("INSERT INTO denuncia (id, descricao, tipo, denunciado, denunciador, status_, tel, end_) "
 						+ "VALUES (default, '%s', '%s', %s, %s, 0, %s, %s)", 
-						txtDescrição.getText(), Util.getDenunciAtual().getTipo(), 1, Util.getDenunciAtual().getDenunciado().getId(),
+						txtDescrição.getText(), Util.getDenunciAtual().getTipo(), Util.getDenunciAtual().getDenunciado().getId(),
 						Util.getContaLogada().getId(), Util.getDenunciAtual().getTelefone().getId(), Util.getDenunciAtual().getEndereco().getId()));
 				Banco.InserirQuery(String.format("INSERT INTO denuncia (id, descricao, tipo, denunciado, denunciador, status_, tel, end_) "
 						+ "VALUES (default, '%s', '%s', %s, %s, 0, %s, %s)", 
-						txtDescrição.getText(), Util.getDenunciAtual().getTipo(), 1, Util.getDenunciAtual().getDenunciado().getId(),
+						txtDescrição.getText(), Util.getDenunciAtual().getTipo(), Util.getDenunciAtual().getDenunciado().getId(),
 						Util.getContaLogada().getId(), Util.getDenunciAtual().getTelefone().getId(), Util.getDenunciAtual().getEndereco().getId()));
 			}
 			catch (Exception erro)
 			{
 				System.out.println(String.format("INSERT INTO denuncia (id, descricao, tipo, denunciado, denunciador, status_, tel) "
 						+ "VALUES (default, '%s', '%s', %s, %s, 0, %s)", 
-						txtDescrição.getText(), Util.getDenunciAtual().getTipo(), 1, Util.getDenunciAtual().getDenunciado().getId(),
+						txtDescrição.getText(), Util.getDenunciAtual().getTipo(), Util.getDenunciAtual().getDenunciado().getId(),
 						Util.getContaLogada().getId(), Util.getDenunciAtual().getTelefone().getId()));
 				Banco.InserirQuery(String.format("INSERT INTO denuncia (id, descricao, tipo, denunciado, denunciador, status_, tel) "
 						+ "VALUES (default, '%s', '%s', %s, %s, 0, %s)", 
-						txtDescrição.getText(), Util.getDenunciAtual().getTipo(), 1, Util.getDenunciAtual().getDenunciado().getId(),
+						txtDescrição.getText(), Util.getDenunciAtual().getTipo(), Util.getDenunciAtual().getDenunciado().getId(),
 						Util.getContaLogada().getId(), Util.getDenunciAtual().getTelefone().getId()));
 			}
 
