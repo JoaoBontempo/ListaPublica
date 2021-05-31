@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -29,6 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import classes.API;
 import classes.Banco;
 import classes.Comentario;
+import classes.ComentarioUtil;
 import classes.Denuncia;
 import classes.Endereco;
 import classes.EnderecoComDescricao;
@@ -44,6 +46,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -57,6 +60,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.scene.control.TableColumn;
@@ -175,9 +179,12 @@ public class TelaLocal extends Application {
 
     @FXML
     private Label lbWhatsApp;
+    
+    @FXML
+    private FlowPane flpComentarios;
 	
 	@FXML
-    void RealizarComentario(ActionEvent event) {
+    void RealizarComentario(ActionEvent event) throws IOException {
 		String comentario=txtComentario.getText();
 		if(comentario.length()<=0) {
 			Util.MessageBoxShow("Comentário inválido", "Digite um comentário antes de confirmar");
@@ -194,6 +201,10 @@ public class TelaLocal extends Application {
 					"'"+LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+"','"+comentario+"');";
 			System.out.println(query);
 			Banco.InserirQuery(query);
+			AtualizarComentarioUtil(Util.getContaLogada().getUsuario(), LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), comentario);
+			TelaComentario comentarioTela = new TelaComentario();
+			comentarioTela.setPane(flpComentarios);
+			comentarioTela.loadFxml();
 			atualizarComentarios();
 			txtComentario.clear();
 		} catch (SQLException e) {
@@ -202,13 +213,20 @@ public class TelaLocal extends Application {
 		}
     }
 	
+	private void AtualizarComentarioUtil(String usuario, String data, String comentario)
+	{
+		ComentarioUtil.setComentario(comentario);
+		ComentarioUtil.setData(data);
+		ComentarioUtil.setUsuario(usuario);
+	}
+	
 	@FXML
 	public void ChamarNumeroWhatsApp() throws IOException, URISyntaxException
 	{
 		Util.ChamarNumeroWhatsApp(Util.FormatarSetTelefone(Util.getTelefoneAtual()));
 	}
 	
-	private void atualizarComentarios() {
+	private void atualizarComentarios() throws IOException {
 		
 		List<ComentarioTable> comentarios=Util.RecuperarComentariosEndereco(this.id_telefone);
 		ObservableList<ComentarioTable> observableComentario =
@@ -217,7 +235,6 @@ public class TelaLocal extends Application {
 			tvComentarios.getItems().clear();
 			tvComentarios.setItems(observableComentario);
 		}
-		
 	}
 
 	@FXML
