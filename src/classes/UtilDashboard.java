@@ -19,8 +19,6 @@ public class UtilDashboard {
 	public static void setIdTelefone(int idTelefone) {
 		UtilDashboard.idTelefone = idTelefone;
 	}
-
-	
 	
 	public static String getNumeroTelefone() {
 		return numeroTelefone;

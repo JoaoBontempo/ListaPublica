@@ -288,7 +288,7 @@ public class Dashboard extends Application {
 		File imagemEscolhida=fileChooser.showOpenDialog(this.primaryStage);
 		// armazeno o arquivo na pasta 
 		try {
-			String diretorioTmp="C:\\lista\\usuarios\\"+imagemEscolhida.getName();
+			String diretorioTmp="C:\\lista\\usuarios\\"+imagemEscolhida.getName()+Util.getContaLogada().getId();
 			File arquivoEscolhido=new File(diretorioTmp);
 			if(arquivoEscolhido.length() > (4194304L) ) {
 				Util.MessageBoxShow("Imagem muito grande", "A imagem é maior que 4Mb.");
@@ -333,7 +333,7 @@ public class Dashboard extends Application {
 				if(imagem != null) {
 					if(imagem.length()>0) {
 						possuiIcone=true;
-						Util.verificaExistenciaImagem("profile.jpg", imagem.getBytes(), false);
+						Util.verificaExistenciaImagem("profile"+id+".jpg", imagem.getBytes(), false);
 					}	
 				}
 
@@ -347,7 +347,7 @@ public class Dashboard extends Application {
 		}
 		//file://C:/lista/usuarios/profile.jpg
 		if(possuiIcone) {
-			imgIconePerfil.setImage(new Image(new File("C:\\lista\\usuarios\\profile.jpg").toURI().toString(), 400, 400, false, false));
+			imgIconePerfil.setImage(new Image(new File("C:\\lista\\usuarios\\profile"+id+".jpg").toURI().toString(), 400, 400, false, false));
 		}
 
 	}
@@ -454,16 +454,15 @@ public class Dashboard extends Application {
 
 					Banco.InserirQueryReader(query);
 					Banco.getReader().next();
+					
 					idDono=Banco.getReader().getString("dono");
+					
 					UtilDashboard.setIdLugar(String.valueOf(Banco.getReader().getInt("lugar")));
 					UtilDashboard.setIdDono(idDono);
 					UtilDashboard.setNumeroTelefone(numero);
 					UtilDashboard.setIdTelefone(Util.RecuperarIdTelefonePorTelefone(numero));
 
-					// obtem os telefones
-					//query="select distinct endereco.usuario,telefone.numero from endereco INNER JOIN telefone ON endereco.usuario="+idDono+" order by endereco.usuario,telefone.numero;";
 					query="select numero from telefone where dono="+idDono+";";
-					//System.out.println("Id dono: "+idDono+"\nIdLugar:"+UtilDashboard.getIdLugar()+"\nQuery: "+query);
 					Banco.InserirQueryReader(query);
 
 					UtilDashboard.getTelefones().clear();

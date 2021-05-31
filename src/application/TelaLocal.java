@@ -183,6 +183,8 @@ public class TelaLocal extends Application {
     @FXML
     private FlowPane flpComentarios;
 	
+    private int idDono;
+    
 	@FXML
     void RealizarComentario(ActionEvent event) throws IOException {
 		String comentario=txtComentario.getText();
@@ -197,7 +199,7 @@ public class TelaLocal extends Application {
 			}
 		}
 		try {
-			String query="insert into comentarios values(default,"+UtilDashboard.getIdTelefone()+","+Util.getContaLogada().getId()+","+
+			String query="insert into comentarios values(default,"+id_telefone+","+Util.getContaLogada().getId()+","+
 					"'"+LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+"','"+comentario+"');";
 			System.out.println(query);
 			Banco.InserirQuery(query);
@@ -274,51 +276,63 @@ public class TelaLocal extends Application {
 		}
 	}
 
-	void buscarInfosDono(int idDono) {
+	void buscarInfosDono(int idDono,boolean comImagem) {
 		// esse método obtem os campos nome,usuario e email do dono referente ao numero do telefone e atribui os valores nos respectivos campos
 		Parceiro ret=Util.recuperarValoresUsuarioTelaLocal(idDono);
 		if(ret!=null) {
+			if(comImagem)
+				buscarTodasImagens();
 			txtNomeUsuario.setText(ret.getUsuario());
 			txtEmail.setText(ret.getEmail());
 			txtNomeCompleto.setText(ret.getNome());
+		
 		}
 	}
-	
-	/*
+
 	void buscarTodasImagens() {
 		// esse método vai buscar as imagens de usuário e do endereço e atribuir as ImageView
 		
 		try {
-			Banco.InserirQueryReader("select imagem from parceiro where id="+id);
-			if(Banco.getReader().next()) {
-				String imagem=Banco.getReader().getString("imagem");
-				if(imagem != null) {
-					if(imagem.length()>0) {
-						Util.verificaExistenciaImagem("profile.jpg", imagem.getBytes(), false);
-						imgProprietario.setImage(new Image(new File("C:\\lista\\usuarios\\profile.jpg").toURI().toString(), 400, 400, false, false));
-					}	
-				}
-				
-
-			}
+			obterImagemParceiro();
+			obterImagemLocal();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
+	}
 
+	private void obterImagemParceiro() throws SQLException, Exception {
+		String query="select imagem from parceiro where id="+idDono;
+		Banco.InserirQueryReader(query);
 		
+		if(Banco.getReader().next()) {
+			String imagem=Banco.getReader().getString("imagem");
+			if(imagem != null) {
+				if(imagem.length()>0) {
+					Util.verificaExistenciaImagem("profile"+Util.getContaLogada().getId()+".jpg", imagem.getBytes(), false);
+					imgProprietario.setImage(new Image(new File("C:\\lista\\usuarios\\profile"+Util.getContaLogada().getId()+".jpg").toURI().toString(), 400, 400, false, false));
+				}	
+			}
+		}
+	}
+	
+	private void obterImagemLocal() throws SQLException, Exception {
+		String query="select imagem from endereco where id="+id_endereco;
+		Banco.InserirQueryReader(query);
 		
-		
-		
-		
-		
-		
-		
-		
-		
+		if(Banco.getReader().next()) {
+			String imagem=Banco.getReader().getString("imagem");
+			if(imagem != null) {
+				if(imagem.length()>0) {
+					Util.verificaExistenciaImagem("addr"+id_endereco+".jpg", imagem.getBytes(), false);
+					imgProprietario.setImage(new Image(new File("C:\\lista\\locais\\addr"+id_endereco+".jpg").toURI().toString(), 400, 400, false, false));
+				}	
+			}
+		}
+	}
 	
 	
 	@FXML
@@ -330,7 +344,7 @@ public class TelaLocal extends Application {
 	            	
 	            	try {
 	            		String telefone=numero.getNumero();
-	            		int idDono=Util.recuperarIdDonoAtravesTelefone(telefone);
+	            		idDono=Util.recuperarIdDonoAtravesTelefone(telefone);
 	            		Util.setTelefoneAtual(telefone);
 	            		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", Util.FormatarGetTelefone(Util.getTelefoneAtual())));
 	                	String url="http://localhost:5000/ListaPublica/getUserAddress/"+telefone;
@@ -345,8 +359,6 @@ public class TelaLocal extends Application {
 	                		telefoneSemEndereco();
 	                	}
 	                	
-	            		
-	            		System.out.println(objeto.toString());
 	                	if(objeto.getString("imagem").length()>0) {
 	                		conteudoImagem=objeto.getString("imagem");
 	                		possuiImagem=true;
@@ -365,9 +377,7 @@ public class TelaLocal extends Application {
 	            			tvComentarios.setItems(observableComentario);
 	            		}
 	            		
-	            		// BUSCA AS INFOS DE USUARIO (DONO)
-//	            		JSONObject objetoParceiro=new JSONObject(objeto.get("parceiro"));
-	            		buscarInfosDono(idDono);
+	            		buscarInfosDono(idDono,false);
 	                	
 	            	}catch(JSONException | NullPointerException e) {
 	            		// não faça nada, pois se entrar aqui é pq o array não tem posições, então ignore.
@@ -401,8 +411,12 @@ public class TelaLocal extends Application {
 		lbDenunciarLocal.setDisable(Util.isConvidado());
 
 		id_telefone=UtilDashboard.getIdTelefone();
+		this.idDono= Integer.parseInt(UtilDashboard.getIdDono());
+		this.id_endereco=Integer.parseInt(UtilDashboard.getIdLugar());
 		
+		buscarInfosDono(idDono,true);
 		caracteresProibidosComentario=Arrays.asList("'");
+		
 		tvcTelefone.setCellValueFactory(new PropertyValueFactory("numero"));
 		
 		// verifica se está logado ou não (caso esteja logado apareça o pane de textbox e button)

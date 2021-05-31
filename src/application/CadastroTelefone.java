@@ -130,20 +130,20 @@ public class CadastroTelefone extends Application{
 			primaryStage.initModality(Modality.WINDOW_MODAL);
 			primaryStage.initOwner(((Node)evento.getSource()).getScene().getWindow());
 			Dashboard dash = new Dashboard();
-			primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-	            @Override
-	            public void handle(WindowEvent t) {
-	                t.consume();
-                    
-	                try {
-						dash.AtualizarCbxTelefones();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-	                System.exit(0);
-	            }
-	        });
+//			primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+//	            @Override
+//	            public void handle(WindowEvent t) {
+//	                t.consume();
+//                    
+//	                try {
+//						dash.AtualizarCbxTelefones();
+//					} catch (SQLException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//	                System.exit(0);
+//	            }
+//	        });
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
