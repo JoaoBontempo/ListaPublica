@@ -93,6 +93,24 @@ namespace SistemaModerador.View
             }
         }
 
+        private void InstanciarFotoPerfil(string nome, int id)
+        {
+            FotoPerfil fp = new FotoPerfil(nome, id);
+            fp.ShowDialog();
+        }
+
+        private void AbrirFotoPerfil(string nomeLabel)
+        {
+            if(nomeLabel.Contains("Denunciado"))
+            {
+                InstanciarFotoPerfil(txtNomeD1.Text, Convert.ToInt32(txtIDD1.Text));
+            }
+            else
+            {
+                InstanciarFotoPerfil(txtNomeD2.Text, Convert.ToInt32(txtIDD2.Text));
+            }
+        }
+
         private void btnExcluirDenunciado_Click(object sender, EventArgs e)
         {
             ExcluirInformacoes("denunciado");  
@@ -107,7 +125,7 @@ namespace SistemaModerador.View
         {
             if (MessageBox.Show("Tem certeza que deseja excluir esse telefone?" +
                 "\n-Os comentários deste telefone serão excluídos" +
-                "\n-Todas as denúncias deste telefone", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question).Equals(DialogResult.Yes))
+                "\n-Todas as denúncias deste telefone", "Confirme sua operação", MessageBoxButtons.YesNo, MessageBoxIcon.Question).Equals(DialogResult.Yes))
             {
                 frmConfirmacao confirmacao = new frmConfirmacao();
                 confirmacao.ShowDialog();
@@ -147,6 +165,16 @@ namespace SistemaModerador.View
                 btnVerEndereco.Visible = false;
                 txtDescTel.Size = new Size(339, 150);
             }
+        }
+
+        private void lbFotoDenunciante_Click(object sender, EventArgs e)
+        {
+            AbrirFotoPerfil(lbFotoDenunciante.Name);
+        }
+
+        private void lbFotoDenunciado_Click(object sender, EventArgs e)
+        {
+            AbrirFotoPerfil(lbFotoDenunciado.Name);
         }
 
         public frmDenunciaIndividual(int idDenuncia)

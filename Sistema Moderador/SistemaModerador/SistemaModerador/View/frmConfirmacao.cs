@@ -19,7 +19,7 @@ namespace SistemaModerador.View
         public frmConfirmacao()
         {
             InitializeComponent();
-
+            bwEmail.RunWorkerAsync();
         }
 
         public int getResposta()
@@ -51,7 +51,7 @@ namespace SistemaModerador.View
             }
         }
 
-        private void frmConfirmacao_Shown(object sender, EventArgs e)
+        private void bwEmail_DoWork(object sender, DoWorkEventArgs e)
         {
             Util.isCodigo = true;
             codigo = GerarCodigo();

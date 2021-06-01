@@ -24,13 +24,7 @@ namespace SistemaModerador.View
 
             try
             {
-                string base64string = Banco.reader.GetString("imagem");
-                byte[] blobImage = Convert.FromBase64String(base64string);
-
-                using (MemoryStream ms = new MemoryStream(blobImage))
-                {
-                    pbxImagem.Image = Image.FromStream(ms);
-                }
+                pbxImagem.Image = Util.ConverterImagem(Banco.reader.GetString("imagem"));
             }
             catch
             {

@@ -35,6 +35,7 @@ namespace SistemaModerador.View
             this.txtConfirmarCodigo = new System.Windows.Forms.Button();
             this.lbTempo = new System.Windows.Forms.Label();
             this.timer = new System.Windows.Forms.Timer(this.components);
+            this.bwEmail = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -94,6 +95,12 @@ namespace SistemaModerador.View
             this.timer.Interval = 1000;
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
+            // bwEmail
+            // 
+            this.bwEmail.WorkerReportsProgress = true;
+            this.bwEmail.WorkerSupportsCancellation = true;
+            this.bwEmail.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwEmail_DoWork);
+            // 
             // frmConfirmacao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -110,7 +117,6 @@ namespace SistemaModerador.View
             this.Name = "frmConfirmacao";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Confirmar identidade";
-            this.Shown += new System.EventHandler(this.frmConfirmacao_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -123,5 +129,6 @@ namespace SistemaModerador.View
         private System.Windows.Forms.Button txtConfirmarCodigo;
         private System.Windows.Forms.Label lbTempo;
         private System.Windows.Forms.Timer timer;
+        private System.ComponentModel.BackgroundWorker bwEmail;
     }
 }

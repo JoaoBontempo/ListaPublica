@@ -31,6 +31,7 @@ namespace SistemaModerador.View
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.lbFotoDenunciante = new System.Windows.Forms.Label();
             this.txtEmailD2 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtCPFCNPJD2 = new System.Windows.Forms.TextBox();
@@ -42,6 +43,7 @@ namespace SistemaModerador.View
             this.txtIDD2 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lbFotoDenunciado = new System.Windows.Forms.Label();
             this.txtEmailD1 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtCPFCNPJD1 = new System.Windows.Forms.TextBox();
@@ -98,6 +100,7 @@ namespace SistemaModerador.View
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.lbFotoDenunciante);
             this.groupBox3.Controls.Add(this.txtEmailD2);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.txtCPFCNPJD2);
@@ -116,6 +119,18 @@ namespace SistemaModerador.View
             this.groupBox3.TabIndex = 24;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Denunciante";
+            // 
+            // lbFotoDenunciante
+            // 
+            this.lbFotoDenunciante.AutoSize = true;
+            this.lbFotoDenunciante.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbFotoDenunciante.Font = new System.Drawing.Font("Candara", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point);
+            this.lbFotoDenunciante.Location = new System.Drawing.Point(250, 13);
+            this.lbFotoDenunciante.Name = "lbFotoDenunciante";
+            this.lbFotoDenunciante.Size = new System.Drawing.Size(95, 14);
+            this.lbFotoDenunciante.TabIndex = 24;
+            this.lbFotoDenunciante.Text = "Ver foto de perfil";
+            this.lbFotoDenunciante.Click += new System.EventHandler(this.lbFotoDenunciante_Click);
             // 
             // txtEmailD2
             // 
@@ -230,6 +245,7 @@ namespace SistemaModerador.View
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.lbFotoDenunciado);
             this.groupBox2.Controls.Add(this.txtEmailD1);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.txtCPFCNPJD1);
@@ -248,6 +264,18 @@ namespace SistemaModerador.View
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Denunciado";
+            // 
+            // lbFotoDenunciado
+            // 
+            this.lbFotoDenunciado.AutoSize = true;
+            this.lbFotoDenunciado.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbFotoDenunciado.Font = new System.Drawing.Font("Candara", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point);
+            this.lbFotoDenunciado.Location = new System.Drawing.Point(250, 13);
+            this.lbFotoDenunciado.Name = "lbFotoDenunciado";
+            this.lbFotoDenunciado.Size = new System.Drawing.Size(95, 14);
+            this.lbFotoDenunciado.TabIndex = 25;
+            this.lbFotoDenunciado.Text = "Ver foto de perfil";
+            this.lbFotoDenunciado.Click += new System.EventHandler(this.lbFotoDenunciado_Click);
             // 
             // txtEmailD1
             // 
@@ -760,5 +788,7 @@ namespace SistemaModerador.View
         private System.Windows.Forms.Button btnExcluirDenunciante;
         private System.Windows.Forms.Button btnExcluirTelefone;
         private System.Windows.Forms.Button btnExcluirEndereco;
+        private System.Windows.Forms.Label lbFotoDenunciante;
+        private System.Windows.Forms.Label lbFotoDenunciado;
     }
 }

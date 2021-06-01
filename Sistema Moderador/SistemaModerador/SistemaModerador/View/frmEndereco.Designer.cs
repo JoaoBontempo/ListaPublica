@@ -160,6 +160,7 @@ namespace SistemaModerador.View
             this.pbxImagem.Location = new System.Drawing.Point(12, 176);
             this.pbxImagem.Name = "pbxImagem";
             this.pbxImagem.Size = new System.Drawing.Size(426, 300);
+            this.pbxImagem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbxImagem.TabIndex = 19;
             this.pbxImagem.TabStop = false;
             // 
