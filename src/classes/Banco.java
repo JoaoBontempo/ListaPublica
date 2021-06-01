@@ -36,7 +36,7 @@ public final class Banco {
 	// Biblioteca
 	private final static String DRIVE = "com.mysql.cj.jdbc.Driver";
 
-	// Variáveis do banco
+	// Variï¿½veis do banco
 	private static Connection conexao = null;
 	private static Statement statement = null;
 	private static ResultSet resultados = null;

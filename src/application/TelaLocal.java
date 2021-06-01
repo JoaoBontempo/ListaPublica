@@ -51,6 +51,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -62,6 +64,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -118,6 +121,9 @@ public class TelaLocal extends Application {
     private TextField txtNomeCompleto;
 
     @FXML
+    private ScrollPane scrlComments;
+    
+    @FXML
     private TextField txtEmail;
 
     @FXML
@@ -153,6 +159,9 @@ public class TelaLocal extends Application {
 	 @FXML
 	private Pane pnlEnviarComentario;
 	
+	 @FXML
+	private VBox vboxComentarios;
+	 
 	@FXML
 	private TextField txtEstado;
 
@@ -178,6 +187,11 @@ public class TelaLocal extends Application {
     private ImageView imgWhatsApp;
 
     @FXML
+    private ScrollBar scrlComentarios;
+    
+    
+    
+    @FXML
     private Label lbWhatsApp;
     
     @FXML
@@ -201,12 +215,11 @@ public class TelaLocal extends Application {
 		try {
 			String query="insert into comentarios values(default,"+id_telefone+","+Util.getContaLogada().getId()+","+
 					"'"+LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+"','"+comentario+"');";
-			System.out.println(query);
 			Banco.InserirQuery(query);
 			AtualizarComentarioUtil(Util.getContaLogada().getUsuario(), LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), comentario);
-			TelaComentario comentarioTela = new TelaComentario();
-			comentarioTela.setPane(flpComentarios);
-			comentarioTela.loadFxml();
+//			TelaComentario comentarioTela = new TelaComentario();
+//			comentarioTela.setPane(this.vboxComentarios);
+//			comentarioTela.loadFxml();
 			atualizarComentarios();
 			txtComentario.clear();
 		} catch (SQLException e) {
@@ -234,8 +247,17 @@ public class TelaLocal extends Application {
 		ObservableList<ComentarioTable> observableComentario =
 				FXCollections.observableArrayList(comentarios);
 		if(comentarios!=null) {
-			tvComentarios.getItems().clear();
-			tvComentarios.setItems(observableComentario);
+			this.vboxComentarios.getChildren().clear();
+			for(ComentarioTable t:comentarios) {
+				
+				ComentarioUtil.setComentario(t.getComentario());
+				ComentarioUtil.setData(t.getDataComentario());
+				ComentarioUtil.setUsuario(t.getUsuario());
+				
+				TelaComentario comentarioTela = new TelaComentario();
+    			comentarioTela.setPane(this.vboxComentarios);
+    			comentarioTela.loadFxml();
+			}
 		}
 	}
 
@@ -350,6 +372,7 @@ public class TelaLocal extends Application {
 			}
 		}
 		
+		
 	}
 	
 	
@@ -392,7 +415,19 @@ public class TelaLocal extends Application {
 	            		if(comentarios != null) {
 	            			ObservableList<ComentarioTable> observableComentario =
 		            				FXCollections.observableArrayList(comentarios);	
-	            			tvComentarios.setItems(observableComentario);
+	            			this.vboxComentarios.getChildren().clear();
+	            			for(ComentarioTable t:observableComentario) {
+	            				ComentarioUtil.setComentario(t.getComentario());
+	            				ComentarioUtil.setData(t.getDataComentario());
+	            				ComentarioUtil.setUsuario(t.getUsuario());
+	            				
+	            				TelaComentario comentarioTela = new TelaComentario();
+		            			comentarioTela.setPane(this.vboxComentarios);
+		            			comentarioTela.loadFxml();
+	            			}
+	            			
+	            			
+	            			
 	            		}
 	            		
 	            		buscarInfosDono(idDono,false);
@@ -453,14 +488,16 @@ public class TelaLocal extends Application {
 
 		// verifica se o endereço possui comentário associado
 		List<ComentarioTable> comentarios=Util.RecuperarComentariosEndereco(id_telefone); // Esse utilDashboard será usado apenas ao entrar no form
-		ObservableList<ComentarioTable> observableComentario =
-				FXCollections.observableArrayList(comentarios);
-		tvcUsuario.setCellValueFactory(new PropertyValueFactory("usuario"));
-		tvcComentario.setCellValueFactory(new PropertyValueFactory("comentario"));
-		tvcData.setCellValueFactory(new PropertyValueFactory("dataComentario"));
-		
-		
-		tvComentarios.setItems(observableComentario);
+		for(ComentarioTable t:comentarios) {
+			TelaComentario comentarioTela = new TelaComentario();
+			ComentarioUtil.setComentario(t.getComentario());
+			ComentarioUtil.setUsuario(t.getUsuario());
+			ComentarioUtil.setData(t.getDataComentario());
+			comentarioTela.setPane(this.vboxComentarios);
+			comentarioTela.loadFxml();
+			
+
+		}
 		
 		// inicia a api
 		iniciaApi();
