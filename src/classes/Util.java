@@ -49,8 +49,6 @@ public final class Util {
 	public static Parceiro getContaLogada() {
 		return contaLogada;
 	}
-
-	
 	
 	public static void setContaLogada(Parceiro contaLogada) {
 		Util.contaLogada = contaLogada;

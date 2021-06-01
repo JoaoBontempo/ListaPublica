@@ -456,7 +456,7 @@ public class Dashboard extends Application {
 					Banco.getReader().next();
 					
 					idDono=Banco.getReader().getString("dono");
-					
+					System.out.println("ID DONO: "+idDono);
 					UtilDashboard.setIdLugar(String.valueOf(Banco.getReader().getInt("lugar")));
 					UtilDashboard.setIdDono(idDono);
 					UtilDashboard.setNumeroTelefone(numero);
