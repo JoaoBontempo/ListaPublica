@@ -129,7 +129,7 @@
                               <Font name="Candara" size="19.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="txtDescricao" editable="false" layoutX="12.0" layoutY="316.0" prefHeight="97.0" prefWidth="427.0" />
+                        <TextArea fx:id="txtDescricao" editable="false" layoutX="12.0" layoutY="316.0" prefHeight="97.0" prefWidth="427.0" wrapText="true" />
                         <TableView fx:id="tvTelefone" layoutX="12.0" layoutY="427.0" onMouseClicked="#abrirDescricaoDetalhada" prefHeight="210.0" prefWidth="427.0">
                           <columns>
                             <TableColumn fx:id="tvcTelefone" prefWidth="75.0" text="Telefone(s)" />

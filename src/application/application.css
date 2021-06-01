@@ -199,6 +199,27 @@
 	-fx-text-fill: #ffffff;
 }
 
+.text-area .scroll-bar .thumb
+{
+    -fx-background-color: #090E11;
+    -fx-border-color: #84ff00;
+}
+
+.text-area .scroll-bar .increment-button,
+.text-area .scroll-bar .decrement-button{
+	-fx-background-color: #090E11;
+}
+
+.text-area .scroll-bar .increment-arrow,
+.text-area .scroll-bar .decrement-arrow {
+    -fx-background-color: #84ff00;
+}
+
+.text-area .scroll-bar
+{
+	-fx-background-color: #090E11;
+}
+
 .text-area .content
 {
 	-fx-background-color: #090E11;

@@ -13,7 +13,7 @@
 <AnchorPane prefHeight="538.0" prefWidth="482.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TelaDenuncia">
    <children>
       <ComboBox fx:id="cboxMotivo" layoutX="15.0" layoutY="162.0" onAction="#changeCboxMotivos" prefHeight="32.0" prefWidth="452.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
-      <TextArea fx:id="txtDescrição" layoutX="15.0" layoutY="283.0" prefHeight="200.0" prefWidth="452.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="283.0" />
+      <TextArea fx:id="txtDescrição" layoutX="15.0" layoutY="283.0" prefHeight="200.0" prefWidth="452.0" wrapText="true" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="283.0" />
       <Label layoutX="15.0" layoutY="145.0" styleClass="labelVerde" text="Motivo" AnchorPane.leftAnchor="15.0">
          <font>
             <Font size="14.0" />
