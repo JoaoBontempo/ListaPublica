@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
@@ -175,6 +176,17 @@ public final class Util {
 	public static void ChamarNumeroWhatsApp(String numero) throws IOException, URISyntaxException
 	{
 		java.awt.Desktop.getDesktop().browse( new java.net.URI("https://api.whatsapp.com/send?phone=55"+numero));
+	}
+	
+	public static void AbrirLinkGoogleMaps(String rua, String numero, String bairro, String cidade, String estado) throws IOException, URISyntaxException
+	{
+		rua = URLEncoder.encode(rua, "UTF-8");
+		estado = URLEncoder.encode(estado, "UTF-8");
+		cidade = URLEncoder.encode(cidade, "UTF-8");
+		numero = URLEncoder.encode(numero, "UTF-8");
+		bairro = URLEncoder.encode(bairro, "UTF-8");
+		String url = String.format("https://www.google.com.br/maps/search/%s,+%s+-+%s+%s+-+%s", rua, numero, bairro, cidade, estado);
+		java.awt.Desktop.getDesktop().browse(new java.net.URI(url));
 	}
 	
 	public static String FormatarGetTelefone(String telefone)

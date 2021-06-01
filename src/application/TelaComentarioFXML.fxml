@@ -7,7 +7,7 @@
 <AnchorPane prefHeight="87.0" prefWidth="430.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TelaComentario">
    <children>
       <Label fx:id="lbUser" layoutX="14.0" layoutY="14.0" styleClass="labelVerde" text="Usuário" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
-      <TextArea fx:id="txtComentario" editable="false" layoutX="5.0" layoutY="22.0" prefHeight="58.0" prefWidth="399.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="22.0" />
+      <TextArea fx:id="txtComentario" editable="false" layoutX="5.0" layoutY="22.0" prefHeight="58.0" prefWidth="399.0" styleClass="text-areaComentario" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="22.0" />
       <Label fx:id="lbData" layoutX="372.0" layoutY="14.0" styleClass="labelVerde" text="Usuário" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
    </children>
 </AnchorPane>

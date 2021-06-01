@@ -86,7 +86,7 @@ public class TelaLocal extends Application {
 	public void setIdBuscarInfos(String id) {
 		this.idBuscarInfos = id;
 	}
-
+	
 	@FXML
 	private TextField txtNumeroResidencia;
 
@@ -189,7 +189,11 @@ public class TelaLocal extends Application {
     @FXML
     private ScrollBar scrlComentarios;
     
-    
+    @FXML
+    private ImageView imgAbrirMaps;
+
+    @FXML
+    private Label lbAbrirMaps;
     
     @FXML
     private Label lbWhatsApp;
@@ -310,6 +314,12 @@ public class TelaLocal extends Application {
 		
 		}
 	}
+	
+	@FXML
+	public void AbrirLinkMaps() throws IOException, URISyntaxException
+	{
+		Util.AbrirLinkGoogleMaps(txtRua.getText(), txtNumeroResidencia.getText(), txtBairro.getText(), txtCidade.getText(), txtEstado.getText());
+	}
 
 	void buscarTodasImagens() {
 		// esse método vai buscar as imagens de usuário e do endereço e atribuir as ImageView
@@ -396,6 +406,8 @@ public class TelaLocal extends Application {
 		            		objeto=array.getJSONObject(0);
 		            		id_endereco=objeto.getInt("id");
 		            		id_telefone=Util.RecuperarIdTelefonePorTelefone(telefone);
+		            		imgAbrirMaps.setVisible(true);
+		            		lbAbrirMaps.setVisible(true);
 	                	}catch(Exception e) {
 	                		telefoneSemEndereco();
 	                	}
@@ -445,6 +457,8 @@ public class TelaLocal extends Application {
 	}
 	
 	private void telefoneSemEndereco() {
+		imgAbrirMaps.setVisible(false);
+		lbAbrirMaps.setVisible(false);
 		txtEstado.setText("N/D");
 		txtCidade.setText("N/D");
 		txtBairro.setText("N/D");

@@ -3,6 +3,28 @@
 	-fx-background-color: #090E11;
 }
 
+.root .scroll-bar .thumb
+{
+    -fx-background-color: #090E11;
+    -fx-border-color: #84ff00;
+}
+
+.root .scroll-bar .increment-button,
+.root .scroll-bar .decrement-button{
+	-fx-background-color: #090E11;
+}
+
+.root .scroll-bar .increment-arrow,
+.root .scroll-bar .decrement-arrow {
+    -fx-background-color: #84ff00;
+}
+
+.root .scroll-bar
+{
+	-fx-background-color: #090E11;
+}
+
+
 .list-view {
     -fx-background-color: #000000;
     -fx-font-weight: Normal;
@@ -363,4 +385,44 @@
 .table-view .scroll-bar
 {
 	-fx-background-color: #090E11;
+}
+
+.text-areaComentario
+{
+	-fx-background-color: #090E11;
+	-fx-font-weight: Normal;
+	-fx-font-size: 14px;
+	-fx-font-family: 'Cardano';
+	-fx-border-width: 0px;
+	-fx-text-fill: #ffffff;
+}
+
+.text-areaComentario .scroll-bar .thumb
+{
+    -fx-background-color: #090E11;
+    -fx-border-color: #84ff00;
+}
+
+.text-areaComentario .scroll-bar .increment-button,
+.text-areaComentario .scroll-bar .decrement-button{
+	-fx-background-color: #090E11;
+}
+
+.text-areaComentario .scroll-bar .increment-arrow,
+.text-areaComentario .scroll-bar .decrement-arrow {
+    -fx-background-color: #84ff00;
+}
+
+.text-areaComentario .scroll-bar
+{
+	-fx-background-color: #090E11;
+}
+
+.text-areaComentario .content
+{
+	-fx-background-color: #090E11;
+	-fx-font-weight: Normal;
+	-fx-font-size: 14px;
+	-fx-font-family: 'Cardano';
+	-fx-text-fill: #ffffff;
 }
