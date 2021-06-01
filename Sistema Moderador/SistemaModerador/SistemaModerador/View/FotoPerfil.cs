@@ -31,6 +31,7 @@ namespace SistemaModerador.View
             {
                 MessageBox.Show("Este usuário não possui foto de perfil");
                 this.Close();
+                return;
             }
         }
 

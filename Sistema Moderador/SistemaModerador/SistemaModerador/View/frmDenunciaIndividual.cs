@@ -95,8 +95,15 @@ namespace SistemaModerador.View
 
         private void InstanciarFotoPerfil(string nome, int id)
         {
-            FotoPerfil fp = new FotoPerfil(nome, id);
-            fp.ShowDialog();
+            try
+            {
+                FotoPerfil fp = new FotoPerfil(nome, id);
+                fp.ShowDialog();
+            }
+            catch
+            {
+
+            }
         }
 
         private void AbrirFotoPerfil(string nomeLabel)
