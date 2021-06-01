@@ -149,7 +149,6 @@ public class CadastrarLocal extends Application implements Initializable {
 				return;
 			}
 			String cnpjSemMascara=txtNomeLocal.getText().replaceAll("\\.", "").replaceAll("\\-", "").replaceAll("\\/", "");
-			System.out.println(cnpjSemMascara);
 			if(cnpjSemMascara.length() != 14) {
 				Util.MessageBoxShow("Campo errado", "O campo do CNPJ está inválido. Verifique e tente novamente.", AlertType.ERROR);
 				return;

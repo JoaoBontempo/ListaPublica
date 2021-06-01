@@ -305,33 +305,51 @@ public class TelaLocal extends Application {
 	}
 
 	private void obterImagemParceiro() throws SQLException, Exception {
-		String query="select imagem from parceiro where id="+idDono;
-		Banco.InserirQueryReader(query);
-		
-		if(Banco.getReader().next()) {
-			String imagem=Banco.getReader().getString("imagem");
-			if(imagem != null) {
-				if(imagem.length()>0) {
-					Util.verificaExistenciaImagem("profile"+Util.getContaLogada().getId()+".jpg", imagem.getBytes(), false);
-					imgProprietario.setImage(new Image(new File("C:\\lista\\usuarios\\profile"+Util.getContaLogada().getId()+".jpg").toURI().toString(), 400, 400, false, false));
-				}	
+		//verifica se a imagem ja existe no cache(nos diretórios)
+		String caminho="C:\\lista\\usuarios\\profile"+idDono+".jpg";
+		File f = new File(caminho);
+		if(f.exists()) {
+			imgProprietario.setImage(new Image(new File(caminho).toURI().toString(), 400, 400, false, false));
+		}else {
+			String query="select imagem from parceiro where id="+idDono;
+			Banco.InserirQueryReader(query);
+			
+			if(Banco.getReader().next()) {
+				String imagem=Banco.getReader().getString("imagem");
+				if(imagem != null) {
+					if(imagem.length()>0) {
+						Util.verificaExistenciaImagem("profile"+idDono+".jpg", imagem.getBytes(), false);
+						imgProprietario.setImage(new Image(new File(caminho).toURI().toString(), 400, 400, false, false));
+					}	
+				}
 			}
 		}
+		
+		
 	}
 	
 	private void obterImagemLocal() throws SQLException, Exception {
-		String query="select imagem from endereco where id="+id_endereco;
-		Banco.InserirQueryReader(query);
-		
-		if(Banco.getReader().next()) {
-			String imagem=Banco.getReader().getString("imagem");
-			if(imagem != null) {
-				if(imagem.length()>0) {
-					Util.verificaExistenciaImagem("addr"+id_endereco+".jpg", imagem.getBytes(), false);
-					imgProprietario.setImage(new Image(new File("C:\\lista\\locais\\addr"+id_endereco+".jpg").toURI().toString(), 400, 400, false, false));
-				}	
+		String caminho="C:\\lista\\locais\\addr"+id_endereco+".jpg";
+		File f = new File(caminho);
+		if(f.exists()) {
+			imgLocal.setImage(new Image(new File(caminho).toURI().toString(), 400, 400, false, false));
+		}else {
+			String query="select imagem from endereco where id="+id_endereco;
+			System.out.println("ID ENDERECO: "+id_endereco);
+			Banco.InserirQueryReader(query);
+			
+			if(Banco.getReader().next()) {
+				String imagem=Banco.getReader().getString("imagem");
+				if(imagem != null) {
+					if(imagem.length()>0) {
+						Util.verificaExistenciaImagem("addr"+id_endereco+".jpg", imagem.getBytes(), true);
+						imgLocal.setImage(new Image(new File(caminho).toURI().toString(), 400, 400, false, false));
+						
+					}	
+				}
 			}
 		}
+		
 	}
 	
 	
@@ -415,6 +433,7 @@ public class TelaLocal extends Application {
 		this.id_endereco=Integer.parseInt(UtilDashboard.getIdLugar());
 		
 		buscarInfosDono(idDono,true);
+		
 		caracteresProibidosComentario=Arrays.asList("'");
 		
 		tvcTelefone.setCellValueFactory(new PropertyValueFactory("numero"));
