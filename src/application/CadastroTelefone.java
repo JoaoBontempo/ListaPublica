@@ -76,7 +76,7 @@ public class CadastroTelefone extends Application{
 			txtDescrição.setText(CadastroTelUtil.getTelefone().getDescricao());
 			txtNumero.setText(CadastroTelUtil.getTelefone().getNumero().substring(2, CadastroTelUtil.getTelefone().getNumero().length()));
 			txtDDD.setText(CadastroTelUtil.getTelefone().getNumero().substring(0,2));
-			
+
 			txtNumero.setDisable(true);
 			txtDDD.setDisable(true);
 
@@ -114,7 +114,7 @@ public class CadastroTelefone extends Application{
 		}
 		return true;
 	}
-	
+
 	private void LimparCampos()
 	{
 		txtDDD.setText("");
@@ -127,7 +127,7 @@ public class CadastroTelefone extends Application{
 	public void cadastrarTelefone() throws SQLException
 	{
 		if(!CadastroTelUtil.isCaso()) {
-			
+
 			if (validarCampos())
 			{
 				if (cboxEndereco.getSelectionModel().getSelectedIndex() != 0)
@@ -146,23 +146,23 @@ public class CadastroTelefone extends Application{
 			}
 		}
 		else {
-			
-			if (validarCampos())
-			{
-				if (cboxEndereco.getSelectionModel().getSelectedIndex() != 0)
-				{
-				  Banco.InserirQuery(String.format("UPDATE telefone SET lugar = %s, descricao = '%s' WHERE id = %s "
-						  , enderecos.get(cboxEndereco.getSelectionModel().getSelectedIndex() - 1).getId(), txtDescrição.getText(), CadastroTelUtil.getTelefone().getId()));
-				}
-				else
-				{
-					Banco.InserirQuery(String.format("UPDATE telefone SET  descricao = '%s' WHERE id = %s "
-							  , txtDescrição.getText(), CadastroTelUtil.getTelefone().getId()));
-				}
-				Util.MessageBoxShow("Alteração realizada!", "Seu novo telefone foi alterado com sucesso!", AlertType.INFORMATION);
-			}
-		}
 
+			if(!Validacao.verificarTextField(txtDescrição))
+				return;
+
+			if (cboxEndereco.getSelectionModel().getSelectedIndex() != 0)
+			{
+				Banco.InserirQuery(String.format("UPDATE telefone SET lugar = %s, descricao = '%s' WHERE id = %s "
+						, enderecos.get(cboxEndereco.getSelectionModel().getSelectedIndex() - 1).getId(), txtDescrição.getText(), CadastroTelUtil.getTelefone().getId()));
+			}
+			else
+			{
+				Banco.InserirQuery(String.format("UPDATE telefone SET  lugar = null, descricao = '%s' WHERE id = %s "
+						, txtDescrição.getText(), CadastroTelUtil.getTelefone().getId()));
+			}
+			Util.MessageBoxShow("Alteração realizada!", "Seu novo telefone foi alterado com sucesso!", AlertType.INFORMATION);
+
+		}
 	}
 
 	private Event evento;

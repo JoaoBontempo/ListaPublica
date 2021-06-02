@@ -589,12 +589,7 @@ public class Dashboard extends Application {
 
 			Telefone telefone = new Telefone();
 			Endereco endereco = new Endereco();
-			//  endereco.setBairro(result.getString("bairro"));
-			//  endereco.setCidade(result.getString("cidade"));
-			//  endereco.setRua(result.getString("rua"));
-			// endereco.setEstado(result.getString("estado"));
 			endereco.setNome(result.getString("nome"));
-			//endereco.setNumero(result.getInt("numero"));
 
 
 
@@ -603,7 +598,6 @@ public class Dashboard extends Application {
 			telefone.setId(result.getInt("id"));
 			telefone.setEndereco(endereco);
 
-			//System.out.println("Telefone add: " + telefone.getNumero());
 			
 			dadosTelefone.add(telefone);
 			cboxSelecionarTelefone.getItems().add(Util.FormatarGetTelefone(result.getString("numero")));
