@@ -10,7 +10,10 @@ import classes.Util;
 import classes.Validacao;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -175,6 +178,13 @@ public class Cadastrar extends Application{
 		else
 			return true;
 	}
+	
+	private Event evento;
+	
+	public void setEvento(Event evento)
+	{
+		this.evento = evento;
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -186,6 +196,8 @@ public class Cadastrar extends Application{
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Lista Pública - Cadastrar");
 			primaryStage.getIcons().add(icon);
+			primaryStage.initModality(Modality.WINDOW_MODAL);
+			primaryStage.initOwner(((Node)evento.getSource()).getScene().getWindow());
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

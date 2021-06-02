@@ -97,9 +97,9 @@ public class CadastroTelefone extends Application{
 			return false;
 		if (!Validacao.verificarNumerosTextField(txtNumero))
 			return false;
-		if (txtDDD.getText().length() > 2)
+		if (txtDDD.getText().length() != 2)
 		{
-			Util.MessageBoxShow("Campo inválido", "O campo 'DDD' deve conter de 1 a 2 números apenas.", AlertType.ERROR);
+			Util.MessageBoxShow("Campo inválido", "O campo 'DDD' deve conter exatamente dois números.", AlertType.ERROR);
 			txtDDD.requestFocus();
 			return false;
 		}
@@ -113,6 +113,14 @@ public class CadastroTelefone extends Application{
 			return false;
 		}
 		return true;
+	}
+	
+	private void LimparCampos()
+	{
+		txtDDD.setText("");
+		txtNumero.setText("");
+		txtDescrição.setText("");
+		cboxEndereco.getSelectionModel().selectFirst();
 	}
 
 	@FXML
@@ -134,6 +142,7 @@ public class CadastroTelefone extends Application{
 							+ " (default, '%s', %s, '%s')", txtDDD.getText() + txtNumero.getText(), Util.getContaLogada().getId(), txtDescrição.getText()));
 				}
 				Util.MessageBoxShow("Cadastro realizado!", "Seu novo telefone foi cadastrado com sucesso!", AlertType.INFORMATION);
+				LimparCampos();
 			}
 		}
 		else {
@@ -156,9 +165,9 @@ public class CadastroTelefone extends Application{
 
 	}
 
-	public Event evento;
+	private Event evento;
 
-	public void getEvent(Event evento) {
+	public void setEvent(Event evento) {
 		this.evento = evento;
 	}
 

@@ -44,6 +44,7 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -65,6 +66,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -80,11 +82,18 @@ public class TelaLocal extends Application {
 	private int id_telefone;
 	private String conteudoImagem = "";
 	private String fileName="";
-	private Stage primaryStage;
+	//private Stage primaryStage;
 	private List<String> caracteresProibidosComentario=new ArrayList<String>();
 	
 	public void setIdBuscarInfos(String id) {
 		this.idBuscarInfos = id;
+	}
+	
+	private Event evento;
+	
+	public void setEvento(Event evento)
+	{
+		this.evento = evento;
 	}
 	
 	@FXML
@@ -278,21 +287,21 @@ public class TelaLocal extends Application {
 		
     }
 	
-
+	public void getEvent(Event evento) {
+		this.evento = evento;
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("telaLugar.fxml"));
-			
-			
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Image icon = new Image("Recursos/logo.png");
-
+			primaryStage.initModality(Modality.WINDOW_MODAL);
+			primaryStage.initOwner(((Node)evento.getSource()).getScene().getWindow());
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Lista Pública - Informações detalhadas do local");
-			
 			primaryStage.getIcons().add(icon);
 			primaryStage.show();
 			

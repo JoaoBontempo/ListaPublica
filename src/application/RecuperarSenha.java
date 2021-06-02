@@ -222,6 +222,7 @@ public class RecuperarSenha extends Application {
 	public void getEvent(MouseEvent evento) {
 		this.evento = evento;
 	}
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {

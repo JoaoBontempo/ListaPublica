@@ -230,7 +230,7 @@ public class Dashboard extends Application {
 		SelecaoTelefone();
 		CadastroTelefone ct = new CadastroTelefone();
 		CadastroTelUtil.setCaso(true);
-		ct.getEvent(event);
+		ct.setEvent(event);
 		ct.start(new Stage());
 
 	}
@@ -487,6 +487,7 @@ public class Dashboard extends Application {
 						}
 					}
 					TelaLocal tl = new TelaLocal();
+					tl.setEvento(event);
 					UtilDashboard.setTbVutil(ret);
 					tl.start(new Stage());
 
@@ -714,7 +715,7 @@ public class Dashboard extends Application {
 	@FXML
 	public void showNovoTelefone(Event evento) {
 		CadastroTelefone ct = new CadastroTelefone();
-		ct.getEvent(evento);
+		ct.setEvent(evento);
 		CadastroTelUtil.setCaso(false);
 		ct.start(new Stage());
 	}

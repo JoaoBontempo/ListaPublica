@@ -31,7 +31,7 @@ public final class Banco {
 	private static String senha = "root";
 	
 	private static String porta = "3306";
-	//private static String porta = "11976";
+	//private static String porta = "11050";
 
 	// Biblioteca
 	private final static String DRIVE = "com.mysql.cj.jdbc.Driver";

@@ -170,8 +170,8 @@ public class Login extends Application {
 		}
 		Dashboard dash = new Dashboard();
 		dash.start(new Stage());
-//		Stage stageAtual = (Stage) btnLogar.getScene().getWindow();
-//		stageAtual.close();
+		Stage stageAtual = (Stage) btnLogar.getScene().getWindow();
+		stageAtual.close();
 	}
 
 	@FXML
@@ -190,9 +190,10 @@ public class Login extends Application {
 	void meCadastrar(MouseEvent event) {
 
 		Cadastrar cadastrar = new Cadastrar();
+		cadastrar.setEvento(event);
 		cadastrar.start(new Stage());
-		Stage stageAtual = (Stage) lbCadastrar.getScene().getWindow();
-		stageAtual.close();
+		//Stage stageAtual = (Stage) lbCadastrar.getScene().getWindow();
+		//stageAtual.close();
 	}
 
 	@FXML
