@@ -15,6 +15,8 @@ public final class Validacao {
 			return true;
 		if (string.isEmpty())
 			return true;
+		if (string.equals(""))
+			return true;
 		return false;
 	}
 	

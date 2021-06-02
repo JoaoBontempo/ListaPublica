@@ -36,6 +36,7 @@ import classesTableView.ComentarioTable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -197,6 +198,18 @@ public final class Util {
 		telefone = telefone.substring(2, telefone.length());
 		return String.format("(%s) %s", ddd, telefone);
 	}
+	
+	/*
+	public static void LimparCboxEmBranco(ComboBox<String> cbox)
+	{
+		for (int i = 0; i < cbox.getItems().size(); i++)
+		{
+			if (Validacao.isNullOrEmpty(cbox.getItems().get(i).toString())) 
+			{
+				cbox.getItems().remove(i);
+			}
+		}
+	}*/
 
 	public static void RecuperarInformacoesDenunciado(int id) throws SQLException
 	{

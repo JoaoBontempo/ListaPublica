@@ -235,16 +235,17 @@ public class Dashboard extends Application {
 
 	}
 
-	public int setID;
+	private int idTelefoneSelecionado;
 	@FXML
 	void ExcluirTelefone(ActionEvent event) throws SQLException {
 
 		if(Util.MessageBoxShow(" Excluir número" , "Tem certeza que deseja excluir o telefone " 
 				+ cboxSelecionarTelefone.getSelectionModel().getSelectedItem() + " ?").equals(ButtonType.OK)){
 
-			SelecaoTelefone();
-			System.out.println(setID);
-			ResultSet result =  Banco.InserirQueryReader("SELECT id FROM denuncia WHERE denuncia.tel = " + setID);
+			idTelefoneSelecionado = dadosTelefone.get(cboxSelecionarTelefone.getSelectionModel().getSelectedIndex()).getId();
+			//System.out.println(idTelefoneSelecionado);
+			/*
+			ResultSet result =  Banco.InserirQueryReader("SELECT id FROM denuncia WHERE denuncia.tel = " + idTelefoneSelecionado);
 
 			while(result.next()){
 
@@ -252,13 +253,20 @@ public class Dashboard extends Application {
 				System.out.print("Analise");
 			}
 
-			if(Banco.InserirQuery("DELETE FROM telefone WHERE id = " + setID)) {
+			if(Banco.InserirQuery("DELETE FROM telefone WHERE id = " + idTelefoneSelecionado)) {
 
 				Util.MessageBoxShow("", "Telefone excluido com sucesso");
 				AtualizarCbxTelefones();
 				lvInfo.getItems().clear();
 
-			}
+			}*/
+			Banco.InserirQuery("DELETE FROM comentarios WHERE idTelefone = " + idTelefoneSelecionado);
+			Banco.InserirQuery("DELETE FROM denuncia WHERE tel = " + idTelefoneSelecionado);
+			Banco.InserirQuery("DELETE FROM telefone WHERE id = " + idTelefoneSelecionado);
+			Util.MessageBoxShow("Telefone excluído", "Seu telefone foi excluído com sucesso", AlertType.INFORMATION);
+			//cboxSelecionarTelefone.getSelectionModel().selectFirst();
+			AtualizarCbxTelefones();
+			lvInfo.getItems().clear();
 		}
 	}
 
@@ -267,21 +275,31 @@ public class Dashboard extends Application {
 
 		SelecaoTelefone();
 	}
-
+	
+	
 	public void SelecaoTelefone() {
 		lvInfo.getItems().clear();
+		if (cboxSelecionarTelefone.getSelectionModel().getSelectedIndex() == -1)
+			return;
+			
+		Telefone telefone = dadosTelefone.get(cboxSelecionarTelefone.getSelectionModel().getSelectedIndex());
+		/*
 		for(Telefone telefone : dadosTelefone ) {
 
 			if(cboxSelecionarTelefone.getSelectionModel().getSelectedItem().equals(telefone.getNumero())){
 				CadastroTelUtil.setTelefone(telefone);
 				lvInfo.getItems().add("Nome do Local: " + telefone.getEndereco().getNome());
 				lvInfo.getItems().add("Descrição: " + telefone.getDescricao());
-				setID = telefone.getId();
-
+				idTelefoneSelecionado = telefone.getId();
 				break;
 			}
-		}
+		}*/
+		CadastroTelUtil.setTelefone(telefone);
+		lvInfo.getItems().add("Nome do Local: " + telefone.getEndereco().getNome());
+		lvInfo.getItems().add("Descrição: " + telefone.getDescricao());
+		idTelefoneSelecionado = telefone.getId();
 	}
+
 
 
 
@@ -369,12 +387,12 @@ public class Dashboard extends Application {
 		}
 
 		if (Validacao.validarEmail(txtMCEmail.getText())) {
-			
+
 			if(Banco.InserirQuery(String.format("UPDATE parceiro set email = '%s' where id = %s", txtMCEmail.getText(),Util.getContaLogada().getId()))) {
-				
+
 				Util.MessageBoxShow("Alteração de Dados", "Email alterado com sucesso!");
 				Util.getContaLogada().setEmail(txtMCEmail.getText());
-				
+
 			}
 		}
 
@@ -524,7 +542,7 @@ public class Dashboard extends Application {
 	}
 
 
-	// Mï¿½todo 'onLoad'
+	// Método 'onLoad'
 	public void initialize() throws SQLException {
 		verificaIconeUsuario();
 		//imgIconePerfil.setImage(new Image("file://C:\\lista\\usuarios\\profile.jpg"));
@@ -561,10 +579,12 @@ public class Dashboard extends Application {
 	public void  AtualizarCbxTelefones() throws SQLException {
 		if (Util.isConvidado())
 			return;
-		ResultSet result = Banco.InserirQueryReader("SELECT telefone.*, endereco.* FROM telefone LEFT JOIN endereco ON endereco.id = telefone.lugar WHERE telefone.dono = " 
+		ResultSet result = Banco.InserirQueryReader("SELECT telefone.*, endereco.nome FROM telefone LEFT JOIN endereco ON endereco.id = telefone.lugar WHERE telefone.dono = " 
 				+ Util.getContaLogada().getId());
 
+		dadosTelefone.clear();
 		cboxSelecionarTelefone.getItems().clear();  
+		cboxSelecionarTelefone.getSelectionModel().clearSelection();
 		while(result.next()) {
 
 			Telefone telefone = new Telefone();
@@ -583,11 +603,11 @@ public class Dashboard extends Application {
 			telefone.setId(result.getInt("id"));
 			telefone.setEndereco(endereco);
 
-
+			//System.out.println("Telefone add: " + telefone.getNumero());
+			
 			dadosTelefone.add(telefone);
-			cboxSelecionarTelefone.getItems().add(result.getString("numero"));
+			cboxSelecionarTelefone.getItems().add(Util.FormatarGetTelefone(result.getString("numero")));
 		}
-
 	}
 
 	private void setQueryParameters() {
