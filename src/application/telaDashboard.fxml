@@ -122,12 +122,18 @@
 							</image>
 						</ImageView>
 						<!-- make ScrollPane resize the content width -->
-						<ScrollPane fitToWidth="true" layoutX="283.0" layoutY="21.0" prefHeight="343.0" prefWidth="823.0" stylesheets="@application.css" AnchorPane.bottomAnchor="63.0" AnchorPane.leftAnchor="343.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="21.0">
+						<ScrollPane fitToWidth="true" layoutX="283.0" layoutY="62.0" prefHeight="302.0" prefWidth="823.0" stylesheets="@application.css" AnchorPane.bottomAnchor="63.0" AnchorPane.leftAnchor="343.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="62.0">
 							<content>
 								<!-- do not put bounds on the FlowPane size -->
 								<FlowPane fx:id="fpTelefones" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefWidth="600.0" />
 							</content>
 						</ScrollPane>
+                  <TextField fx:id="txtPesquisaTelefone" layoutX="373.0" layoutY="31.0" onKeyTyped="#txtPesquisaTelefoneTextChanged" prefHeight="34.0" prefWidth="781.0" promptText="Procurar informação..." AnchorPane.leftAnchor="385.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="343.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Recursos/lupa.png" />
+                     </image>
+                  </ImageView>
 					</children>
 				</AnchorPane>
 			</content>

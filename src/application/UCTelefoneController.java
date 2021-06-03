@@ -121,7 +121,7 @@ public class UCTelefoneController extends Application{
 	}
 
 	public Telefone getTelefone() {
-		return telefone;
+		return this.telefone;
 	}
 
 	public void setTelefone(Telefone telefone) {

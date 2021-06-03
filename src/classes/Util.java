@@ -33,6 +33,7 @@ import org.json.JSONObject;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import application.Dashboard;
+import application.UCTelefoneController;
 import classesTableView.ComentarioTable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -49,6 +50,7 @@ public final class Util {
 	public static ArrayList<Endereco> enderecos = new ArrayList<Endereco>();
 	public static int idEndereco;
 	public static Dashboard dashboard = new Dashboard();
+	public static ArrayList<Telefone> telefones = new ArrayList<Telefone>();
 	/**/
 	
 	private static Parceiro contaLogada;

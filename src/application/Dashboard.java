@@ -54,6 +54,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -105,7 +106,9 @@ public class Dashboard extends Application {
 
 	private int alturaFotoPerfil=112;
 
-
+	@FXML
+	private TextField txtPesquisaTelefone;
+	
 	@FXML
 	private TabPane TabDash;
 
@@ -515,7 +518,35 @@ public class Dashboard extends Application {
 
 		AtualizarCbxTelefones();
 		AtualizarGridTelefones(API.doGetTelefones(100));
-
+	}
+	
+	@FXML
+	public void txtPesquisaTelefoneTextChanged()
+	{
+		BuscarInformacao(txtPesquisaTelefone.getText());
+	}
+	
+	private void BuscarInformacao(String info)
+	{
+		info = info.toLowerCase();
+		int i = 0;
+		for (Node node : Util.dashboard.getFpTelefones().getChildren())
+		{
+			if (Validacao.isNullOrEmpty(info))
+			{
+				node.setVisible(true);
+				continue;
+			}
+			if (Util.telefones.get(i).getNumero().toLowerCase().contains(info) || Util.telefones.get(i).getDescricao().toLowerCase().contains(info))
+			{
+				node.setVisible(true);
+			}
+			else
+			{
+				node.setVisible(false);
+			}
+			i++;
+		}
 	}
 
 	public void  AtualizarCbxTelefones() throws SQLException, IOException {
@@ -525,7 +556,7 @@ public class Dashboard extends Application {
 		ResultSet result = Banco.InserirQueryReader("SELECT id, numero, descricao, lugar FROM telefone WHERE dono = " + Util.getContaLogada().getId());
 		
 		fpTelefones.getChildren().clear();
-
+		Util.telefones.clear();
 		while(result.next()) {
 			Util.idEndereco = result.getInt("lugar");
 			Telefone telefone = new Telefone();
@@ -538,6 +569,7 @@ public class Dashboard extends Application {
 			UCTelefoneController uct = new UCTelefoneController();
 			uct.setPane(fpTelefones);
 			uct.loadFxml();
+			Util.telefones.add(telefone);
 		}
 	}
 	
