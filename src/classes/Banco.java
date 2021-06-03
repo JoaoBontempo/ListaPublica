@@ -29,7 +29,9 @@ public final class Banco {
 	//private static String senha = "S3nh4F0rt3";
 	private static String usuario = "root";
 	private static String senha = "root";
-	
+
+	//private static String porta = "11050";
+
 	//private static String porta = "3306";
 	private static String porta = "11050";
 

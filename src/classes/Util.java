@@ -227,6 +227,10 @@ public final class Util {
 		parceiro.setUsuario(result.getString("usuario"));
 		denunciAtual.setDenunciado(parceiro);
 	}
+	
+	public static boolean verificaTamanhoImagem(Long tamanhoLimite,File arquivo) {
+		return arquivo.length()>tamanhoLimite;
+	}
 
 	public static void RecuperarInformacoesTelefoneAtual() throws SQLException
 	{

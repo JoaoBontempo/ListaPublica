@@ -98,6 +98,11 @@ public class Dashboard extends Application {
 	private String nome = "*", estado = "*", cidade = "*", numero = "*", email = "*", descricao = "*";
 
 	private Stage primaryStage;
+	
+	private int larguraFotoPerfil=194;
+	
+	private int alturaFotoPerfil=112;
+	
 
 	@FXML
 	private TabPane TabDash;
@@ -215,7 +220,10 @@ public class Dashboard extends Application {
 
 	@FXML
 	private Button btnAlterar;
-
+	
+	@FXML
+    private Label lblExcluirFotoPerfil;
+	
 	@FXML
 	private Button btnExcluirTel;
 
@@ -235,6 +243,26 @@ public class Dashboard extends Application {
 
 	}
 
+	@FXML
+    void ExcluirFotoPerfil(MouseEvent event) {
+		// Troca a foto para o padrão
+		// como ele faz isso:
+		//   joga como vazio o campo de imagem do usuário, pois caso for vazio o sistema saberá que o ícone é padrão
+		try {
+			Banco.InserirQuery("update parceiro set imagem='' where id="+Util.getContaLogada().getId()+";");
+			trocaFotoPerfilParaOPadrao(); // atualiza
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+	
+	private void trocaFotoPerfilParaOPadrao() {
+		imgIconePerfil.setImage(new Image(new File("src/Recursos/logo_contornada.png").toURI().toString(), this.larguraFotoPerfil, this.alturaFotoPerfil, false, false));
+	}
+	
+	
+	
 	private int idTelefoneSelecionado;
 	@FXML
 	void ExcluirTelefone(ActionEvent event) throws SQLException {
@@ -315,19 +343,15 @@ public class Dashboard extends Application {
 		// armazeno o arquivo na pasta 
 		try {
 			String diretorioTmp="C:\\lista\\usuarios\\"+imagemEscolhida.getName()+Util.getContaLogada().getId();
-			File arquivoEscolhido=new File(diretorioTmp);
-			if(arquivoEscolhido.length() > (4194304L) ) {
+			if(Util.verificaTamanhoImagem(4194304L,new File(imagemEscolhida.getAbsolutePath())) ) {
 				Util.MessageBoxShow("Imagem muito grande", "A imagem é maior que 4Mb.");
 				return;
 			}
+			
 			Files.copy(Path.of(imagemEscolhida.getAbsolutePath()), new FileOutputStream(diretorioTmp));
 			String base=Util.converterStringParaBase64(Path.of(imagemEscolhida.getAbsolutePath()).toString());
 			Banco.InserirQuery("update parceiro set imagem='"+base+"' where id ="+Util.getContaLogada().getId());
-
-			imgIconePerfil.setImage(new Image(new File(diretorioTmp).toURI().toString(), 400, 400, false, false));
-
-
-			imgIconePerfil.setImage(new Image(new File(diretorioTmp).toURI().toString(), 150, 150, false, false));
+			imgIconePerfil.setImage(new Image(new File(diretorioTmp).toURI().toString(), this.larguraFotoPerfil, this.alturaFotoPerfil, false, false));
 
 
 		} catch (SQLException e) {
@@ -355,6 +379,7 @@ public class Dashboard extends Application {
 		try {
 			Banco.InserirQueryReader("select imagem from parceiro where id="+id);
 			if(Banco.getReader().next()) {
+				
 				String imagem=Banco.getReader().getString("imagem");
 				if(imagem != null) {
 					if(imagem.length()>0) {
@@ -374,6 +399,9 @@ public class Dashboard extends Application {
 		//file://C:/lista/usuarios/profile.jpg
 		if(possuiIcone) {
 			imgIconePerfil.setImage(new Image(new File("C:\\lista\\usuarios\\profile"+id+".jpg").toURI().toString(), 400, 400, false, false));
+		}else {
+			trocaFotoPerfilParaOPadrao();
+			
 		}
 
 	}
@@ -545,7 +573,6 @@ public class Dashboard extends Application {
 	// Método 'onLoad'
 	public void initialize() throws SQLException {
 		verificaIconeUsuario();
-		//imgIconePerfil.setImage(new Image("file://C:\\lista\\usuarios\\profile.jpg"));
 
 		tbMeusEnderecos.setDisable(Util.isConvidado());
 		tbMeusTelefones.setDisable(Util.isConvidado());
@@ -583,8 +610,9 @@ public class Dashboard extends Application {
 				+ Util.getContaLogada().getId());
 
 		dadosTelefone.clear();
-		cboxSelecionarTelefone.getItems().clear();  
-		cboxSelecionarTelefone.getSelectionModel().clearSelection();
+		cboxSelecionarTelefone.valueProperty().set(null);
+		//cboxSelecionarTelefone.getItems().clear();  
+		//cboxSelecionarTelefone.getSelectionModel().clearSelection();
 		while(result.next()) {
 
 			Telefone telefone = new Telefone();
