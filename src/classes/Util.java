@@ -42,6 +42,11 @@ import javafx.stage.Stage;
 
 public final class Util {
 
+	/*UTILIDADES DO USER CONTROL TELEFONES*/
+	public static Telefone telefone;
+	public static ArrayList<Endereco> enderecos = new ArrayList<Endereco>();
+	public static int idEndereco;
+	
 	private static Parceiro contaLogada;
 	private static Denuncia denunciAtual;
 	private static String telefoneAtual;

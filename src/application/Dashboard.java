@@ -64,6 +64,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -81,6 +82,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.fxml.FXML;
@@ -98,11 +100,11 @@ public class Dashboard extends Application {
 	private String nome = "*", estado = "*", cidade = "*", numero = "*", email = "*", descricao = "*";
 
 	private Stage primaryStage;
-	
+
 	private int larguraFotoPerfil=194;
-	
+
 	private int alturaFotoPerfil=112;
-	
+
 
 	@FXML
 	private TabPane TabDash;
@@ -139,9 +141,9 @@ public class Dashboard extends Application {
 
 	@FXML
 	private ComboBox<String> cboxCidades;
-
+	/*
 	@FXML
-	private ComboBox<String> cboxSelecionarTelefone;
+	private ComboBox<String> cboxSelecionarTelefone;*/
 
 	@FXML
 	private TextField txtNome;
@@ -217,19 +219,23 @@ public class Dashboard extends Application {
 
 	@FXML
 	private BorderPane pnlinformacoes;
+	/*
+	@FXML
+	private Button btnAlterar;*/
 
 	@FXML
-	private Button btnAlterar;
-	
-	@FXML
-    private Label lblExcluirFotoPerfil;
-	
-	@FXML
-	private Button btnExcluirTel;
+	private Label lblExcluirFotoPerfil;
 
+    @FXML
+    private FlowPane fpTelefones;
+	/*
 	@FXML
-	private ListView<String> lvInfo;
+	private Button btnExcluirTel;*/
+	/*
+	@FXML
+	private ListView<String> lvInfo;*/
 
+	/*
 	@FXML
 	void AlterarTelefone(ActionEvent event) {
 		if(cboxSelecionarTelefone.getSelectionModel().getSelectedItem().equals(null))
@@ -241,10 +247,10 @@ public class Dashboard extends Application {
 		ct.setEvent(event);
 		ct.start(new Stage());
 
-	}
+	}*/
 
 	@FXML
-    void ExcluirFotoPerfil(MouseEvent event) {
+	void ExcluirFotoPerfil(MouseEvent event) {
 		// Troca a foto para o padrão
 		// como ele faz isso:
 		//   joga como vazio o campo de imagem do usuário, pois caso for vazio o sistema saberá que o ícone é padrão
@@ -255,15 +261,13 @@ public class Dashboard extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
-	
+	}
+
 	private void trocaFotoPerfilParaOPadrao() {
 		imgIconePerfil.setImage(new Image(new File("src/Recursos/logo_contornada.png").toURI().toString(), this.larguraFotoPerfil, this.alturaFotoPerfil, false, false));
 	}
-	
-	
-	
-	private int idTelefoneSelecionado;
+
+	/*
 	@FXML
 	void ExcluirTelefone(ActionEvent event) throws SQLException {
 
@@ -287,29 +291,30 @@ public class Dashboard extends Application {
 				AtualizarCbxTelefones();
 				lvInfo.getItems().clear();
 
-			}*/
+			}
 			Banco.InserirQuery("DELETE FROM comentarios WHERE idTelefone = " + idTelefoneSelecionado);
 			Banco.InserirQuery("DELETE FROM denuncia WHERE tel = " + idTelefoneSelecionado);
 			Banco.InserirQuery("DELETE FROM telefone WHERE id = " + idTelefoneSelecionado);
 			Util.MessageBoxShow("Telefone excluído", "Seu telefone foi excluído com sucesso", AlertType.INFORMATION);
 			//cboxSelecionarTelefone.getSelectionModel().selectFirst();
 			AtualizarCbxTelefones();
-			lvInfo.getItems().clear();
+			//lvInfo.getItems().clear();
 		}
 	}
-
+	
+	/*
 	@FXML
 	void SelecionarTelefone(ActionEvent event) {
 
 		SelecaoTelefone();
-	}
-	
-	
+	}*/
+
+	/*
 	public void SelecaoTelefone() {
 		lvInfo.getItems().clear();
 		if (cboxSelecionarTelefone.getSelectionModel().getSelectedIndex() == -1)
 			return;
-			
+
 		Telefone telefone = dadosTelefone.get(cboxSelecionarTelefone.getSelectionModel().getSelectedIndex());
 		/*
 		for(Telefone telefone : dadosTelefone ) {
@@ -321,12 +326,12 @@ public class Dashboard extends Application {
 				idTelefoneSelecionado = telefone.getId();
 				break;
 			}
-		}*/
+		}
 		CadastroTelUtil.setTelefone(telefone);
 		lvInfo.getItems().add("Nome do Local: " + telefone.getEndereco().getNome());
 		lvInfo.getItems().add("Descrição: " + telefone.getDescricao());
 		idTelefoneSelecionado = telefone.getId();
-	}
+	}*/
 
 
 
@@ -347,7 +352,7 @@ public class Dashboard extends Application {
 				Util.MessageBoxShow("Imagem muito grande", "A imagem é maior que 4Mb.");
 				return;
 			}
-			
+
 			Files.copy(Path.of(imagemEscolhida.getAbsolutePath()), new FileOutputStream(diretorioTmp));
 			String base=Util.converterStringParaBase64(Path.of(imagemEscolhida.getAbsolutePath()).toString());
 			Banco.InserirQuery("update parceiro set imagem='"+base+"' where id ="+Util.getContaLogada().getId());
@@ -379,7 +384,7 @@ public class Dashboard extends Application {
 		try {
 			Banco.InserirQueryReader("select imagem from parceiro where id="+id);
 			if(Banco.getReader().next()) {
-				
+
 				String imagem=Banco.getReader().getString("imagem");
 				if(imagem != null) {
 					if(imagem.length()>0) {
@@ -401,7 +406,7 @@ public class Dashboard extends Application {
 			imgIconePerfil.setImage(new Image(new File("C:\\lista\\usuarios\\profile"+id+".jpg").toURI().toString(), 400, 400, false, false));
 		}else {
 			trocaFotoPerfilParaOPadrao();
-			
+
 		}
 
 	}
@@ -547,7 +552,7 @@ public class Dashboard extends Application {
 
 
 	@FXML
-	void buscarDados(Event event) throws SQLException {
+	void buscarDados(Event event) throws SQLException, IOException {
 
 		if (tbMinhaConta.isSelected())
 		{
@@ -571,7 +576,7 @@ public class Dashboard extends Application {
 
 
 	// Método 'onLoad'
-	public void initialize() throws SQLException {
+	public void initialize() throws SQLException, IOException {
 		verificaIconeUsuario();
 
 		tbMeusEnderecos.setDisable(Util.isConvidado());
@@ -603,14 +608,15 @@ public class Dashboard extends Application {
 
 	}
 
-	public void  AtualizarCbxTelefones() throws SQLException {
+	public void  AtualizarCbxTelefones() throws SQLException, IOException {
 		if (Util.isConvidado())
 			return;
-		ResultSet result = Banco.InserirQueryReader("SELECT telefone.*, endereco.nome FROM telefone LEFT JOIN endereco ON endereco.id = telefone.lugar WHERE telefone.dono = " 
+		ResultSet result = Banco.InserirQueryReader("SELECT telefone.*, endereco.nome, endereco.id FROM telefone LEFT JOIN endereco ON endereco.id = telefone.lugar WHERE telefone.dono = " 
 				+ Util.getContaLogada().getId());
-
-		dadosTelefone.clear();
-		cboxSelecionarTelefone.valueProperty().set(null);
+		if (Util.enderecos != null)
+			Util.enderecos.clear();
+		//dadosTelefone.clear();
+		//cboxSelecionarTelefone.valueProperty().set(null);
 		//cboxSelecionarTelefone.getItems().clear();  
 		//cboxSelecionarTelefone.getSelectionModel().clearSelection();
 		while(result.next()) {
@@ -618,7 +624,7 @@ public class Dashboard extends Application {
 			Telefone telefone = new Telefone();
 			Endereco endereco = new Endereco();
 			endereco.setNome(result.getString("nome"));
-
+			endereco.setId(result.getInt("id"));
 
 
 			telefone.setNumero(result.getString("numero"));
@@ -626,9 +632,22 @@ public class Dashboard extends Application {
 			telefone.setId(result.getInt("id"));
 			telefone.setEndereco(endereco);
 
-			
-			dadosTelefone.add(telefone);
-			cboxSelecionarTelefone.getItems().add(Util.FormatarGetTelefone(result.getString("numero")));
+			try
+			{
+				Util.idEndereco = result.getInt("lugar");
+			}
+			catch (Exception erro)
+			{
+				Util.idEndereco = -1;
+			}
+
+			Util.enderecos.add(endereco);
+			Util.telefone = telefone;
+			UCTelefoneController uct = new UCTelefoneController();
+			uct.setPane(fpTelefones);
+			uct.loadFxml();
+			//dadosTelefone.add(telefone);
+			//cboxSelecionarTelefone.getItems().add(Util.FormatarGetTelefone(result.getString("numero")));
 		}
 	}
 

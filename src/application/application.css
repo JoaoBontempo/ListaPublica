@@ -3,6 +3,11 @@
 	-fx-background-color: #090E11;
 }
 
+.scroll-pane > .viewport {
+   -fx-background-color: #090E11;
+   -fx-border-width: 0px;
+}
+
 .root .scroll-bar .thumb
 {
     -fx-background-color: #090E11;

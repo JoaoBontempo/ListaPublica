@@ -10,16 +10,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="185.0" prefWidth="636.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.UCTelefoneController">
+<AnchorPane prefHeight="187.0" prefWidth="478.0" style="-fx-border-color: #ffffff; -fx-border-width: 1px;" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.UCTelefoneController">
    <children>
-      <TextField fx:id="txtTelefone" layoutX="58.0" layoutY="11.0" prefHeight="34.0" prefWidth="246.0" styleClass="text-field2" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="332.0" AnchorPane.topAnchor="15.0" />
+      <TextField fx:id="txtTelefone" editable="false" layoutX="66.0" layoutY="21.0" prefHeight="34.0" prefWidth="160.0" styleClass="text-field2" AnchorPane.leftAnchor="64.0" AnchorPane.rightAnchor="254.0" AnchorPane.topAnchor="19.0" />
       <TextArea fx:id="txtDescrição" layoutX="15.0" layoutY="78.0" prefHeight="59.0" prefWidth="606.0" wrapText="true" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
       <ImageView fitHeight="34.0" fitWidth="48.0" layoutX="16.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <image>
             <Image url="@../Recursos/telefoneIcon.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="34.0" fitWidth="48.0" layoutX="325.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="277.0" AnchorPane.topAnchor="15.0">
+      <ImageView fitHeight="34.0" fitWidth="48.0" layoutX="239.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="205.0" AnchorPane.topAnchor="15.0">
          <image>
             <Image url="@../Recursos/enderecoIcon.png" />
          </image>
@@ -45,6 +45,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ComboBox fx:id="cboxEndereco" layoutX="413.0" layoutY="16.0" prefHeight="34.0" prefWidth="253.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+      <ComboBox fx:id="cboxEndereco" layoutX="273.0" layoutY="21.0" prefHeight="34.0" prefWidth="182.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
    </children>
 </AnchorPane>
