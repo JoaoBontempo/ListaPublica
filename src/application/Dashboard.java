@@ -141,9 +141,6 @@ public class Dashboard extends Application {
 
 	@FXML
 	private ComboBox<String> cboxCidades;
-	/*
-	@FXML
-	private ComboBox<String> cboxSelecionarTelefone;*/
 
 	@FXML
 	private TextField txtNome;
@@ -219,9 +216,6 @@ public class Dashboard extends Application {
 
 	@FXML
 	private BorderPane pnlinformacoes;
-	/*
-	@FXML
-	private Button btnAlterar;*/
 
 	@FXML
 	private Label lblExcluirFotoPerfil;
@@ -233,27 +227,7 @@ public class Dashboard extends Application {
     {
     	return fpTelefones;
     }
-	/*
-	@FXML
-	private Button btnExcluirTel;*/
-	/*
-	@FXML
-	private ListView<String> lvInfo;*/
-
-	/*
-	@FXML
-	void AlterarTelefone(ActionEvent event) {
-		if(cboxSelecionarTelefone.getSelectionModel().getSelectedItem().equals(null))
-			return;
-
-		SelecaoTelefone();
-		CadastroTelefone ct = new CadastroTelefone();
-		CadastroTelUtil.setCaso(true);
-		ct.setEvent(event);
-		ct.start(new Stage());
-
-	}*/
-
+    
 	@FXML
 	void ExcluirFotoPerfil(MouseEvent event) {
 		// Troca a foto para o padrão

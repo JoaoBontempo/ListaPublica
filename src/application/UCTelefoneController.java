@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import classes.Banco;
+import classes.CadastroTelUtil;
 import classes.Endereco;
 import classes.Telefone;
 import classes.Util;
@@ -59,7 +60,7 @@ public class UCTelefoneController extends Application{
 		enderecos = Util.enderecos;
 		telefone = Util.telefone;
 		idEndereco = Util.idEndereco;
-		txtTelefone.setText(telefone.getNumero());
+		txtTelefone.setText(Util.FormatarGetTelefone(telefone.getNumero()));
 		txtDescrição.setText(telefone.getDescricao());
 		
 		int i = 0;
@@ -75,9 +76,22 @@ public class UCTelefoneController extends Application{
 	}
 	
 	@FXML
-	public void AlterarTelefone()
+	public void AlterarTelefone() throws SQLException
 	{
-		
+		if(!Validacao.verificarTextArea(txtDescrição))
+			return;
+
+		if (cboxEndereco.getSelectionModel().getSelectedIndex() != -1)
+		{
+			Banco.InserirQuery(String.format("UPDATE telefone SET lugar = %s, descricao = '%s' WHERE id = %s "
+					, Util.enderecos.get(cboxEndereco.getSelectionModel().getSelectedIndex()).getId(), txtDescrição.getText(), telefone.getId()));
+		}
+		else
+		{
+			Banco.InserirQuery(String.format("UPDATE telefone SET  lugar = null, descricao = '%s' WHERE id = %s "
+					, txtDescrição.getText(), telefone.getId()));
+		}
+		Util.MessageBoxShow("Alteração realizada!", "Seu telefone foi alterado com sucesso!", AlertType.INFORMATION);
 	}
 	
 	@FXML 
