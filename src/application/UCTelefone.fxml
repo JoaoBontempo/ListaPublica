@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="185.0" prefWidth="636.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.UCTelefoneController">
+   <children>
+      <TextField fx:id="txtTelefone" layoutX="58.0" layoutY="11.0" prefHeight="34.0" prefWidth="246.0" styleClass="text-field2" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="332.0" AnchorPane.topAnchor="15.0" />
+      <TextArea fx:id="txtDescrição" layoutX="15.0" layoutY="78.0" prefHeight="59.0" prefWidth="606.0" wrapText="true" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+      <ImageView fitHeight="34.0" fitWidth="48.0" layoutX="16.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+         <image>
+            <Image url="@../Recursos/telefoneIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="34.0" fitWidth="48.0" layoutX="325.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="277.0" AnchorPane.topAnchor="15.0">
+         <image>
+            <Image url="@../Recursos/enderecoIcon.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="14.0" layoutY="58.0" styleClass="labelVerde" text="Descrição" AnchorPane.leftAnchor="15.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="btnDeletar" fitHeight="26.0" fitWidth="26.0" layoutX="560.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="144.0">
+         <image>
+            <Image url="@../Recursos/cancel.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="btnSalvar" fitHeight="26.0" fitWidth="26.0" layoutX="596.0" layoutY="145.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="144.0">
+         <image>
+            <Image url="@../Recursos/Salvar.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ComboBox fx:id="cboxEndereco" layoutX="413.0" layoutY="16.0" prefHeight="34.0" prefWidth="253.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+   </children>
+</AnchorPane>
