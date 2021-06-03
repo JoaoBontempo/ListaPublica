@@ -1,14 +1,20 @@
 package application;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import classes.Banco;
 import classes.Endereco;
 import classes.Telefone;
 import classes.Util;
+import classes.Validacao;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -59,6 +65,8 @@ public class UCTelefoneController extends Application{
 		int i = 0;
 		for (Endereco endereco : enderecos)
 		{
+			if (Validacao.isNullOrEmpty(endereco.getNome()))
+				continue;
 			cboxEndereco.getItems().add(endereco.getNome());
 			if (idEndereco == endereco.getId())
 				cboxEndereco.getSelectionModel().select(i);
@@ -73,9 +81,18 @@ public class UCTelefoneController extends Application{
 	}
 	
 	@FXML 
-	public void ExcluirTelefone()
+	public void ExcluirTelefone() throws SQLException, IOException
 	{
-		
+		if(Util.MessageBoxShow(" Excluir número" , "Tem certeza que deseja excluir o telefone " 
+				+ telefone.getNumero() + " ?").equals(ButtonType.OK)){
+
+			
+			Banco.InserirQuery("DELETE FROM comentarios WHERE idTelefone = " + telefone.getId());
+			Banco.InserirQuery("DELETE FROM denuncia WHERE tel = " + telefone.getId());
+			Banco.InserirQuery("DELETE FROM telefone WHERE id = " + telefone.getId());
+			Util.MessageBoxShow("Telefone excluído", "Seu telefone foi excluído com sucesso", AlertType.INFORMATION);
+			Util.dashboard.AtualizarCbxTelefones();
+		}
 	}
 	
 	public void setPane(FlowPane pane)

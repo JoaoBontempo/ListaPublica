@@ -29,7 +29,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <ImageView fx:id="btnDeletar" fitHeight="26.0" fitWidth="26.0" layoutX="560.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="144.0">
+      <ImageView fx:id="btnDeletar" fitHeight="26.0" fitWidth="26.0" layoutX="560.0" layoutY="144.0" onMouseClicked="#ExcluirTelefone" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="144.0">
          <image>
             <Image url="@../Recursos/cancel.png" />
          </image>
@@ -37,7 +37,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fx:id="btnSalvar" fitHeight="26.0" fitWidth="26.0" layoutX="596.0" layoutY="145.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="144.0">
+      <ImageView fx:id="btnSalvar" fitHeight="26.0" fitWidth="26.0" layoutX="596.0" layoutY="145.0" onMouseClicked="#AlterarTelefone" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="144.0">
          <image>
             <Image url="@../Recursos/Salvar.png" />
          </image>

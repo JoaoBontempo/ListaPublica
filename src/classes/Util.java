@@ -32,6 +32,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import application.Dashboard;
 import classesTableView.ComentarioTable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -42,10 +43,13 @@ import javafx.stage.Stage;
 
 public final class Util {
 
+	
 	/*UTILIDADES DO USER CONTROL TELEFONES*/
 	public static Telefone telefone;
 	public static ArrayList<Endereco> enderecos = new ArrayList<Endereco>();
 	public static int idEndereco;
+	public static Dashboard dashboard = new Dashboard();
+	/**/
 	
 	private static Parceiro contaLogada;
 	private static Denuncia denunciAtual;

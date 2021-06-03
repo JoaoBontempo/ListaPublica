@@ -228,6 +228,11 @@ public class Dashboard extends Application {
 
     @FXML
     private FlowPane fpTelefones;
+    
+    public FlowPane getFpTelefones()
+    {
+    	return fpTelefones;
+    }
 	/*
 	@FXML
 	private Button btnExcluirTel;*/
@@ -266,75 +271,6 @@ public class Dashboard extends Application {
 	private void trocaFotoPerfilParaOPadrao() {
 		imgIconePerfil.setImage(new Image(new File("src/Recursos/logo_contornada.png").toURI().toString(), this.larguraFotoPerfil, this.alturaFotoPerfil, false, false));
 	}
-
-	/*
-	@FXML
-	void ExcluirTelefone(ActionEvent event) throws SQLException {
-
-		if(Util.MessageBoxShow(" Excluir número" , "Tem certeza que deseja excluir o telefone " 
-				+ cboxSelecionarTelefone.getSelectionModel().getSelectedItem() + " ?").equals(ButtonType.OK)){
-
-			idTelefoneSelecionado = dadosTelefone.get(cboxSelecionarTelefone.getSelectionModel().getSelectedIndex()).getId();
-			//System.out.println(idTelefoneSelecionado);
-			/*
-			ResultSet result =  Banco.InserirQueryReader("SELECT id FROM denuncia WHERE denuncia.tel = " + idTelefoneSelecionado);
-
-			while(result.next()){
-
-				Banco.InserirQuery("DELETE FROM denuncia WHERE id = " + result.getInt("id"));
-				System.out.print("Analise");
-			}
-
-			if(Banco.InserirQuery("DELETE FROM telefone WHERE id = " + idTelefoneSelecionado)) {
-
-				Util.MessageBoxShow("", "Telefone excluido com sucesso");
-				AtualizarCbxTelefones();
-				lvInfo.getItems().clear();
-
-			}
-			Banco.InserirQuery("DELETE FROM comentarios WHERE idTelefone = " + idTelefoneSelecionado);
-			Banco.InserirQuery("DELETE FROM denuncia WHERE tel = " + idTelefoneSelecionado);
-			Banco.InserirQuery("DELETE FROM telefone WHERE id = " + idTelefoneSelecionado);
-			Util.MessageBoxShow("Telefone excluído", "Seu telefone foi excluído com sucesso", AlertType.INFORMATION);
-			//cboxSelecionarTelefone.getSelectionModel().selectFirst();
-			AtualizarCbxTelefones();
-			//lvInfo.getItems().clear();
-		}
-	}
-	
-	/*
-	@FXML
-	void SelecionarTelefone(ActionEvent event) {
-
-		SelecaoTelefone();
-	}*/
-
-	/*
-	public void SelecaoTelefone() {
-		lvInfo.getItems().clear();
-		if (cboxSelecionarTelefone.getSelectionModel().getSelectedIndex() == -1)
-			return;
-
-		Telefone telefone = dadosTelefone.get(cboxSelecionarTelefone.getSelectionModel().getSelectedIndex());
-		/*
-		for(Telefone telefone : dadosTelefone ) {
-
-			if(cboxSelecionarTelefone.getSelectionModel().getSelectedItem().equals(telefone.getNumero())){
-				CadastroTelUtil.setTelefone(telefone);
-				lvInfo.getItems().add("Nome do Local: " + telefone.getEndereco().getNome());
-				lvInfo.getItems().add("Descrição: " + telefone.getDescricao());
-				idTelefoneSelecionado = telefone.getId();
-				break;
-			}
-		}
-		CadastroTelUtil.setTelefone(telefone);
-		lvInfo.getItems().add("Nome do Local: " + telefone.getEndereco().getNome());
-		lvInfo.getItems().add("Descrição: " + telefone.getDescricao());
-		idTelefoneSelecionado = telefone.getId();
-	}*/
-
-
-
 
 	@FXML
 	void TrocarFotoPerfil(MouseEvent event) {
@@ -578,7 +514,7 @@ public class Dashboard extends Application {
 	// Método 'onLoad'
 	public void initialize() throws SQLException, IOException {
 		verificaIconeUsuario();
-
+		Util.dashboard = this;
 		tbMeusEnderecos.setDisable(Util.isConvidado());
 		tbMeusTelefones.setDisable(Util.isConvidado());
 		tbMinhaConta.setDisable(Util.isConvidado());
@@ -611,45 +547,39 @@ public class Dashboard extends Application {
 	public void  AtualizarCbxTelefones() throws SQLException, IOException {
 		if (Util.isConvidado())
 			return;
-		ResultSet result = Banco.InserirQueryReader("SELECT telefone.*, endereco.nome, endereco.id FROM telefone LEFT JOIN endereco ON endereco.id = telefone.lugar WHERE telefone.dono = " 
-				+ Util.getContaLogada().getId());
-		if (Util.enderecos != null)
-			Util.enderecos.clear();
-		//dadosTelefone.clear();
-		//cboxSelecionarTelefone.valueProperty().set(null);
-		//cboxSelecionarTelefone.getItems().clear();  
-		//cboxSelecionarTelefone.getSelectionModel().clearSelection();
+		AtualizarEnderecos();
+		ResultSet result = Banco.InserirQueryReader("SELECT id, numero, descricao, lugar FROM telefone WHERE dono = " + Util.getContaLogada().getId());
+		
+		fpTelefones.getChildren().clear();
+
 		while(result.next()) {
-
+			Util.idEndereco = result.getInt("lugar");
 			Telefone telefone = new Telefone();
-			Endereco endereco = new Endereco();
-			endereco.setNome(result.getString("nome"));
-			endereco.setId(result.getInt("id"));
-
-
 			telefone.setNumero(result.getString("numero"));
 			telefone.setDescricao(result.getString("descricao"));
 			telefone.setId(result.getInt("id"));
-			telefone.setEndereco(endereco);
 
-			try
-			{
-				Util.idEndereco = result.getInt("lugar");
-			}
-			catch (Exception erro)
-			{
-				Util.idEndereco = -1;
-			}
 
-			Util.enderecos.add(endereco);
 			Util.telefone = telefone;
 			UCTelefoneController uct = new UCTelefoneController();
 			uct.setPane(fpTelefones);
 			uct.loadFxml();
-			//dadosTelefone.add(telefone);
-			//cboxSelecionarTelefone.getItems().add(Util.FormatarGetTelefone(result.getString("numero")));
 		}
 	}
+	
+	public void AtualizarEnderecos() throws SQLException
+	{
+		Util.enderecos.clear();
+		ResultSet result = Banco.InserirQueryReader("SELECT id, nome FROM endereco WHERE usuario = " + Util.getContaLogada().getId());
+		while(result.next())
+		{
+			Endereco end = new Endereco();
+			end.setId(result.getInt("id"));
+			end.setNome(result.getString("nome"));
+			Util.enderecos.add(end);
+		}
+	}
+
 
 	private void setQueryParameters() {
 		numero = Validacao.isNullOrEmpty(txtTelefone.getText()) ? "*" : txtTelefone.getText();

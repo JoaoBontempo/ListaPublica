@@ -1,5 +1,6 @@
 package application;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -124,7 +125,7 @@ public class CadastroTelefone extends Application{
 	}
 
 	@FXML
-	public void cadastrarTelefone() throws SQLException
+	public void cadastrarTelefone() throws SQLException, IOException
 	{
 		if(!CadastroTelUtil.isCaso()) {
 
@@ -143,6 +144,7 @@ public class CadastroTelefone extends Application{
 				}
 				Util.MessageBoxShow("Cadastro realizado!", "Seu novo telefone foi cadastrado com sucesso!", AlertType.INFORMATION);
 				LimparCampos();
+				Util.dashboard.AtualizarCbxTelefones();
 			}
 		}
 		else {
