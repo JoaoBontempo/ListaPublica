@@ -2,6 +2,7 @@ package classes;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
@@ -51,7 +52,7 @@ public final class API {
 		ArrayList<Telefone> telefones = new ArrayList<Telefone>();
 
 		ObjectMapper mapper = new ObjectMapper();
-
+		
 		HttpPost post = new HttpPost("http://localhost:5000/ListaPublica/getFiltro");
 		post.addHeader("content-type", "application/json");
 
@@ -65,12 +66,13 @@ public final class API {
 
 
 		try {
-			post.setEntity(new StringEntity(js.toString()));
+			post.setEntity(new StringEntity(js.toString(), "UTF-8"));
 			HttpClient httpClient = HttpClients.createDefault();
 			HttpResponse response;
 			response = httpClient.execute(post);
 
-			result = EntityUtils.toString(response.getEntity());
+			
+			result = EntityUtils.toString(response.getEntity());			
 			JSONArray obj = new JSONArray(result);
 			
 			Telefone telefone;
