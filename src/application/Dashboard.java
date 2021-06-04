@@ -649,7 +649,7 @@ public class Dashboard extends Application {
 					return true;
 				} else if (telefone.getEstado().toLowerCase().indexOf(lowerCaseFilter) != -1) {
 					return true;
-				} else if (telefone.getNumero().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+				} else if (Util.FormatarSetTelefone(telefone.getNumero().toLowerCase()).indexOf(lowerCaseFilter) != -1) {
 					return true;
 				} else if (telefone.getDescricao().toLowerCase().indexOf(lowerCaseFilter) != -1) {
 					return true;
