@@ -150,6 +150,9 @@ public class TelaLocal extends Application {
 	private TableColumn<ComentarioTable, String> tvcUsuario;
 
 	@FXML
+    private Label lblTelefoneSelecionado;
+	
+	@FXML
 	private TableColumn<ComentarioTable, String> tvcComentario;
 
 	@FXML
@@ -275,19 +278,6 @@ public class TelaLocal extends Application {
 			}
 		}
 	}
-
-	@FXML
-    void AbrirImagemBaixada(MouseEvent event) {
-		File diretorio= new File("C:\\lista\\locais\\"+fileName);
-		if(diretorio.exists()) {
-			try {
-				Process process = Runtime.getRuntime().exec("cmd /c start "+diretorio.getAbsolutePath());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-    }
 	
 	public void getEvent(Event evento) {
 		this.evento = evento;
@@ -406,6 +396,7 @@ public class TelaLocal extends Application {
 	            	
 	            	try {
 	            		String telefone=numero.getNumero();
+	            		lblTelefoneSelecionado.setText("Telefone selecionado: "+telefone);
 	            		idDono=Util.recuperarIdDonoAtravesTelefone(telefone);
 	            		Util.setTelefoneAtual(telefone);
 	            		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", Util.FormatarGetTelefone(Util.getTelefoneAtual())));
@@ -413,10 +404,16 @@ public class TelaLocal extends Application {
 	                	JSONArray array=null;
 	                	JSONObject objeto=null;
 	                	try {
+	                		id_telefone=Util.RecuperarIdTelefonePorTelefone(telefone);
+		            		
+	                		// verifica se o telefone possui descrição
+		            		verificaDescricaoTelefone(id_telefone);
+	                		
 	                		array=requisicaoGenerica(url); // passo o telefone e a api vai obter o id do local e fazer uma requisicao nesse id
 		            		objeto=array.getJSONObject(0);
 		            		id_endereco=objeto.getInt("id");
-		            		id_telefone=Util.RecuperarIdTelefonePorTelefone(telefone);
+		            		
+		            		
 		            		imgAbrirMaps.setVisible(true);
 		            		lbAbrirMaps.setVisible(true);
 	                	}catch(Exception e) {
@@ -432,8 +429,7 @@ public class TelaLocal extends Application {
 	                	}
 	                	//UtilDashboard.setIdDono(objeto.getString("id"));
 	                	insereCampos(objeto.get("estado").toString(),objeto.get("bairro").toString(),objeto.get("rua").toString(),
-	                			objeto.get("cidade").toString(),objeto.get("numero").toString(),objeto.get("descricao").toString(),
-	                			objeto.getString("nome"));
+	                			objeto.get("cidade").toString(),objeto.get("numero").toString(),objeto.getString("nome"));
 	                	List<ComentarioTable> comentarios=Util.RecuperarComentariosEndereco(id_telefone); // Esse utilDashboard será usado apenas ao entrar no form
 	            		if(comentarios != null) {
 	            			ObservableList<ComentarioTable> observableComentario =
@@ -448,9 +444,7 @@ public class TelaLocal extends Application {
 		            			comentarioTela.setPane(this.vboxComentarios);
 		            			comentarioTela.loadFxml();
 	            			}
-	            			
-	            			
-	            			
+	 
 	            		}
 	            		
 	            		buscarInfosDono(idDono,false);
@@ -467,6 +461,22 @@ public class TelaLocal extends Application {
             }
 	}
 	
+	private void verificaDescricaoTelefone(int id_telefone) {
+		try {
+			Banco.InserirQueryReader("select descricao from telefone where id="+id_telefone+";");
+			if(Banco.getReader().next()) {
+				txtDescricao.setText(Banco.getReader().getString("descricao"));
+			}else {
+				txtDescricao.setText("N/D");
+			}
+		} catch (SQLException e) {
+			txtDescricao.setText("N/D");
+			e.printStackTrace();
+		}
+		
+		
+	}
+
 	private void telefoneSemEndereco() {
 		imgAbrirMaps.setVisible(false);
 		lbAbrirMaps.setVisible(false);
@@ -476,7 +486,7 @@ public class TelaLocal extends Application {
 		txtRua.setText("N/D");
 		txtNumeroResidencia.setText("N/D");
 		txtNome.setText("N/D");
-		txtDescricao.setText("N/D");
+		//txtDescricao.setText("N/D");
 		txtComentario.setText("N/D");
 		txtNomeCompleto.setText("N/D");
 		txtNomeUsuario.setText("N/D");
@@ -489,6 +499,9 @@ public class TelaLocal extends Application {
 		lbDenunciarLocal.setDisable(Util.isConvidado());
 
 		id_telefone=UtilDashboard.getIdTelefone();
+		lblTelefoneSelecionado.setText("Telefone selecionado: "+UtilDashboard.getNumeroTelefone());
+		
+		verificaDescricaoTelefone(id_telefone);
 		this.idDono= Integer.parseInt(UtilDashboard.getIdDono());
 		this.id_endereco=Integer.parseInt(UtilDashboard.getIdLugar());
 		
@@ -599,8 +612,7 @@ public class TelaLocal extends Application {
 			
 			// JOGA OS VALORES NOS CAMPOS
 			insereCampos(enderecos.get(0).getEstado(), enderecos.get(0).getBairro(), enderecos.get(0).getRua(),
-					enderecos.get(0).getCidade(), Integer.toString(enderecos.get(0).getNumero()),
-					enderecos.get(0).getDescricao(), enderecos.get(0).getNome());
+					enderecos.get(0).getCidade(), Integer.toString(enderecos.get(0).getNumero()), enderecos.get(0).getNome());
 
 		} catch (JSONException e) {
 			// não faça nada (Entra aqui caso o JSONARray=0)
@@ -609,15 +621,14 @@ public class TelaLocal extends Application {
 		}
 	}
 
-	void insereCampos(String estado, String bairro, String rua, String cidade, String numero, String descricao,
-			String nome) {
+	void insereCampos(String estado, String bairro, String rua, String cidade, String numero, String nome) {
 		this.txtBairro.setText(bairro);
 		this.txtRua.setText(rua);
 		this.txtCidade.setText(cidade);
 		this.txtEstado.setText(estado);
 		this.txtNumeroResidencia.setText(numero);
-		this.txtDescricao.setText(descricao);
 		this.txtNome.setText(nome);
+		
 	}
 
 	public static void main(String[] args) {
