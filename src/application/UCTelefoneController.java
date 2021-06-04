@@ -29,8 +29,7 @@ public class UCTelefoneController extends Application{
 
 	private FlowPane secPane;
 	private Telefone telefone;
-	private int idEndereco, index;
-	
+	private int idEndereco, index;	
 	@FXML
 	private TextField txtTelefone;
 
@@ -42,9 +41,7 @@ public class UCTelefoneController extends Application{
 
 	@FXML
 	private ImageView btnSalvar;
-	
-	private ArrayList<Endereco> enderecos;
-	
+		
 	@FXML
 	private ComboBox<String> cboxEndereco;
 
@@ -57,31 +54,40 @@ public class UCTelefoneController extends Application{
 	
 	public void initialize()
 	{
-		enderecos = Util.todoEnderecos;
+		index = Util.index;
 		telefone = Util.telefone;
 		idEndereco = Util.idEndereco;
 		txtTelefone.setText(Util.FormatarGetTelefone(telefone.getNumero()));
 		txtDescrição.setText(telefone.getDescricao());
-		
+		boolean found = false;
 		int i = 0;
-		for (Endereco endereco : enderecos)
+		cboxEndereco.getItems().add("Sem endereço");
+		for (Endereco endereco : Util.todoEnderecos)
 		{
-			if (Validacao.isNullOrEmpty(endereco.getNome()))
-				continue;
 			cboxEndereco.getItems().add(endereco.getNome());
 			if (idEndereco == endereco.getId())
 			{
 				Util.enderecosAtuais.add(endereco);
-				cboxEndereco.getSelectionModel().select(i);
-			}
+				cboxEndereco.getSelectionModel().select(i+1);
+				found = true;
+				continue;
+			}				
 			i++;
+		}
+		
+		if (!found)
+		{
+			cboxEndereco.getSelectionModel().selectFirst();
+			Endereco end = new Endereco();
+			end.setNome("Sem endereço");
+			Util.enderecosAtuais.add(end);
 		}
 	}
 	
 	private void AtualizarParametrosPesquisa()
 	{
 		Util.telefones.get(index).setDescricao(txtDescrição.getText());
-		Util.telefones.get(index).getEndereco().setNome(cboxEndereco.getSelectionModel().getSelectedItem());
+		Util.enderecosAtuais.get(index).setNome(cboxEndereco.getSelectionModel().getSelectedItem());
 	}
 	
 	@FXML
@@ -90,10 +96,10 @@ public class UCTelefoneController extends Application{
 		if(!Validacao.verificarTextArea(txtDescrição))
 			return;
 
-		if (cboxEndereco.getSelectionModel().getSelectedIndex() != -1)
+		if (cboxEndereco.getSelectionModel().getSelectedIndex() != 0)
 		{
 			Banco.InserirQuery(String.format("UPDATE telefone SET lugar = %s, descricao = '%s' WHERE id = %s "
-					, Util.todoEnderecos.get(cboxEndereco.getSelectionModel().getSelectedIndex()).getId(), txtDescrição.getText(), telefone.getId()));
+					, Util.todoEnderecos.get(cboxEndereco.getSelectionModel().getSelectedIndex() - 1).getId(), txtDescrição.getText(), telefone.getId()));
 		}
 		else
 		{
@@ -137,13 +143,4 @@ public class UCTelefoneController extends Application{
 	public void setTelefone(Telefone telefone) {
 		this.telefone = telefone;
 	}
-
-	public int getIndex() {
-		return index;
-	}
-
-	public void setIndex(int index) {
-		this.index = index;
-	}  
-
 }

@@ -555,7 +555,8 @@ public class Dashboard extends Application {
 		AtualizarEnderecos();
 		ResultSet result = Banco.InserirQueryReader(
 				"SELECT id, numero, descricao, lugar FROM telefone WHERE dono = " + Util.getContaLogada().getId());
-
+		
+		Util.enderecosAtuais.clear();
 		fpTelefones.getChildren().clear();
 		Util.telefones.clear();
 		int i = 0;
@@ -570,7 +571,7 @@ public class Dashboard extends Application {
 			Util.telefone = telefone;
 			Util.telefones.add(telefone);
 			UCTelefoneController uct = new UCTelefoneController();
-			uct.setIndex(i);
+			Util.index = i++;
 			uct.setPane(fpTelefones);
 			uct.loadFxml();
 		}

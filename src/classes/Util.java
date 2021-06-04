@@ -52,6 +52,7 @@ public final class Util {
 	public static int idEndereco;
 	public static Dashboard dashboard = new Dashboard();
 	public static ArrayList<Telefone> telefones = new ArrayList<Telefone>();
+	public static int index;
 	/**/
 	
 	private static Parceiro contaLogada;

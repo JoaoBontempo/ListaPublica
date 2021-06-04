@@ -68,23 +68,6 @@ public class CadastroTelefone extends Application{
 			cboxEndereco.getItems().add(endereco.getNome());
 		}
 		cboxEndereco.getSelectionModel().selectFirst();
-
-		/*if(CadastroTelUtil.isCaso()) {
-
-			lbTelefone.setText(CadastroTelUtil.getLbTelefone());
-			btnCadastrar.setText(CadastroTelUtil.getBtnTxt());
-			txtDescrição.setText(CadastroTelUtil.getTelefone().getDescricao());
-			txtNumero.setText(CadastroTelUtil.getTelefone().getNumero().substring(2, CadastroTelUtil.getTelefone().getNumero().length()));
-			txtDDD.setText(CadastroTelUtil.getTelefone().getNumero().substring(0,2));
-
-			txtNumero.setDisable(true);
-			txtDDD.setDisable(true);
-
-			if(cboxEndereco.getItems().contains(CadastroTelUtil.getTelefone().getEndereco().getNome())){
-				cboxEndereco.getSelectionModel().select(CadastroTelUtil.getTelefone().getEndereco().getNome());
-			}
-		}*/
-
 	}
 
 	private boolean validarCampos() throws SQLException
@@ -115,7 +98,7 @@ public class CadastroTelefone extends Application{
 			txtNumero.requestFocus();
 			return false;
 		}
-		
+
 		if (!Validacao.verificarTextField(txtDescrição))
 			return false;
 
@@ -139,43 +122,23 @@ public class CadastroTelefone extends Application{
 	@FXML
 	public void cadastrarTelefone() throws SQLException, IOException
 	{
-		
-			if (validarCampos())
-			{
-				if (cboxEndereco.getSelectionModel().getSelectedIndex() != 0)
-				{
-					Banco.InserirQuery(String.format("INSERT INTO telefone (id, numero, dono, lugar, descricao) VALUES"
-							+ " (default, '%s', %s, %s, '%s')", txtDDD.getText() + txtNumero.getText(), Util.getContaLogada().getId(), 
-							enderecos.get(cboxEndereco.getSelectionModel().getSelectedIndex() - 1).getId(), txtDescrição.getText()));
-				}
-				else
-				{
-					Banco.InserirQuery(String.format("INSERT INTO telefone (id, numero, dono, descricao) VALUES"
-							+ " (default, '%s', %s, '%s')", txtDDD.getText() + txtNumero.getText(), Util.getContaLogada().getId(), txtDescrição.getText()));
-				}
-				Util.MessageBoxShow("Cadastro realizado!", "Seu novo telefone foi cadastrado com sucesso!", AlertType.INFORMATION);
-				LimparCampos();
-				Util.dashboard.AtualizarCbxTelefones();
-			}
-		
-            
-			/*
-			if(!Validacao.verificarTextField(txtDescrição))
-				return;
-
+		if (validarCampos())
+		{
 			if (cboxEndereco.getSelectionModel().getSelectedIndex() != 0)
 			{
-				Banco.InserirQuery(String.format("UPDATE telefone SET lugar = %s, descricao = '%s' WHERE id = %s "
-						, enderecos.get(cboxEndereco.getSelectionModel().getSelectedIndex() - 1).getId(), txtDescrição.getText(), CadastroTelUtil.getTelefone().getId()));
+				Banco.InserirQuery(String.format("INSERT INTO telefone (id, numero, dono, lugar, descricao) VALUES"
+						+ " (default, '%s', %s, %s, '%s')", txtDDD.getText() + txtNumero.getText(), Util.getContaLogada().getId(), 
+						enderecos.get(cboxEndereco.getSelectionModel().getSelectedIndex() - 1).getId(), txtDescrição.getText()));
 			}
 			else
 			{
-				Banco.InserirQuery(String.format("UPDATE telefone SET  lugar = null, descricao = '%s' WHERE id = %s "
-						, txtDescrição.getText(), CadastroTelUtil.getTelefone().getId()));
+				Banco.InserirQuery(String.format("INSERT INTO telefone (id, numero, dono, descricao) VALUES"
+						+ " (default, '%s', %s, '%s')", txtDDD.getText() + txtNumero.getText(), Util.getContaLogada().getId(), txtDescrição.getText()));
 			}
-			Util.MessageBoxShow("Alteração realizada!", "Seu novo telefone foi alterado com sucesso!", AlertType.INFORMATION);
-*/
-		
+			Util.MessageBoxShow("Cadastro realizado!", "Seu novo telefone foi cadastrado com sucesso!", AlertType.INFORMATION);
+			LimparCampos();
+			Util.dashboard.AtualizarCbxTelefones();
+		}
 	}
 
 	private Event evento;
