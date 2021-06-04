@@ -104,6 +104,19 @@ public class CadastroTelefone extends Application{
 			txtDDD.requestFocus();
 			return false;
 		}
+		if (txtNumero.getText().length() < 8)
+		{
+			Util.MessageBoxShow("Campo inválido", "O número de telefone deve possuir pelo menos 8 digitos");
+			txtNumero.requestFocus();
+			return false;
+		}
+		if (txtNumero.getText().length() > 10)
+		{
+			Util.MessageBoxShow("Campo inválido", "O número de telefone deve possuir menos de 10 digitos");
+			txtNumero.requestFocus();
+			return false;
+		}
+		
 		if (!Validacao.verificarTextField(txtDescrição))
 			return false;
 
