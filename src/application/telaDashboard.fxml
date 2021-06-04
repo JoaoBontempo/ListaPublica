@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -125,7 +126,6 @@
 						<ScrollPane fitToWidth="true" layoutX="283.0" layoutY="62.0" prefHeight="302.0" prefWidth="823.0" stylesheets="@application.css" AnchorPane.bottomAnchor="63.0" AnchorPane.leftAnchor="343.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="62.0">
 							<content>
 								<!-- do not put bounds on the FlowPane size -->
-								<FlowPane fx:id="fpTelefones" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefWidth="600.0" vgap="25.0" />
 								<FlowPane fx:id="fpTelefones" hgap="10.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefWidth="600.0" vgap="10.0">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
