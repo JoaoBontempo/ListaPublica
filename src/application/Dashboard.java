@@ -537,7 +537,9 @@ public class Dashboard extends Application {
 				node.setVisible(true);
 				continue;
 			}
-			if (Util.telefones.get(i).getNumero().toLowerCase().contains(info) || Util.telefones.get(i).getDescricao().toLowerCase().contains(info))
+			if (Util.FormatarSetTelefone(Util.telefones.get(i).getNumero()).toLowerCase().contains(info) || 
+					Util.telefones.get(i).getDescricao().toLowerCase().contains(info) ||
+					Util.enderecosAtuais.get(i).getNome().toLowerCase().contains(info))
 			{
 				node.setVisible(true);
 			}
@@ -557,6 +559,7 @@ public class Dashboard extends Application {
 		
 		fpTelefones.getChildren().clear();
 		Util.telefones.clear();
+		int i = 0;
 		while(result.next()) {
 			Util.idEndereco = result.getInt("lugar");
 			Telefone telefone = new Telefone();
@@ -566,23 +569,24 @@ public class Dashboard extends Application {
 
 
 			Util.telefone = telefone;
+			Util.telefones.add(telefone);
 			UCTelefoneController uct = new UCTelefoneController();
+			uct.setIndex(i);
 			uct.setPane(fpTelefones);
 			uct.loadFxml();
-			Util.telefones.add(telefone);
 		}
 	}
 	
 	public void AtualizarEnderecos() throws SQLException
 	{
-		Util.enderecos.clear();
+		Util.todoEnderecos.clear();
 		ResultSet result = Banco.InserirQueryReader("SELECT id, nome FROM endereco WHERE usuario = " + Util.getContaLogada().getId());
 		while(result.next())
 		{
 			Endereco end = new Endereco();
 			end.setId(result.getInt("id"));
 			end.setNome(result.getString("nome"));
-			Util.enderecos.add(end);
+			Util.todoEnderecos.add(end);
 		}
 	}
 

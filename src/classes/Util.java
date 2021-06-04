@@ -47,7 +47,8 @@ public final class Util {
 	
 	/*UTILIDADES DO USER CONTROL TELEFONES*/
 	public static Telefone telefone;
-	public static ArrayList<Endereco> enderecos = new ArrayList<Endereco>();
+	public static ArrayList<Endereco> todoEnderecos = new ArrayList<Endereco>();
+	public static ArrayList<Endereco> enderecosAtuais = new ArrayList<Endereco>(); 
 	public static int idEndereco;
 	public static Dashboard dashboard = new Dashboard();
 	public static ArrayList<Telefone> telefones = new ArrayList<Telefone>();

@@ -30,7 +30,7 @@ public class UCTelefoneController extends Application{
 
 	private FlowPane secPane;
 	private Telefone telefone;
-	private int idEndereco;
+	private int idEndereco, index;
 	
 	@FXML
 	private TextField txtTelefone;
@@ -55,9 +55,10 @@ public class UCTelefoneController extends Application{
 
 	}
 	
+	
 	public void initialize()
 	{
-		enderecos = Util.enderecos;
+		enderecos = Util.todoEnderecos;
 		telefone = Util.telefone;
 		idEndereco = Util.idEndereco;
 		txtTelefone.setText(Util.FormatarGetTelefone(telefone.getNumero()));
@@ -70,9 +71,18 @@ public class UCTelefoneController extends Application{
 				continue;
 			cboxEndereco.getItems().add(endereco.getNome());
 			if (idEndereco == endereco.getId())
+			{
+				Util.enderecosAtuais.add(endereco);
 				cboxEndereco.getSelectionModel().select(i);
+			}
 			i++;
 		}
+	}
+	
+	private void AtualizarParametrosPesquisa()
+	{
+		Util.telefones.get(index).setDescricao(txtDescrição.getText());
+		Util.telefones.get(index).getEndereco().setNome(cboxEndereco.getSelectionModel().getSelectedItem());
 	}
 	
 	@FXML
@@ -84,7 +94,7 @@ public class UCTelefoneController extends Application{
 		if (cboxEndereco.getSelectionModel().getSelectedIndex() != -1)
 		{
 			Banco.InserirQuery(String.format("UPDATE telefone SET lugar = %s, descricao = '%s' WHERE id = %s "
-					, Util.enderecos.get(cboxEndereco.getSelectionModel().getSelectedIndex()).getId(), txtDescrição.getText(), telefone.getId()));
+					, Util.todoEnderecos.get(cboxEndereco.getSelectionModel().getSelectedIndex()).getId(), txtDescrição.getText(), telefone.getId()));
 		}
 		else
 		{
@@ -92,6 +102,7 @@ public class UCTelefoneController extends Application{
 					, txtDescrição.getText(), telefone.getId()));
 		}
 		Util.MessageBoxShow("Alteração realizada!", "Seu telefone foi alterado com sucesso!", AlertType.INFORMATION);
+		AtualizarParametrosPesquisa();
 	}
 	
 	@FXML 
@@ -126,6 +137,14 @@ public class UCTelefoneController extends Application{
 
 	public void setTelefone(Telefone telefone) {
 		this.telefone = telefone;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
 	}  
 
 }
