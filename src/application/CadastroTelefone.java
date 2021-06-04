@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import classes.Banco;
-import classes.CadastroTelUtil;
 import classes.Endereco;
 import classes.Telefone;
 import classes.Util;
@@ -70,7 +69,7 @@ public class CadastroTelefone extends Application{
 		}
 		cboxEndereco.getSelectionModel().selectFirst();
 
-		if(CadastroTelUtil.isCaso()) {
+		/*if(CadastroTelUtil.isCaso()) {
 
 			lbTelefone.setText(CadastroTelUtil.getLbTelefone());
 			btnCadastrar.setText(CadastroTelUtil.getBtnTxt());
@@ -84,7 +83,7 @@ public class CadastroTelefone extends Application{
 			if(cboxEndereco.getItems().contains(CadastroTelUtil.getTelefone().getEndereco().getNome())){
 				cboxEndereco.getSelectionModel().select(CadastroTelUtil.getTelefone().getEndereco().getNome());
 			}
-		}
+		}*/
 
 	}
 
@@ -127,8 +126,7 @@ public class CadastroTelefone extends Application{
 	@FXML
 	public void cadastrarTelefone() throws SQLException, IOException
 	{
-		if(!CadastroTelUtil.isCaso()) {
-
+		
 			if (validarCampos())
 			{
 				if (cboxEndereco.getSelectionModel().getSelectedIndex() != 0)
@@ -146,9 +144,9 @@ public class CadastroTelefone extends Application{
 				LimparCampos();
 				Util.dashboard.AtualizarCbxTelefones();
 			}
-		}
-		else {
-
+		
+            
+			/*
 			if(!Validacao.verificarTextField(txtDescrição))
 				return;
 
@@ -163,8 +161,8 @@ public class CadastroTelefone extends Application{
 						, txtDescrição.getText(), CadastroTelUtil.getTelefone().getId()));
 			}
 			Util.MessageBoxShow("Alteração realizada!", "Seu novo telefone foi alterado com sucesso!", AlertType.INFORMATION);
-
-		}
+*/
+		
 	}
 
 	private Event evento;

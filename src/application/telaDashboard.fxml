@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane fx:id="TabDash" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="1181.0" stylesheets="@application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Dashboard">
+<TabPane fx:id="TabDash" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="1181.0" stylesheets="@application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Dashboard">
 	<tabs>
 		<Tab text="Lista de lugares/telefones">
 			<content>
@@ -126,6 +126,10 @@
 							<content>
 								<!-- do not put bounds on the FlowPane size -->
 								<FlowPane fx:id="fpTelefones" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefWidth="600.0" vgap="25.0" />
+								<FlowPane fx:id="fpTelefones" hgap="10.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefWidth="600.0" vgap="10.0">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding></FlowPane>
 							</content>
 						</ScrollPane>
                   <TextField fx:id="txtPesquisaTelefone" layoutX="373.0" layoutY="31.0" onKeyTyped="#txtPesquisaTelefoneTextChanged" prefHeight="34.0" prefWidth="781.0" promptText="Procurar informação..." AnchorPane.leftAnchor="385.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
@@ -142,11 +146,23 @@
 			<content>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 					<children>
-						<Button fx:id="btnCadastrarEndereco" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#FormCadastrarEndereco" prefHeight="36.0" prefWidth="229.0" text="Cadastrar endereço">
+						<Button fx:id="btnCadastrarEndereco" layoutX="28.0" layoutY="49.0" mnemonicParsing="false" onAction="#FormCadastrarEndereco" prefHeight="42.0" prefWidth="293.0" text="Cadastrar endereço" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="27.0">
 							<font>
 								<Font name="Candara" size="15.0" />
 							</font>
 						</Button>
+                  <ImageView fitHeight="193.0" fitWidth="347.0" layoutX="14.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Recursos/logo_contornada.png" />
+                     </image>
+                  </ImageView>
+                 <!-- make ScrollPane resize the content width -->
+						<ScrollPane fitToWidth="true" layoutX="343.0" layoutY="27.0" prefHeight="389.0" prefWidth="823.0" stylesheets="@application.css" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="343.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="26.0">
+							<content>
+								<!-- do not put bounds on the FlowPane size -->
+								<FlowPane fx:id="fpEndereco" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefWidth="600.0" />
+							</content>
+						</ScrollPane>
 					</children>
 				</AnchorPane>
 			</content>
@@ -155,8 +171,8 @@
 			<content>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="430.0" prefWidth="1181.0">
 					<children>
-						<TextField fx:id="txtMCNome" disable="true" layoutX="187.0" layoutY="85.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="187.0" />
-						<TextField fx:id="txtMCUsuario" disable="true" layoutX="187.0" layoutY="149.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="187.0" />
+						<TextField fx:id="txtMCNome" disable="true" editable="false" layoutX="187.0" layoutY="85.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="187.0" />
+						<TextField fx:id="txtMCUsuario" disable="true" editable="false" layoutX="187.0" layoutY="149.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="187.0" />
 						<TextField fx:id="txtMCEmail" layoutX="187.0" layoutY="211.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="187.0" />
 						<TextField fx:id="txtMCCPFouCNPJ" disable="true" editable="false" layoutX="187.0" layoutY="274.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="187.0" />
 						<Label layoutX="193.0" layoutY="63.0" text="Nome" textFill="WHITE" AnchorPane.leftAnchor="193.0">

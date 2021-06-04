@@ -35,7 +35,6 @@ import API_IBGE.Municipio;
 import API_IBGE.UF;
 import classes.API;
 import classes.Banco;
-import classes.CadastroTelUtil;
 import classes.Email;
 import classes.Endereco;
 import classes.Parceiro;
@@ -94,21 +93,21 @@ public class Dashboard extends Application {
 
 	private ArrayList<Integer> idsEstado = new ArrayList<Integer>();
 
-	private ArrayList<String> cidadesUtil = new ArrayList<String>(); // ArrayList para a classe Utils.
+	// private ArrayList<String> cidadesUtil = new ArrayList<String>(); // ArrayList
+	// para a classe Utils.
 
-	private ArrayList<Telefone> dadosTelefone = new ArrayList<Telefone>();
+	// private ArrayList<Telefone> dadosTelefone = new ArrayList<Telefone>();
 
 	private String nome = "*", estado = "*", cidade = "*", numero = "*", email = "*", descricao = "*";
 
 	private Stage primaryStage;
 
-	private int larguraFotoPerfil=194;
-
-	private int alturaFotoPerfil=112;
+	private int larguraFotoPerfil = 194;
 
 	@FXML
 	private TextField txtPesquisaTelefone;
 	
+	private int alturaFotoPerfil = 112;
 	@FXML
 	private TabPane TabDash;
 
@@ -223,21 +222,21 @@ public class Dashboard extends Application {
 	@FXML
 	private Label lblExcluirFotoPerfil;
 
-    @FXML
-    private FlowPane fpTelefones;
-    
-    public FlowPane getFpTelefones()
-    {
-    	return fpTelefones;
-    }
-    
+	@FXML
+	private FlowPane fpTelefones;
+
+	public FlowPane getFpTelefones() {
+		return fpTelefones;
+	}
+
 	@FXML
 	void ExcluirFotoPerfil(MouseEvent event) {
 		// Troca a foto para o padrão
 		// como ele faz isso:
-		//   joga como vazio o campo de imagem do usuário, pois caso for vazio o sistema saberá que o ícone é padrão
+		// joga como vazio o campo de imagem do usuário, pois caso for vazio o sistema
+		// saberá que o ícone é padrão
 		try {
-			Banco.InserirQuery("update parceiro set imagem='' where id="+Util.getContaLogada().getId()+";");
+			Banco.InserirQuery("update parceiro set imagem='' where id=" + Util.getContaLogada().getId() + ";");
 			trocaFotoPerfilParaOPadrao(); // atualiza
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -246,31 +245,30 @@ public class Dashboard extends Application {
 	}
 
 	private void trocaFotoPerfilParaOPadrao() {
-		imgIconePerfil.setImage(new Image(new File("src/Recursos/logo_contornada.png").toURI().toString(), this.larguraFotoPerfil, this.alturaFotoPerfil, false, false));
+		imgIconePerfil.setImage(new Image(new File("src/Recursos/logo_contornada.png").toURI().toString(),
+				this.larguraFotoPerfil, this.alturaFotoPerfil, false, false));
 	}
 
 	@FXML
 	void TrocarFotoPerfil(MouseEvent event) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Defina uma imagem do local");
-		fileChooser.getExtensionFilters().addAll(
-				new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-				new FileChooser.ExtensionFilter("PNG", "*.png"),
-				new FileChooser.ExtensionFilter("ICO", "*.ico"));
-		File imagemEscolhida=fileChooser.showOpenDialog(this.primaryStage);
-		// armazeno o arquivo na pasta 
+		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+				new FileChooser.ExtensionFilter("PNG", "*.png"), new FileChooser.ExtensionFilter("ICO", "*.ico"));
+		File imagemEscolhida = fileChooser.showOpenDialog(this.primaryStage);
+		// armazeno o arquivo na pasta
 		try {
-			String diretorioTmp="C:\\lista\\usuarios\\"+imagemEscolhida.getName()+Util.getContaLogada().getId();
-			if(Util.verificaTamanhoImagem(4194304L,new File(imagemEscolhida.getAbsolutePath())) ) {
+			String diretorioTmp = "C:\\lista\\usuarios\\" + imagemEscolhida.getName() + Util.getContaLogada().getId();
+			if (Util.verificaTamanhoImagem(4194304L, new File(imagemEscolhida.getAbsolutePath()))) {
 				Util.MessageBoxShow("Imagem muito grande", "A imagem é maior que 4Mb.");
 				return;
 			}
 
 			Files.copy(Path.of(imagemEscolhida.getAbsolutePath()), new FileOutputStream(diretorioTmp));
-			String base=Util.converterStringParaBase64(Path.of(imagemEscolhida.getAbsolutePath()).toString());
-			Banco.InserirQuery("update parceiro set imagem='"+base+"' where id ="+Util.getContaLogada().getId());
-			imgIconePerfil.setImage(new Image(new File(diretorioTmp).toURI().toString(), this.larguraFotoPerfil, this.alturaFotoPerfil, false, false));
-
+			String base = Util.converterStringParaBase64(Path.of(imagemEscolhida.getAbsolutePath()).toString());
+			Banco.InserirQuery("update parceiro set imagem='" + base + "' where id =" + Util.getContaLogada().getId());
+			imgIconePerfil.setImage(new Image(new File(diretorioTmp).toURI().toString(), this.larguraFotoPerfil,
+					this.alturaFotoPerfil, false, false));
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -284,26 +282,25 @@ public class Dashboard extends Application {
 
 	}
 
-
 	void verificaIconeUsuario() {
-		int id=-1;
+		int id = -1;
 		try {
-			id=Util.getContaLogada().getId();	
-		}catch(NullPointerException e) {
+			id = Util.getContaLogada().getId();
+		} catch (NullPointerException e) {
 			// usuário está no modo convidado
 			return;
 		}
-		boolean possuiIcone=false;
+		boolean possuiIcone = false;
 		try {
-			Banco.InserirQueryReader("select imagem from parceiro where id="+id);
-			if(Banco.getReader().next()) {
+			Banco.InserirQueryReader("select imagem from parceiro where id=" + id);
+			if (Banco.getReader().next()) {
 
-				String imagem=Banco.getReader().getString("imagem");
-				if(imagem != null) {
-					if(imagem.length()>0) {
-						possuiIcone=true;
-						Util.verificaExistenciaImagem("profile"+id+".jpg", imagem.getBytes(), false);
-					}	
+				String imagem = Banco.getReader().getString("imagem");
+				if (imagem != null) {
+					if (imagem.length() > 0) {
+						possuiIcone = true;
+						Util.verificaExistenciaImagem("profile" + id + ".jpg", imagem.getBytes(), false);
+					}
 				}
 
 			}
@@ -314,10 +311,11 @@ public class Dashboard extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//file://C:/lista/usuarios/profile.jpg
-		if(possuiIcone) {
-			imgIconePerfil.setImage(new Image(new File("C:\\lista\\usuarios\\profile"+id+".jpg").toURI().toString(), 400, 400, false, false));
-		}else {
+		// file://C:/lista/usuarios/profile.jpg
+		if (possuiIcone) {
+			imgIconePerfil.setImage(new Image(new File("C:\\lista\\usuarios\\profile" + id + ".jpg").toURI().toString(),
+					400, 400, false, false));
+		} else {
 			trocaFotoPerfilParaOPadrao();
 
 		}
@@ -334,23 +332,29 @@ public class Dashboard extends Application {
 
 		if (Validacao.validarEmail(txtMCEmail.getText())) {
 
-			if(Banco.InserirQuery(String.format("UPDATE parceiro set email = '%s' where id = %s", txtMCEmail.getText(),Util.getContaLogada().getId()))) {
+			if (Banco.InserirQuery(String.format("UPDATE parceiro set email = '%s' where id = %s", txtMCEmail.getText(),
+					Util.getContaLogada().getId()))) {
 
 				Util.MessageBoxShow("Alteração de Dados", "Email alterado com sucesso!");
 				Util.getContaLogada().setEmail(txtMCEmail.getText());
 
+			} else {
+
+				Util.MessageBoxShow("Alteração de Dados", "Verifique se o E-mail inserido é válido!",
+						AlertType.WARNING);
 			}
 		}
 
 	}
 
 	private String Codigo = "";
+
 	@FXML
 	void AlterarSenha(ActionEvent event) {
 		Codigo = RecuperarSenha.gerarCodigo(0, "", new Random().nextInt(9));
 
-		if(Email.enviarEmail("O seu código de acesso é " + Codigo,
-				"Troca de Senha", Util.getContaLogada().getEmail())) {
+		if (Email.enviarEmail("O seu código de acesso é " + Codigo, "Troca de Senha",
+				Util.getContaLogada().getEmail())) {
 			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o código de alteração ao seu E-mail! ");
 			txtMCCodigo.requestFocus();
 		}
@@ -359,7 +363,7 @@ public class Dashboard extends Application {
 	@FXML
 	void ConfirmarCodigoSenha(ActionEvent event) {
 
-		if(txtMCCodigo.getText().equals(Codigo)) {
+		if (txtMCCodigo.getText().equals(Codigo)) {
 
 			TrocarSenha trocarSenha = new TrocarSenha();
 			trocarSenha.setEmail(Util.getContaLogada().getEmail());
@@ -392,7 +396,7 @@ public class Dashboard extends Application {
 	@FXML
 	void FormCadastrarEndereco(ActionEvent event) {
 		try {
-			CadastrarLocal cadastro=new CadastrarLocal();
+			CadastrarLocal cadastro = new CadastrarLocal();
 			cadastro.getEvent(event);
 			cadastro.start(new Stage());
 		} catch (Exception e) {
@@ -401,52 +405,51 @@ public class Dashboard extends Application {
 		}
 	}
 
-
 	// esse método vai obter o ID do usuário que pertence ao lugar clicado e abrir a
 	// janela de Tela, mostrando as infos detalhadas e todos os
 	// telefones associados ao mesmo.
 	@FXML
 	void abrirDescricaoDetalhada(MouseEvent event) {
-		String id="";
+		String id = "";
 
-		//		DOUBLE CLICK NA LINHA
-		if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
-			if(tvTelefones.getSelectionModel().getSelectedItem() != null) {
+		// DOUBLE CLICK NA LINHA
+		if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+			if (tvTelefones.getSelectionModel().getSelectedItem() != null) {
 				// obtï¿½m o telefone para obter o id do parceiro e id do local
-				TableViewUtil ret=tvTelefones.getSelectionModel().getSelectedItem();
+				TableViewUtil ret = tvTelefones.getSelectionModel().getSelectedItem();
 				Util.setTelefoneAtual(ret.getNumero());
-				String numero=Util.FormatarSetTelefone(ret.getNumero());
-				String descricao=ret.getDescricao();
-				String idDono=null;
-				String idLugar=null;
-				String query="";
+				String numero = Util.FormatarSetTelefone(ret.getNumero());
+				String descricao = ret.getDescricao();
+				String idDono = null;
+				String idLugar = null;
+				String query = "";
 
 				try {
 					// primeiro obtenho o id do dono , depois obtenho os telefones associados a ele
-					query="select dono,lugar,descricao from telefone where numero LIKE '%"+numero+"%'";
-					query+=descricao == null?";":" and descricao LIKE '%"+descricao+"%';";
+					query = "select dono,lugar,descricao from telefone where numero LIKE '%" + numero + "%'";
+					query += descricao == null ? ";" : " and descricao LIKE '%" + descricao + "%';";
 					System.out.println(query);
 
 					Banco.InserirQueryReader(query);
 					Banco.getReader().next();
 
-					idDono=Banco.getReader().getString("dono");
+					idDono = Banco.getReader().getString("dono");
 
-					System.out.println("ID DONO: "+idDono);
+					System.out.println("ID DONO: " + idDono);
 
 					UtilDashboard.setIdLugar(String.valueOf(Banco.getReader().getInt("lugar")));
 					UtilDashboard.setIdDono(idDono);
 					UtilDashboard.setNumeroTelefone(numero);
 					UtilDashboard.setIdTelefone(Util.RecuperarIdTelefonePorTelefone(numero));
 
-					query="select numero from telefone where dono="+idDono+";";
+					query = "select numero from telefone where dono=" + idDono + ";";
 					Banco.InserirQueryReader(query);
 
 					UtilDashboard.getTelefones().clear();
-					while(Banco.getReader().next()){
+					while (Banco.getReader().next()) {
 						try {
 							UtilDashboard.getTelefones().add(new TelefoneNumero(Banco.getReader().getString("numero")));
-						}catch(Exception exc) {
+						} catch (Exception exc) {
 							exc.printStackTrace();
 						}
 					}
@@ -456,19 +459,17 @@ public class Dashboard extends Application {
 					tl.start(new Stage());
 
 				} catch (Exception e1) {
-					e1.printStackTrace(); 					
+					e1.printStackTrace();
 				}
 			}
 		}
 
 	}
 
-
 	@FXML
 	void buscarDados(Event event) throws SQLException, IOException {
 
-		if (tbMinhaConta.isSelected())
-		{
+		if (tbMinhaConta.isSelected()) {
 			txtMCNome.setText(Util.getContaLogada().getNome());
 			txtMCUsuario.setText(Util.getContaLogada().getUsuario());
 			txtMCEmail.setText(Util.getContaLogada().getEmail());
@@ -481,12 +482,10 @@ public class Dashboard extends Application {
 			}
 		}
 
-		if(tbMeusTelefones.isSelected())
-		{
+		if (tbMeusTelefones.isSelected()) {
 			AtualizarCbxTelefones();
 		}
 	}
-
 
 	// Método 'onLoad'
 	public void initialize() throws SQLException, IOException {
@@ -514,7 +513,6 @@ public class Dashboard extends Application {
 		tvcCidade.setCellValueFactory(new PropertyValueFactory("cidade"));
 		tvcCidade.setStyle("-fx-alignment: CENTER;");
 		tvcEmail.setCellValueFactory(new PropertyValueFactory("email"));
-
 
 		AtualizarCbxTelefones();
 		AtualizarGridTelefones(API.doGetTelefones(100));
@@ -551,22 +549,23 @@ public class Dashboard extends Application {
 		}
 	}
 
-	public void  AtualizarCbxTelefones() throws SQLException, IOException {
+	public void AtualizarCbxTelefones() throws SQLException, IOException {
 		if (Util.isConvidado())
 			return;
 		AtualizarEnderecos();
-		ResultSet result = Banco.InserirQueryReader("SELECT id, numero, descricao, lugar FROM telefone WHERE dono = " + Util.getContaLogada().getId());
-		
+		ResultSet result = Banco.InserirQueryReader(
+				"SELECT id, numero, descricao, lugar FROM telefone WHERE dono = " + Util.getContaLogada().getId());
+
 		fpTelefones.getChildren().clear();
 		Util.telefones.clear();
 		int i = 0;
 		while(result.next()) {
+
 			Util.idEndereco = result.getInt("lugar");
 			Telefone telefone = new Telefone();
 			telefone.setNumero(result.getString("numero"));
 			telefone.setDescricao(result.getString("descricao"));
 			telefone.setId(result.getInt("id"));
-
 
 			Util.telefone = telefone;
 			Util.telefones.add(telefone);
@@ -583,13 +582,13 @@ public class Dashboard extends Application {
 		ResultSet result = Banco.InserirQueryReader("SELECT id, nome FROM endereco WHERE usuario = " + Util.getContaLogada().getId());
 		while(result.next())
 		{
+
 			Endereco end = new Endereco();
 			end.setId(result.getInt("id"));
 			end.setNome(result.getString("nome"));
 			Util.todoEnderecos.add(end);
 		}
 	}
-
 
 	private void setQueryParameters() {
 		numero = Validacao.isNullOrEmpty(txtTelefone.getText()) ? "*" : txtTelefone.getText();
@@ -685,8 +684,9 @@ public class Dashboard extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			TabPane root = (TabPane) FXMLLoader.load(getClass().getClassLoader().getResource("application/telaDashboard.fxml"));
-			this.primaryStage=primaryStage;
+			TabPane root = (TabPane) FXMLLoader
+					.load(getClass().getClassLoader().getResource("application/telaDashboard.fxml"));
+			this.primaryStage = primaryStage;
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Image icon = new Image("/Recursos/logo.png");
@@ -694,9 +694,8 @@ public class Dashboard extends Application {
 			primaryStage.setTitle("Lista Pública - Menu principal");
 			primaryStage.getIcons().add(icon);
 			primaryStage.setMaximized(true);
-			//root.getSelectionModel().selectedItemProperty().addListener((v, oldValue,
-			//	newValue) -> System.out.println(newValue));
-
+			// root.getSelectionModel().selectedItemProperty().addListener((v, oldValue,
+			// newValue) -> System.out.println(newValue));
 
 			primaryStage.show();
 		} catch (Exception e) {
@@ -717,7 +716,6 @@ public class Dashboard extends Application {
 	public void showNovoTelefone(Event evento) {
 		CadastroTelefone ct = new CadastroTelefone();
 		ct.setEvent(evento);
-		CadastroTelUtil.setCaso(false);
 		ct.start(new Stage());
 	}
 }

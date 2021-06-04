@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import classes.Banco;
-import classes.CadastroTelUtil;
 import classes.Endereco;
 import classes.Telefone;
 import classes.Util;

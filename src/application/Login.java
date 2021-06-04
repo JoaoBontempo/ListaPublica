@@ -24,7 +24,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
-
 public class Login extends Application {
 
 	private int id;
@@ -50,7 +49,7 @@ public class Login extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("telaLogin.fxml"));
+			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("telaLogin.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Image icon = new Image("Recursos/logo.png");
@@ -59,13 +58,12 @@ public class Login extends Application {
 			primaryStage.getIcons().add(icon);
 			primaryStage.setResizable(false);
 			primaryStage.show();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void initialize() throws ClassNotFoundException, SQLException
-	{
+	public void initialize() throws ClassNotFoundException, SQLException {
 //		try {
 //			Banco.Desconectar();
 //		}
@@ -82,8 +80,7 @@ public class Login extends Application {
 		launch(args);
 	}
 
-	private boolean verificarCampos()
-	{
+	private boolean verificarCampos() {
 		if (!Validacao.verificarTextField(txtUsuario))
 			return false;
 		if (!Validacao.verificarTextField(txtSenha))
@@ -91,82 +88,68 @@ public class Login extends Application {
 		return true;
 	}
 
-	private String verificarTipoLogin()
-	{
-		//CPF || CNPJ
+	private String verificarTipoLogin() {
+		// CPF || CNPJ
 		if (txtUsuario.getText().matches("[0-9]+"))
 			return "CPF/CNPJ";
-		//E-MAIL
+		// E-MAIL
 		else if (txtUsuario.getText().contains("@"))
 			return "Email";
 		else
 			return "Usuario";
 	}
 
-	private boolean realizarLoginBanco(String tipo) throws SQLException
-	{
-		if (tipo.equals("Email"))
-		{
-			if (!Validacao.validarEmail(txtUsuario.getText()))
-			{
+	private boolean realizarLoginBanco(String tipo) throws SQLException {
+		if (tipo.equals("Email")) {
+			if (!Validacao.validarEmail(txtUsuario.getText())) {
 				Util.MessageBoxShow("Campo inválido", "O email inserido é inválido ou está incorreto", AlertType.ERROR);
 				return false;
 			}
 		}
-		if (tipo.equals("CPF/CNPJ"))
-		{
-			//cpf
-			if (txtUsuario.getText().length() == 11)
-			{
+		if (tipo.equals("CPF/CNPJ")) {
+			// cpf
+			if (txtUsuario.getText().length() == 11) {
 				if (!Validacao.validarCPF(txtUsuario))
 					return false;
-				else
-				{
+				else {
 					tipo = "CPF";
 				}
-			}
-			else if (txtUsuario.getText().length() == 14) //cnpj
+			} else if (txtUsuario.getText().length() == 14) // cnpj
 			{
 				if (!Validacao.validarCNPJ(txtUsuario))
 					return false;
-				else
-				{
+				else {
 					tipo = "CNPJ";
 				}
 			}
 		}
-		ResultSet result = Banco.InserirQueryReader(String.format("SELECT %s, senha, id FROM parceiro WHERE %s = '%s'", tipo.toLowerCase(), tipo.toLowerCase(), txtUsuario.getText()));
-		
-		if (!result.next())
-		{
+		ResultSet result = Banco.InserirQueryReader(String.format("SELECT %s, senha, id FROM parceiro WHERE %s = '%s'",
+				tipo.toLowerCase(), tipo.toLowerCase(), txtUsuario.getText()));
+
+		if (!result.next()) {
 			Util.MessageBoxShow("Falha ao realizar login", tipo + " não encontrado", AlertType.ERROR);
 			return false;
-		}
-		else
-		{
-			if (Util.verificarSenha(txtSenha.getText(), result.getString("senha")))
-			{
+		} else {
+			if (Util.verificarSenha(txtSenha.getText(), result.getString("senha"))) {
 				id = result.getInt("id");
 				return true;
-			}
-			else
-			{
+			} else {
 				Util.MessageBoxShow("Falha ao realizar login", "Senha incorreta", AlertType.ERROR);
 				return false;
 			}
 		}
 	}
 
-	private void loginRealizado() throws SQLException
-	{
-		
-		if (!Util.isConvidado())
-		{
+	private void loginRealizado() throws SQLException {
+
+		if (!Util.isConvidado()) {
 			ResultSet result = Banco.InserirQueryReader("SELECT * FROM parceiro WHERE id = " + id);
 			result.next();
-			Parceiro contaLogada = new Parceiro(result.getInt("id"), result.getInt("tipo"), result.getString("nome"), result.getString("cpf"), result.getString("cnpj"), result.getString("email"), result.getString("usuario"));
+			Parceiro contaLogada = new Parceiro(result.getInt("id"), result.getInt("tipo"), result.getString("nome"),
+					result.getString("cpf"), result.getString("cnpj"), result.getString("email"),
+					result.getString("usuario"));
 			Util.setContaLogada(contaLogada);
-		    
+
 		}
 		Dashboard dash = new Dashboard();
 		dash.start(new Stage());
@@ -175,10 +158,8 @@ public class Login extends Application {
 	}
 
 	@FXML
-	public void RealizarLogin() throws SQLException
-	{ 
-		if (verificarCampos())
-		{
+	public void RealizarLogin() throws SQLException {
+		if (verificarCampos()) {
 			if (realizarLoginBanco(verificarTipoLogin()))
 				loginRealizado();
 			else
@@ -190,25 +171,25 @@ public class Login extends Application {
 	void meCadastrar(MouseEvent event) {
 
 		Cadastrar cadastrar = new Cadastrar();
-		cadastrar.setEvento(event);
+		//cadastrar.setEvento(event);
 		cadastrar.start(new Stage());
-		//Stage stageAtual = (Stage) lbCadastrar.getScene().getWindow();
-		//stageAtual.close();
+		Stage stageAtual = (Stage) lbCadastrar.getScene().getWindow();
+		stageAtual.close();
 	}
 
 	@FXML
-	public void loginConvidado() throws SQLException
-	{
-		if(Util.MessageBoxShow("Tem certeza que deseja entrar como convidado?", "Só será possível visualizar telefones cadastrados\n"
-				+ "por outras pessoas ou empresas").equals(ButtonType.OK))
-		{
+	public void loginConvidado() throws SQLException {
+		if (Util.MessageBoxShow("Tem certeza que deseja entrar como convidado?",
+				"Só será possível visualizar telefones cadastrados\n" + "por outras pessoas ou empresas")
+				.equals(ButtonType.OK)) {
 			Util.setConvidado(true);
 			loginRealizado();
 		}
 	}
+
 	@FXML
 	void esqueciSenha(MouseEvent event) {
-		
+
 		RecuperarSenha recuperar = new RecuperarSenha();
 		recuperar.getEvent(event);
 		recuperar.start(new Stage());
