@@ -8,6 +8,16 @@
    -fx-border-width: 0px;
 }
 
+.scroll-pane
+{
+	-fx-border-color: #84ff00;
+}
+
+.flow-pane
+{
+	-fx-border-color: #84ff00;
+}
+
 .root .scroll-bar .thumb
 {
     -fx-background-color: #090E11;

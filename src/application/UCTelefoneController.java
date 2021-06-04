@@ -88,7 +88,7 @@ public class UCTelefoneController extends Application{
 	{
 		Util.telefones.get(index).setDescricao(txtDescrição.getText());
 		Util.enderecosAtuais.get(index).setNome(cboxEndereco.getSelectionModel().getSelectedItem());
-	}
+ 	}
 	
 	@FXML
 	public void AlterarTelefone() throws SQLException
