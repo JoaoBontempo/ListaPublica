@@ -12,7 +12,7 @@
 
 <AnchorPane prefHeight="187.0" prefWidth="478.0" style="-fx-border-color: #ffffff; -fx-border-width: 1px;" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.UCTelefoneController">
    <children>
-      <TextField fx:id="txtTelefone" editable="false" layoutX="66.0" layoutY="21.0" prefHeight="34.0" prefWidth="160.0" styleClass="text-field2" AnchorPane.leftAnchor="64.0" AnchorPane.rightAnchor="254.0" AnchorPane.topAnchor="19.0" />
+      <TextField fx:id="txtTelefone" editable="false" layoutX="69.0" layoutY="15.0" prefHeight="34.0" prefWidth="154.0" styleClass="text-field2" AnchorPane.leftAnchor="68.0" AnchorPane.rightAnchor="256.0" AnchorPane.topAnchor="14.0" />
       <TextArea fx:id="txtDescrição" layoutX="15.0" layoutY="78.0" prefHeight="59.0" prefWidth="606.0" wrapText="true" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
       <ImageView fitHeight="34.0" fitWidth="48.0" layoutX="16.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <image>

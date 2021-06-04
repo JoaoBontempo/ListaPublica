@@ -125,7 +125,7 @@
 						<ScrollPane fitToWidth="true" layoutX="283.0" layoutY="62.0" prefHeight="302.0" prefWidth="823.0" stylesheets="@application.css" AnchorPane.bottomAnchor="63.0" AnchorPane.leftAnchor="343.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="62.0">
 							<content>
 								<!-- do not put bounds on the FlowPane size -->
-								<FlowPane fx:id="fpTelefones" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefWidth="600.0" />
+								<FlowPane fx:id="fpTelefones" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefWidth="600.0" vgap="25.0" />
 							</content>
 						</ScrollPane>
                   <TextField fx:id="txtPesquisaTelefone" layoutX="373.0" layoutY="31.0" onKeyTyped="#txtPesquisaTelefoneTextChanged" prefHeight="34.0" prefWidth="781.0" promptText="Procurar informação..." AnchorPane.leftAnchor="385.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />

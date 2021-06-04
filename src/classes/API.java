@@ -63,7 +63,7 @@ public final class API {
 		js.put("estado", queryFilter.getEstado());
 		js.put("email", queryFilter.getEmail());
 		js.put("descricao", queryFilter.getDescricao());
-
+		System.out.println(js.toString());
 
 		try {
 			post.setEntity(new StringEntity(js.toString(), "UTF-8"));

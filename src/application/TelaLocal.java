@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
 
@@ -348,21 +350,21 @@ public class TelaLocal extends Application {
 	private void obterImagemParceiro() throws SQLException, Exception {
 		//verifica se a imagem ja existe no cache(nos diretórios)
 		String caminho="C:\\lista\\usuarios\\profile"+idDono+".jpg";
-		File f = new File(caminho);
-		if(f.exists()) {
-			imgProprietario.setImage(new Image(new File(caminho).toURI().toString(), 400, 400, false, false));
-		}else {
-			String query="select imagem from parceiro where id="+idDono;
-			Banco.InserirQueryReader(query);
-			
-			if(Banco.getReader().next()) {
-				String imagem=Banco.getReader().getString("imagem");
-				if(imagem != null) {
-					if(imagem.length()>0) {
-						Util.verificaExistenciaImagem("profile"+idDono+".jpg", imagem.getBytes(), false);
-						imgProprietario.setImage(new Image(new File(caminho).toURI().toString(), 400, 400, false, false));
-					}	
-				}
+//		File f = new File(caminho);
+//		
+//		byte[] bytesArq=Files.readAllBytes(Path.of(caminho));
+//		byte[] bytesArqBase64=Base64.getEncoder().encode(bytesArq);
+//		
+		String query="select imagem from parceiro where id="+idDono;
+		Banco.InserirQueryReader(query);
+		
+		if(Banco.getReader().next()) {
+			String imagem=Banco.getReader().getString("imagem");
+			if(imagem != null) {
+				if(imagem.length()>0) {
+					Util.verificaExistenciaImagem("profile"+idDono+".jpg", imagem.getBytes(), false);
+					imgProprietario.setImage(new Image(new File(caminho).toURI().toString(), 400, 400, false, false));
+				}	
 			}
 		}
 		

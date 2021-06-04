@@ -351,19 +351,22 @@ public class CadastrarLocal extends Application implements Initializable {
 	
 	private void verificaCep() {
 		if(txtCep.getText().isEmpty()) {
-			//Util.MessageBoxShow("Campo vazio", "O campo de cep está vazio.",AlertType.ERROR);
 			return;
 		}
 		String cepSemFormato=txtCep.getText().replaceAll("\\-", "").replace("\\.", "");
-		System.out.println("Sem formato: "+cepSemFormato);
-		if(cepSemFormato.length() == 8) {
-			JSONObject ret = Util.obtemInfosApiCep(cepSemFormato);
-			System.out.println(ret);
-			txtBairro.setText(ret.getString("bairro"));
-			txtRua.setText(ret.getString("logradouro"));
-			cmbEstados.getSelectionModel().select(ret.getString("uf"));
-			cmbCidades.getSelectionModel().select(ret.getString("localidade"));
+		try {
+			if(cepSemFormato.length() == 8) {
+				JSONObject ret = Util.obtemInfosApiCep(cepSemFormato);
+				System.out.println(ret);
+				txtBairro.setText(ret.getString("bairro"));
+				txtRua.setText(ret.getString("logradouro"));
+				cmbEstados.getSelectionModel().select(ret.getString("uf"));
+				cmbCidades.getSelectionModel().select(ret.getString("localidade"));
+			}	
+		}catch(Exception e) {
+			Util.MessageBoxShow("Cep inválido", "O cep informado não foi encontrado");
 		}
+		
 	}
 	
 	@Override
