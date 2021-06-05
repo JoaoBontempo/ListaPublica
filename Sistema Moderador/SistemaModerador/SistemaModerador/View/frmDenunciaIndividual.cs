@@ -80,6 +80,7 @@ namespace SistemaModerador.View
                         else
                             textBox = txtIDD2;
 
+                        Banco.InserirQuery("DELETE FROM comentarios WHERE idTelefone = " + txtIdTel.Text);
                         Banco.InserirQuery("DELETE FROM comentarios WHERE idParceiro = " + textBox.Text);
                         Banco.InserirQuery("DELETE FROM denuncia WHERE id = " + idDenuncia);
                         Banco.InserirQuery("DELETE FROM telefone WHERE dono = " + textBox.Text);
@@ -224,7 +225,7 @@ namespace SistemaModerador.View
             txtEmailD2.Text = Banco.reader.GetString("emailD2");
             txtUsuarioD2.Text = Banco.reader.GetString("usuarioD2");
             lbCPFCPNJ2.Text = tipo ? "CPNJ" : "CPF";
-            txtCPFCNPJD2.Text = tipo ? Banco.reader.GetString("cpnjD2") : Banco.reader.GetString("cpfD2");
+            txtCPFCNPJD2.Text = tipo ? Banco.reader.GetString("cnpjD2") : Banco.reader.GetString("cpfD2");
 
             //Informações da denúncia
             txtIDDenuncia.Text = idDenuncia.ToString();
