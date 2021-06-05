@@ -60,6 +60,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -553,6 +554,11 @@ public class TelaLocal extends Application {
 
 	@FXML
 	public void MostrarTelaDenuncia() {
+		if (Util.getContaLogada().getUsuario().equals(txtNomeUsuario.getText()))
+		{
+			Util.MessageBoxShow("Opção inválida", "Não é possível denunciar seu próprio telefone.", AlertType.INFORMATION);
+			return;
+		}
 		Denuncia denuncia = new Denuncia();
 		// denuncia.setDenunciado();
 		denuncia.setDenunciador(Util.getContaLogada());
