@@ -58,7 +58,7 @@ public final class API {
 
 		JSONObject js = new JSONObject();
 		js.put("nome", queryFilter.getNome());
-		js.put("numero", queryFilter.getNumero());
+		js.put("numero", Util.FormatarSetTelefone(queryFilter.getNumero()));
 		js.put("cidade", queryFilter.getCidade());
 		js.put("estado", queryFilter.getEstado());
 		js.put("email", queryFilter.getEmail());
