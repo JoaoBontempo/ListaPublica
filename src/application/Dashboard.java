@@ -92,7 +92,6 @@ import javafx.fxml.Initializable;
 public class Dashboard extends Application {
 
 	private ArrayList<Integer> idsEstado = new ArrayList<Integer>();
-
 	// private ArrayList<String> cidadesUtil = new ArrayList<String>(); // ArrayList
 	// para a classe Utils.
 
@@ -526,24 +525,26 @@ public class Dashboard extends Application {
 	
 	private void BuscarInformacao(String info)
 	{
+		fpTelefones.getChildren().clear();
 		info = info.toLowerCase();
 		int i = 0;
-		for (Node node : Util.dashboard.getFpTelefones().getChildren())
+		for (Node node : Util.nodos)
 		{
 			if (Validacao.isNullOrEmpty(info))
 			{
-				node.setVisible(true);
+				//node.setVisible(true);
+				fpTelefones.getChildren().add(node);
 				continue;
 			}
 			if (Util.FormatarSetTelefone(Util.telefones.get(i).getNumero()).toLowerCase().contains(info) || 
 					Util.telefones.get(i).getDescricao().toLowerCase().contains(info) ||
 					Util.enderecosAtuais.get(i).getNome().toLowerCase().contains(info))
 			{
-				node.setVisible(true);
+				fpTelefones.getChildren().add(node);
 			}
 			else
 			{
-				node.setVisible(false);
+				//node.setVisible(false);
 			}
 			i++;
 		}
@@ -555,7 +556,7 @@ public class Dashboard extends Application {
 		AtualizarEnderecos();
 		ResultSet result = Banco.InserirQueryReader(
 				"SELECT id, numero, descricao, lugar FROM telefone WHERE dono = " + Util.getContaLogada().getId());
-		
+		Util.nodos.clear();
 		Util.enderecosAtuais.clear();
 		fpTelefones.getChildren().clear();
 		Util.telefones.clear();

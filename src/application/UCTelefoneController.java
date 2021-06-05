@@ -134,6 +134,7 @@ public class UCTelefoneController extends Application{
 	public void loadFxml () throws IOException {
 		AnchorPane newLoadedPane = FXMLLoader.load(getClass().getResource("UCTelefone.fxml"));
 		secPane.getChildren().add(newLoadedPane);
+		Util.nodos.add(newLoadedPane);
 	}
 
 	public Telefone getTelefone() {

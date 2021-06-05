@@ -35,6 +35,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import application.Dashboard;
 import application.UCTelefoneController;
 import classesTableView.ComentarioTable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -53,6 +54,7 @@ public final class Util {
 	public static Dashboard dashboard = new Dashboard();
 	public static ArrayList<Telefone> telefones = new ArrayList<Telefone>();
 	public static int index;
+	public static ArrayList<Node> nodos = new ArrayList<Node>();
 	/**/
 	
 	private static Parceiro contaLogada;
