@@ -56,6 +56,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -108,6 +110,9 @@ public class TelaLocal extends Application {
     private TableView<TelefoneNumero> tvTelefone;
 	
 	@FXML
+    private Tab tabInfosEndereco;
+	
+	@FXML
 	private Pane pnlTelefones;
 
 	@FXML
@@ -155,6 +160,9 @@ public class TelaLocal extends Application {
 	@FXML
 	private TableColumn<ComentarioTable, String> tvcComentario;
 
+	 @FXML
+	 private TabPane tabPaneInfos;
+	 
 	@FXML
 	private TableColumn<ComentarioTable, String> tvcData;
 	
@@ -393,6 +401,7 @@ public class TelaLocal extends Application {
 		//		DOUBLE CLICK NA LINHA
 		if (event.getButton().equals(MouseButton.PRIMARY)){
 	            if(tvTelefone.getSelectionModel().getSelectedItem() != null) {
+	            	tabInfosEndereco.setDisable(false);
 	            	TelefoneNumero numero=tvTelefone.getSelectionModel().getSelectedItem();
 	            	
 	            	try {
@@ -427,7 +436,6 @@ public class TelaLocal extends Application {
 	                		Util.verificaExistenciaImagem(fileName, conteudoImagem.getBytes(), true);
 	                		imgLocal.setImage(new Image("file:///C:/lista/locais/"+fileName));
 	                	}
-	                	//UtilDashboard.setIdDono(objeto.getString("id"));
 	                	insereCampos(objeto.get("estado").toString(),objeto.get("bairro").toString(),objeto.get("rua").toString(),
 	                			objeto.get("cidade").toString(),objeto.get("numero").toString(),objeto.getString("nome"));
 	                	List<ComentarioTable> comentarios=Util.RecuperarComentariosEndereco(id_telefone); // Esse utilDashboard será usado apenas ao entrar no form
@@ -491,6 +499,7 @@ public class TelaLocal extends Application {
 		txtNomeCompleto.setText("N/D");
 		txtNomeUsuario.setText("N/D");
 		txtEmail.setText("N/D");
+		tabInfosEndereco.setDisable(true);
 		tvComentarios.getItems().clear();
 		
 	}
@@ -564,8 +573,10 @@ public class TelaLocal extends Application {
 			HttpClient httpClient = HttpClients.createDefault();
 			HttpResponse response;
 			response = httpClient.execute(get);
-
+			
 			String result = EntityUtils.toString(response.getEntity());
+			if(result.length()<=0) {tabInfosEndereco.setDisable(true);}
+			
 			obj = new JSONArray(result);
 			return obj;
 		} catch (JSONException | IOException e) {
@@ -597,6 +608,10 @@ public class TelaLocal extends Application {
 				result = EntityUtils.toString(response.getEntity());	
 			}catch(IllegalArgumentException e) {
 			}
+			
+			// se o result for vazio, desative a aba de infos do endereço
+			
+			if(result.length()<=0) {tabInfosEndereco.setDisable(true);}
 			
 			JSONArray obj = new JSONArray(result);
 			EnderecoComDescricao endereco;

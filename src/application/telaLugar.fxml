@@ -59,9 +59,9 @@
          </image>
       </ImageView>
       <Label fx:id="lbWhatsApp" layoutX="549.0" layoutY="629.0" onMouseClicked="#ChamarNumeroWhatsApp" styleClass="labelComLink" text="Chamar {numero} no WhatsApp" textFill="WHITE" AnchorPane.leftAnchor="549.0" AnchorPane.topAnchor="629.0" />
-      <TabPane layoutX="33.0" layoutY="25.0" prefHeight="700.0" prefWidth="450.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="33.0">
+      <TabPane fx:id="tabPaneInfos" layoutX="33.0" layoutY="25.0" prefHeight="700.0" prefWidth="450.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="33.0">
         <tabs>
-          <Tab text="Informações de endereço">
+          <Tab fx:id="tabInfosEndereco" text="Informações de endereço">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="174.0" prefWidth="427.0">
                      <children>

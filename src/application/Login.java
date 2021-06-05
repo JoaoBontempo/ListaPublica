@@ -52,7 +52,7 @@ public class Login extends Application {
 			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("telaLogin.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			Image icon = new Image("Recursos/logo.png");
+			Image icon = new Image("Recursos/logo.png"	);
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Lista Pública - Login");
 			primaryStage.getIcons().add(icon);
