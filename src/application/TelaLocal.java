@@ -362,6 +362,7 @@ public class TelaLocal extends Application {
 	}
 	
 	private void obterImagemLocal() throws SQLException, Exception {
+		
 		String caminho="C:\\lista\\locais\\addr"+id_endereco+".jpg";
 		File f = new File(caminho);
 		if(f.exists()) {
@@ -396,7 +397,6 @@ public class TelaLocal extends Application {
 	            	
 	            	try {
 	            		String telefone=numero.getNumero();
-	            		lblTelefoneSelecionado.setText("Telefone selecionado: "+telefone);
 	            		idDono=Util.recuperarIdDonoAtravesTelefone(telefone);
 	            		Util.setTelefoneAtual(telefone);
 	            		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", Util.FormatarGetTelefone(Util.getTelefoneAtual())));
@@ -497,9 +497,9 @@ public class TelaLocal extends Application {
 
 	public void initialize() throws Exception {
 		lbDenunciarLocal.setDisable(Util.isConvidado());
-
+		
 		id_telefone=UtilDashboard.getIdTelefone();
-		lblTelefoneSelecionado.setText("Telefone selecionado: "+UtilDashboard.getNumeroTelefone());
+		
 		
 		verificaDescricaoTelefone(id_telefone);
 		this.idDono= Integer.parseInt(UtilDashboard.getIdDono());
