@@ -2,7 +2,22 @@ package classes;
 
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.InputMismatchException;
+import java.util.logging.Level;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.DomElement;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlTelInput;
+import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextArea;
@@ -106,7 +121,7 @@ public final class Validacao {
 
 			// Verifica se os dígitos calculados conferem com os dígitos informados.
 			if ((dig13 == CNPJ.getText().charAt(12)) && (dig14 == CNPJ.getText().charAt(13)))
-				return (true);
+				return (ValidarDocumento(CNPJ.getText()));
 			else {
 				Util.MessageBoxShow("Campo inválido", "O CPNJ inserido é inválido", AlertType.ERROR);
 				return (false);
@@ -184,7 +199,7 @@ public final class Validacao {
 			Util.MessageBoxShow("Campo inválido", "O CPF inserido é inválido!", AlertType.WARNING);
 			return false;
 		} else
-			return true;
+			return ValidarDocumento(textBox.getText());
 	}
 
 	public static boolean validarEmail(String email) {
@@ -218,5 +233,36 @@ public final class Validacao {
 			return false;
 		}
 		return true;
+	}
+
+	public static boolean ValidarDocumento(String doc)
+	{
+		try
+		{
+			java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
+			WebClient client = new WebClient();
+			client.getOptions().setCssEnabled(true);
+			client.getOptions().setUseInsecureSSL(false);
+			client.getOptions().setJavaScriptEnabled(true);
+
+			//client.getOptions().setDoNotTrackEnabled(true);
+
+			HtmlPage page = client.getPage("https://www.situacao-cadastral.com/");
+
+			HtmlTelInput elem = (HtmlTelInput) page.getElementById("doc");
+			elem.setText(doc);
+
+			HtmlElement button = (HtmlElement) page.getElementById("consultar");
+			page = button.click();
+
+			HtmlElement resultado = (HtmlElement) page.getElementById("resultado");
+			return resultado.getTextContent().contains("Situação: Regular") || resultado.getTextContent().contains("Situação: Ativa");
+		}
+		catch (Exception erro)
+		{
+			Util.MessageBoxShow("Ocorreu um erro", "Houve um erro ao buscar a situação de seu documento. "
+					+ "\nPor favor, verifique seu CPF ou CNPJ e tente novamente");
+			return false;
+		}
 	}
 }

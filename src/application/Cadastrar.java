@@ -1,8 +1,11 @@
 package application;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.sun.javafx.geom.Point2D;
 
 import classes.Banco;
@@ -61,8 +64,7 @@ public class Cadastrar extends Application {
 	private Label lbLogar;
 
 	@FXML
-	void realizarCadastro(ActionEvent event) {
-
+	void realizarCadastro(ActionEvent event) throws FailingHttpStatusCodeException, MalformedURLException, IOException {
 		if (ValidarCampos())
 			realizarCadastro(tipo);
 	}
