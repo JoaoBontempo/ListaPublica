@@ -56,6 +56,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
@@ -501,6 +502,12 @@ public class TelaLocal extends Application {
 		txtNomeUsuario.setText("N/D");
 		txtEmail.setText("N/D");
 		tabInfosEndereco.setDisable(true);
+		
+		// "clica" no tab infos
+//		SingleSelectionModel<Tab> selectionModel = tabPaneInfos.getSelectionModel();
+//		selectionModel.select(2);
+		
+		
 		tvComentarios.getItems().clear();
 		
 	}
@@ -581,7 +588,10 @@ public class TelaLocal extends Application {
 			response = httpClient.execute(get);
 			
 			String result = EntityUtils.toString(response.getEntity());
-			if(result.length()<=0) {tabInfosEndereco.setDisable(true);}
+			if(result.length()<=0) {
+				tabInfosEndereco.setDisable(true);
+				tabPaneInfos.getSelectionModel().select(1);
+			}
 			
 			obj = new JSONArray(result);
 			return obj;
@@ -617,7 +627,10 @@ public class TelaLocal extends Application {
 			
 			// se o result for vazio, desative a aba de infos do endereço
 			
-			if(result.length()<=0) {tabInfosEndereco.setDisable(true);}
+			if(result.length()<=0) {
+				tabPaneInfos.getSelectionModel().select(1);
+				tabInfosEndereco.setDisable(true);
+			}
 			
 			JSONArray obj = new JSONArray(result);
 			EnderecoComDescricao endereco;

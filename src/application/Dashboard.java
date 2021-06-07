@@ -250,13 +250,14 @@ public class Dashboard extends Application {
 
 	@FXML
 	void TrocarFotoPerfil(MouseEvent event) {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Defina uma imagem do local");
-		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-				new FileChooser.ExtensionFilter("PNG", "*.png"), new FileChooser.ExtensionFilter("ICO", "*.ico"));
-		File imagemEscolhida = fileChooser.showOpenDialog(this.primaryStage);
-		// armazeno o arquivo na pasta
 		try {
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle("Defina uma imagem do local");
+			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+					new FileChooser.ExtensionFilter("PNG", "*.png"), new FileChooser.ExtensionFilter("ICO", "*.ico"));
+			File imagemEscolhida = fileChooser.showOpenDialog(this.primaryStage);
+			// armazeno o arquivo na pasta
+			
 			String diretorioTmp = "C:\\lista\\usuarios\\" + imagemEscolhida.getName() + Util.getContaLogada().getId();
 			if (Util.verificaTamanhoImagem(4194304L, new File(imagemEscolhida.getAbsolutePath()))) {
 				Util.MessageBoxShow("Imagem muito grande", "A imagem é maior que 4Mb.");
@@ -271,12 +272,15 @@ public class Dashboard extends Application {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException fe) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
+			fe.printStackTrace();
+		} catch (IOException ie) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ie.printStackTrace();
+		}catch(NullPointerException ne) {
+			// fechar sem escolher arquivo
+			return;
 		}
 
 	}
