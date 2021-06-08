@@ -3,6 +3,27 @@
 	-fx-background-color: #090E11;
 }
 
+.radio-button
+{
+	-fx-text-fill: #ffffff;
+	-fx-font-family: 'Candara';
+	-fx-font-size: 14px;
+}
+
+.radio-button .radio
+{
+	-fx-background-color: #090E11;
+	-fx-border-color: #84ff00;
+	-fx-border-radius: 360;
+	-fx-dot-color: #84ff00;
+}
+
+.radio-button .dot
+{
+	-fx-mark-highlight-color: #84ff00;
+ 	-fx-mark-color: #84ff00;
+}
+
 .scroll-pane > .viewport {
    -fx-background-color: #090E11;
    -fx-border-width: 0px;

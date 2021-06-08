@@ -97,7 +97,7 @@ public class Dashboard extends Application {
 
 	// private ArrayList<Telefone> dadosTelefone = new ArrayList<Telefone>();
 
-	private String nome = "*", estado = "*", cidade = "*", numero = "*", email = "*", descricao = "*";
+	private String nome = "*", estado = "*", cidade = "*", numero = "*", email = "*", descricao = "*", tipo = "*";
 
 	private Stage primaryStage;
 
@@ -420,8 +420,8 @@ public class Dashboard extends Application {
 			if (tvTelefones.getSelectionModel().getSelectedItem() != null) {
 				// obt�m o telefone para obter o id do parceiro e id do local
 				TableViewUtil ret = tvTelefones.getSelectionModel().getSelectedItem();
-				Util.setTelefoneAtual(ret.getNumero());
-				String numero = Util.FormatarSetTelefone(ret.getNumero());
+				Util.setTelefoneAtual(ret);
+				String numero = Util.FormatarSetTelefone(ret.getNumero(), ret.getTipo());
 				String descricao = ret.getDescricao();
 				String idDono = null;
 				String idLugar = null;
@@ -540,7 +540,7 @@ public class Dashboard extends Application {
 				fpTelefones.getChildren().add(node);
 				continue;
 			}
-			if (Util.FormatarSetTelefone(Util.telefones.get(i).getNumero()).toLowerCase().contains(info) || 
+			if (Util.FormatarSetTelefone(Util.telefones.get(i).getNumero(), Util.telefones.get(i).getTipo()).toLowerCase().contains(info) || 
 					Util.telefones.get(i).getDescricao().toLowerCase().contains(info) ||
 					Util.enderecosAtuais.get(i).getNome().toLowerCase().contains(info))
 			{
@@ -617,7 +617,7 @@ public class Dashboard extends Application {
 	@FXML
 	private void AplicarFiltroDeDados() {
 		setQueryParameters();
-		AtualizarGridTelefones(API.doPostTelefone(new TableViewUtil(nome, numero, cidade, estado, email, descricao)));
+		AtualizarGridTelefones(API.doPostTelefone(new TableViewUtil(nome, numero, cidade, estado, email, descricao, tipo)));
 	}
 
 	private void AtualizarGridTelefones(ArrayList<Telefone> dados) {
@@ -654,7 +654,7 @@ public class Dashboard extends Application {
 					return true;
 				} else if (telefone.getEstado().toLowerCase().indexOf(lowerCaseFilter) != -1) {
 					return true;
-				} else if (Util.FormatarSetTelefone(telefone.getNumero().toLowerCase()).indexOf(lowerCaseFilter) != -1) {
+				} else if (Util.FormatarSetTelefone(telefone.getNumero().toLowerCase(), telefone.getTipo()).indexOf(lowerCaseFilter) != -1) {
 					return true;
 				} else if (telefone.getDescricao().toLowerCase().indexOf(lowerCaseFilter) != -1) {
 					return true;

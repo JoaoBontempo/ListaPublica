@@ -33,7 +33,7 @@ public final class Banco {
 	//private static String porta = "11050";
 
 	private static String porta = "3306";
-	//private static String porta = "13489";
+	//private static String porta = "19075";
 
 	// Biblioteca
 	private final static String DRIVE = "com.mysql.cj.jdbc.Driver";

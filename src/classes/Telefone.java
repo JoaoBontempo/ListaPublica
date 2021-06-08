@@ -6,6 +6,7 @@ public class Telefone {
 	private Endereco endereco;
 	private Parceiro parceiro;
 	private String descricao;
+	private String tipo;
 	
 	public String getNumero() {
 		return numero;
@@ -38,5 +39,11 @@ public class Telefone {
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 }

@@ -2,7 +2,7 @@ package classes;
 
 public class TableViewUtil {
 	
-	public TableViewUtil(String nome, String numero, String cidade, String estado, String email, String descricao)
+	public TableViewUtil(String nome, String numero, String cidade, String estado, String email, String descricao, String tipo)
 	{ 
 		this.email = email;
 		this.nome = nome;
@@ -44,6 +44,7 @@ public class TableViewUtil {
 	private String estado;
 	private String descricao;
 	private String email;
+	private String tipo;
 	
 	public String getNome() {
 		return nome;
@@ -52,7 +53,7 @@ public class TableViewUtil {
 		this.nome = nome;
 	}
 	public String getNumero() {
-		return Util.FormatarGetTelefone(numero);
+		return Util.FormatarGetTelefone(numero, tipo);
 	}
 	public void setNumero(String numero) {
 		this.numero = numero;
@@ -80,5 +81,13 @@ public class TableViewUtil {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 }
