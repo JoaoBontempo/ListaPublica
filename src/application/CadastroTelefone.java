@@ -97,6 +97,12 @@ public class CadastroTelefone extends Application{
 				return false;
 			if (!Validacao.verificarNumerosTextField(txtDDD))
 				return false;
+			if (txtDDD.getText().length() != 2)
+			{
+				Util.MessageBoxShow("Campo inválido", "O campo 'DDD' deve ter exatamente 2 números", AlertType.ERROR);
+				txtDDD.requestFocus();
+				return false;
+			}
 			if (!Validacao.verificarNumerosTextField(txtNumero))
 				return false;
 		}
