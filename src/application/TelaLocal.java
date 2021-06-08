@@ -496,16 +496,11 @@ public class TelaLocal extends Application {
 		txtRua.setText("N/D");
 		txtNumeroResidencia.setText("N/D");
 		txtNome.setText("N/D");
-		//txtDescricao.setText("N/D");
 		txtComentario.setText("N/D");
 		txtNomeCompleto.setText("N/D");
 		txtNomeUsuario.setText("N/D");
 		txtEmail.setText("N/D");
 		tabInfosEndereco.setDisable(true);
-		
-		// "clica" no tab infos
-//		SingleSelectionModel<Tab> selectionModel = tabPaneInfos.getSelectionModel();
-//		selectionModel.select(2);
 		
 		
 		tvComentarios.getItems().clear();

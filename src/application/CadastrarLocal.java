@@ -165,7 +165,7 @@ public class CadastrarLocal extends Application implements Initializable {
 						txtRua.getText(),txtNumeroResidencia.getText(),txtBairro.getText(),cmbEstados.getSelectionModel().getSelectedItem(),
 						cmbCidades.getSelectionModel().getSelectedItem(),txtNomeLocal.getText(),Integer.toString(Util.getContaLogada().getId()),
 						anexoImagem.length()>0?Util.converterStringParaBase64(anexoImagem):"");
-		System.out.println("Query de cadastro: "+query);
+		
 		try {
 			if(Banco.InserirQuery(query)) {
 				Util.MessageBoxShow("Cadastro realizado", "O seu novo endereço foi cadastrado com sucesso.",AlertType.INFORMATION);
@@ -214,7 +214,7 @@ public class CadastrarLocal extends Application implements Initializable {
 
 			for(int i =0; i < obj.length(); i++)
 			{
-				System.out.println(obj.getJSONObject(i).toString());
+				//System.out.println(obj.getJSONObject(i).toString());
 				estado = mapper.readValue(obj.getJSONObject(i).toString(), UF.class);
 				estados.add(estado);
 			}
@@ -233,13 +233,19 @@ public class CadastrarLocal extends Application implements Initializable {
     
     @FXML
     void escolherImagem(ActionEvent event) {
-    	FileChooser fileChooser = new FileChooser();
-    	fileChooser.setTitle("Defina uma imagem do local");
-    	fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-                new FileChooser.ExtensionFilter("PNG", "*.png"));
-    	File imagemEscolhida=fileChooser.showOpenDialog(this.primaryStage);
-    	txtCaminhoImagem.setText(imagemEscolhida.getAbsolutePath());
+    	try {
+    		FileChooser fileChooser = new FileChooser();
+        	fileChooser.setTitle("Defina uma imagem do local");
+        	fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                    new FileChooser.ExtensionFilter("PNG", "*.png"));
+        	File imagemEscolhida=fileChooser.showOpenDialog(this.primaryStage);
+        	txtCaminhoImagem.setText(imagemEscolhida.getAbsolutePath());	
+    	}catch(Exception e) {
+    		return;
+    	}
+    	
+    	
     }
     
     @FXML
@@ -263,7 +269,6 @@ public class CadastrarLocal extends Application implements Initializable {
 		ArrayList<Municipio> municipios = new ArrayList<Municipio>();
 		HttpClient httpClient = HttpClientBuilder.create().build();
 		int ret=idsEstado.get(cmbEstados.getSelectionModel().getSelectedIndex());
-		System.out.println("INDICE RETORNO: "+ret);
 		HttpGet httpGet = new HttpGet(String.format("https://servicodados.ibge.gov.br/api/v1/localidades/estados/%s/municipios",
 		idsEstado.get(cmbEstados.getSelectionModel().getSelectedIndex())));
 
@@ -332,7 +337,6 @@ public class CadastrarLocal extends Application implements Initializable {
 	
 	@FXML
     void verificarTeclaDeletar(KeyEvent event) {
-		System.out.println( txtCep.getText().length()-1);
 		if(event.getCode().toString().equals("BACK_SPACE") && (txtCep.getText().length()-1) == 0) {
 			txtCep.setTextFormatter(null);
 			txtCep.clear();
@@ -357,7 +361,7 @@ public class CadastrarLocal extends Application implements Initializable {
 		try {
 			if(cepSemFormato.length() == 8) {
 				JSONObject ret = Util.obtemInfosApiCep(cepSemFormato);
-				System.out.println(ret);
+				//System.out.println(ret);
 				txtBairro.setText(ret.getString("bairro"));
 				txtRua.setText(ret.getString("logradouro"));
 				cmbEstados.getSelectionModel().select(ret.getString("uf"));
@@ -377,8 +381,6 @@ public class CadastrarLocal extends Application implements Initializable {
 			idsEstado.add(estado.getId());
 			cmbEstados.getItems().add(estado.getSigla());
 		}
-		System.out.println("Tamanho idEstados: "+idsEstado.size());
-		
 		
 		txtCep.focusedProperty().addListener(new ChangeListener<Boolean>()
 		{
