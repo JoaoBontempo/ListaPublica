@@ -124,6 +124,9 @@ public class Dashboard extends Application {
 	private ImageView imgIconePerfil;
 
 	@FXML
+	private TableColumn<TableViewUtil, String> tvcTipo;
+	
+	@FXML
 	private TableColumn<TableViewUtil, String> tvcNome;
 
 	@FXML
@@ -556,6 +559,7 @@ public class Dashboard extends Application {
 		tvcNome.setCellValueFactory(new PropertyValueFactory("nome"));
 		tvcDescricao.setCellValueFactory(new PropertyValueFactory("descricao"));
 		tvcEstado.setCellValueFactory(new PropertyValueFactory("estado"));
+		tvcTipo.setCellValueFactory(new PropertyValueFactory("tipo"));
 		tvcEstado.setStyle("-fx-alignment: CENTER;");
 		tvcCidade.setCellValueFactory(new PropertyValueFactory("cidade"));
 		tvcCidade.setStyle("-fx-alignment: CENTER;");
@@ -603,7 +607,7 @@ public class Dashboard extends Application {
 			return;
 		AtualizarEnderecos();
 		ResultSet result = Banco.InserirQueryReader(
-				"SELECT id, numero, descricao, lugar FROM telefone WHERE dono = " + Util.getContaLogada().getId());
+				"SELECT id, numero, descricao, lugar, tipo FROM telefone WHERE dono = " + Util.getContaLogada().getId());
 		Util.nodos.clear();
 		Util.enderecosAtuais.clear();
 		fpTelefones.getChildren().clear();
@@ -616,6 +620,7 @@ public class Dashboard extends Application {
 			telefone.setNumero(result.getString("numero"));
 			telefone.setDescricao(result.getString("descricao"));
 			telefone.setId(result.getInt("id"));
+			telefone.setTipo(result.getString("tipo"));
 
 			Util.telefone = telefone;
 			Util.telefones.add(telefone);
@@ -661,6 +666,7 @@ public class Dashboard extends Application {
 	@FXML
 	private void AplicarFiltroDeDados() {
 		setQueryParameters();
+		System.out.println(tipo);
 		AtualizarGridTelefones(API.doPostTelefone(new TableViewUtil(nome, numero, cidade, estado, email, descricao, tipo)));
 	}
 

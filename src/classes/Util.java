@@ -183,6 +183,8 @@ public final class Util {
 	
 	public static String FormatarSetTelefone(String telefone, String tipo)
 	{
+		if (tipo.equals("outro"))
+			return telefone;
 		telefone = telefone.replace("(", "");
 		telefone = telefone.replace(")", "");
 		telefone = telefone.replace(" ", "");
@@ -206,12 +208,32 @@ public final class Util {
 		java.awt.Desktop.getDesktop().browse(new java.net.URI(url));
 	}
 	
+	private static String ColocarTracoTelefone(String telefone, int index)
+	{
+		String telFormatado = "";
+		for (int i = 0; i<telefone.length(); i++)
+		{
+			telFormatado += telefone.charAt(i);
+			if (index-1 == i)
+				telFormatado += "-";
+		}
+		return telFormatado;
+	}
+	
 	public static String FormatarGetTelefone(String telefone, String tipo)
 	{
+		if (tipo.equals("outro"))
+			return telefone;
 		if (telefone.length() <= 1)
 			return telefone;
 		String ddd = telefone.substring(0,2);
 		telefone = telefone.substring(2, telefone.length());
+		
+		if (tipo.equals("fixo"))
+			telefone = ColocarTracoTelefone(telefone, 4);
+		else
+			telefone = ColocarTracoTelefone(telefone, 5);
+		
 		return String.format("(%s) %s", ddd, telefone);
 	}
 	

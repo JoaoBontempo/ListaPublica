@@ -10,6 +10,7 @@ public class TableViewUtil {
 		this.cidade = cidade;
 		this.estado = estado;
 		this.descricao = descricao;
+		this.tipo = tipo;
 	}
 	
 	public TableViewUtil (String numero, String tipo)
@@ -42,6 +43,7 @@ public class TableViewUtil {
 		this.email = parceiro.getEmail();
 		this.nome = parceiro.getNome();
 		this.numero = telefone.getNumero();
+		this.tipo =  telefone.getTipo();
 	}
 	
 	private String nome;
