@@ -101,10 +101,10 @@ namespace ListaPublica.Controllers
         }
 
 
-        private string retornarQuerySQL(string numero, string nome, string email, string cidade, string estado, string descricao)
+        private string retornarQuerySQL(string numero, string nome, string email, string cidade, string estado, string descricao, string tipo)
         {
             string query = "SELECT telefone.*," +
-               "parceiro.id as idP, parceiro.nome as nomeP, parceiro.tipo, parceiro.usuario as usuarioP, parceiro.email, parceiro.cpf, parceiro.cnpj, " +
+               "parceiro.id as idP, parceiro.nome as nomeP, parceiro.tipo as tipoP, parceiro.usuario as usuarioP, parceiro.email, parceiro.cpf, parceiro.cnpj, " +
                "endereco.id as idE, endereco.rua, endereco.bairro, endereco.cidade, endereco.estado, endereco.nome as nomeE, endereco.numero as numeroE " +
                "FROM telefone " +
                "INNER JOIN parceiro ON telefone.dono = parceiro.id " +
@@ -115,16 +115,17 @@ namespace ListaPublica.Controllers
             email = email.Equals("*") ? "" : String.Format("AND parceiro.email LIKE  '%{0}%'", email);
             cidade = cidade.Equals("*") ? "" : String.Format("AND endereco.cidade = '{0}'", cidade);
             estado = estado.Equals("*") ? "" : String.Format("AND endereco.estado = '{0}'", estado);
+            tipo = tipo.Equals("*") ? "" : String.Format("AND telefone.tipo = '{0}'", tipo);
             descricao = descricao.Equals("*") ? "" : String.Format("AND telefone.descricao LIKE '%{0}%' ", descricao);
 
-            query += String.Format("{0} {1} {2} {3} {4} {5} ORDER BY telefone.id DESC", nome, email, estado, cidade, numero, descricao);
+            query += String.Format("{0} {1} {2} {3} {4} {5} {6} ORDER BY telefone.id DESC", nome, email, estado, cidade, numero, descricao, tipo);
             return query;
         }
 
         [HttpPost("getFiltro")]
         public IList<Telefone> getTelefoneFiltro(TableViewUtil dados)
         {
-            return BuscarInfosBanco(retornarQuerySQL(dados.numero, dados.nome, dados.email, dados.cidade, dados.estado, dados.descricao));
+            return BuscarInfosBanco(retornarQuerySQL(dados.numero, dados.nome, dados.email, dados.cidade, dados.estado, dados.descricao, dados.tipo));
         }
 
         private IList<Telefone> BuscarInfosBanco(string query)
@@ -156,7 +157,7 @@ namespace ListaPublica.Controllers
 
                 Parceiro parceiro = new Parceiro();
                 parceiro.id = Banco.reader.GetInt32("idP");
-                parceiro.tipo = Convert.ToBoolean(Banco.reader.GetInt32("tipo"));
+                parceiro.tipo = Convert.ToBoolean(Banco.reader.GetInt32("tipoP"));
                 if (parceiro.tipo)
                     parceiro.cnpj = Banco.reader.GetString("cnpj");
                 else
@@ -171,6 +172,7 @@ namespace ListaPublica.Controllers
                 telefone.descricao = Banco.reader.GetString("descricao");
                 telefone.id = Banco.reader.GetInt32("id");
                 telefone.numero = Banco.reader.GetString("numero");
+                telefone.tipo = Banco.reader.GetString("tipo");
                 //parceiro.telefones.Add(telefone);
 
                 telefone.parceiro = parceiro;

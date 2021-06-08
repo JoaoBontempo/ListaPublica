@@ -12,6 +12,12 @@ public class TableViewUtil {
 		this.descricao = descricao;
 	}
 	
+	public TableViewUtil (String numero, String tipo)
+	{
+		this.tipo = tipo;
+		this.numero = numero;
+	}
+	
 	public TableViewUtil(TableViewUtil tbl) {
 		this.email = tbl.email;
 		this.nome = tbl.nome;

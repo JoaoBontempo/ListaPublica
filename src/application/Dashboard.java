@@ -64,6 +64,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -223,9 +224,52 @@ public class Dashboard extends Application {
 
 	@FXML
 	private FlowPane fpTelefones;
+	
+    @FXML
+    private RadioButton rbtnQualquer0;
+
+    @FXML
+    private RadioButton rbtnCelular1;
+    
+    @FXML
+    private RadioButton rbtnOutro3;
+
+    @FXML
+    private RadioButton rbtnFixo2;
 
 	public FlowPane getFpTelefones() {
 		return fpTelefones;
+	}
+	
+	private void TrocarTipo(int tipo)
+	{
+		switch (tipo)
+		{
+			case 0:
+				this.tipo = "*";
+				break;
+				
+			case 1:
+				this.tipo = "celular";
+				break;
+				
+			case 2:
+				this.tipo = "fixo";
+				break;
+				
+			case 3:
+				this.tipo = "outro";
+				break;
+		}
+	}
+	
+	@FXML
+	public void TrocarRadioButtons(Event e)
+	{
+		RadioButton selected = (RadioButton)e.getSource();
+		int num = Integer.parseInt(String.valueOf(selected.getId().charAt(selected.getId().length()-1)));
+		Util.ChangeRadioButtons(new RadioButton[] {rbtnQualquer0, rbtnCelular1, rbtnFixo2, rbtnOutro3}, num);
+		TrocarTipo(num);
 	}
 
 	@FXML

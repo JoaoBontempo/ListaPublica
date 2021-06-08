@@ -63,6 +63,7 @@ public final class API {
 		js.put("estado", queryFilter.getEstado());
 		js.put("email", queryFilter.getEmail());
 		js.put("descricao", queryFilter.getDescricao());
+		js.put("tipo", queryFilter.getTipo());
 		System.out.println(js.toString());
 
 		try {

@@ -37,6 +37,7 @@ import classes.Denuncia;
 import classes.Endereco;
 import classes.EnderecoComDescricao;
 import classes.Parceiro;
+import classes.TableViewUtil;
 import classes.Telefone;
 import classes.TelefoneNumero;
 import classes.Util;
@@ -266,7 +267,7 @@ public class TelaLocal extends Application {
 	@FXML
 	public void ChamarNumeroWhatsApp() throws IOException, URISyntaxException
 	{
-		Util.ChamarNumeroWhatsApp(Util.FormatarSetTelefone(Util.getTelefoneAtual()));
+		Util.ChamarNumeroWhatsApp(Util.FormatarSetTelefone(Util.getTelefoneAtual().getNumero(), Util.getTelefoneAtual().getTipo()));
 	}
 	
 	private void atualizarComentarios() throws IOException {
@@ -407,15 +408,15 @@ public class TelaLocal extends Application {
 	            	TelefoneNumero numero=tvTelefone.getSelectionModel().getSelectedItem();
 	            	
 	            	try {
-	            		String telefone=numero.getNumero();
-	            		idDono=Util.recuperarIdDonoAtravesTelefone(telefone);
-	            		Util.setTelefoneAtual(telefone);
-	            		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", Util.FormatarGetTelefone(Util.getTelefoneAtual())));
-	                	String url="http://localhost:5000/ListaPublica/getUserAddress/"+telefone;
+	            		//String telefone=numero.getNumero();
+	            		idDono=Util.recuperarIdDonoAtravesTelefone(numero.getNumero());
+	            		Util.setTelefoneAtual(new TableViewUtil(numero.getNumero(), numero.getTipo()));
+	            		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", Util.FormatarGetTelefone(Util.getTelefoneAtual().getNumero(), Util.getTelefoneAtual().getTipo())));
+	                	String url="http://localhost:5000/ListaPublica/getUserAddress/" + numero.getNumero();
 	                	JSONArray array=null;
 	                	JSONObject objeto=null;
 	                	try {
-	                		id_telefone=Util.RecuperarIdTelefonePorTelefone(telefone);
+	                		id_telefone=Util.RecuperarIdTelefonePorTelefone(numero.getNumero());
 		            		
 	                		// verifica se o telefone possui descrição
 		            		verificaDescricaoTelefone(id_telefone);
@@ -432,9 +433,9 @@ public class TelaLocal extends Application {
 	                	}
 	                	
 	                	if(objeto.getString("imagem").length()>0) {
-	                		conteudoImagem=objeto.getString("imagem");
-	                		possuiImagem=true;
-	                		fileName=telefone+=".jpg";
+	                		conteudoImagem = objeto.getString("imagem");
+	                		possuiImagem = true;
+	                		fileName = numero.getNumero() + ".jpg";
 	                		Util.verificaExistenciaImagem(fileName, conteudoImagem.getBytes(), true);
 	                		imgLocal.setImage(new Image("file:///C:/lista/locais/"+fileName));
 	                	}
@@ -551,7 +552,8 @@ public class TelaLocal extends Application {
 		
 		// inicia a api
 		iniciaApi();
-		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", Util.FormatarGetTelefone(Util.FormatarSetTelefone(Util.getTelefoneAtual()))));
+		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", 
+	    Util.FormatarGetTelefone(Util.FormatarSetTelefone(Util.getTelefoneAtual().getNumero(), Util.getTelefoneAtual().getTipo()), Util.getTelefoneAtual().getTipo())));
 	}
 
 	@FXML
@@ -603,7 +605,7 @@ public class TelaLocal extends Application {
 		String telefone="";
 		
 		// jogar a função abaixo
-		telefone=Util.FormatarSetTelefone(UtilDashboard.getNumeroTelefone());
+		telefone=Util.FormatarSetTelefone(UtilDashboard.getNumeroTelefone(), Util.getTelefoneAtual().getTipo());
 		
 		
 		String url = "http://localhost:5000/ListaPublica/getUserAddress/" + telefone;
