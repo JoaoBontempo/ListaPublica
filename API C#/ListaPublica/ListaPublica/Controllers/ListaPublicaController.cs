@@ -17,7 +17,7 @@ namespace ListaPublica.Controllers
         public IList<Telefone> getLastPhones(int qntd)
         {
             return BuscarInfosBanco("SELECT telefone.*," +
-               "parceiro.id as idP, parceiro.nome as nomeP, parceiro.tipo, parceiro.usuario as usuarioP, parceiro.email, parceiro.cpf, parceiro.cnpj, " +
+               "parceiro.id as idP, parceiro.nome as nomeP, parceiro.tipo as tipoP, parceiro.usuario as usuarioP, parceiro.email, parceiro.cpf, parceiro.cnpj, " +
                "endereco.id as idE, endereco.rua, endereco.bairro, endereco.cidade, endereco.estado, endereco.nome as nomeE, endereco.numero as numeroE " +
                "FROM telefone " +
                "INNER JOIN parceiro ON telefone.dono = parceiro.id " +
