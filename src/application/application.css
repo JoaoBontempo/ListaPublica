@@ -18,6 +18,11 @@
 	-fx-dot-color: #84ff00;
 }
 
+.radio-button:focused .radio
+{
+	-fx-border-color: yellow;
+}
+
 .radio-button .dot
 {
 	-fx-mark-highlight-color: #84ff00;
@@ -222,6 +227,12 @@
 	-fx-text-fill: #84ff00;
 }
 
+.button:focused
+{
+	-fx-border-color: yellow;
+	-fx-text-fill: yellow;
+}
+
 .separatorHorizontal .line
 {
 	-fx-border-style: solid;
@@ -252,7 +263,7 @@
 	-fx-font-weight: Normal;
 	-fx-font-size: 14px;
 	-fx-font-family: 'Cardano';
-	-fx-border-width: 2px;
+	-fx-border-width: 1px;
 	-fx-border-color: #84ff00;
 	-fx-text-fill: #ffffff;
 }
@@ -285,7 +296,9 @@
 	-fx-font-size: 14px;
 	-fx-font-family: 'Cardano';
 	-fx-text-fill: #ffffff;
+	-fx-border-width: 1px;
 }
+
 
 .text-field
 {
@@ -423,42 +436,21 @@
 	-fx-background-color: #090E11;
 }
 
-.text-areaComentario
+.text-areaComment
 {
 	-fx-background-color: #090E11;
-	-fx-font-weight: Normal;
-	-fx-font-size: 14px;
-	-fx-font-family: 'Cardano';
+	-fx-border-color: #090E11;
 	-fx-border-width: 0px;
-	-fx-text-fill: #ffffff;
 }
 
-.text-areaComentario .scroll-bar .thumb
+.text-areaComment .scroll-pane
 {
-    -fx-background-color: #090E11;
-    -fx-border-color: #84ff00;
+	-fx-border-color: #090E11;
 }
 
-.text-areaComentario .scroll-bar .increment-button,
-.text-areaComentario .scroll-bar .decrement-button{
-	-fx-background-color: #090E11;
-}
-
-.text-areaComentario .scroll-bar .increment-arrow,
-.text-areaComentario .scroll-bar .decrement-arrow {
-    -fx-background-color: #84ff00;
-}
-
-.text-areaComentario .scroll-bar
+.text-areaComment .content
 {
+	-fx-border-color: #090E11;
 	-fx-background-color: #090E11;
-}
-
-.text-areaComentario .content
-{
-	-fx-background-color: #090E11;
-	-fx-font-weight: Normal;
-	-fx-font-size: 14px;
-	-fx-font-family: 'Cardano';
-	-fx-text-fill: #ffffff;
+	-fx-border-width: 0px;
 }
