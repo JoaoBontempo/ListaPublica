@@ -17,6 +17,11 @@ public class TelefoneNumero {
 		this.numero = numero;
 	}
 
+	public TelefoneNumero(String numero, String tipo) {
+		this.numero = numero;
+		this.tipo = tipo;
+	}
+
 	public void setNumero(String numero) {
 		this.numero = numero;
 	}

@@ -111,6 +111,8 @@ public class TelaLocal extends Application {
 	
 	@FXML
     private TableView<TelefoneNumero> tvTelefone;
+    @FXML
+    private TableColumn<TelefoneNumero, String> tvcTipo;
 	
 	@FXML
     private Tab tabInfosEndereco;
@@ -411,7 +413,7 @@ public class TelaLocal extends Application {
 	            		//String telefone=numero.getNumero();
 	            		idDono=Util.recuperarIdDonoAtravesTelefone(numero.getNumero());
 	            		Util.setTelefoneAtual(new TableViewUtil(numero.getNumero(), numero.getTipo()));
-	            		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", Util.FormatarGetTelefone(Util.getTelefoneAtual().getNumero(), Util.getTelefoneAtual().getTipo())));
+	            		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", Util.FormatarGetTelefone(numero.getNumero(), numero.getTipo())));
 	                	String url="http://localhost:5000/ListaPublica/getUserAddress/" + numero.getNumero();
 	                	JSONArray array=null;
 	                	JSONObject objeto=null;
@@ -462,6 +464,7 @@ public class TelaLocal extends Application {
 	                	
 	            	}catch(JSONException | NullPointerException e) {
 	            		// não faça nada, pois se entrar aqui é pq o array não tem posições, então ignore.
+	            		e.printStackTrace();
 	            	} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -523,6 +526,8 @@ public class TelaLocal extends Application {
 		caracteresProibidosComentario=Arrays.asList("'");
 		
 		tvcTelefone.setCellValueFactory(new PropertyValueFactory("numero"));
+		tvcTipo.setCellValueFactory(new PropertyValueFactory("tipo"));
+
 		
 		// verifica se está logado ou não (caso esteja logado apareça o pane de textbox e button)
 		if(Util.getContaLogada() != null) {

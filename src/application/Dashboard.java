@@ -492,13 +492,13 @@ public class Dashboard extends Application {
 					UtilDashboard.setNumeroTelefone(numero);
 					UtilDashboard.setIdTelefone(Util.RecuperarIdTelefonePorTelefone(numero));
 
-					query = "select numero from telefone where dono=" + idDono + ";";
+					query = "select numero, tipo from telefone where dono=" + idDono + ";";
 					Banco.InserirQueryReader(query);
 
 					UtilDashboard.getTelefones().clear();
 					while (Banco.getReader().next()) {
 						try {
-							UtilDashboard.getTelefones().add(new TelefoneNumero(Banco.getReader().getString("numero")));
+							UtilDashboard.getTelefones().add(new TelefoneNumero(Banco.getReader().getString("numero"), Banco.getReader().getString("tipo")));
 						} catch (Exception exc) {
 							exc.printStackTrace();
 						}

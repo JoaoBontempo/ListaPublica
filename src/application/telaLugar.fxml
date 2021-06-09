@@ -144,6 +144,7 @@
                         <TableView fx:id="tvTelefone" layoutX="12.0" layoutY="427.0" onMouseClicked="#abrirDescricaoDetalhada" prefHeight="228.0" prefWidth="427.0">
                           <columns>
                             <TableColumn fx:id="tvcTelefone" prefWidth="75.0" text="Telefone(s)" />
+                              <TableColumn fx:id="tvcTipo" prefWidth="75.0" text="Telefone(s)" visible="false" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
