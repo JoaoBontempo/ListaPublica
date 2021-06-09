@@ -248,9 +248,6 @@ public class TelaLocal extends Application {
 					"'"+LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+"','"+comentario+"');";
 			Banco.InserirQuery(query);
 			AtualizarComentarioUtil(Util.getContaLogada().getUsuario(), LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), comentario);
-//			TelaComentario comentarioTela = new TelaComentario();
-//			comentarioTela.setPane(this.vboxComentarios);
-//			comentarioTela.loadFxml();
 			atualizarComentarios();
 			txtComentario.clear();
 		} catch (SQLException e) {
@@ -414,11 +411,13 @@ public class TelaLocal extends Application {
 	            		idDono=Util.recuperarIdDonoAtravesTelefone(numero.getNumero());
 	            		Util.setTelefoneAtual(new TableViewUtil(numero.getNumero(), numero.getTipo()));
 	            		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", Util.FormatarGetTelefone(numero.getNumero(), numero.getTipo())));
-	                	String url="http://localhost:5000/ListaPublica/getUserAddress/" + numero.getNumero();
+	            		
+	            		String numeroStr=numero.getNumero().replace('\s', '+');
+	                	String url="http://localhost:5000/ListaPublica/getUserAddress/" + numeroStr;
 	                	JSONArray array=null;
 	                	JSONObject objeto=null;
 	                	try {
-	                		id_telefone=Util.RecuperarIdTelefonePorTelefone(numero.getNumero());
+	                		id_telefone=Util.RecuperarIdTelefonePorTelefone(numeroStr);
 		            		
 	                		// verifica se o telefone possui descrição
 		            		verificaDescricaoTelefone(id_telefone);
@@ -579,7 +578,6 @@ public class TelaLocal extends Application {
 	}
 
 	JSONArray requisicaoGenerica(String url) {
-		System.out.println("URL: "+url);
 		ObjectMapper mapper = new ObjectMapper();
 		String link = url;
 		HttpGet get = new HttpGet(url);

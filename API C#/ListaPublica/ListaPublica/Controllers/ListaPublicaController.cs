@@ -30,8 +30,8 @@ namespace ListaPublica.Controllers
         public IList<EnderecoComDescricao> getUserAddress(String telefone)
         {
             IList<EnderecoComDescricao> enderecos = new List<EnderecoComDescricao>();
-            //string query = "select distinct e.rua,e.numero,e.bairro,e.estado,e.cidade,e.nome,e.imagem,t.descricao,t.dono,t.numero"
-            //  +" from endereco as e , telefone as t INNER JOIN endereco ON(t.dono="+idDono+") WHERE t.numero LIKE '%"+telefone+"%';";
+
+            telefone = telefone.Replace("+", " ");
 
             string queryObtemIdLocal = "select lugar from telefone where numero='" + telefone + "';"; // obtem o id do local associado ao telefone X
 

@@ -116,7 +116,8 @@ public final class Util {
 
 	public static int RecuperarIdTelefonePorTelefone(String telefone) {
 		try {
-			Banco.InserirQueryReader("select id from telefone where numero="+telefone+";");
+			telefone=telefone.replace('+', '\s');
+			Banco.InserirQueryReader("select id from telefone where numero='"+telefone+"';");
 			if(Banco.getReader().next()) {
 				return Banco.getReader().getInt("id");
 			}
