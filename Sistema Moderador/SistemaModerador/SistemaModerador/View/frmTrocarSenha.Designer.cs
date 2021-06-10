@@ -64,6 +64,7 @@ namespace SistemaModerador.View
             this.txtNovaSenha.Size = new System.Drawing.Size(240, 27);
             this.txtNovaSenha.TabIndex = 22;
             this.txtNovaSenha.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtNovaSenha.TextChanged += new System.EventHandler(this.txtNovaSenha_TextChanged);
             // 
             // label3
             // 

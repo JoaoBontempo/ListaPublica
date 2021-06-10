@@ -18,11 +18,12 @@ namespace SistemaModerador.View
             InitializeComponent();
         }
 
-        private void txtConfirmarSenha_TextChanged(object sender, EventArgs e)
+        private void VerificarSenhas()
         {
-            if (String.IsNullOrEmpty(txtConfirmarSenha.Text))
+            if (String.IsNullOrEmpty(txtConfirmarSenha.Text) || String.IsNullOrEmpty(txtNovaSenha.Text))
             {
                 lbConfirmarSenha.Hide();
+                btnConfirmar.Enabled = false;
                 pnlConfirmarSenha.Hide();
                 return;
             }
@@ -30,18 +31,23 @@ namespace SistemaModerador.View
             pnlConfirmarSenha.Show();
             if (txtConfirmarSenha.Text.Equals(txtNovaSenha.Text))
             {
-                lbConfirmarSenha.Text = "As senha coincidem";
+                lbConfirmarSenha.Text = "As senhas coincidem";
                 lbConfirmarSenha.ForeColor = Color.Green;
                 pnlConfirmarSenha.BackColor = Color.Green;
                 btnConfirmar.Enabled = true;
             }
             else
             {
-                lbConfirmarSenha.Text = "As não senhas coincidem";
+                lbConfirmarSenha.Text = "As senhas não coincidem";
                 lbConfirmarSenha.ForeColor = Color.Red;
                 pnlConfirmarSenha.BackColor = Color.Red;
                 btnConfirmar.Enabled = false;
             }
+        }
+
+        private void txtConfirmarSenha_TextChanged(object sender, EventArgs e)
+        {
+            VerificarSenhas();
         }
 
         private void btnAtualizar_Click(object sender, EventArgs e)
@@ -60,6 +66,11 @@ namespace SistemaModerador.View
 
             if (confirmacao.getResposta() == -1)
                 this.Close();
+        }
+
+        private void txtNovaSenha_TextChanged(object sender, EventArgs e)
+        {
+            VerificarSenhas();
         }
     }
 }
