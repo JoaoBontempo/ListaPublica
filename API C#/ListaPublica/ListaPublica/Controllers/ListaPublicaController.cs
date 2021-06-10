@@ -32,7 +32,6 @@ namespace ListaPublica.Controllers
             IList<EnderecoComDescricao> enderecos = new List<EnderecoComDescricao>();
 
             telefone = telefone.Replace("+", " ");
-
             string queryObtemIdLocal = "select lugar from telefone where numero='" + telefone + "';"; // obtem o id do local associado ao telefone X
 
             Banco.AbreConexao();

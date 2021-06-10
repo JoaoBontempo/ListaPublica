@@ -611,7 +611,8 @@ public class TelaLocal extends Application {
 		telefone=Util.FormatarSetTelefone(UtilDashboard.getNumeroTelefone(), Util.getTelefoneAtual().getTipo());
 		
 		
-		String url = "http://localhost:5000/ListaPublica/getUserAddress/" + telefone;
+		String numeroStr=telefone.replace('\s', '+');
+		String url = "http://localhost:5000/ListaPublica/getUserAddress/" + numeroStr;
 		HttpGet get = new HttpGet(url);
 
 		try {

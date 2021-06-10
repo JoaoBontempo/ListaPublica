@@ -376,3 +376,6 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 src/classes/Banco.java
+API C#/ListaPublica/ListaPublica/Classes/Banco.cs
+src/classes/Banco.java
+Sistema Moderador/SistemaModerador/SistemaModerador/Classes/Banco.cs
