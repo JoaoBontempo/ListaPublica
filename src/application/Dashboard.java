@@ -64,6 +64,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -97,7 +98,7 @@ public class Dashboard extends Application {
 
 	// private ArrayList<Telefone> dadosTelefone = new ArrayList<Telefone>();
 
-	private String nome = "*", estado = "*", cidade = "*", numero = "*", email = "*", descricao = "*";
+	private String nome = "*", estado = "*", cidade = "*", numero = "*", email = "*", descricao = "*", tipo = "*";
 
 	private Stage primaryStage;
 
@@ -125,6 +126,9 @@ public class Dashboard extends Application {
 	@FXML
 	private ImageView imgIconePerfil;
 
+	@FXML
+	private TableColumn<TableViewUtil, String> tvcTipo;
+	
 	@FXML
 	private TableColumn<TableViewUtil, String> tvcNome;
 
@@ -156,7 +160,7 @@ public class Dashboard extends Application {
 	private TextField txtEmail;
 
 	@FXML
-	private TextField txtDescrição;
+	private TextField txtDescriÃ§Ã£o;
 
 	@FXML
 	private Button btnNovoTelefone;
@@ -231,17 +235,59 @@ public class Dashboard extends Application {
 	private FlowPane fpEndereco;
 	
 
+    @FXML
+    private RadioButton rbtnQualquer0;
+
+    @FXML
+    private RadioButton rbtnCelular1;
+    
+    @FXML
+    private RadioButton rbtnOutro3;
+
+    @FXML
+    private RadioButton rbtnFixo2;
 
 	public FlowPane getFpTelefones() {
 		return fpTelefones;
 	}
+	
+	private void TrocarTipo(int tipo)
+	{
+		switch (tipo)
+		{
+			case 0:
+				this.tipo = "*";
+				break;
+				
+			case 1:
+				this.tipo = "celular";
+				break;
+				
+			case 2:
+				this.tipo = "fixo";
+				break;
+				
+			case 3:
+				this.tipo = "outro";
+				break;
+		}
+	}
+	
+	@FXML
+	public void TrocarRadioButtons(Event e)
+	{
+		RadioButton selected = (RadioButton)e.getSource();
+		int num = Integer.parseInt(String.valueOf(selected.getId().charAt(selected.getId().length()-1)));
+		Util.ChangeRadioButtons(new RadioButton[] {rbtnQualquer0, rbtnCelular1, rbtnFixo2, rbtnOutro3}, num);
+		TrocarTipo(num);
+	}
 
 	@FXML
 	void ExcluirFotoPerfil(MouseEvent event) {
-		// Troca a foto para o padrão
+		// Troca a foto para o padrï¿½o
 		// como ele faz isso:
-		// joga como vazio o campo de imagem do usuário, pois caso for vazio o sistema
-		// saberá que o ícone é padrão
+		// joga como vazio o campo de imagem do usuï¿½rio, pois caso for vazio o sistema
+		// saberï¿½ que o ï¿½cone ï¿½ padrï¿½o
 		try {
 			Banco.InserirQuery("update parceiro set imagem='' where id=" + Util.getContaLogada().getId() + ";");
 			trocaFotoPerfilParaOPadrao(); // atualiza
@@ -258,16 +304,17 @@ public class Dashboard extends Application {
 
 	@FXML
 	void TrocarFotoPerfil(MouseEvent event) {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Defina uma imagem do local");
-		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-				new FileChooser.ExtensionFilter("PNG", "*.png"), new FileChooser.ExtensionFilter("ICO", "*.ico"));
-		File imagemEscolhida = fileChooser.showOpenDialog(this.primaryStage);
-		// armazeno o arquivo na pasta
 		try {
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle("Defina uma imagem do local");
+			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+					new FileChooser.ExtensionFilter("PNG", "*.png"), new FileChooser.ExtensionFilter("ICO", "*.ico"));
+			File imagemEscolhida = fileChooser.showOpenDialog(this.primaryStage);
+			// armazeno o arquivo na pasta
+			
 			String diretorioTmp = "C:\\lista\\usuarios\\" + imagemEscolhida.getName() + Util.getContaLogada().getId();
 			if (Util.verificaTamanhoImagem(4194304L, new File(imagemEscolhida.getAbsolutePath()))) {
-				Util.MessageBoxShow("Imagem muito grande", "A imagem é maior que 4Mb.");
+				Util.MessageBoxShow("Imagem muito grande", "A imagem ï¿½ maior que 4Mb.");
 				return;
 			}
 
@@ -279,12 +326,15 @@ public class Dashboard extends Application {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException fe) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
+			fe.printStackTrace();
+		} catch (IOException ie) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ie.printStackTrace();
+		}catch(NullPointerException ne) {
+			// fechar sem escolher arquivo
+			return;
 		}
 
 	}
@@ -294,7 +344,7 @@ public class Dashboard extends Application {
 		try {
 			id = Util.getContaLogada().getId();
 		} catch (NullPointerException e) {
-			// usuário está no modo convidado
+			// usuï¿½rio estï¿½ no modo convidado
 			return;
 		}
 		boolean possuiIcone = false;
@@ -342,12 +392,12 @@ public class Dashboard extends Application {
 			if (Banco.InserirQuery(String.format("UPDATE parceiro set email = '%s' where id = %s", txtMCEmail.getText(),
 					Util.getContaLogada().getId()))) {
 
-				Util.MessageBoxShow("Alteração de Dados", "Email alterado com sucesso!");
+				Util.MessageBoxShow("Alteraï¿½ï¿½o de Dados", "Email alterado com sucesso!");
 				Util.getContaLogada().setEmail(txtMCEmail.getText());
 
 			} else {
 
-				Util.MessageBoxShow("Alteração de Dados", "Verifique se o E-mail inserido é válido!",
+				Util.MessageBoxShow("Alteraï¿½ï¿½o de Dados", "Verifique se o E-mail inserido ï¿½ vï¿½lido!",
 						AlertType.WARNING);
 			}
 		}
@@ -360,9 +410,9 @@ public class Dashboard extends Application {
 	void AlterarSenha(ActionEvent event) {
 		Codigo = RecuperarSenha.gerarCodigo(0, "", new Random().nextInt(9));
 
-		if (Email.enviarEmail("O seu código de acesso é " + Codigo, "Troca de Senha",
+		if (Email.enviarEmail("O seu cï¿½digo de acesso ï¿½ " + Codigo, "Troca de Senha",
 				Util.getContaLogada().getEmail())) {
-			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o código de alteração ao seu E-mail! ");
+			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o cï¿½digo de alteraï¿½ï¿½o ao seu E-mail! ");
 			txtMCCodigo.requestFocus();
 		}
 	}
@@ -412,7 +462,7 @@ public class Dashboard extends Application {
 		}
 	}
 
-	// esse método vai obter o ID do usuário que pertence ao lugar clicado e abrir a
+	// esse mï¿½todo vai obter o ID do usuï¿½rio que pertence ao lugar clicado e abrir a
 	// janela de Tela, mostrando as infos detalhadas e todos os
 	// telefones associados ao mesmo.
 	@FXML
@@ -424,8 +474,8 @@ public class Dashboard extends Application {
 			if (tvTelefones.getSelectionModel().getSelectedItem() != null) {
 				// obtï¿½m o telefone para obter o id do parceiro e id do local
 				TableViewUtil ret = tvTelefones.getSelectionModel().getSelectedItem();
-				Util.setTelefoneAtual(ret.getNumero());
-				String numero = Util.FormatarSetTelefone(ret.getNumero());
+				Util.setTelefoneAtual(ret);
+				String numero = Util.FormatarSetTelefone(ret.getNumero(), ret.getTipo());
 				String descricao = ret.getDescricao();
 				String idDono = null;
 				String idLugar = null;
@@ -449,13 +499,13 @@ public class Dashboard extends Application {
 					UtilDashboard.setNumeroTelefone(numero);
 					UtilDashboard.setIdTelefone(Util.RecuperarIdTelefonePorTelefone(numero));
 
-					query = "select numero from telefone where dono=" + idDono + ";";
+					query = "select numero, tipo from telefone where dono=" + idDono + ";";
 					Banco.InserirQueryReader(query);
 
 					UtilDashboard.getTelefones().clear();
 					while (Banco.getReader().next()) {
 						try {
-							UtilDashboard.getTelefones().add(new TelefoneNumero(Banco.getReader().getString("numero")));
+							UtilDashboard.getTelefones().add(new TelefoneNumero(Banco.getReader().getString("numero"), Banco.getReader().getString("tipo")));
 						} catch (Exception exc) {
 							exc.printStackTrace();
 						}
@@ -494,7 +544,7 @@ public class Dashboard extends Application {
 		}
 	}
 
-	// Método 'onLoad'
+	// Mï¿½todo 'onLoad'
 	public void initialize() throws SQLException, IOException {
 		verificaIconeUsuario();
 		Util.dashboard = this;
@@ -516,6 +566,7 @@ public class Dashboard extends Application {
 		tvcNome.setCellValueFactory(new PropertyValueFactory("nome"));
 		tvcDescricao.setCellValueFactory(new PropertyValueFactory("descricao"));
 		tvcEstado.setCellValueFactory(new PropertyValueFactory("estado"));
+		tvcTipo.setCellValueFactory(new PropertyValueFactory("tipo"));
 		tvcEstado.setStyle("-fx-alignment: CENTER;");
 		tvcCidade.setCellValueFactory(new PropertyValueFactory("cidade"));
 		tvcCidade.setStyle("-fx-alignment: CENTER;");
@@ -545,7 +596,7 @@ public class Dashboard extends Application {
 				fpTelefones.getChildren().add(node);
 				continue;
 			}
-			if (Util.FormatarSetTelefone(Util.telefones.get(i).getNumero()).toLowerCase().contains(info) || 
+			if (Util.FormatarSetTelefone(Util.telefones.get(i).getNumero(), Util.telefones.get(i).getTipo()).toLowerCase().contains(info) || 
 					Util.telefones.get(i).getDescricao().toLowerCase().contains(info) ||
 					Util.enderecosAtuais.get(i).getNome().toLowerCase().contains(info))
 			{
@@ -564,7 +615,7 @@ public class Dashboard extends Application {
 			return;
 		AtualizarEnderecos();
 		ResultSet result = Banco.InserirQueryReader(
-				"SELECT id, numero, descricao, lugar FROM telefone WHERE dono = " + Util.getContaLogada().getId());
+				"SELECT id, numero, descricao, lugar, tipo FROM telefone WHERE dono = " + Util.getContaLogada().getId());
 		Util.nodos.clear();
 		Util.enderecosAtuais.clear();
 		fpTelefones.getChildren().clear();
@@ -577,6 +628,7 @@ public class Dashboard extends Application {
 			telefone.setNumero(result.getString("numero"));
 			telefone.setDescricao(result.getString("descricao"));
 			telefone.setId(result.getInt("id"));
+			telefone.setTipo(result.getString("tipo"));
 
 			Util.telefone = telefone;
 			Util.telefones.add(telefone);
@@ -643,7 +695,7 @@ public class Dashboard extends Application {
 		numero = Validacao.isNullOrEmpty(txtTelefone.getText()) ? "*" : txtTelefone.getText();
 		nome = Validacao.isNullOrEmpty(txtNome.getText()) ? "*" : txtNome.getText();
 		email = Validacao.isNullOrEmpty(txtEmail.getText()) ? "*" : txtEmail.getText();
-		descricao = Validacao.isNullOrEmpty(txtDescrição.getText()) ? "*" : txtDescrição.getText();
+		descricao = Validacao.isNullOrEmpty(txtDescriï¿½ï¿½o.getText()) ? "*" : txtDescriï¿½ï¿½o.getText();
 		cidade = cboxCidades.getSelectionModel().getSelectedIndex() == 0 ? "*"
 				: cboxCidades.getSelectionModel().getSelectedItem();
 		estado = cboxEstados.getSelectionModel().getSelectedIndex() == 0 ? "*"
@@ -660,13 +712,14 @@ public class Dashboard extends Application {
 	@FXML
 	private void AplicarFiltroDeDados() {
 		setQueryParameters();
-		AtualizarGridTelefones(API.doPostTelefone(new TableViewUtil(nome, numero, cidade, estado, email, descricao)));
+		System.out.println(tipo);
+		AtualizarGridTelefones(API.doPostTelefone(new TableViewUtil(nome, numero, cidade, estado, email, descricao, tipo)));
 	}
 
 	private void AtualizarGridTelefones(ArrayList<Telefone> dados) {
 		if (dados.size() == 0) {
 			Util.MessageBoxShow("Nenhum dado foi encontrado",
-					"Não foi possível encontrar nenhum dado.\n" + "Tente mudar as informações do filtro",
+					"Nï¿½o foi possï¿½vel encontrar nenhum dado.\n" + "Tente mudar as informaï¿½ï¿½es do filtro",
 					AlertType.WARNING);
 			return;
 		}
@@ -697,7 +750,7 @@ public class Dashboard extends Application {
 					return true;
 				} else if (telefone.getEstado().toLowerCase().indexOf(lowerCaseFilter) != -1) {
 					return true;
-				} else if (Util.FormatarSetTelefone(telefone.getNumero().toLowerCase()).indexOf(lowerCaseFilter) != -1) {
+				} else if (Util.FormatarSetTelefone(telefone.getNumero().toLowerCase(), telefone.getTipo()).indexOf(lowerCaseFilter) != -1) {
 					return true;
 				} else if (telefone.getDescricao().toLowerCase().indexOf(lowerCaseFilter) != -1) {
 					return true;
@@ -740,7 +793,7 @@ public class Dashboard extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Image icon = new Image("/Recursos/logo.png");
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("Lista Pública - Menu principal");
+			primaryStage.setTitle("Lista Pï¿½blica - Menu principal");
 			primaryStage.getIcons().add(icon);
 			primaryStage.setMaximized(true);
 			// root.getSelectionModel().selectedItemProperty().addListener((v, oldValue,

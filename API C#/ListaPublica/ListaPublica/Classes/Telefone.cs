@@ -10,6 +10,7 @@ namespace ListaPublica.Classes
         public int id { get; set; }
         public string numero { get; set; }
         public string descricao { get; set; }
+        public string tipo { get; set; }
         public Endereco endereco { get; set; }
         public Parceiro parceiro { get; set; }
     }

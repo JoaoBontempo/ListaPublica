@@ -1,6 +1,5 @@
 package classes;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -40,6 +39,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -68,7 +68,7 @@ public final class Util {
 	
 	private static Parceiro contaLogada;
 	private static Denuncia denunciAtual;
-	private static String telefoneAtual;
+	private static TableViewUtil telefoneAtual;
 
 	private static boolean convidado = false;
 
@@ -125,7 +125,8 @@ public final class Util {
 
 	public static int RecuperarIdTelefonePorTelefone(String telefone) {
 		try {
-			Banco.InserirQueryReader("select id from telefone where numero="+telefone+";");
+			telefone=telefone.replace('+', '\s');
+			Banco.InserirQueryReader("select id from telefone where numero='"+telefone+"';");
 			if(Banco.getReader().next()) {
 				return Banco.getReader().getInt("id");
 			}
@@ -190,11 +191,14 @@ public final class Util {
 		}
 	}
 	
-	public static String FormatarSetTelefone(String telefone)
+	public static String FormatarSetTelefone(String telefone, String tipo)
 	{
+		if (tipo.equals("outro"))
+			return telefone;
 		telefone = telefone.replace("(", "");
 		telefone = telefone.replace(")", "");
 		telefone = telefone.replace(" ", "");
+		telefone = telefone.replace("-", "");
 		return telefone;
 	}
 	
@@ -214,12 +218,32 @@ public final class Util {
 		java.awt.Desktop.getDesktop().browse(new java.net.URI(url));
 	}
 	
-	public static String FormatarGetTelefone(String telefone)
+	private static String ColocarTracoTelefone(String telefone, int index)
 	{
+		String telFormatado = "";
+		for (int i = 0; i<telefone.length(); i++)
+		{
+			telFormatado += telefone.charAt(i);
+			if (index-1 == i)
+				telFormatado += "-";
+		}
+		return telFormatado;
+	}
+	
+	public static String FormatarGetTelefone(String telefone, String tipo)
+	{
+		if (tipo.equals("outro"))
+			return telefone;
 		if (telefone.length() <= 1)
 			return telefone;
 		String ddd = telefone.substring(0,2);
 		telefone = telefone.substring(2, telefone.length());
+		
+		if (tipo.equals("fixo"))
+			telefone = ColocarTracoTelefone(telefone, 4);
+		else
+			telefone = ColocarTracoTelefone(telefone, 5);
+		
 		return String.format("(%s) %s", ddd, telefone);
 	}
 	
@@ -259,11 +283,11 @@ public final class Util {
 	public static void RecuperarInformacoesTelefoneAtual() throws SQLException
 	{
 		Telefone telefone = new Telefone();
-		ResultSet result = Banco.InserirQueryReader("SELECT * FROM telefone WHERE numero = '" + Util.FormatarSetTelefone(telefoneAtual)+"'");
+		ResultSet result = Banco.InserirQueryReader("SELECT * FROM telefone WHERE numero = '" + Util.FormatarSetTelefone(telefoneAtual.getNumero(), telefoneAtual.getTipo())+"'");
 		result.next();
 		telefone.setId(result.getInt("id"));
 		telefone.setDescricao(result.getString("descricao"));
-		telefone.setNumero(telefoneAtual);
+		telefone.setNumero(telefoneAtual.getNumero());
 		denunciAtual.setTelefone(telefone);
 	}
 
@@ -333,6 +357,17 @@ public final class Util {
 
 
 	}
+	
+	public static void ChangeRadioButtons(RadioButton[] buttons, int selected)
+	{
+		for (int i = 0; i < buttons.length; i++)
+		{
+			if (i == selected)
+				buttons[i].setSelected(true);
+			else
+				buttons[i].setSelected(false);
+		}
+	}
 
 	public static String criptografarSenha(String senha)
 	{
@@ -363,11 +398,11 @@ public final class Util {
 		Util.denunciAtual = denunciAtual;
 	}
 
-	public static String getTelefoneAtual() {
+	public static TableViewUtil getTelefoneAtual() {
 		return telefoneAtual;
 	}
 
-	public static void setTelefoneAtual(String telefoneAtual) {
+	public static void setTelefoneAtual(TableViewUtil telefoneAtual) {
 		Util.telefoneAtual = telefoneAtual;
 	}
 }

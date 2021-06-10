@@ -3,49 +3,53 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="448.0" prefWidth="500.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CadastroTelefone">
+<AnchorPane prefHeight="481.0" prefWidth="500.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CadastroTelefone">
    <children>
+      <RadioButton fx:id="rbtnFixo0" layoutX="30.0" layoutY="200.0" mnemonicParsing="false" onAction="#TrocarRadioButton" selected="true" text="Tel. fixo" AnchorPane.leftAnchor="15.0" />
+      <RadioButton fx:id="rbtnCelular1" layoutX="107.0" layoutY="200.0" mnemonicParsing="false" onAction="#TrocarRadioButton" text="Celular" />
+      <RadioButton fx:id="rbtnOutro2" layoutX="187.0" layoutY="200.0" mnemonicParsing="false" onAction="#TrocarRadioButton" text="Outro" AnchorPane.rightAnchor="250.0" />
+      <TextField fx:id="txtDDD" alignment="CENTER" layoutX="15.0" layoutY="221.0" prefHeight="34.0" prefWidth="80.0" styleClass="text-field2" AnchorPane.bottomAnchor="193.0" />
+      <TextField fx:id="txtNumero" layoutX="105.0" layoutY="221.0" prefHeight="34.0" prefWidth="279.0" promptText="Insira o número do telefone" styleClass="text-field2" AnchorPane.bottomAnchor="193.0" />
+      <ComboBox fx:id="cboxEndereco" layoutX="18.0" layoutY="283.0" prefHeight="32.0" prefWidth="369.0" AnchorPane.bottomAnchor="133.0" AnchorPane.leftAnchor="15.0" />
+      <TextField fx:id="txtDescrição" layoutX="18.0" layoutY="340.0" prefHeight="34.0" prefWidth="369.0" promptText="Uma breve descrição sobre o telefone..." styleClass="text-field2" AnchorPane.bottomAnchor="74.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
       <Label fx:id="lbTelefone" layoutX="97.0" layoutY="151.0" styleClass="labelVerde" text="Cadastrar novo telefone">
          <font>
             <Font name="System Bold" size="27.0" />
          </font>
       </Label>
-      <TextField fx:id="txtNumero" layoutX="107.0" layoutY="221.0" prefHeight="34.0" prefWidth="282.0" promptText="Insira o número do telefone" styleClass="text-field2" AnchorPane.bottomAnchor="193.0" AnchorPane.leftAnchor="107.0" />
-      <Label layoutX="107.0" layoutY="202.0" styleClass="labelVerde" text="Número" AnchorPane.bottomAnchor="226.0" AnchorPane.leftAnchor="107.0">
+      <Label fx:id="lbNumero" layoutX="105.0" layoutY="235.0" styleClass="labelVerde" text="Número" AnchorPane.bottomAnchor="226.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtDescrição" layoutX="18.0" layoutY="340.0" prefHeight="34.0" prefWidth="369.0" promptText="Uma breve descrição sobre o telefone..." styleClass="text-field2" AnchorPane.bottomAnchor="74.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
       <Label layoutX="18.0" layoutY="321.0" styleClass="labelVerde" text="Descrição" AnchorPane.bottomAnchor="107.0" AnchorPane.leftAnchor="15.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cboxEndereco" layoutX="18.0" layoutY="283.0" prefHeight="32.0" prefWidth="369.0" AnchorPane.bottomAnchor="133.0" AnchorPane.leftAnchor="15.0" />
       <Label layoutX="18.0" layoutY="263.0" styleClass="labelVerde" text="Endereço" AnchorPane.bottomAnchor="165.0" AnchorPane.leftAnchor="15.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ImageView fitHeight="114.0" fitWidth="289.0" layoutX="150.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="149.36000061035156">
-         <image>
-            <Image url="@../Recursos/logo_contornada.png" />
-         </image>
-      </ImageView>
       <Button fx:id="btnCadastrar" layoutX="15.0" layoutY="395.0" mnemonicParsing="false" onAction="#cadastrarTelefone" prefHeight="34.0" prefWidth="465.0" text="Cadastrar telefone" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <TextField fx:id="txtDDD" alignment="CENTER" layoutX="18.0" layoutY="221.0" prefHeight="34.0" prefWidth="80.0" styleClass="text-field2" AnchorPane.bottomAnchor="193.0" AnchorPane.leftAnchor="15.0" />
-      <Label layoutX="18.0" layoutY="202.0" styleClass="labelVerde" text="DDD" AnchorPane.bottomAnchor="226.0" AnchorPane.leftAnchor="15.0">
+      <ImageView fitHeight="114.0" fitWidth="289.0" layoutX="150.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="149.36000061035156">
+         <image>
+            <Image url="@../Recursos/logo_contornada.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lbDDD" layoutX="15.0" layoutY="202.0" styleClass="labelVerde" text="DDD" AnchorPane.bottomAnchor="226.0">
          <font>
             <Font size="14.0" />
          </font>

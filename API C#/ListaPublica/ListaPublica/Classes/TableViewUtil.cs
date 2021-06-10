@@ -13,5 +13,6 @@ namespace ListaPublica.Classes
         public string estado { get; set; }
         public string email { get; set; }
         public string descricao { get; set; }
+        public string tipo { get; set; }
     }
 }

@@ -58,11 +58,12 @@ public final class API {
 
 		JSONObject js = new JSONObject();
 		js.put("nome", queryFilter.getNome());
-		js.put("numero", Util.FormatarSetTelefone(queryFilter.getNumero()));
+		js.put("numero", Util.FormatarSetTelefone(queryFilter.getNumero(), queryFilter.getTipo()));
 		js.put("cidade", queryFilter.getCidade());
 		js.put("estado", queryFilter.getEstado());
 		js.put("email", queryFilter.getEmail());
 		js.put("descricao", queryFilter.getDescricao());
+		js.put("tipo", queryFilter.getTipo());
 		System.out.println(js.toString());
 
 		try {

@@ -18,7 +18,7 @@ namespace SistemaModerador.View
         "Pdenunciado.id as idD1, Pdenunciado.nome as nomeD1, Pdenunciado.tipo as tipoD1, Pdenunciado.usuario as usuarioD1, Pdenunciado.email as emailD1, Pdenunciado.cpf as cpfD1, Pdenunciado.cnpj as cpnjD1," +
         "Pdenunciador.id as idD2, Pdenunciador.nome as nomeD2, Pdenunciador.tipo as tipoD2, Pdenunciador.usuario as usuarioD2, Pdenunciador.email as emailD2, Pdenunciador.cpf as cpfD2, Pdenunciador.cnpj as cnpjD2," +
         "endereco.id as idE," +
-        "telefone.id as idT, telefone.descricao as descT, telefone.numero " +
+        "telefone.id as idT, telefone.descricao as descT, telefone.numero, telefone.tipo as tipoT " +
         "FROM denuncia " +
         "INNER JOIN parceiro as Pdenunciado ON denuncia.denunciado = Pdenunciado.id " +
         "INNER JOIN parceiro as Pdenunciador ON denuncia.denunciador = Pdenunciador.id " +
@@ -234,7 +234,7 @@ namespace SistemaModerador.View
 
             //Informações do telefone
             txtIdTel.Text = Banco.reader.GetInt32("idT").ToString();
-            txtNumeroTel.Text = Banco.reader.GetString("numero");
+            txtNumeroTel.Text = Util.FormatarGetTelefone(Banco.reader.GetString("numero"), Banco.reader.GetString("tipoT"));
             txtDescTel.Text = Banco.reader.GetString("descT");
         }
     }

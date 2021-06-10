@@ -21,6 +21,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -47,8 +48,24 @@ public class CadastroTelefone extends Application{
 	private ArrayList<Endereco> enderecos = new ArrayList<Endereco>();
 	@FXML
 	private Button btnCadastrar;
+	
+    @FXML
+    private RadioButton rbtnFixo0;
 
+    @FXML
+    private RadioButton rbtnCelular1;
 
+    @FXML
+    private RadioButton rbtnOutro2;
+
+    @FXML
+    private Label lbNumero;
+    @FXML
+    private Label lbDDD;
+    
+    int tipo = 0;
+    
+    String numeroC, tipoC;
 
 	public CadastroTelefone() {
 		// TODO Auto-generated constructor stub
@@ -72,37 +89,58 @@ public class CadastroTelefone extends Application{
 
 	private boolean validarCampos() throws SQLException
 	{
-		if (!Validacao.verificarTextField(txtDDD))
-			return false;
 		if (!Validacao.verificarTextField(txtNumero))
 			return false;
-		if (!Validacao.verificarNumerosTextField(txtDDD))
-			return false;
-		if (!Validacao.verificarNumerosTextField(txtNumero))
-			return false;
-		if (txtDDD.getText().length() != 2)
+		if (tipo != 2)
 		{
-			Util.MessageBoxShow("Campo inválido", "O campo 'DDD' deve conter exatamente dois números.", AlertType.ERROR);
-			txtDDD.requestFocus();
-			return false;
+			if (!Validacao.verificarTextField(txtDDD))
+				return false;
+			if (!Validacao.verificarNumerosTextField(txtDDD))
+				return false;
+			if (txtDDD.getText().length() != 2)
+			{
+				Util.MessageBoxShow("Campo inválido", "O campo 'DDD' deve ter exatamente 2 números", AlertType.ERROR);
+				txtDDD.requestFocus();
+				return false;
+			}
+			if (!Validacao.verificarNumerosTextField(txtNumero))
+				return false;
 		}
-		if (txtNumero.getText().length() < 8)
+		switch (tipo)
 		{
-			Util.MessageBoxShow("Campo inválido", "O número de telefone deve possuir pelo menos 8 digitos");
-			txtNumero.requestFocus();
-			return false;
+			//FIXO
+			case 0:
+				if (txtNumero.getText().length() != 8)
+				{
+					Util.MessageBoxShow("Campo inválido", "Um telefone fixo deve conter exatamente 8 números", AlertType.ERROR);
+					txtNumero.requestFocus();
+					return false;
+				}
+				break;
+				
+			//CELULAR	
+			case 1:
+				if (txtNumero.getText().length() != 9)
+				{
+					Util.MessageBoxShow("Campo inválido", "Um telefone celular deve conter exatamente 9 números", AlertType.ERROR);
+					txtNumero.requestFocus();
+					return false;
+				}
+				break;
 		}
-		if (txtNumero.getText().length() > 10)
-		{
-			Util.MessageBoxShow("Campo inválido", "O número de telefone deve possuir menos de 10 digitos");
-			txtNumero.requestFocus();
-			return false;
-		}
-
+		
 		if (!Validacao.verificarTextField(txtDescrição))
 			return false;
-
-		ResultSet result = Banco.InserirQueryReader(String.format("SELECT id FROM telefone WHERE telefone.numero = '%s'", txtDDD.getText() + txtNumero.getText()));
+		
+		if (tipo == 2)
+			return VerificarExistenciaTelefone(String.format("SELECT id FROM telefone WHERE telefone.numero = '%s'", txtNumero.getText()));
+		else
+			return VerificarExistenciaTelefone(String.format("SELECT id FROM telefone WHERE telefone.numero = '%s'", txtDDD.getText() + txtNumero.getText()));
+	}
+	
+	private boolean VerificarExistenciaTelefone(String query) throws SQLException
+	{
+		ResultSet result = Banco.InserirQueryReader(query);
 		if (result.next())
 		{
 			Util.MessageBoxShow("Cadastro inválido","Este telefone já está cadastrado", AlertType.ERROR);
@@ -118,22 +156,72 @@ public class CadastroTelefone extends Application{
 		txtDescrição.setText("");
 		cboxEndereco.getSelectionModel().selectFirst();
 	}
+	
+	//TXTNUMERO COM DDD: 282, 34, LABEL POSITION: X: 105, Y: 235
+	//TXT NUMERO SEM DDD: 369, 34, LABEL: X: 15
+	@FXML
+	public void TrocarRadioButton(Event e)
+	{
+		RadioButton selected = (RadioButton)e.getSource();
+		int num = Integer.parseInt(String.valueOf(selected.getId().charAt(selected.getId().length()-1)));
+		Util.ChangeRadioButtons(new RadioButton[] {rbtnFixo0, rbtnCelular1, rbtnOutro2}, num);
+		tipo = num;
+		if (num == 2)
+		{
+			txtDDD.setText("");
+			lbDDD.setVisible(false);
+			txtDDD.setVisible(false);
+			lbNumero.setLayoutX(15);
+			txtNumero.setLayoutX(15);
+			txtNumero.setPrefWidth(369);;
+		}
+		else
+		{
+			lbDDD.setVisible(true);
+			txtDDD.setVisible(true);
+			lbNumero.setLayoutX(105);
+			txtNumero.setLayoutX(105);
+			txtNumero.setPrefWidth(282);;
+		}
+	}
+	
+	private void FormatarCamposCadastro()
+	{
+		switch (tipo)
+		{
+			case 0:
+				tipoC = "fixo";
+				numeroC = txtDDD.getText() + txtNumero.getText();
+				break;
+				
+			case 1:
+				tipoC = "celular";
+				numeroC = txtDDD.getText() + txtNumero.getText();
+				break;
+				
+			case 2:
+				tipoC = "outro";
+				numeroC = txtNumero.getText();
+				break;
+		}
+	}
 
 	@FXML
 	public void cadastrarTelefone() throws SQLException, IOException
 	{
 		if (validarCampos())
 		{
+			FormatarCamposCadastro();
 			if (cboxEndereco.getSelectionModel().getSelectedIndex() != 0)
 			{
-				Banco.InserirQuery(String.format("INSERT INTO telefone (id, numero, dono, lugar, descricao) VALUES"
-						+ " (default, '%s', %s, %s, '%s')", txtDDD.getText() + txtNumero.getText(), Util.getContaLogada().getId(), 
-						enderecos.get(cboxEndereco.getSelectionModel().getSelectedIndex() - 1).getId(), txtDescrição.getText()));
+				Banco.InserirQuery(String.format("INSERT INTO telefone (id, numero, dono, lugar, descricao, tipo) VALUES"
+						+ " (default, '%s', %s, %s, '%s', '%s')", numeroC, Util.getContaLogada().getId(), 
+						enderecos.get(cboxEndereco.getSelectionModel().getSelectedIndex() - 1).getId(), txtDescrição.getText(), tipoC));
 			}
 			else
 			{
-				Banco.InserirQuery(String.format("INSERT INTO telefone (id, numero, dono, descricao) VALUES"
-						+ " (default, '%s', %s, '%s')", txtDDD.getText() + txtNumero.getText(), Util.getContaLogada().getId(), txtDescrição.getText()));
+				Banco.InserirQuery(String.format("INSERT INTO telefone (id, numero, dono, descricao, tipo) VALUES"
+						+ " (default, '%s', %s, '%s', '%s')", numeroC, Util.getContaLogada().getId(), txtDescrição.getText(), tipoC));
 			}
 			Util.MessageBoxShow("Cadastro realizado!", "Seu novo telefone foi cadastrado com sucesso!", AlertType.INFORMATION);
 			LimparCampos();

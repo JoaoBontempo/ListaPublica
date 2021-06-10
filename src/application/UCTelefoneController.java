@@ -58,7 +58,7 @@ public class UCTelefoneController extends Application{
 		index = Util.index;
 		telefone = Util.telefone;
 		idEndereco = Util.idEndereco;
-		txtTelefone.setText(Util.FormatarGetTelefone(telefone.getNumero()));
+		txtTelefone.setText(Util.FormatarGetTelefone(telefone.getNumero(), telefone.getTipo()));
 		txtDescrição.setText(telefone.getDescricao());
 		boolean found = false;
 		int i = 0;

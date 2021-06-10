@@ -37,6 +37,7 @@ import classes.Denuncia;
 import classes.Endereco;
 import classes.EnderecoComDescricao;
 import classes.Parceiro;
+import classes.TableViewUtil;
 import classes.Telefone;
 import classes.TelefoneNumero;
 import classes.Util;
@@ -56,6 +57,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
@@ -109,6 +111,8 @@ public class TelaLocal extends Application {
 	
 	@FXML
     private TableView<TelefoneNumero> tvTelefone;
+    @FXML
+    private TableColumn<TelefoneNumero, String> tvcTipo;
 	
 	@FXML
     private Tab tabInfosEndereco;
@@ -244,9 +248,6 @@ public class TelaLocal extends Application {
 					"'"+LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+"','"+comentario+"');";
 			Banco.InserirQuery(query);
 			AtualizarComentarioUtil(Util.getContaLogada().getUsuario(), LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), comentario);
-//			TelaComentario comentarioTela = new TelaComentario();
-//			comentarioTela.setPane(this.vboxComentarios);
-//			comentarioTela.loadFxml();
 			atualizarComentarios();
 			txtComentario.clear();
 		} catch (SQLException e) {
@@ -265,7 +266,7 @@ public class TelaLocal extends Application {
 	@FXML
 	public void ChamarNumeroWhatsApp() throws IOException, URISyntaxException
 	{
-		Util.ChamarNumeroWhatsApp(Util.FormatarSetTelefone(Util.getTelefoneAtual()));
+		Util.ChamarNumeroWhatsApp(Util.FormatarSetTelefone(Util.getTelefoneAtual().getNumero(), Util.getTelefoneAtual().getTipo()));
 	}
 	
 	private void atualizarComentarios() throws IOException {
@@ -406,15 +407,17 @@ public class TelaLocal extends Application {
 	            	TelefoneNumero numero=tvTelefone.getSelectionModel().getSelectedItem();
 	            	
 	            	try {
-	            		String telefone=numero.getNumero();
-	            		idDono=Util.recuperarIdDonoAtravesTelefone(telefone);
-	            		Util.setTelefoneAtual(telefone);
-	            		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", Util.FormatarGetTelefone(Util.getTelefoneAtual())));
-	                	String url="http://localhost:5000/ListaPublica/getUserAddress/"+telefone;
+	            		//String telefone=numero.getNumero();
+	            		idDono=Util.recuperarIdDonoAtravesTelefone(numero.getNumero());
+	            		Util.setTelefoneAtual(new TableViewUtil(numero.getNumero(), numero.getTipo()));
+	            		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", Util.FormatarGetTelefone(numero.getNumero(), numero.getTipo())));
+	            		
+	            		String numeroStr=numero.getNumero().replace('\s', '+');
+	                	String url="http://localhost:5000/ListaPublica/getUserAddress/" + numeroStr;
 	                	JSONArray array=null;
 	                	JSONObject objeto=null;
 	                	try {
-	                		id_telefone=Util.RecuperarIdTelefonePorTelefone(telefone);
+	                		id_telefone=Util.RecuperarIdTelefonePorTelefone(numeroStr);
 		            		
 	                		// verifica se o telefone possui descrição
 		            		verificaDescricaoTelefone(id_telefone);
@@ -431,9 +434,9 @@ public class TelaLocal extends Application {
 	                	}
 	                	
 	                	if(objeto.getString("imagem").length()>0) {
-	                		conteudoImagem=objeto.getString("imagem");
-	                		possuiImagem=true;
-	                		fileName=telefone+=".jpg";
+	                		conteudoImagem = objeto.getString("imagem");
+	                		possuiImagem = true;
+	                		fileName = numero.getNumero() + ".jpg";
 	                		Util.verificaExistenciaImagem(fileName, conteudoImagem.getBytes(), true);
 	                		imgLocal.setImage(new Image("file:///C:/lista/locais/"+fileName));
 	                	}
@@ -460,6 +463,7 @@ public class TelaLocal extends Application {
 	                	
 	            	}catch(JSONException | NullPointerException e) {
 	            		// não faça nada, pois se entrar aqui é pq o array não tem posições, então ignore.
+	            		e.printStackTrace();
 	            	} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -495,12 +499,13 @@ public class TelaLocal extends Application {
 		txtRua.setText("N/D");
 		txtNumeroResidencia.setText("N/D");
 		txtNome.setText("N/D");
-		//txtDescricao.setText("N/D");
 		txtComentario.setText("N/D");
 		txtNomeCompleto.setText("N/D");
 		txtNomeUsuario.setText("N/D");
 		txtEmail.setText("N/D");
 		tabInfosEndereco.setDisable(true);
+		
+		
 		tvComentarios.getItems().clear();
 		
 	}
@@ -520,6 +525,8 @@ public class TelaLocal extends Application {
 		caracteresProibidosComentario=Arrays.asList("'");
 		
 		tvcTelefone.setCellValueFactory(new PropertyValueFactory("numero"));
+		tvcTipo.setCellValueFactory(new PropertyValueFactory("tipo"));
+
 		
 		// verifica se está logado ou não (caso esteja logado apareça o pane de textbox e button)
 		if(Util.getContaLogada() != null) {
@@ -549,7 +556,8 @@ public class TelaLocal extends Application {
 		
 		// inicia a api
 		iniciaApi();
-		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", Util.FormatarGetTelefone(Util.FormatarSetTelefone(Util.getTelefoneAtual()))));
+		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", 
+	    Util.FormatarGetTelefone(Util.FormatarSetTelefone(Util.getTelefoneAtual().getNumero(), Util.getTelefoneAtual().getTipo()), Util.getTelefoneAtual().getTipo())));
 	}
 
 	@FXML
@@ -570,7 +578,6 @@ public class TelaLocal extends Application {
 	}
 
 	JSONArray requisicaoGenerica(String url) {
-		System.out.println("URL: "+url);
 		ObjectMapper mapper = new ObjectMapper();
 		String link = url;
 		HttpGet get = new HttpGet(url);
@@ -581,7 +588,10 @@ public class TelaLocal extends Application {
 			response = httpClient.execute(get);
 			
 			String result = EntityUtils.toString(response.getEntity());
-			if(result.length()<=0) {tabInfosEndereco.setDisable(true);}
+			if(result.length()<=0) {
+				tabInfosEndereco.setDisable(true);
+				tabPaneInfos.getSelectionModel().select(1);
+			}
 			
 			obj = new JSONArray(result);
 			return obj;
@@ -598,7 +608,7 @@ public class TelaLocal extends Application {
 		String telefone="";
 		
 		// jogar a função abaixo
-		telefone=Util.FormatarSetTelefone(UtilDashboard.getNumeroTelefone());
+		telefone=Util.FormatarSetTelefone(UtilDashboard.getNumeroTelefone(), Util.getTelefoneAtual().getTipo());
 		
 		
 		String url = "http://localhost:5000/ListaPublica/getUserAddress/" + telefone;
@@ -617,7 +627,10 @@ public class TelaLocal extends Application {
 			
 			// se o result for vazio, desative a aba de infos do endereço
 			
-			if(result.length()<=0) {tabInfosEndereco.setDisable(true);}
+			if(result.length()<=0) {
+				tabPaneInfos.getSelectionModel().select(1);
+				tabInfosEndereco.setDisable(true);
+			}
 			
 			JSONArray obj = new JSONArray(result);
 			EnderecoComDescricao endereco;

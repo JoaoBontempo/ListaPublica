@@ -237,10 +237,10 @@ public final class Validacao {
 
 	public static boolean ValidarDocumento(String doc)
 	{
+		WebClient client = new WebClient();
 		try
 		{
 			java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
-			WebClient client = new WebClient();
 			client.getOptions().setCssEnabled(true);
 			client.getOptions().setUseInsecureSSL(false);
 			client.getOptions().setJavaScriptEnabled(true);
@@ -256,12 +256,15 @@ public final class Validacao {
 			page = button.click();
 
 			HtmlElement resultado = (HtmlElement) page.getElementById("resultado");
-			return resultado.getTextContent().contains("Situação: Regular") || resultado.getTextContent().contains("Situação: Ativa");
+			String result = resultado.getTextContent();
+			client.close();
+			return result.contains("Situação: Regular") || result.contains("Situação: Ativa");
 		}
 		catch (Exception erro)
 		{
 			Util.MessageBoxShow("Ocorreu um erro", "Houve um erro ao buscar a situação de seu documento. "
 					+ "\nPor favor, verifique seu CPF ou CNPJ e tente novamente");
+			client.close();
 			return false;
 		}
 	}
