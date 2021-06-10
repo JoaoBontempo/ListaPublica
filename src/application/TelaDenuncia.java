@@ -1,6 +1,8 @@
 package application;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import classes.Banco;
 import classes.Email;
@@ -194,8 +196,15 @@ public class TelaDenuncia extends Application {
 						txtDescrição.getText(), Util.getDenunciAtual().getTipo(), Util.getDenunciAtual().getDenunciado().getId(),
 						Util.getContaLogada().getId(), Util.getDenunciAtual().getTelefone().getId()));
 			}
-
-			if(Email.enviarEmail(conteudo, "Nova denúncia de parceiro: " + Util.getDenunciAtual().getTipo()))
+			
+			ArrayList<String> moderadores = new ArrayList<String>();
+			ResultSet result = Banco.InserirQueryReader("SELECT email FROM moderador");
+			while (result.next())
+			{
+				moderadores.add(result.getString("email"));
+			}
+			
+			if(Email.enviarEmail(conteudo, "Nova denúncia de parceiro: " + Util.getDenunciAtual().getTipo(), moderadores))
 				Util.MessageBoxShow("Denúncia enviada com sucesso!", "Um e-mail com as informações foi enviado para os moderadores.\n"
 						+ "\nSua denúncia será analisada.\n"
 						+ "\nObrigado por contribuir para a melhoria do software!", AlertType.INFORMATION);

@@ -314,7 +314,7 @@ public class Dashboard extends Application {
 
 			String diretorioTmp = "C:\\lista\\usuarios\\" + imagemEscolhida.getName() + Util.getContaLogada().getId();
 			if (Util.verificaTamanhoImagem(4194304L, new File(imagemEscolhida.getAbsolutePath()))) {
-				Util.MessageBoxShow("Imagem muito grande", "A imagem ï¿½ maior que 4Mb.");
+				Util.MessageBoxShow("Imagem muito grande", "A imagem é maior que 4Mb.");
 				return;
 			}
 
@@ -392,12 +392,12 @@ public class Dashboard extends Application {
 			if (Banco.InserirQuery(String.format("UPDATE parceiro set email = '%s' where id = %s", txtMCEmail.getText(),
 					Util.getContaLogada().getId()))) {
 
-				Util.MessageBoxShow("Alteraï¿½ï¿½o de Dados", "Email alterado com sucesso!");
+				Util.MessageBoxShow("Alteração de Dados", "Email alterado com sucesso!");
 				Util.getContaLogada().setEmail(txtMCEmail.getText());
 
 			} else {
 
-				Util.MessageBoxShow("Alteraï¿½ï¿½o de Dados", "Verifique se o E-mail inserido ï¿½ vï¿½lido!",
+				Util.MessageBoxShow("Alteração de Dados", "Verifique se o E-mail inserido é válido!",
 						AlertType.WARNING);
 			}
 		}
@@ -410,9 +410,9 @@ public class Dashboard extends Application {
 	void AlterarSenha(ActionEvent event) {
 		Codigo = RecuperarSenha.gerarCodigo(0, "", new Random().nextInt(9));
 
-		if (Email.enviarEmail("O seu cï¿½digo de acesso ï¿½ " + Codigo, "Troca de Senha",
+		if (Email.enviarEmail("O seu código de acesso é " + Codigo, "Troca de Senha",
 				Util.getContaLogada().getEmail())) {
-			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o cï¿½digo de alteraï¿½ï¿½o ao seu E-mail! ");
+			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o código de alteração ao seu E-mail! ");
 			txtMCCodigo.requestFocus();
 		}
 	}
@@ -793,7 +793,7 @@ public class Dashboard extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Image icon = new Image("/Recursos/logo.png");
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("Lista Pï¿½blica - Menu principal");
+			primaryStage.setTitle("Lista Pública - Menu principal");
 			primaryStage.getIcons().add(icon);
 			primaryStage.setMaximized(true);
 			// root.getSelectionModel().selectedItemProperty().addListener((v, oldValue,

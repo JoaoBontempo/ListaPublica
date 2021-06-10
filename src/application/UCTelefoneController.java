@@ -41,7 +41,7 @@ public class UCTelefoneController extends Application{
 
 	@FXML
 	private ImageView btnSalvar;
-		
+
 	@FXML
 	private ComboBox<String> cboxEndereco;
 
@@ -50,9 +50,9 @@ public class UCTelefoneController extends Application{
 		// TODO Auto-generated method stub
 
 	}
-	
-	
-	
+
+
+
 	public void initialize()
 	{
 		index = Util.index;
@@ -75,7 +75,7 @@ public class UCTelefoneController extends Application{
 			}				
 			i++;
 		}
-		
+
 		if (!found)
 		{
 			cboxEndereco.getSelectionModel().selectFirst();
@@ -84,40 +84,44 @@ public class UCTelefoneController extends Application{
 			Util.enderecosAtuais.add(end);
 		}
 	}
-	
+
 	private void AtualizarParametrosPesquisa()
 	{
 		Util.telefones.get(index).setDescricao(txtDescrição.getText());
 		Util.enderecosAtuais.get(index).setNome(cboxEndereco.getSelectionModel().getSelectedItem());
- 	}
-	
+	}
+
 	@FXML
 	public void AlterarTelefone() throws SQLException
 	{
-		if(!Validacao.verificarTextArea(txtDescrição))
-			return;
+		if(Util.MessageBoxShow("Alterar informações" , "Tem certeza que deseja aletrar as informações do telefone " 
+				+ telefone.getNumero() + " ?").equals(ButtonType.OK)){
 
-		if (cboxEndereco.getSelectionModel().getSelectedIndex() != 0)
-		{
-			Banco.InserirQuery(String.format("UPDATE telefone SET lugar = %s, descricao = '%s' WHERE id = %s "
-					, Util.todoEnderecos.get(cboxEndereco.getSelectionModel().getSelectedIndex() - 1).getId(), txtDescrição.getText(), telefone.getId()));
+			if(!Validacao.verificarTextArea(txtDescrição))
+				return;
+
+			if (cboxEndereco.getSelectionModel().getSelectedIndex() != 0)
+			{
+				Banco.InserirQuery(String.format("UPDATE telefone SET lugar = %s, descricao = '%s' WHERE id = %s "
+						, Util.todoEnderecos.get(cboxEndereco.getSelectionModel().getSelectedIndex() - 1).getId(), txtDescrição.getText(), telefone.getId()));
+			}
+			else
+			{
+				Banco.InserirQuery(String.format("UPDATE telefone SET  lugar = null, descricao = '%s' WHERE id = %s "
+						, txtDescrição.getText(), telefone.getId()));
+			}
+			Util.MessageBoxShow("Alteração realizada!", "Seu telefone foi alterado com sucesso!", AlertType.INFORMATION);
+			AtualizarParametrosPesquisa();
 		}
-		else
-		{
-			Banco.InserirQuery(String.format("UPDATE telefone SET  lugar = null, descricao = '%s' WHERE id = %s "
-					, txtDescrição.getText(), telefone.getId()));
-		}
-		Util.MessageBoxShow("Alteração realizada!", "Seu telefone foi alterado com sucesso!", AlertType.INFORMATION);
-		AtualizarParametrosPesquisa();
 	}
-	
+
 	@FXML 
 	public void ExcluirTelefone() throws SQLException, IOException
 	{
-		if(Util.MessageBoxShow(" Excluir número" , "Tem certeza que deseja excluir o telefone " 
+		if(Util.MessageBoxShow("Excluir número" , "Tem certeza que deseja excluir o telefone " 
 				+ telefone.getNumero() + " ?").equals(ButtonType.OK)){
 
-			
+
 			Banco.InserirQuery("DELETE FROM comentarios WHERE idTelefone = " + telefone.getId());
 			Banco.InserirQuery("DELETE FROM denuncia WHERE tel = " + telefone.getId());
 			Banco.InserirQuery("DELETE FROM telefone WHERE id = " + telefone.getId());
@@ -125,12 +129,12 @@ public class UCTelefoneController extends Application{
 			Util.dashboard.AtualizarCbxTelefones();
 		}
 	}
-	
+
 	public void setPane(FlowPane pane)
 	{
 		this.secPane = pane;
 	}
-	
+
 	@FXML 
 	public void loadFxml () throws IOException {
 		AnchorPane newLoadedPane = FXMLLoader.load(getClass().getResource("UCTelefone.fxml"));
