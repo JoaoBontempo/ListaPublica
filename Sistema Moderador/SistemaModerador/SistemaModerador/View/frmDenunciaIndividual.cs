@@ -66,13 +66,6 @@ namespace SistemaModerador.View
                         MessageBox.Show("A operação foi cancelada.");
                         break;
 
-                    case 0:
-                        MessageBox.Show("O código de confirmação está incorreto! O sistema será fechado");
-                        Banco.FecharBanco();
-                        this.Close();
-                        Application.Exit();
-                        break;
-
                     case 1:
                         TextBox textBox;
                         if (parceiro.Equals("denunciado"))
@@ -144,13 +137,6 @@ namespace SistemaModerador.View
                         MessageBox.Show("A operação foi cancelada.");
                         break;
 
-                    case 0:
-                        MessageBox.Show("O código de confirmação está incorreto! O sistema será fechado");
-                        Banco.FecharBanco();
-                        this.Close();
-                        Application.Exit();
-                        break;
-
                     case 1:
                         Banco.InserirQuery("DELETE FROM denuncia WHERE tel = " + txtIdTel.Text);
                         Banco.InserirQuery("DELETE FROM comentarios WHERE idTelefone = " + txtIdTel.Text);
@@ -167,11 +153,23 @@ namespace SistemaModerador.View
         {
             if (MessageBox.Show("Tem certeza que deseja excluir esse endereço?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question).Equals(DialogResult.Yes))
             {
-                Banco.InserirQuery("DELETE FROM endereco WHERE id = " + idEndereco);
-                MessageBox.Show("Endereço excluído com sucesso!");
-                btnExcluirEndereco.Visible = false;
-                btnVerEndereco.Visible = false;
-                txtDescTel.Size = new Size(339, 150);
+                frmConfirmacao confirmacao = new frmConfirmacao();
+                confirmacao.ShowDialog();
+
+                switch (confirmacao.getResposta())
+                {
+                    case -1:
+                        MessageBox.Show("A operação foi cancelada.");
+                        break;
+
+                    case 1:
+                        Banco.InserirQuery("DELETE FROM endereco WHERE id = " + idEndereco);
+                        MessageBox.Show("Endereço excluído com sucesso!");
+                        btnExcluirEndereco.Visible = false;
+                        btnVerEndereco.Visible = false;
+                        txtDescTel.Size = new Size(339, 150);
+                        break;
+                }
             }
         }
 

@@ -29,10 +29,16 @@ namespace SistemaModerador
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvDenuncias = new System.Windows.Forms.DataGridView();
+            this.clnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnDescricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnDenunciador = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnDenunciado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pbxLupa = new System.Windows.Forms.PictureBox();
             this.txtPesquisar = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -49,12 +55,8 @@ namespace SistemaModerador
             this.rbQualquerStatus = new System.Windows.Forms.RadioButton();
             this.rbFechado = new System.Windows.Forms.RadioButton();
             this.rbAberto = new System.Windows.Forms.RadioButton();
-            this.clnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clnTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clnDescricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clnStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clnDenunciador = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clnDenunciado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnAlterarSenha = new System.Windows.Forms.Button();
+            this.btnCadastrarModerador = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDenuncias)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxLupa)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -64,12 +66,12 @@ namespace SistemaModerador
             // 
             this.dgvDenuncias.AllowUserToAddRows = false;
             this.dgvDenuncias.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            this.dgvDenuncias.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
+            this.dgvDenuncias.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvDenuncias.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -77,14 +79,14 @@ namespace SistemaModerador
             this.dgvDenuncias.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
             this.dgvDenuncias.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvDenuncias.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvDenuncias.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvDenuncias.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dgvDenuncias.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDenuncias.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.clnId,
@@ -93,14 +95,14 @@ namespace SistemaModerador
             this.clnStatus,
             this.clnDenunciador,
             this.clnDenunciado});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(34)))), ((int)(((byte)(41)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvDenuncias.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(34)))), ((int)(((byte)(41)))));
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Candara", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvDenuncias.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgvDenuncias.EnableHeadersVisualStyles = false;
             this.dgvDenuncias.GridColor = System.Drawing.Color.Black;
             this.dgvDenuncias.Location = new System.Drawing.Point(12, 225);
@@ -115,6 +117,48 @@ namespace SistemaModerador
             this.dgvDenuncias.Size = new System.Drawing.Size(945, 184);
             this.dgvDenuncias.TabIndex = 0;
             this.dgvDenuncias.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDenuncias_CellDoubleClick);
+            // 
+            // clnId
+            // 
+            this.clnId.HeaderText = "ID";
+            this.clnId.Name = "clnId";
+            this.clnId.ReadOnly = true;
+            this.clnId.Visible = false;
+            // 
+            // clnTipo
+            // 
+            this.clnTipo.FillWeight = 70F;
+            this.clnTipo.HeaderText = "Tipo";
+            this.clnTipo.Name = "clnTipo";
+            this.clnTipo.ReadOnly = true;
+            // 
+            // clnDescricao
+            // 
+            this.clnDescricao.FillWeight = 120F;
+            this.clnDescricao.HeaderText = "Descrição";
+            this.clnDescricao.Name = "clnDescricao";
+            this.clnDescricao.ReadOnly = true;
+            // 
+            // clnStatus
+            // 
+            this.clnStatus.FillWeight = 25F;
+            this.clnStatus.HeaderText = "Status";
+            this.clnStatus.Name = "clnStatus";
+            this.clnStatus.ReadOnly = true;
+            // 
+            // clnDenunciador
+            // 
+            this.clnDenunciador.FillWeight = 70F;
+            this.clnDenunciador.HeaderText = "Denunciante";
+            this.clnDenunciador.Name = "clnDenunciador";
+            this.clnDenunciador.ReadOnly = true;
+            // 
+            // clnDenunciado
+            // 
+            this.clnDenunciado.FillWeight = 70F;
+            this.clnDenunciado.HeaderText = "Denunciado";
+            this.clnDenunciado.Name = "clnDenunciado";
+            this.clnDenunciado.ReadOnly = true;
             // 
             // pbxLupa
             // 
@@ -337,47 +381,39 @@ namespace SistemaModerador
             this.rbAberto.UseVisualStyleBackColor = true;
             this.rbAberto.CheckedChanged += new System.EventHandler(this.rbAberto_CheckedChanged);
             // 
-            // clnId
+            // btnAlterarSenha
             // 
-            this.clnId.HeaderText = "ID";
-            this.clnId.Name = "clnId";
-            this.clnId.ReadOnly = true;
-            this.clnId.Visible = false;
+            this.btnAlterarSenha.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAlterarSenha.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(15)))), ((int)(((byte)(0)))));
+            this.btnAlterarSenha.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAlterarSenha.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.btnAlterarSenha.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAlterarSenha.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnAlterarSenha.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.btnAlterarSenha.Location = new System.Drawing.Point(772, 415);
+            this.btnAlterarSenha.Name = "btnAlterarSenha";
+            this.btnAlterarSenha.Size = new System.Drawing.Size(185, 30);
+            this.btnAlterarSenha.TabIndex = 22;
+            this.btnAlterarSenha.Text = "Alterar senha da conta";
+            this.btnAlterarSenha.UseVisualStyleBackColor = false;
+            this.btnAlterarSenha.Click += new System.EventHandler(this.btnAlterarSenha_Click);
             // 
-            // clnTipo
+            // btnCadastrarModerador
             // 
-            this.clnTipo.FillWeight = 70F;
-            this.clnTipo.HeaderText = "Tipo";
-            this.clnTipo.Name = "clnTipo";
-            this.clnTipo.ReadOnly = true;
-            // 
-            // clnDescricao
-            // 
-            this.clnDescricao.FillWeight = 120F;
-            this.clnDescricao.HeaderText = "Descrição";
-            this.clnDescricao.Name = "clnDescricao";
-            this.clnDescricao.ReadOnly = true;
-            // 
-            // clnStatus
-            // 
-            this.clnStatus.FillWeight = 25F;
-            this.clnStatus.HeaderText = "Status";
-            this.clnStatus.Name = "clnStatus";
-            this.clnStatus.ReadOnly = true;
-            // 
-            // clnDenunciador
-            // 
-            this.clnDenunciador.FillWeight = 70F;
-            this.clnDenunciador.HeaderText = "Denunciante";
-            this.clnDenunciador.Name = "clnDenunciador";
-            this.clnDenunciador.ReadOnly = true;
-            // 
-            // clnDenunciado
-            // 
-            this.clnDenunciado.FillWeight = 70F;
-            this.clnDenunciado.HeaderText = "Denunciado";
-            this.clnDenunciado.Name = "clnDenunciado";
-            this.clnDenunciado.ReadOnly = true;
+            this.btnCadastrarModerador.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCadastrarModerador.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(15)))), ((int)(((byte)(0)))));
+            this.btnCadastrarModerador.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCadastrarModerador.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.btnCadastrarModerador.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCadastrarModerador.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnCadastrarModerador.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.btnCadastrarModerador.Location = new System.Drawing.Point(546, 415);
+            this.btnCadastrarModerador.Name = "btnCadastrarModerador";
+            this.btnCadastrarModerador.Size = new System.Drawing.Size(220, 30);
+            this.btnCadastrarModerador.TabIndex = 23;
+            this.btnCadastrarModerador.Text = "Cadastrar novo moderador";
+            this.btnCadastrarModerador.UseVisualStyleBackColor = false;
+            this.btnCadastrarModerador.Click += new System.EventHandler(this.btnCadastrarModerador_Click);
             // 
             // TelaPrincipal
             // 
@@ -385,6 +421,8 @@ namespace SistemaModerador
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(14)))), ((int)(((byte)(17)))));
             this.ClientSize = new System.Drawing.Size(969, 454);
+            this.Controls.Add(this.btnCadastrarModerador);
+            this.Controls.Add(this.btnAlterarSenha);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnAtualizar);
             this.Controls.Add(this.txtDescricao);
@@ -438,5 +476,7 @@ namespace SistemaModerador
         private System.Windows.Forms.DataGridViewTextBoxColumn clnStatus;
         private System.Windows.Forms.DataGridViewTextBoxColumn clnDenunciador;
         private System.Windows.Forms.DataGridViewTextBoxColumn clnDenunciado;
+        private System.Windows.Forms.Button btnAlterarSenha;
+        private System.Windows.Forms.Button btnCadastrarModerador;
     }
 }

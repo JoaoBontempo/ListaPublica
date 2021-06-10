@@ -122,7 +122,19 @@ namespace SistemaModerador
             fdi.ShowDialog();
             AtualizarGridDenuncias(queryGeral + "ORDER BY denuncia.id DESC");
         }
-        
+
+        private void btnAlterarSenha_Click(object sender, EventArgs e)
+        {
+            frmTrocarSenha trocaSenha = new frmTrocarSenha();
+            trocaSenha.ShowDialog();
+        }
+
+        private void btnCadastrarModerador_Click(object sender, EventArgs e)
+        {
+            frmCadastrarModerador cadastro = new frmCadastrarModerador();
+            cadastro.ShowDialog();
+        }
+
         private string MontarQueryFiltro(int id, int local, int status, string tipo, string descricao)
         {
             string query = queryGeral;

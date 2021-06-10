@@ -10,8 +10,7 @@ namespace SistemaModerador.Classes
 {
     public class Util
     {
-        public static string moderador;
-        public static string email;
+		public static Moderador moderador = new Moderador();
         public static bool isCodigo = false;
 
         public static Image ConverterImagem(string blob)

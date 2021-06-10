@@ -13,7 +13,7 @@ namespace SistemaModerador.View
 {
     public partial class frmConfirmacao : Form
     {
-        Random random = new Random();
+        private static Random random = new Random();
         int tempo = 120, resposta = -1;
         string codigo;
         public frmConfirmacao()
@@ -27,7 +27,7 @@ namespace SistemaModerador.View
             return resposta;
         }
 
-        private string GerarCodigo()
+        public static string GerarCodigo()
         {
             string codigo = DateTime.Now.Millisecond.ToString() + "-LP-";
             for (int i = 0; i < 6; i++)
@@ -47,7 +47,12 @@ namespace SistemaModerador.View
             else
             {
                 resposta = 0;
+                string senha = GerarCodigo();
+                Banco.InserirQuery(String.Format("UPDATE moderador SET senha = '{0}' WHERE id = {1}", BCrypt.Net.BCrypt.HashPassword(senha), Util.moderador.getId()));
+                Email.EnviarEmail(senha);
+                Banco.FecharBanco();
                 this.Close();
+                Application.Exit();
             }
         }
 
@@ -55,7 +60,7 @@ namespace SistemaModerador.View
         {
             Util.isCodigo = true;
             codigo = GerarCodigo();
-            string[] dest = { Util.email };
+            string[] dest = { Util.moderador.getEmail() };
             Email.EnviarEmail("Código de confirmação", String.Format("Este é seu código de confirmação para excluir as informações no Sistema Moderador:" +
                 "\n\n{0}\n\n" +
                 "Este código irá expirar em 2 minutos. Por favor, não compartilhe este código.", codigo), dest);

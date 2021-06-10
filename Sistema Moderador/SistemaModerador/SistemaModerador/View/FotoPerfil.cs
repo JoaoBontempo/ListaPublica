@@ -48,13 +48,6 @@ namespace SistemaModerador.View
                         MessageBox.Show("A operação foi cancelada.");
                         break;
 
-                    case 0:
-                        MessageBox.Show("O código de confirmação está incorreto! O sistema será fechado");
-                        Banco.FecharBanco();
-                        this.Close();
-                        Application.Exit();
-                        break;
-
                     case 1:
                         Banco.InserirQuery("UPDATE parceiro SET imagem = null WHERE id = " + id.ToString());
                         MessageBox.Show("Foto excluída com sucesso!");
