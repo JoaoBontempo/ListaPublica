@@ -39,6 +39,11 @@ namespace SistemaModerador.View
 
         private void txtConfirmarCodigo_Click(object sender, EventArgs e)
         {
+            if (String.IsNullOrEmpty(txtCodigo.Text))
+            {
+                MessageBox.Show("Nenhum código foi informado");
+                txtCodigo.Focus();
+            }
             if (txtCodigo.Text.Equals(codigo))
             {
                 resposta = 1;

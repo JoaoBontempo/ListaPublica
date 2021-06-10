@@ -13,6 +13,33 @@ namespace SistemaModerador.Classes
 		public static Moderador moderador = new Moderador();
         public static bool isCodigo = false;
 
+        public static bool ValidarEmail(string email)
+        {
+            if (String.IsNullOrEmpty(email))
+                return false;
+
+            if (!email.Contains("@"))
+                return false;
+
+            string[] partesEmail = email.Split('@');
+
+            if (!partesEmail[1].Contains("."))
+                return false;
+
+            string[] dominio = partesEmail[1].Split('.');
+
+            if (partesEmail[0].Contains("{") || partesEmail[0].Contains("}") || partesEmail[0].Contains("[") || partesEmail[0].Contains("]") || partesEmail[0].Contains(",")
+                        || partesEmail[0].Contains("'") || partesEmail[0].Contains(@"""") || partesEmail[0].Contains(@"\") || partesEmail[0].Contains("/") ||
+                        partesEmail[0].Contains("|") || partesEmail[0].Contains("!") || partesEmail[0].Contains("=") || partesEmail[0].Contains("+")
+                        || partesEmail[0].Contains("$") || partesEmail[0].Contains("%") || partesEmail[0].Contains("(") || partesEmail[0].Contains(")") || partesEmail[0].Contains("#"))
+                return false;
+
+            if (String.IsNullOrEmpty(dominio[1]) || String.IsNullOrEmpty(dominio[0]))
+                return false;
+
+            return true;
+        }
+
         public static Image ConverterImagem(string blob)
         {
             byte[] bytes = Convert.FromBase64String(blob);
