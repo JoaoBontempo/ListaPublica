@@ -18,6 +18,29 @@ namespace SistemaModerador.View
             InitializeComponent();
         }
 
+        private bool ValidarCampos()
+        {
+            if (String.IsNullOrEmpty(txtUsuario.Text))
+            {
+                MessageBox.Show("Nenhum usuário foi informado");
+                txtUsuario.Focus();
+                return false;
+            }
+            if (String.IsNullOrEmpty(txtEmail.Text))
+            {
+                MessageBox.Show("Nenhum e-mail foi informado");
+                txtEmail.Focus();
+                return false;
+            }
+            if (Util.ValidarEmail(txtEmail.Text))
+            {
+                MessageBox.Show("O e-mail informado é inválido");
+                txtEmail.Focus();
+                return false;
+            }
+            return true;
+        }
+
         private void frmCadastrarModerador_Shown(object sender, EventArgs e)
         {
             frmConfirmacao confirmacao = new frmConfirmacao();

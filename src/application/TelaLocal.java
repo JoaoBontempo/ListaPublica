@@ -305,6 +305,7 @@ public class TelaLocal extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Lista Pública - Informações detalhadas do local");
 			primaryStage.getIcons().add(icon);
+			primaryStage.setResizable(false);
 			primaryStage.show();
 			
 			
@@ -363,7 +364,10 @@ public class TelaLocal extends Application {
 			if(imagem != null) {
 				if(imagem.length()>0) {
 					Util.verificaExistenciaImagem("profile"+idDono+".jpg", imagem.getBytes(), false);
-					imgProprietario.setImage(new Image(new File(caminho).toURI().toString(), 400, 400, false, false));
+					
+					Image img=new Image(new File(caminho).toURI().toString(), 400, 400, false, false);
+					System.out.println("Tamanho largura: "+img.getWidth());
+					imgProprietario.setImage(img);
 				}	
 			}
 		}
@@ -375,9 +379,7 @@ public class TelaLocal extends Application {
 		
 		String caminho="C:\\lista\\locais\\addr"+id_endereco+".jpg";
 		File f = new File(caminho);
-		if(f.exists()) {
-			imgLocal.setImage(new Image(new File(caminho).toURI().toString(), 400, 400, false, false));
-		}else {
+		
 			String query="select imagem from endereco where id="+id_endereco;
 			System.out.println("ID ENDERECO: "+id_endereco);
 			Banco.InserirQueryReader(query);
@@ -387,13 +389,12 @@ public class TelaLocal extends Application {
 				if(imagem != null) {
 					if(imagem.length()>0) {
 						Util.verificaExistenciaImagem("addr"+id_endereco+".jpg", imagem.getBytes(), true);
-						imgLocal.setImage(new Image(new File(caminho).toURI().toString(), 400, 400, false, false));
+						Image img=new Image(new File(caminho).toURI().toString(), 1920, 1080, false, false);
+						imgLocal.setImage(img);
 						
 					}	
 				}
 			}
-		}
-		
 		
 	}
 	
