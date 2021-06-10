@@ -1,5 +1,7 @@
 package classes;
  
+import java.util.ArrayList;
+
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
@@ -45,6 +47,27 @@ public final class Email {
 			email.setSubject(titulo); // Jogar "Nova denúncia de parceiro: " + motivo como argumento dessa função
 			email.setMsg(descricao);
 			email.addTo(destinatario);
+			email.send();
+			return true;
+		}
+		catch (Exception erro)
+		{
+			Util.MessageBoxShow("Erro ao enviar e-mail", erro.getMessage(), AlertType.ERROR);
+			return false;
+		}
+	}
+	
+	public static boolean enviarEmail(String descricao,String titulo, ArrayList<String> moderadores)
+	{
+		//configurarEmail();
+		try
+		{
+			email.setFrom(remetente[0]);
+			email.setSubject(titulo); // Jogar "Nova denúncia de parceiro: " + motivo como argumento dessa função
+			email.setMsg(descricao);
+			
+			for (String moderador : moderadores)
+				email.addTo(moderador);
 			email.send();
 			return true;
 		}
