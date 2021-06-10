@@ -189,10 +189,14 @@ public class UCEnderecoController {
 				+ endereco.getNome() + " ?").equals(ButtonType.OK)){
 
 
-
-			Banco.InserirQuery("DELETE FROM endereco WHERE id = " + endereco.getId());
-			Util.MessageBoxShow("Telefone excluído", "Seu telefone foi excluído com sucesso", AlertType.INFORMATION);
-			Util.dashboard.AtualizarCbxEnderecos();
+               Banco.InserirQuery("UPDATE telefone SET lugar = null WHERE lugar = '" + endereco.getId() + "'");
+			if(Banco.InserirQuery("DELETE FROM endereco WHERE id = " + endereco.getId())) {
+				
+				Util.MessageBoxShow("Endereço excluído", "Seu endereço foi excluído com sucesso", AlertType.INFORMATION);
+				Util.dashboard.AtualizarCbxEnderecos();
+			}
+			else
+				Util.MessageBoxShow("Exclusão de Endereço", "Houve um erro ao excluir seu endereço", AlertType.ERROR);
 		}
 	}
 
@@ -219,6 +223,7 @@ public class UCEnderecoController {
 
 
 	}
+	
 	private Endereco endereco;
 	public void initialize() throws SQLException, Exception
 	{

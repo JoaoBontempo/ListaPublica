@@ -179,7 +179,7 @@ public class Cadastrar extends Application {
 					}
 
 					Util.MessageBoxShow("Cadastar", "Cadastro realizado com sucesso", AlertType.INFORMATION);
-					this.primaryStage.close();
+					//this.primaryStage.close();
 				} else {
 
 					Util.MessageBoxShow("Erro ao Cadastrar", "As senhas inseridas não correspondem", AlertType.ERROR);

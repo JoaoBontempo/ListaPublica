@@ -74,6 +74,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -601,6 +602,41 @@ public class Dashboard extends Application {
 					Util.enderecosAtuais.get(i).getNome().toLowerCase().contains(info))
 			{
 				fpTelefones.getChildren().add(node);
+			}
+			else
+			{
+				//node.setVisible(false);
+			}
+			i++;
+		}
+	}
+	@FXML
+	void txtPesquisaEnderecoTextChanged(KeyEvent event) {
+		BuscarInformacaoEndereco(txtPesquisaEndereco.getText());
+	}
+
+	private void BuscarInformacaoEndereco(String info)
+	{
+
+		fpEndereco.getChildren().clear();
+		info = info.toLowerCase();
+		int i = 0;
+		for (Node node : Util.nodes)
+		{
+			if (Validacao.isNullOrEmpty(info))
+			{
+				//node.setVisible(true);
+				fpEndereco.getChildren().add(node);
+				continue;
+			}
+			if (Util.Enderecos.get(i).getEstado().toLowerCase().contains(info) || 
+					Util.Enderecos.get(i).getCidade().toLowerCase().contains(info) ||
+					Util.Enderecos.get(i).getBairro().toLowerCase().contains(info) ||
+					Util.Enderecos.get(i).getRua().toLowerCase().contains(info) ||
+					Integer.toString(Util.Enderecos.get(i).getNumero()).contains(info) ||
+					Util.Enderecos.get(i).getNome().toLowerCase().contains(info) )
+			{
+				fpEndereco.getChildren().add(node);
 			}
 			else
 			{
