@@ -2,12 +2,14 @@ package application;
 
 import javafx.scene.control.TextField;
 
+import java.sql.SQLException;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
 
 import org.geonames.Toponym;
 
+import classes.Banco;
 import classes.Email;
 import classes.Util;
 import javafx.application.Application;
@@ -140,6 +142,7 @@ public class RecuperarSenha extends Application {
 		String builder=txtNumeroUm.getText()+txtNumeroDois.getText()+txtNumeroTres.getText()+txtNumeroQuatro.getText()
 		+txtNumeroCinco.getText();
 		if(builder.equals(codigoGerado)) {
+			
 			// form trocar senha
 			TrocarSenha telaTrocarSenha = new TrocarSenha();
 			telaTrocarSenha.setEmail(txtEmailPrincipal.getText());
@@ -162,16 +165,27 @@ public class RecuperarSenha extends Application {
 			return;
 		}
 
-
-
 		if(codigoEnviado) {
 			// verificar como implementar essa verificação depois
 			Util.MessageBoxShow("Código já enviado","O código ja foi enviado uma vez para o e-mail.",AlertType.WARNING);
 			return;
 		}
-		// deixa para caso tenha tempo
-		// se após o @ não tiver ao menos dois caracteres, dê o aviso novamente.
 
+		// verifica se o e-mail existe
+		String emailDigitado=txtEmailPrincipal.getText();
+		
+		try {
+			Banco.InserirQueryReader("select id from parceiro where email='"+emailDigitado+"';");
+			if(!Banco.getReader().next()) {
+				// não existe
+				Util.MessageBoxShow("E-mail inválido", "O e-mail informado não existe no sistema.");
+				return;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		// se chegou aqui então ok. Gere o código, armazene, Envie o código e mostre o panel para colocar os
 		codigoGerado=gerarCodigo(0,"",5);
 		System.out.println("Código: "+codigoGerado);
