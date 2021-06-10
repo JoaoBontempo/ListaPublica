@@ -140,7 +140,7 @@ public class Login extends Application {
 		}
 	}
 
-	private void loginRealizado() throws SQLException {
+	private void loginRealizado() throws Exception {
 
 		if (!Util.isConvidado()) {
 			ResultSet result = Banco.InserirQueryReader("SELECT * FROM parceiro WHERE id = " + id);
@@ -158,7 +158,7 @@ public class Login extends Application {
 	}
 
 	@FXML
-	public void RealizarLogin() throws SQLException {
+	public void RealizarLogin() throws Exception {
 		if (verificarCampos()) {
 			if (realizarLoginBanco(verificarTipoLogin()))
 				loginRealizado();
@@ -178,7 +178,7 @@ public class Login extends Application {
 	}
 
 	@FXML
-	public void loginConvidado() throws SQLException {
+	public void loginConvidado() throws Exception {
 		if (Util.MessageBoxShow("Tem certeza que deseja entrar como convidado?",
 				"Só será possível visualizar telefones cadastrados\n" + "por outras pessoas ou empresas")
 				.equals(ButtonType.OK)) {

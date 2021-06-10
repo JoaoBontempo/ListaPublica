@@ -106,10 +106,10 @@ public class Dashboard extends Application {
 
 	@FXML
 	private TextField txtPesquisaTelefone;
-	
+
 	@FXML
 	private TextField txtPesquisaEndereco;
-	
+
 	private int alturaFotoPerfil = 112;
 	@FXML
 	private TabPane TabDash;
@@ -128,7 +128,7 @@ public class Dashboard extends Application {
 
 	@FXML
 	private TableColumn<TableViewUtil, String> tvcTipo;
-	
+
 	@FXML
 	private TableColumn<TableViewUtil, String> tvcNome;
 
@@ -160,7 +160,7 @@ public class Dashboard extends Application {
 	private TextField txtEmail;
 
 	@FXML
-	private TextField txtDescriÃ§Ã£o;
+	private TextField txtDescrição;
 
 	@FXML
 	private Button btnNovoTelefone;
@@ -230,49 +230,49 @@ public class Dashboard extends Application {
 
 	@FXML
 	private FlowPane fpTelefones;
-	
+
 	@FXML
 	private FlowPane fpEndereco;
-	
 
-    @FXML
-    private RadioButton rbtnQualquer0;
 
-    @FXML
-    private RadioButton rbtnCelular1;
-    
-    @FXML
-    private RadioButton rbtnOutro3;
+	@FXML
+	private RadioButton rbtnQualquer0;
 
-    @FXML
-    private RadioButton rbtnFixo2;
+	@FXML
+	private RadioButton rbtnCelular1;
+
+	@FXML
+	private RadioButton rbtnOutro3;
+
+	@FXML
+	private RadioButton rbtnFixo2;
 
 	public FlowPane getFpTelefones() {
 		return fpTelefones;
 	}
-	
+
 	private void TrocarTipo(int tipo)
 	{
 		switch (tipo)
 		{
-			case 0:
-				this.tipo = "*";
-				break;
-				
-			case 1:
-				this.tipo = "celular";
-				break;
-				
-			case 2:
-				this.tipo = "fixo";
-				break;
-				
-			case 3:
-				this.tipo = "outro";
-				break;
+		case 0:
+			this.tipo = "*";
+			break;
+
+		case 1:
+			this.tipo = "celular";
+			break;
+
+		case 2:
+			this.tipo = "fixo";
+			break;
+
+		case 3:
+			this.tipo = "outro";
+			break;
 		}
 	}
-	
+
 	@FXML
 	public void TrocarRadioButtons(Event e)
 	{
@@ -311,7 +311,7 @@ public class Dashboard extends Application {
 					new FileChooser.ExtensionFilter("PNG", "*.png"), new FileChooser.ExtensionFilter("ICO", "*.ico"));
 			File imagemEscolhida = fileChooser.showOpenDialog(this.primaryStage);
 			// armazeno o arquivo na pasta
-			
+
 			String diretorioTmp = "C:\\lista\\usuarios\\" + imagemEscolhida.getName() + Util.getContaLogada().getId();
 			if (Util.verificaTamanhoImagem(4194304L, new File(imagemEscolhida.getAbsolutePath()))) {
 				Util.MessageBoxShow("Imagem muito grande", "A imagem ï¿½ maior que 4Mb.");
@@ -576,13 +576,13 @@ public class Dashboard extends Application {
 		AtualizarCbxEnderecos();
 		AtualizarGridTelefones(API.doGetTelefones(100));
 	}
-	
+
 	@FXML
 	public void txtPesquisaTelefoneTextChanged()
 	{
 		BuscarInformacao(txtPesquisaTelefone.getText());
 	}
-	
+
 	private void BuscarInformacao(String info)
 	{
 		fpTelefones.getChildren().clear();
@@ -638,12 +638,12 @@ public class Dashboard extends Application {
 			uct.loadFxml();
 		}
 	}
-	
+
 	public void AtualizarCbxEnderecos() throws SQLException, IOException {
-		
+
 		if (Util.isConvidado())
 			return;
-		
+
 		AtualizarEnderecos();
 		ResultSet result = Banco.InserirQueryReader(
 				"SELECT * FROM endereco WHERE usuario = " + Util.getContaLogada().getId());
@@ -665,8 +665,8 @@ public class Dashboard extends Application {
 			endereco.setNome(result.getString("nome"));
 			endereco.setCidade(result.getString("cidade"));
 			endereco.setImagem(result.getString("imagem"));
-			
-			
+
+
 
 			Util.endereco = endereco;
 			Util.Enderecos.add(endereco);
@@ -676,7 +676,7 @@ public class Dashboard extends Application {
 			uce.loadFxml();
 		}
 	}
-	
+
 	public void AtualizarEnderecos() throws SQLException
 	{
 		Util.todoEnderecos.clear();
@@ -695,7 +695,7 @@ public class Dashboard extends Application {
 		numero = Validacao.isNullOrEmpty(txtTelefone.getText()) ? "*" : txtTelefone.getText();
 		nome = Validacao.isNullOrEmpty(txtNome.getText()) ? "*" : txtNome.getText();
 		email = Validacao.isNullOrEmpty(txtEmail.getText()) ? "*" : txtEmail.getText();
-		descricao = Validacao.isNullOrEmpty(txtDescriï¿½ï¿½o.getText()) ? "*" : txtDescriï¿½ï¿½o.getText();
+		descricao = Validacao.isNullOrEmpty(txtDescrição.getText()) ? "*" : txtDescrição.getText();
 		cidade = cboxCidades.getSelectionModel().getSelectedIndex() == 0 ? "*"
 				: cboxCidades.getSelectionModel().getSelectedItem();
 		estado = cboxEstados.getSelectionModel().getSelectedIndex() == 0 ? "*"
@@ -719,7 +719,7 @@ public class Dashboard extends Application {
 	private void AtualizarGridTelefones(ArrayList<Telefone> dados) {
 		if (dados.size() == 0) {
 			Util.MessageBoxShow("Nenhum dado foi encontrado",
-					"Nï¿½o foi possï¿½vel encontrar nenhum dado.\n" + "Tente mudar as informaï¿½ï¿½es do filtro",
+					"Não foi possivel encontrar nenhum dado.\n" + "Tente mudar as informações do filtro",
 					AlertType.WARNING);
 			return;
 		}
@@ -820,4 +820,5 @@ public class Dashboard extends Application {
 		ct.setEvent(evento);
 		ct.start(new Stage());
 	}
+
 }
