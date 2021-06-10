@@ -106,6 +106,9 @@ public class Dashboard extends Application {
 	@FXML
 	private TextField txtPesquisaTelefone;
 	
+	@FXML
+	private TextField txtPesquisaEndereco;
+	
 	private int alturaFotoPerfil = 112;
 	@FXML
 	private TabPane TabDash;
@@ -223,6 +226,11 @@ public class Dashboard extends Application {
 
 	@FXML
 	private FlowPane fpTelefones;
+	
+	@FXML
+	private FlowPane fpEndereco;
+	
+
 
 	public FlowPane getFpTelefones() {
 		return fpTelefones;
@@ -514,6 +522,7 @@ public class Dashboard extends Application {
 		tvcEmail.setCellValueFactory(new PropertyValueFactory("email"));
 
 		AtualizarCbxTelefones();
+		AtualizarCbxEnderecos();
 		AtualizarGridTelefones(API.doGetTelefones(100));
 	}
 	
@@ -575,6 +584,44 @@ public class Dashboard extends Application {
 			Util.index = i++;
 			uct.setPane(fpTelefones);
 			uct.loadFxml();
+		}
+	}
+	
+	public void AtualizarCbxEnderecos() throws SQLException, IOException {
+		
+		if (Util.isConvidado())
+			return;
+		
+		AtualizarEnderecos();
+		ResultSet result = Banco.InserirQueryReader(
+				"SELECT * FROM endereco WHERE usuario = " + Util.getContaLogada().getId());
+		Util.nodes.clear();
+		//Util.enderecosAtuais.clear();
+		fpEndereco.getChildren().clear();
+		Util.Enderecos.clear();
+		int i = 0;
+		while(result.next()) {
+
+			//Util.idEndereco = result.getInt("lugar");
+			Endereco endereco = new Endereco();
+
+			endereco.setId(result.getInt("id"));
+			endereco.setBairro(result.getString("bairro"));
+			endereco.setRua(result.getString("rua"));
+			endereco.setEstado(result.getString("estado"));
+			endereco.setNumero(result.getInt("numero"));
+			endereco.setNome(result.getString("nome"));
+			endereco.setCidade(result.getString("cidade"));
+			endereco.setImagem(result.getString("imagem"));
+			
+			
+
+			Util.endereco = endereco;
+			Util.Enderecos.add(endereco);
+			UCEnderecoController uce= new UCEnderecoController();
+			//Util.index = i++;
+			uce.setPane(fpEndereco);
+			uce.loadFxml();
 		}
 	}
 	

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="337.0" prefWidth="713.0" style="-fx-border-color: #ffffff; -fx-border-width: 1px;" stylesheets="@application.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.UCEnderecoController">
+   <children>
+      <TextField fx:id="txtNome" layoutX="395.0" layoutY="45.0" prefHeight="34.0" prefWidth="283.0" styleClass="text-field2" AnchorPane.leftAnchor="395.0" AnchorPane.topAnchor="45.0" />
+      <ImageView fitHeight="34.0" fitWidth="48.0" layoutX="14.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="18.0">
+         <image>
+            <Image url="@../Recursos/enderecoIcon.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="395.0" layoutY="26.0" styleClass="labelVerde" text="Nome" AnchorPane.leftAnchor="395.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="btnDeletar" fitHeight="26.0" fitWidth="26.0" layoutX="607.0" layoutY="370.0" onMouseClicked="#ExcluirEndereco" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="56.0">
+         <image>
+            <Image url="@../Recursos/cancel.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="btnSalvar" fitHeight="26.0" fitWidth="26.0" layoutX="642.0" layoutY="371.0" onMouseClicked="#AlterarEndereco" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="21.0">
+         <image>
+            <Image url="@../Recursos/Salvar.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Label layoutX="394.0" layoutY="84.0" styleClass="labelVerde" text="Estado ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="537.0" layoutY="84.0" styleClass="labelVerde" text="Cidade">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtRua" layoutX="395.0" layoutY="177.0" prefHeight="34.0" prefWidth="283.0" styleClass="text-field2" />
+      <Label layoutX="398.0" layoutY="156.0" styleClass="labelVerde" text="Rua">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cboxEstado" layoutX="393.0" layoutY="104.0" onAction="#recuperarCidades" prefHeight="34.0" prefWidth="138.0" />
+      <ComboBox fx:id="cboxCidade" layoutX="536.0" layoutY="104.0" prefHeight="34.0" prefWidth="138.0" />
+      <TextField fx:id="txtBairro" layoutX="395.0" layoutY="237.0" prefHeight="34.0" prefWidth="216.0" styleClass="text-field2" />
+      <Label layoutX="397.0" layoutY="217.0" styleClass="labelVerde" text="Bairro">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtNumero" layoutX="621.0" layoutY="237.0" prefHeight="34.0" prefWidth="56.0" styleClass="text-field2" />
+      <Label layoutX="612.0" layoutY="217.0" prefHeight="10.0" prefWidth="37.0" styleClass="labelVerde" text="N°">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="imgLocal" fitHeight="129.0" fitWidth="291.0" layoutX="72.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+         <image>
+            <Image url="@../Recursos/logo_contornada.png" />
+         </image>
+         <viewport>
+            <Rectangle2D minX="200.0" minY="200.0" />
+         </viewport>
+      </ImageView>
+      <Button fx:id="btnRemoverImagem" layoutX="314.0" layoutY="237.0" mnemonicParsing="false" onAction="#removerImagem" prefHeight="34.0" prefWidth="34.0" text="X" />
+      <Button fx:id="btnAdicionarImagem" layoutX="252.0" layoutY="237.0" mnemonicParsing="false" onAction="#abrirImagem" prefHeight="34.0" prefWidth="56.0" text="..." />
+      <TextField fx:id="txtCaminhoImagem" editable="false" layoutX="39.0" layoutY="237.0" prefHeight="34.0" prefWidth="203.0" promptText="Clique para escolher o arquivo de imagem" styleClass="text-field2" stylesheets="@application.css" />
+   </children>
+</AnchorPane>

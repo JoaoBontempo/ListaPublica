@@ -132,7 +132,7 @@ public class CadastrarLocal extends Application implements Initializable {
 	}
 	
 	@FXML
-    void cadastrarEndereco(ActionEvent event) {
+    void cadastrarEndereco(ActionEvent event) throws IOException {
 		if(txtBairro.getText().isEmpty()) {
 			Util.MessageBoxShow("Campo vazio", "Preencha o bairro corretamente", AlertType.ERROR);
 			return;
@@ -169,6 +169,7 @@ public class CadastrarLocal extends Application implements Initializable {
 		try {
 			if(Banco.InserirQuery(query)) {
 				Util.MessageBoxShow("Cadastro realizado", "O seu novo endereço foi cadastrado com sucesso.",AlertType.INFORMATION);
+				Util.dashboard.AtualizarCbxEnderecos();
 				limparTela();
 				return;
 			}else {

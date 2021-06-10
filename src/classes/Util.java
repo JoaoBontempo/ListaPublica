@@ -57,6 +57,15 @@ public final class Util {
 	public static ArrayList<Node> nodos = new ArrayList<Node>();
 	/**/
 	
+	/*UTILIDADES DO USER CONTROL ENDERECOS*/
+	public static Endereco endereco;
+	public static ArrayList<Endereco> Enderecos = new ArrayList<Endereco>();
+	//public static ArrayList<Endereco> enderecosAtuais = new ArrayList<Endereco>(); 
+	//public static int index;
+	public static ArrayList<Node> nodes = new ArrayList<Node>();
+	/**/
+	
+	
 	private static Parceiro contaLogada;
 	private static Denuncia denunciAtual;
 	private static String telefoneAtual;
