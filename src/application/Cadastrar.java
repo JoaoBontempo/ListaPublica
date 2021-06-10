@@ -1,7 +1,12 @@
 package application;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -14,6 +19,7 @@ import classes.Validacao;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Node;
@@ -53,10 +59,18 @@ public class Cadastrar extends Application {
 	private TextField txtEmail;
 
 	@FXML
+    private TextField txtCaminhoImagemPerfil;
+
+    @FXML
+    private Button btnEscolherImagem;
+    
+	@FXML
 	private PasswordField txtConfirmarSenha;
 	@FXML
 	private TextField txtCPFouCNPJ;
 
+	private Stage primaryStage;
+	
 	@FXML
 	private TextField txtNome;
 
@@ -91,7 +105,7 @@ public class Cadastrar extends Application {
 			Util.MessageBoxShow("Erro ao Cadastrar", "O E-mail inserido é inválido", AlertType.ERROR);
 			return false;
 		}
-
+		
 		if (txtCPFouCNPJ.getText().length() == 14) {
 			tipo = true; // tipo cnpj
 			return Validacao.validarCNPJ(txtCPFouCNPJ);
@@ -104,7 +118,7 @@ public class Cadastrar extends Application {
 	}
 
 	public void initialize() {
-
+		
 	}
 
 	@FXML
@@ -115,6 +129,34 @@ public class Cadastrar extends Application {
 		stageAtual.close();
 	}
 
+	
+	@FXML
+	void TrocarFotoPerfil(ActionEvent event) {
+		try {
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle("Defina uma imagem do perfil");
+			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+					new FileChooser.ExtensionFilter("PNG", "*.png"), new FileChooser.ExtensionFilter("ICO", "*.ico"));
+			File imagemEscolhida = fileChooser.showOpenDialog(this.primaryStage);
+			// armazeno o arquivo na pasta
+			txtCaminhoImagemPerfil.setText(imagemEscolhida.getAbsolutePath());
+			
+//			String diretorioTmp = "C:\\lista\\usuarios\\" + imagemEscolhida.getName() + Util.getContaLogada().getId();
+//			if (Util.verificaTamanhoImagem(4194304L, new File(imagemEscolhida.getAbsolutePath()))) {
+//				Util.MessageBoxShow("Imagem muito grande", "A imagem é maior que 4Mb.");
+//				return;
+//			}
+//
+//			Files.copy(Path.of(imagemEscolhida.getAbsolutePath()), new FileOutputStream(diretorioTmp));
+//			String base = Util.converterStringParaBase64(Path.of(imagemEscolhida.getAbsolutePath()).toString());
+//			Banco.InserirQuery("update parceiro set imagem='" + base + "' where id =" + Util.getContaLogada().getId());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 	void realizarCadastro(boolean tipo) {
 
 		try {
@@ -122,20 +164,22 @@ public class Cadastrar extends Application {
 			if (validarCredenciais(tipo)) {
 
 				if (txtSenha.getText().equals(txtConfirmarSenha.getText())) {
+					String base = Util.converterStringParaBase64(Path.of(txtCaminhoImagemPerfil.getText()).toString());
 					if (tipo) {
 						Banco.InserirQuery(String.format(
-								"INSERT INTO parceiro(id,nome,usuario,tipo,cnpj,email,senha) VALUES(default,'%s','%s','%s','%s','%s','%s')",
+								"INSERT INTO parceiro(id,nome,usuario,tipo,cnpj,email,senha,imagem) VALUES(default,'%s','%s','%s','%s','%s','%s','%s')",
 								txtNome.getText(), txtUsuario.getText(), "1", txtCPFouCNPJ.getText(),
-								txtEmail.getText(), Util.criptografarSenha(txtSenha.getText())));
+								txtEmail.getText(), Util.criptografarSenha(txtSenha.getText()),base));
 					} else {
 
 						Banco.InserirQuery(String.format(
-								"INSERT INTO parceiro(id,nome,usuario,tipo,cpf,email,senha) VALUES(default,'%s','%s','%s','%s','%s','%s')",
+								"INSERT INTO parceiro(id,nome,usuario,tipo,cpf,email,senha,imagem) VALUES(default,'%s','%s','%s','%s','%s','%s','%s')",
 								txtNome.getText(), txtUsuario.getText(), "0", txtCPFouCNPJ.getText(),
-								txtEmail.getText(), Util.criptografarSenha(txtSenha.getText())));
+								txtEmail.getText(), Util.criptografarSenha(txtSenha.getText()),base));
 					}
 
 					Util.MessageBoxShow("Cadastar", "Cadastro realizado com sucesso", AlertType.INFORMATION);
+					this.primaryStage.close();
 				} else {
 
 					Util.MessageBoxShow("Erro ao Cadastrar", "As senhas inseridas não correspondem", AlertType.ERROR);
@@ -237,6 +281,7 @@ public class Cadastrar extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			this.primaryStage=primaryStage;
 			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("telaCadastro.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
