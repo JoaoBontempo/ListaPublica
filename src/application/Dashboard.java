@@ -405,7 +405,7 @@ public class Dashboard extends Application {
 
 	}
 
-	private String Codigo = "";
+	private String Codigo = null;
 
 	@FXML
 	void AlterarSenha(ActionEvent event) {

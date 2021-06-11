@@ -142,7 +142,10 @@ public class UCEnderecoController {
 				new FileChooser.ExtensionFilter("JPG", "*.jpg"),
 				new FileChooser.ExtensionFilter("PNG", "*.png"));
 		imagemEscolhida=fileChooser.showOpenDialog(this.primaryStage);
-
+		
+        if(imagemEscolhida == null)
+        	return;
+        
 		if(imagemEscolhida.length() <= 4194304) {
 
 			txtCaminhoImagem.setText(imagemEscolhida.getAbsolutePath());
