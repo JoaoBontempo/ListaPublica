@@ -258,7 +258,16 @@ public final class Validacao {
 			HtmlElement resultado = (HtmlElement) page.getElementById("resultado");
 			String result = resultado.getTextContent();
 			client.close();
-			return result.contains("Situação: Regular") || result.contains("Situação: Ativa");
+			boolean ativo = result.contains("Situação: Regular") || result.contains("Situação: Ativa");
+			if (ativo)
+				return ativo;
+			else
+			{
+				Util.MessageBoxShow("CPF/CNPJ inválido", "Somente CPFs regulares ou CNPJs ativos podem ser cadastrados."
+						+ "\n\n"
+						+ "Por favor, verifique a situação do seu documento.", AlertType.ERROR);
+				return ativo;
+			}
 		}
 		catch (Exception erro)
 		{
