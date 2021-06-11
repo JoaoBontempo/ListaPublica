@@ -19,9 +19,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="334.0" minWidth="500.0" prefHeight="750.0" prefWidth="1000.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TelaLocal">
+<AnchorPane minHeight="334.0" minWidth="500.0" prefHeight="672.0" prefWidth="1000.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TelaLocal">
    <children>
-      <Label fx:id="lbDenunciarLocal" layoutX="518.0" layoutY="656.0" onMouseClicked="#MostrarTelaDenuncia" styleClass="labelComLink" text="Denunciar este telefone" textFill="WHITE" underline="true" AnchorPane.leftAnchor="518.0" AnchorPane.topAnchor="658.0">
+      <Label fx:id="lbDenunciarLocal" layoutX="518.0" layoutY="629.0" onMouseClicked="#MostrarTelaDenuncia" styleClass="labelComLink" text="Denunciar este telefone" textFill="WHITE" underline="true" AnchorPane.leftAnchor="518.0" AnchorPane.topAnchor="629.0">
          <font>
             <Font size="14.0" />
          </font>
@@ -29,21 +29,21 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Label>
-      <Pane fx:id="pnlComentarios" layoutX="500.0" layoutY="25.0" prefHeight="528.0" prefWidth="480.0" AnchorPane.bottomAnchor="197.0" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="25.0">
+      <Pane fx:id="pnlComentarios" layoutX="500.0" layoutY="25.0" prefHeight="495.0" prefWidth="480.0" AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="25.0">
          <children>
             <Label layoutX="134.0" layoutY="14.0" prefHeight="30.0" prefWidth="170.0" styleClass="labelVerde" stylesheets="@application.css" text="Comentários">
                <font>
                   <Font name="Candara" size="28.0" />
                </font>
             </Label>
-            <ScrollPane fx:id="scrlComments" hbarPolicy="NEVER" layoutX="10.0" layoutY="48.0" prefHeight="475.0" prefWidth="464.0" style="-fx-background: #090E11; -fx-border-color: #090E11;" vbarPolicy="ALWAYS">
+            <ScrollPane fx:id="scrlComments" hbarPolicy="NEVER" layoutX="10.0" layoutY="48.0" prefHeight="445.0" prefWidth="464.0" style="-fx-background: #090E11; -fx-border-color: #090E11;" vbarPolicy="ALWAYS">
                <content>
                   <VBox fx:id="vboxComentarios" prefHeight="469.0" prefWidth="431.0" style="-fx-background: transparent;" />
                </content>
             </ScrollPane>
          </children>
       </Pane>
-      <Pane fx:id="pnlEnviarComentario" layoutX="497.0" layoutY="553.0" prefHeight="77.0" prefWidth="458.0" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="497.0" AnchorPane.topAnchor="553.0">
+      <Pane fx:id="pnlEnviarComentario" layoutX="511.0" layoutY="525.0" prefHeight="77.0" prefWidth="458.0" AnchorPane.leftAnchor="511.0" AnchorPane.topAnchor="525.0">
          <children>
             <TextField fx:id="txtComentario" layoutX="14.0" layoutY="26.0" prefHeight="34.0" prefWidth="354.0" promptText="Faça um comentário sobre esse local" />
             <Button fx:id="btnEnviarComentario" layoutX="374.0" layoutY="30.0" mnemonicParsing="false" onAction="#RealizarComentario" prefHeight="27.0" prefWidth="70.0" text="Enviar">
@@ -53,13 +53,13 @@
             </Button>
          </children>
       </Pane>
-      <ImageView fx:id="imgWhatsApp" fitHeight="30.0" fitWidth="36.0" layoutX="513.0" layoutY="623.0" onMouseClicked="#ChamarNumeroWhatsApp" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: Hand;" AnchorPane.leftAnchor="513.0" AnchorPane.topAnchor="623.0">
+      <ImageView fx:id="imgWhatsApp" fitHeight="30.0" fitWidth="36.0" layoutX="513.0" layoutY="596.0" onMouseClicked="#ChamarNumeroWhatsApp" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: Hand;" AnchorPane.leftAnchor="513.0" AnchorPane.topAnchor="596.0">
          <image>
             <Image url="@../Recursos/whatsLogo.png" />
          </image>
       </ImageView>
-      <Label fx:id="lbWhatsApp" layoutX="549.0" layoutY="629.0" onMouseClicked="#ChamarNumeroWhatsApp" styleClass="labelComLink" text="Chamar {numero} no WhatsApp" textFill="WHITE" AnchorPane.leftAnchor="549.0" AnchorPane.topAnchor="629.0" />
-      <TabPane fx:id="tabPaneInfos" layoutX="33.0" layoutY="25.0" prefHeight="700.0" prefWidth="450.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="33.0">
+      <Label fx:id="lbWhatsApp" layoutX="549.0" layoutY="602.0" onMouseClicked="#ChamarNumeroWhatsApp" styleClass="labelComLink" text="Chamar {numero} no WhatsApp" textFill="WHITE" AnchorPane.leftAnchor="549.0" AnchorPane.topAnchor="602.0" />
+      <TabPane fx:id="tabPaneInfos" layoutX="33.0" layoutY="25.0" prefHeight="643.0" prefWidth="450.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="33.0" AnchorPane.topAnchor="25.0">
         <tabs>
           <Tab fx:id="tabInfosEndereco" text="Informações de endereço">
             <content>
@@ -133,15 +133,15 @@
           </Tab>
           <Tab text="Informações do proprietário">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="626.0" prefWidth="450.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="620.0" prefWidth="450.0">
                      <children>
                         <Label fx:id="lblCnpj1" layoutX="159.0" layoutY="286.0" prefHeight="30.0" prefWidth="133.0" styleClass="labelVerde" stylesheets="@application.css" text="Descrição">
                            <font>
                               <Font name="Candara" size="19.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="txtDescricao" editable="false" layoutX="12.0" layoutY="316.0" prefHeight="97.0" prefWidth="427.0" wrapText="true" />
-                        <TableView fx:id="tvTelefone" layoutX="12.0" layoutY="427.0" onMouseClicked="#abrirDescricaoDetalhada" prefHeight="228.0" prefWidth="427.0">
+                        <TextArea fx:id="txtDescricao" editable="false" layoutX="12.0" layoutY="316.0" prefHeight="77.0" prefWidth="427.0" wrapText="true" />
+                        <TableView fx:id="tvTelefone" layoutX="12.0" layoutY="404.0" onMouseClicked="#abrirDescricaoDetalhada" prefHeight="183.0" prefWidth="427.0">
                           <columns>
                             <TableColumn fx:id="tvcTelefone" prefWidth="75.0" text="Telefone(s)" />
                               <TableColumn fx:id="tvcTipo" prefWidth="75.0" text="Telefone(s)" visible="false" />
