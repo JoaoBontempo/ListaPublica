@@ -164,7 +164,10 @@ public class TelaDenuncia extends Application {
 						+ "Bairro: " + Util.getDenunciAtual().getEndereco().getBairro() + "\n"
 						+ "Cidade: " + Util.getDenunciAtual().getEndereco().getBairro() + "\n"
 						+ "Estado: " + Util.getDenunciAtual().getEndereco().getEstado() + "\n"
-						+ "Nome: " + Util.getDenunciAtual().getEndereco().getNome() + "\n";
+						+ "Nome: " + Util.getDenunciAtual().getEndereco().getNome() + "\n"
+						+ "---------------------------------------------------------------"
+						+ "\nDescrição da denúncia:\n"
+						+ txtDescrição.getText();
 			}
 			catch (Exception erro)
 			{
@@ -196,14 +199,14 @@ public class TelaDenuncia extends Application {
 						txtDescrição.getText(), Util.getDenunciAtual().getTipo(), Util.getDenunciAtual().getDenunciado().getId(),
 						Util.getContaLogada().getId(), Util.getDenunciAtual().getTelefone().getId()));
 			}
-			
+
 			ArrayList<String> moderadores = new ArrayList<String>();
 			ResultSet result = Banco.InserirQueryReader("SELECT email FROM moderador");
 			while (result.next())
 			{
 				moderadores.add(result.getString("email"));
 			}
-			
+
 			if(Email.enviarEmail(conteudo, "Nova denúncia de parceiro: " + Util.getDenunciAtual().getTipo(), moderadores))
 				Util.MessageBoxShow("Denúncia enviada com sucesso!", "Um e-mail com as informações foi enviado para os moderadores.\n"
 						+ "\nSua denúncia será analisada.\n"
