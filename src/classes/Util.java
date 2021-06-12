@@ -54,6 +54,7 @@ public final class Util {
 	public static Dashboard dashboard = new Dashboard();
 	public static ArrayList<Telefone> telefones = new ArrayList<Telefone>();
 	public static int index;
+	public static int indexEndereco;
 	public static ArrayList<Node> nodos = new ArrayList<Node>();
 	/**/
 	

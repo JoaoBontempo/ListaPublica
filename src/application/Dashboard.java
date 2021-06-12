@@ -212,7 +212,7 @@ public class Dashboard extends Application {
 
 	@FXML
 	private Label lbMCCPFouCNPJ;
-	
+
 	@FXML
 	private Label lbTempoRestante;
 
@@ -420,17 +420,17 @@ public class Dashboard extends Application {
 	}
 
 	private String codigo = null;
-	
+
 	public String getCodigo()
 	{
 		return this.codigo;
 	}
-	
+
 	public void setCodigo(String codigo)
 	{
 		this.codigo = codigo;
 	}
-	
+
 	private String GerarCodigo()
 	{
 		Random random = new Random();
@@ -460,7 +460,7 @@ public class Dashboard extends Application {
 			txtMCCodigo.requestFocus();
 		}
 	}
-	
+
 	public void setLabelTemporizador(int tempo)
 	{
 		lbTempoRestante.setText("Tempo restante: " + tempo + " segundos");
@@ -635,7 +635,7 @@ public class Dashboard extends Application {
 		tvcCidade.setCellValueFactory(new PropertyValueFactory("cidade"));
 		tvcCidade.setStyle("-fx-alignment: CENTER;");
 		tvcEmail.setCellValueFactory(new PropertyValueFactory("email"));
-		
+
 		MudarInterfaceCodigo(false);
 		AtualizarCbxTelefones();
 		AtualizarCbxEnderecos();
@@ -744,7 +744,7 @@ public class Dashboard extends Application {
 		if (Util.isConvidado())
 			return;
 
-		AtualizarEnderecos();
+		//AtualizarEnderecos();
 		ResultSet result = Banco.InserirQueryReader(
 				"SELECT * FROM endereco WHERE usuario = " + Util.getContaLogada().getId());
 		Util.nodes.clear();
@@ -771,10 +771,22 @@ public class Dashboard extends Application {
 			Util.endereco = endereco;
 			Util.Enderecos.add(endereco);
 			UCEnderecoController uce= new UCEnderecoController();
-			//Util.index = i++;
+			Util.indexEndereco = i++;
 			uce.setPane(fpEndereco);
 			uce.loadFxml();
 		}
+	}
+	public void AtualizarFlowPaneEndereco(int index) {
+
+		fpEndereco.getChildren().clear();
+		Util.Enderecos.remove(index);
+		Util.nodes.remove(index);
+
+		for (Node node : Util.nodes) {
+			
+           fpEndereco.getChildren().add(node);
+		}
+
 	}
 
 	public void AtualizarEnderecos() throws SQLException

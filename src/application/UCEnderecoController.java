@@ -82,6 +82,7 @@ public class UCEnderecoController {
 	boolean alterada = false;
 
 	private File imagemEscolhida;
+	private int index;
 
 	@FXML
 	void AlterarEndereco(MouseEvent event) throws SQLException, IOException {
@@ -112,7 +113,7 @@ public class UCEnderecoController {
 
 					Util.MessageBoxShow("Endereço alterado", "Seu endereço foi alterado com sucesso", AlertType.INFORMATION);
 					alterada = false;
-					Util.dashboard.AtualizarCbxEnderecos();
+					AtualizarParametrosPesquisa();
 				}
 				else {
 
@@ -155,6 +156,15 @@ public class UCEnderecoController {
 		else 
 			Util.MessageBoxShow("Inserção de Imagem", "A imagem solicitada escede o tamanho mínimo de 4Mb", AlertType.WARNING);
 	}
+	private void AtualizarParametrosPesquisa()
+	{
+		Util.Enderecos.get(index).setEstado(cboxEstado.getSelectionModel().getSelectedItem());
+		Util.Enderecos.get(index).setCidade(cboxCidade.getSelectionModel().getSelectedItem());
+		Util.Enderecos.get(index).setBairro(txtBairro.getText());
+		Util.Enderecos.get(index).setRua(txtRua.getText());
+		Util.Enderecos.get(index).setNumero(Integer.parseInt(txtNumero.getText()));
+		Util.Enderecos.get(index).setNome(txtNome.getText());
+	}
 
 	private boolean ValidarCampos(){
 
@@ -196,7 +206,8 @@ public class UCEnderecoController {
 			if(Banco.InserirQuery("DELETE FROM endereco WHERE id = " + endereco.getId())) {
 				
 				Util.MessageBoxShow("Endereço excluído", "Seu endereço foi excluído com sucesso", AlertType.INFORMATION);
-				Util.dashboard.AtualizarCbxEnderecos();
+				//Util.dashboard.AtualizarCbxEnderecos();
+				Util.dashboard.AtualizarFlowPaneEndereco(index);
 			}
 			else
 				Util.MessageBoxShow("Exclusão de Endereço", "Houve um erro ao excluir seu endereço", AlertType.ERROR);
@@ -230,13 +241,13 @@ public class UCEnderecoController {
 	private Endereco endereco;
 	public void initialize() throws SQLException, Exception
 	{
-		//index = Util.index;
+		index = Util.indexEndereco;
 		endereco = Util.endereco;
 		txtRua.setText(endereco.getRua());
 		txtBairro.setText(endereco.getBairro());
 		txtNumero.setText(String.valueOf(endereco.getNumero()));
 		txtNome.setText(endereco.getNome());
-
+        
 		ArrayList<UF> estados = API.doGetEstados();
 
 		for (UF estado : estados) {
