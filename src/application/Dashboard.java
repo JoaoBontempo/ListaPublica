@@ -440,10 +440,10 @@ public class Dashboard extends Application {
 			if (i % 2 == 0) 
 				codigo += String.valueOf(random.nextInt(10));
 			else
-				codigo += (char)random.nextInt(255);
+				codigo += (char)(random.nextInt((122 - 97) + 1) + 97);
 		}
 		System.out.println(codigo);
-		return codigo.replace(" ", "-");
+		return codigo;
 	}
 
 	@FXML
@@ -453,8 +453,8 @@ public class Dashboard extends Application {
 				+ "\n\n Insira o código abaixo para validar sua operação:"
 				+ "\n\n" + codigo, "Solicitação de troca de senha - Lista Pública",
 				Util.getContaLogada().getEmail())) {
-			TemporizadorCodigo temp = new TemporizadorCodigo(this);
-			temp.start();
+			//TemporizadorCodigo temp = new TemporizadorCodigo(this);
+			//temp.start();
 			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o código de alteração ao seu E-mail!", AlertType.INFORMATION);
 			MudarInterfaceCodigo(true);
 			txtMCCodigo.requestFocus();
