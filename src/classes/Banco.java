@@ -22,8 +22,7 @@ public final class Banco {
 
 	// Credenciais do banco
 
-	//private static String ip = "2.tcp.ngrok.io";
-	private static String ip = "127.0.0.1";
+	private static String ip = "8.tcp.ngrok.io";
 	//private static String ip = "0.tcp.ngrok.io";
 	//private static String ip = "127.0.0.1";
 	private static String banco = "db_lista_publica";
@@ -35,7 +34,7 @@ public final class Banco {
 
 	//private static String porta = "13352";
 
-	private static String porta = "3306";
+	private static String porta = "18220";
 //private static String porta = "15770";
 	//private static String porta = "3306";
 //	private static String porta = "15770";

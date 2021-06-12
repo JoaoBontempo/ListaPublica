@@ -32,7 +32,8 @@ public final class Email {
 		propriedades.put("mail.smtp.starttls.enable", "true");
 		propriedades.put("mail.smtp.host", "smtp.gmail.com");
 		propriedades.put("mail.smtp.port", "587");
-
+		propriedades.put("mail.smtp.ssl.trust", "*");
+		//propriedades.put("mail.smtp.port", "465");
 		session = Session.getInstance(propriedades, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication()

@@ -188,7 +188,6 @@ public class RecuperarSenha extends Application {
 		
 		// se chegou aqui então ok. Gere o código, armazene, Envie o código e mostre o panel para colocar os
 		codigoGerado=gerarCodigo(0,"",5);
-		System.out.println("Código: "+codigoGerado);
 		//if(Email.enviarEmail("Seu código de verificação é : "+codigoGerado,"Código de verificação",txtEmailPrincipal.getText()))
 		if(Email.enviarEmail("Seu código de verificação é : "+codigoGerado,"Código de verificação",txtEmailPrincipal.getText())) {
 			pnlCodigos.setVisible(true);

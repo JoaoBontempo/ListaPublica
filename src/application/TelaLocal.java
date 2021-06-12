@@ -521,6 +521,8 @@ public class TelaLocal extends Application {
 		this.idDono= Integer.parseInt(UtilDashboard.getIdDono());
 		this.id_endereco=Integer.parseInt(UtilDashboard.getIdLugar());
 		
+		
+		
 		buscarInfosDono(idDono,true);
 		
 		caracteresProibidosComentario=Arrays.asList("'");
@@ -559,6 +561,17 @@ public class TelaLocal extends Application {
 		iniciaApi();
 		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", 
 	    Util.FormatarGetTelefone(Util.FormatarSetTelefone(Util.getTelefoneAtual().getNumero(), Util.getTelefoneAtual().getTipo()), Util.getTelefoneAtual().getTipo())));
+	
+		int contador=0;
+		for(TelefoneNumero n:tvTelefone.getItems()) {
+			if(n.getNumero().toString().equals(UtilDashboard.getNumeroTelefone().toString())) {
+				tvTelefone.getSelectionModel().select(contador);
+				break;
+			}
+			contador++;
+		}
+		
+	
 	}
 
 	@FXML
