@@ -23,7 +23,6 @@ public final class Banco {
 	// Credenciais do banco
 
 	private static String ip = "2.tcp.ngrok.io";
-	//private static String ip = "0.tcp.ngrok.io";
 	//private static String ip = "127.0.0.1";
 	private static String banco = "db_lista_publica";
 
@@ -32,12 +31,10 @@ public final class Banco {
 	private static String usuario = "root";
 	private static String senha = "root";
 
-	//private static String porta = "13352";
-
 	private static String porta = "19147";
-//private static String porta = "15770";
+
 	//private static String porta = "3306";
-//	private static String porta = "15770";
+
 
 	// Biblioteca
 	private final static String DRIVE = "com.mysql.cj.jdbc.Driver";

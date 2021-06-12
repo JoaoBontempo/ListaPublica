@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.http.HttpEntity;
@@ -41,11 +42,11 @@ import classes.Parceiro;
 import classes.TableViewUtil;
 import classes.Telefone;
 import classes.TelefoneNumero;
-import classes.TemporizadorCodigo;
 import classes.Util;
 import classes.UtilDashboard;
 import classes.Validacao;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
@@ -163,7 +164,7 @@ public class Dashboard extends Application {
 	private TextField txtEmail;
 
 	@FXML
-	private TextField txtDescrição;
+	private TextField txtDescriï¿½ï¿½o;
 
 	@FXML
 	private Button btnNovoTelefone;
@@ -325,7 +326,7 @@ public class Dashboard extends Application {
 
 			String diretorioTmp = "C:\\lista\\usuarios\\" + imagemEscolhida.getName() + Util.getContaLogada().getId();
 			if (Util.verificaTamanhoImagem(4194304L, new File(imagemEscolhida.getAbsolutePath()))) {
-				Util.MessageBoxShow("Imagem muito grande", "A imagem é maior que 4Mb.");
+				Util.MessageBoxShow("Imagem muito grande", "A imagem ï¿½ maior que 4Mb.");
 				return;
 			}
 
@@ -403,12 +404,12 @@ public class Dashboard extends Application {
 			if (Banco.InserirQuery(String.format("UPDATE parceiro set email = '%s' where id = %s", txtMCEmail.getText(),
 					Util.getContaLogada().getId()))) {
 
-				Util.MessageBoxShow("Alteração de Dados", "Email alterado com sucesso!");
+				Util.MessageBoxShow("Alteraï¿½ï¿½o de Dados", "Email alterado com sucesso!");
 				Util.getContaLogada().setEmail(txtMCEmail.getText());
 
 			} else {
 
-				Util.MessageBoxShow("Alteração de Dados", "Verifique se o E-mail inserido é válido!",
+				Util.MessageBoxShow("Alteraï¿½ï¿½o de Dados", "Verifique se o E-mail inserido ï¿½ vï¿½lido!",
 						AlertType.WARNING);
 			}
 		}
@@ -438,24 +439,69 @@ public class Dashboard extends Application {
 		return codigo;
 	}
 
+	
+	Thread thread;
+	int segundos = 0 ;
+	boolean codigoCerto = false;
+	
+	private void iniciarTimer()
+	{
+		thread = new Thread(new Runnable() {
+			@Override
+			public void run()
+			{
+				try {
+					for (int i = 120; i >= 0; i--)
+					{
+						Thread.sleep(1000);
+						segundos = i;
+						setLabelTemporizador();
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		thread.start();
+	}
+
 	@FXML
 	void AlterarSenha(ActionEvent event) {
 		codigo = GerarCodigo();
-		if (Email.enviarEmail(
-				"Você solicitou a troca de senha no sistema Lista Pública de Telefones."
-						+ "\n\n Insira o código abaixo para validar sua operação:" + "\n\n" + codigo,
-						"Solicitação de troca de senha - Lista Pública", Util.getContaLogada().getEmail())) {
-			// TemporizadorCodigo temp = new TemporizadorCodigo(this);
-			// temp.start();
-			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o código de alteração ao seu E-mail!",
-					AlertType.INFORMATION);
+		if (Email.enviarEmail("Vocï¿½ solicitou a troca de senha no sistema Lista Pï¿½blica de Telefones."
+				+ "\n\n Insira o cï¿½digo abaixo para validar sua operaï¿½ï¿½o:"
+				+ "\n\n" + codigo, "Solicitaï¿½ï¿½o de troca de senha - Lista Pï¿½blica",
+				Util.getContaLogada().getEmail())) {
+			iniciarTimer();
+			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o cï¿½digo de alteraï¿½ï¿½o ao seu E-mail!", AlertType.INFORMATION);
 			MudarInterfaceCodigo(true);
 			txtMCCodigo.requestFocus();
 		}
 	}
 
-	public void setLabelTemporizador(int tempo) {
-		lbTempoRestante.setText("Tempo restante: " + tempo + " segundos");
+	public void setLabelTemporizador()
+	{
+		Platform.runLater(new Runnable(){
+			@Override
+			public void run() {
+				if (codigoCerto)
+				{
+					MudarInterfaceCodigo(false);
+					codigo = null;
+				}
+				// TODO Auto-generated method stub
+				lbTempoRestante.setText("Tempo restante: " + segundos + " segundos");
+				
+				if (segundos == 0 && !codigoCerto)
+				{
+					MudarInterfaceCodigo(false);
+					codigo = null;
+					Util.MessageBoxShow("Tempo esgotado", "O cï¿½digo de validaï¿½ï¿½o de troca de senha expirou."
+							+ "\nPor favor, solicite um novo cï¿½digo", AlertType.INFORMATION);
+				}
+			}
+		});
 	}
 
 	public void MudarInterfaceCodigo(boolean visible) {
@@ -473,13 +519,14 @@ public class Dashboard extends Application {
 		if (txtMCCodigo.getText().equals(codigo)) {
 			MudarInterfaceCodigo(false);
 			codigo = null;
+			codigoCerto = true;
 			TrocarSenha trocarSenha = new TrocarSenha();
 			trocarSenha.setEmail(Util.getContaLogada().getEmail());
 			trocarSenha.getEvent(event);
 			trocarSenha.start(new Stage());
 
 		} else {
-			Util.MessageBoxShow("Código inválido", "O código informado está incorreto", AlertType.INFORMATION);
+			Util.MessageBoxShow("Cï¿½digo invï¿½lido", "O cï¿½digo informado estï¿½ incorreto", AlertType.INFORMATION);
 		}
 	}
 
@@ -743,7 +790,7 @@ public class Dashboard extends Application {
 	public void AtualizarFlowPaneEndereco(int index) {
         
 		System.out.print("INDICE PASSADO " + index);
-		// função excluir
+		// funï¿½ï¿½o excluir
 		fpEndereco.getChildren().clear();
 		Util.Enderecos.remove(index);
 		Util.nodes.remove(index);
@@ -765,6 +812,7 @@ public class Dashboard extends Application {
 		for(UCEnderecoController control : Util.controladorEndereco) {
 
 			System.out.println("Local " + control.getNome()  + "Indice" + control.getIndex());
+			//fpEndereco.getChildren().add(node);
 		}
 
 
@@ -773,7 +821,7 @@ public class Dashboard extends Application {
 	public void AtualizarFlowPaneEndereco(int index, int id, String bairro, String rua, String estado, int numero,
 			String nome, String cidade, String imagem) throws IOException {
 
-		// função cadastrar
+		// funï¿½ï¿½o cadastrar
 		Endereco endereco = new Endereco();
 
 		endereco.setId(id);
@@ -813,7 +861,7 @@ public class Dashboard extends Application {
 		numero = Validacao.isNullOrEmpty(txtTelefone.getText()) ? "*" : txtTelefone.getText();
 		nome = Validacao.isNullOrEmpty(txtNome.getText()) ? "*" : txtNome.getText();
 		email = Validacao.isNullOrEmpty(txtEmail.getText()) ? "*" : txtEmail.getText();
-		descricao = Validacao.isNullOrEmpty(txtDescrição.getText()) ? "*" : txtDescrição.getText();
+		descricao = Validacao.isNullOrEmpty(txtDescriï¿½ï¿½o.getText()) ? "*" : txtDescriï¿½ï¿½o.getText();
 		cidade = cboxCidades.getSelectionModel().getSelectedIndex() == 0 ? "*"
 				: cboxCidades.getSelectionModel().getSelectedItem();
 		estado = cboxEstados.getSelectionModel().getSelectedIndex() == 0 ? "*"
@@ -838,7 +886,7 @@ public class Dashboard extends Application {
 	private void AtualizarGridTelefones(ArrayList<Telefone> dados) {
 		if (dados.size() == 0) {
 			Util.MessageBoxShow("Nenhum dado foi encontrado",
-					"Não foi possivel encontrar nenhum dado.\n" + "Tente mudar as informações do filtro",
+					"Nï¿½o foi possivel encontrar nenhum dado.\n" + "Tente mudar as informaï¿½ï¿½es do filtro",
 					AlertType.WARNING);
 			return;
 		}
@@ -913,7 +961,7 @@ public class Dashboard extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Image icon = new Image("/Recursos/logo.png");
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("Lista Pública - Menu principal");
+			primaryStage.setTitle("Lista Pï¿½blica - Menu principal");
 			primaryStage.getIcons().add(icon);
 			primaryStage.setMaximized(true);
 			// root.getSelectionModel().selectedItemProperty().addListener((v, oldValue,
