@@ -2,6 +2,7 @@ package application;
 
 import javafx.scene.control.TextField;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
 
@@ -12,6 +13,7 @@ import org.geonames.Toponym;
 import classes.Banco;
 import classes.Email;
 import classes.Util;
+import classes.Validacao;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -38,7 +40,7 @@ public class RecuperarSenha extends Application {
 	private Button btnConfirmarCodigo;
 
 	@FXML
-	private TextField txtEmailPrincipal;
+	private TextField txtInformacao;
 
 	@FXML
 	private Button btnEnviarCodigo;
@@ -62,7 +64,7 @@ public class RecuperarSenha extends Application {
 	private TextField txtNumeroCinco;
 
 	@FXML
-	void teclaPressionada(KeyEvent event) {
+	void teclaPressionada(KeyEvent event) throws SQLException {
 		if (event.getCode().equals(KeyCode.ENTER)) {
 			// se pressionar enter na textbox executa o comando do botao
 			VerificarEntradaEmail(null);
@@ -70,11 +72,11 @@ public class RecuperarSenha extends Application {
 	}
 
 	/**
-	 * Essa função irá gerar randomicamente uma sequência de números de X tamanho 
+	 * Essa funï¿½ï¿½o irï¿½ gerar randomicamente uma sequï¿½ncia de nï¿½meros de X tamanho 
 	 * 
 	 * @param contador: Contador de parada
 	 * @param valorAtual: Valor atual concatenado a cada chamada de rotina
-	 * @param tamanhoMaximo: Tamanho máximo que o código deverá conter
+	 * @param tamanhoMaximo: Tamanho mï¿½ximo que o cï¿½digo deverï¿½ conter
 	 * @return
 	 */
 	public static String gerarCodigo(int contador, String valorAtual, int tamanhoMaximo){
@@ -86,20 +88,20 @@ public class RecuperarSenha extends Application {
 	void validarCamposTxt(String texto,TextField textField) {
 
 		if(texto.length()>1) {
-			JOptionPane.showMessageDialog(null, "Digite apenas um número no campo.");
+			JOptionPane.showMessageDialog(null, "Digite apenas um nï¿½mero no campo.");
 			Character textoPadrao=textField.getText().toString().charAt(0);
 			textField.setText(Character.toString(textoPadrao));
 			return;
 		}
 		if(!(texto.trim().matches("\\d+")) ) {
 			textField.clear();
-			//JOptionPane.showMessageDialog(null, "Digite apenas números no campo.");
+			//JOptionPane.showMessageDialog(null, "Digite apenas nï¿½meros no campo.");
 			return;
 		}
 	}
 	/**
-	 * Essa função vai verificar se o que o usuário digitou é numero, e validar para
-	 * que digite apenas um dígito por campo
+	 * Essa funï¿½ï¿½o vai verificar se o que o usuï¿½rio digitou ï¿½ numero, e validar para
+	 * que digite apenas um dï¿½gito por campo
 	 * 
 	 * @param event
 	 */
@@ -142,14 +144,13 @@ public class RecuperarSenha extends Application {
 		String builder=txtNumeroUm.getText()+txtNumeroDois.getText()+txtNumeroTres.getText()+txtNumeroQuatro.getText()
 		+txtNumeroCinco.getText();
 		if(builder.equals(codigoGerado)) {
-			
-			// form trocar senha
-			TrocarSenha telaTrocarSenha = new TrocarSenha();
-			telaTrocarSenha.setEmail(txtEmailPrincipal.getText());
-			telaTrocarSenha.start(new Stage());
-
 			Stage stageAtual = (Stage) btnConfirmarCodigo.getScene().getWindow();
 			stageAtual.close();
+			// form trocar senha
+			TrocarSenha telaTrocarSenha = new TrocarSenha();
+			telaTrocarSenha.setEmail(email);
+			telaTrocarSenha.getEvent(event);
+			telaTrocarSenha.start(new Stage());
 
 		}else {
 			Util.MessageBoxShow("Código errado", "Confirme novamente o código digitado e tente novamente", 
@@ -157,45 +158,62 @@ public class RecuperarSenha extends Application {
 		}
 	}
 
+	private String verificarTipo() {
+		// CPF || CNPJ
+
+		if (txtInformacao.getText().length() == 11)
+			return "CPF";
+		else
+			return "CNPJ";
+
+	}
+	
+	private String email = "";
 
 	@FXML
-	void VerificarEntradaEmail(ActionEvent event) {
-		if (!txtEmailPrincipal.getText().contains("@")) {
-			JOptionPane.showMessageDialog(null, "Verifique seu e-mail e tente novamente.");
+	void VerificarEntradaEmail(ActionEvent event) throws SQLException {
+
+		if (!Validacao.verificarTextField(txtInformacao))
+			return;
+		if (!txtInformacao.getText().matches("[0-9]+"))
+		{
+			Util.MessageBoxShow("Campo inválido", "Por favor, insira apenas os digitos do seu CPF/CNPJ.", AlertType.INFORMATION);
 			return;
 		}
-
-		if(codigoEnviado) {
-			// verificar como implementar essa verificação depois
-			Util.MessageBoxShow("Código já enviado","O código ja foi enviado uma vez para o e-mail.",AlertType.WARNING);
+		if (txtInformacao.getText().length() != 11 && txtInformacao.getText().length() != 14)
+		{
+			Util.MessageBoxShow("Campo inválido", "Por favor, insira apenas os digitos do seu CPF/CNPJ de forma correta.", AlertType.INFORMATION);
 			return;
 		}
+		else
+		{
+			String tipo = verificarTipo();
+			ResultSet result = Banco.InserirQueryReader(String.format("SELECT email FROM parceiro WHERE %s = '%s'", tipo.toLowerCase()
+					,txtInformacao.getText()));
 
-		// verifica se o e-mail existe
-		String emailDigitado=txtEmailPrincipal.getText();
-		
-		try {
-			Banco.InserirQueryReader("select id from parceiro where email='"+emailDigitado+"';");
-			if(!Banco.getReader().next()) {
-				// não existe
-				Util.MessageBoxShow("E-mail inválido", "O e-mail informado não existe no sistema.");
+			if (result.next())
+			{
+				email = result.getString("email");
+			}
+			else
+			{
+				Util.MessageBoxShow(tipo + " não encontrado", "O " + tipo + " informado não está cadastrado!", AlertType.INFORMATION);
 				return;
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		// se chegou aqui então ok. Gere o código, armazene, Envie o código e mostre o panel para colocar os
-		codigoGerado=gerarCodigo(0,"",5);
-		//if(Email.enviarEmail("Seu código de verificação é : "+codigoGerado,"Código de verificação",txtEmailPrincipal.getText()))
-		if(Email.enviarEmail("Seu código de verificação é : "+codigoGerado,"Código de verificação",txtEmailPrincipal.getText())) {
-			pnlCodigos.setVisible(true);
-			btnConfirmarCodigo.setVisible(true);
-			btnEnviarCodigo.setVisible(false);
-			codigoEnviado=true;			
-		}else {
-			Util.MessageBoxShow("Falha ao enviar e-mail", "Falha ao enviar e-mail , verifique seu e-mail e tente novamente", AlertType.ERROR);
+
+			// se chegou aqui então ok. Gere o código, armazene, Envie o código e mostre o panel para colocar os
+			codigoGerado=gerarCodigo(0,"",5);
+			System.out.println("Código: "+codigoGerado);
+			//if(Email.enviarEmail("Seu código de verificação : "+codigoGerado,"Código de verificação",txtEmailPrincipal.getText()))
+			if(Email.enviarEmail("Seu código de verificação é : " + codigoGerado,"Código de verificação", email)) {
+				pnlCodigos.setVisible(true);
+				btnConfirmarCodigo.setVisible(true);
+				btnEnviarCodigo.setVisible(false);
+				codigoEnviado=true;		
+				Util.MessageBoxShow("Código enviado!", "O código de confirmação foi enviado para seu e-mail com sucesso!", AlertType.INFORMATION);
+			}else {
+				Util.MessageBoxShow("Falha ao enviar e-mail", "Falha ao enviar e-mail , verifique seu e-mail e tente novamente", AlertType.ERROR);
+			}
 		}
 
 	}
@@ -235,7 +253,7 @@ public class RecuperarSenha extends Application {
 	public void getEvent(MouseEvent evento) {
 		this.evento = evento;
 	}
-	
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -248,11 +266,11 @@ public class RecuperarSenha extends Application {
 			primaryStage.setTitle("Lista Pública - Esqueci a senha");
 
 			primaryStage.getIcons().add(icon);
-			
+
 			//setar tela modal e tela que chamou 
 			primaryStage.initModality(Modality.WINDOW_MODAL);
 			primaryStage.initOwner(((Node)evento.getSource()).getScene().getWindow());
-			
+
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
