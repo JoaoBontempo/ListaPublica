@@ -29,7 +29,7 @@ public class Login extends Application {
 	private int id;
 
 	@FXML
-	private TextField txtUsuario;
+	private TextField txtLogin;
 
 	@FXML
 	private Label lbEsqueciSenha;
@@ -81,7 +81,7 @@ public class Login extends Application {
 	}
 
 	private boolean verificarCampos() {
-		if (!Validacao.verificarTextField(txtUsuario))
+		if (!Validacao.verificarTextField(txtLogin))
 			return false;
 		if (!Validacao.verificarTextField(txtSenha))
 			return false;
@@ -90,10 +90,10 @@ public class Login extends Application {
 
 	private String verificarTipoLogin() {
 		// CPF || CNPJ
-		if (txtUsuario.getText().matches("[0-9]+"))
+		if (txtLogin.getText().matches("[0-9]+"))
 			return "CPF/CNPJ";
 		// E-MAIL
-		else if (txtUsuario.getText().contains("@"))
+		else if (txtLogin.getText().contains("@"))
 			return "Email";
 		else
 			return "Usuario";
@@ -101,22 +101,22 @@ public class Login extends Application {
 
 	private boolean realizarLoginBanco(String tipo) throws SQLException {
 		if (tipo.equals("Email")) {
-			if (!Validacao.validarEmail(txtUsuario.getText())) {
+			if (!Validacao.validarEmail(txtLogin.getText())) {
 				Util.MessageBoxShow("Campo inválido", "O email inserido é inválido ou está incorreto", AlertType.ERROR);
 				return false;
 			}
 		}
 		if (tipo.equals("CPF/CNPJ")) {
 			// cpf
-			if (txtUsuario.getText().length() == 11) {
-				if (!Validacao.validarCPF(txtUsuario))
+			if (txtLogin.getText().length() == 11) {
+				if (!Validacao.validarCPF(txtLogin))
 					return false;
 				else {
 					tipo = "CPF";
 				}
-			} else if (txtUsuario.getText().length() == 14) // cnpj
+			} else if (txtLogin.getText().length() == 14) // cnpj
 			{
-				if (!Validacao.validarCNPJ(txtUsuario))
+				if (!Validacao.validarCNPJ(txtLogin))
 					return false;
 				else {
 					tipo = "CNPJ";
@@ -124,7 +124,7 @@ public class Login extends Application {
 			}
 		}
 		ResultSet result = Banco.InserirQueryReader(String.format("SELECT %s, senha, id FROM parceiro WHERE %s = '%s'",
-				tipo.toLowerCase(), tipo.toLowerCase(), txtUsuario.getText()));
+				tipo.toLowerCase(), tipo.toLowerCase(), txtLogin.getText()));
 
 		if (!result.next()) {
 			Util.MessageBoxShow("Falha ao realizar login", tipo + " não encontrado", AlertType.ERROR);

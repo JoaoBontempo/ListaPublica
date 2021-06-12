@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.http.HttpEntity;
@@ -41,11 +42,11 @@ import classes.Parceiro;
 import classes.TableViewUtil;
 import classes.Telefone;
 import classes.TelefoneNumero;
-import classes.TemporizadorCodigo;
 import classes.Util;
 import classes.UtilDashboard;
 import classes.Validacao;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
@@ -446,6 +447,33 @@ public class Dashboard extends Application {
 		return codigo;
 	}
 
+	
+	Thread thread;
+	int segundos = 0 ;
+	boolean codigoCerto = false;
+	
+	private void iniciarTimer()
+	{
+		thread = new Thread(new Runnable() {
+			@Override
+			public void run()
+			{
+				try {
+					for (int i = 120; i >= 0; i--)
+					{
+						Thread.sleep(1000);
+						segundos = i;
+						setLabelTemporizador();
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		thread.start();
+	}
+
 	@FXML
 	void AlterarSenha(ActionEvent event) {
 		codigo = GerarCodigo();
@@ -453,17 +481,35 @@ public class Dashboard extends Application {
 				+ "\n\n Insira o código abaixo para validar sua operação:"
 				+ "\n\n" + codigo, "Solicitação de troca de senha - Lista Pública",
 				Util.getContaLogada().getEmail())) {
-			//TemporizadorCodigo temp = new TemporizadorCodigo(this);
-			//temp.start();
+			iniciarTimer();
 			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o código de alteração ao seu E-mail!", AlertType.INFORMATION);
 			MudarInterfaceCodigo(true);
 			txtMCCodigo.requestFocus();
 		}
 	}
 
-	public void setLabelTemporizador(int tempo)
+	public void setLabelTemporizador()
 	{
-		lbTempoRestante.setText("Tempo restante: " + tempo + " segundos");
+		Platform.runLater(new Runnable(){
+			@Override
+			public void run() {
+				if (codigoCerto)
+				{
+					MudarInterfaceCodigo(false);
+					codigo = null;
+				}
+				// TODO Auto-generated method stub
+				lbTempoRestante.setText("Tempo restante: " + segundos + " segundos");
+				
+				if (segundos == 0 && !codigoCerto)
+				{
+					MudarInterfaceCodigo(false);
+					codigo = null;
+					Util.MessageBoxShow("Tempo esgotado", "O código de validação de troca de senha expirou."
+							+ "\nPor favor, solicite um novo código", AlertType.INFORMATION);
+				}
+			}
+		});
 	}
 
 	public void MudarInterfaceCodigo(boolean visible)
@@ -482,6 +528,7 @@ public class Dashboard extends Application {
 		if (txtMCCodigo.getText().equals(codigo)) {
 			MudarInterfaceCodigo(false);
 			codigo = null;
+			codigoCerto = true;
 			TrocarSenha trocarSenha = new TrocarSenha();
 			trocarSenha.setEmail(Util.getContaLogada().getEmail());
 			trocarSenha.getEvent(event);
@@ -783,8 +830,8 @@ public class Dashboard extends Application {
 		Util.nodes.remove(index);
 
 		for (Node node : Util.nodes) {
-			
-           fpEndereco.getChildren().add(node);
+
+			fpEndereco.getChildren().add(node);
 		}
 
 	}
