@@ -516,6 +516,7 @@ public class TelaLocal extends Application {
 		
 		id_telefone=UtilDashboard.getIdTelefone();
 		
+		tvcTelefone.setStyle("-fx-alignment: CENTER;");
 		
 		verificaDescricaoTelefone(id_telefone);
 		this.idDono= Integer.parseInt(UtilDashboard.getIdDono());
