@@ -42,7 +42,7 @@ public class Login extends Application {
 
 	@FXML
 	private PasswordField txtSenha;
-	
+
 	@FXML
 	private Button btnGuest;
 
@@ -52,7 +52,7 @@ public class Login extends Application {
 			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("telaLogin.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			Image icon = new Image("Recursos/logo.png"	);
+			Image icon = new Image("Recursos/logo.png");
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Lista Pública - Login");
 			primaryStage.getIcons().add(icon);
@@ -171,7 +171,7 @@ public class Login extends Application {
 	void meCadastrar(MouseEvent event) {
 
 		Cadastrar cadastrar = new Cadastrar();
-		//cadastrar.setEvento(event);
+		// cadastrar.setEvento(event);
 		cadastrar.start(new Stage());
 		Stage stageAtual = (Stage) lbCadastrar.getScene().getWindow();
 		stageAtual.close();

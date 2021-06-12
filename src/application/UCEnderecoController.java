@@ -22,6 +22,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -72,6 +73,8 @@ public class UCEnderecoController {
 
 	@FXML
 	private TextField txtCaminhoImagem;
+	@FXML
+	private Label lbIndice;
 
 	private FlowPane secPane;
 
@@ -83,42 +86,60 @@ public class UCEnderecoController {
 
 	private File imagemEscolhida;
 	private int index;
+    public String nome;
+	
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+		System.out.println("Index passado ao set: " + index);
+		//lbIndice.setText(String.valueOf(index));
+	}
+	public String getNome() {
+		return nome;
+	}
 
 	@FXML
 	void AlterarEndereco(MouseEvent event) throws SQLException, IOException {
 
-		if(ValidarCampos()) {
+		if (ValidarCampos()) {
 
-			if(Util.MessageBoxShow(" Alterar o Local" , "Tem certeza que deseja alterar o Local " 
-					+ endereco.getNome() + " ?").equals(ButtonType.OK)){
-
+			if (Util.MessageBoxShow(" Alterar o Local",
+					"Tem certeza que deseja alterar o Local " + endereco.getNome() + " ?").equals(ButtonType.OK)) {
 
 				String query = "";
-				String anexoImagem=txtCaminhoImagem.getText();
+				String anexoImagem = txtCaminhoImagem.getText();
 
-				if(alterada) {
-					query = String.format("UPDATE endereco SET nome = '%s', imagem = '%s', estado = '%s', cidade = '%s', bairro = '%s', rua = '%s', numero = %s WHERE id = %s ", 
+				if (alterada) {
+					query = String.format(
+							"UPDATE endereco SET nome = '%s', imagem = '%s', estado = '%s', cidade = '%s', bairro = '%s', rua = '%s', numero = %s WHERE id = %s ",
 							txtNome.getText(),
-							anexoImagem.length() > 0 ? Util.converterStringParaBase64(anexoImagem) :"", cboxEstado.getSelectionModel().getSelectedItem(),
-									cboxCidade.getSelectionModel().getSelectedItem(), txtBairro.getText(), txtRua.getText(), txtNumero.getText(), endereco.getId());
+							anexoImagem.length() > 0 ? Util.converterStringParaBase64(anexoImagem) : "",
+							cboxEstado.getSelectionModel().getSelectedItem(),
+							cboxCidade.getSelectionModel().getSelectedItem(), txtBairro.getText(), txtRua.getText(),
+							txtNumero.getText(), endereco.getId());
+				} else {
+
+					query = String.format(
+							"UPDATE endereco SET nome = '%s',  estado = '%s', cidade = '%s', bairro = '%s', rua = '%s', numero = %s WHERE id = %s",
+							txtNome.getText(), cboxEstado.getSelectionModel().getSelectedItem(),
+							cboxCidade.getSelectionModel().getSelectedItem(), txtBairro.getText(), txtRua.getText(),
+							txtNumero.getText(), endereco.getId());
 				}
-				else {
 
-					query = String.format("UPDATE endereco SET nome = '%s',  estado = '%s', cidade = '%s', bairro = '%s', rua = '%s', numero = %s WHERE id = %s", txtNome.getText(),
-							cboxEstado.getSelectionModel().getSelectedItem(),cboxCidade.getSelectionModel().getSelectedItem(), 
-							txtBairro.getText(), txtRua.getText(), txtNumero.getText(), endereco.getId());
-				}
+				if (Banco.InserirQuery(query)) {
 
-				if(Banco.InserirQuery(query)) {
-
-					Util.MessageBoxShow("Endereço alterado", "Seu endereço foi alterado com sucesso", AlertType.INFORMATION);
+					Util.MessageBoxShow("Endereço alterado", "Seu endereço foi alterado com sucesso",
+							AlertType.INFORMATION);
 					alterada = false;
 					AtualizarParametrosPesquisa();
-				}
-				else {
+				} else {
 
-					Util.MessageBoxShow("Endereço inalterado", "Não foi possível alterar seu endereço", AlertType.ERROR);
-					System.out.println("Query : "+query);
+					Util.MessageBoxShow("Endereço inalterado", "Não foi possível alterar seu endereço",
+							AlertType.ERROR);
+					System.out.println("Query : " + query);
 				}
 			}
 		}
@@ -128,36 +149,38 @@ public class UCEnderecoController {
 	@FXML
 	void removerImagem(ActionEvent event) {
 
-		if(Util.MessageBoxShow(" Excluir a Imagem do Local" , "Tem certeza que deseja Remover a Imagem ?? ").equals(ButtonType.OK)){
+		if (Util.MessageBoxShow(" Excluir a Imagem do Local", "Tem certeza que deseja Remover a Imagem ?? ")
+				.equals(ButtonType.OK)) {
 			txtCaminhoImagem.setText("");
 			imgLocal.setImage(new Image(new File("src/Recursos/logo_contornada.png").toURI().toString()));
 		}
 
 	}
+
 	@FXML
 	void abrirImagem(ActionEvent event) {
 
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Defina uma imagem do local");
-		fileChooser.getExtensionFilters().addAll(
-				new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"),
 				new FileChooser.ExtensionFilter("PNG", "*.png"));
-		imagemEscolhida=fileChooser.showOpenDialog(this.primaryStage);
-		
-        if(imagemEscolhida == null)
-        	return;
-        
-		if(imagemEscolhida.length() <= 4194304) {
+		imagemEscolhida = fileChooser.showOpenDialog(this.primaryStage);
+
+		if (imagemEscolhida == null)
+			return;
+
+		if (imagemEscolhida.length() <= 4194304) {
 
 			txtCaminhoImagem.setText(imagemEscolhida.getAbsolutePath());
-			imgLocal.setImage(new Image(new File(txtCaminhoImagem.getText()).toURI().toString(), 400, 400, false, false));
+			imgLocal.setImage(
+					new Image(new File(txtCaminhoImagem.getText()).toURI().toString(), 400, 400, false, false));
 			alterada = true;
-		}
-		else 
-			Util.MessageBoxShow("Inserção de Imagem", "A imagem solicitada escede o tamanho mínimo de 4Mb", AlertType.WARNING);
+		} else
+			Util.MessageBoxShow("Inserção de Imagem", "A imagem solicitada escede o tamanho mínimo de 4Mb",
+					AlertType.WARNING);
 	}
-	private void AtualizarParametrosPesquisa()
-	{
+
+	private void AtualizarParametrosPesquisa() {
 		Util.Enderecos.get(index).setEstado(cboxEstado.getSelectionModel().getSelectedItem());
 		Util.Enderecos.get(index).setCidade(cboxCidade.getSelectionModel().getSelectedItem());
 		Util.Enderecos.get(index).setBairro(txtBairro.getText());
@@ -166,29 +189,29 @@ public class UCEnderecoController {
 		Util.Enderecos.get(index).setNome(txtNome.getText());
 	}
 
-	private boolean ValidarCampos(){
+	private boolean ValidarCampos() {
 
-		if(!Validacao.verificarTextField(txtBairro)) {
+		if (!Validacao.verificarTextField(txtBairro)) {
 			txtBairro.setText(endereco.getBairro());
 			return false;
 		}
 
-		if(!Validacao.verificarTextField(txtRua)){
+		if (!Validacao.verificarTextField(txtRua)) {
 			txtRua.setText(endereco.getRua());
 			return false;
 		}
 
-		if(!Validacao.verificarTextField(txtNumero)) {
+		if (!Validacao.verificarTextField(txtNumero)) {
 			txtNumero.setText(String.valueOf(endereco.getNumero()));
 			return false;
 		}
 
-		if(!Validacao.verificarTextField(txtNome)){
+		if (!Validacao.verificarTextField(txtNome)) {
 			txtNome.setText(endereco.getNome());
 			return false;
 		}
 
-		if(!Validacao.verificarNumerosTextField(txtNumero)){
+		if (!Validacao.verificarNumerosTextField(txtNumero)) {
 			txtNumero.setText(String.valueOf(endereco.getNumero()));
 			return false;
 		}
@@ -198,56 +221,53 @@ public class UCEnderecoController {
 
 	@FXML
 	void ExcluirEndereco(MouseEvent event) throws SQLException, IOException {
-		if(Util.MessageBoxShow(" Excluir o Local" , "Tem certeza que deseja excluir o Local " 
-				+ endereco.getNome() + " ?").equals(ButtonType.OK)){
+		if (Util.MessageBoxShow(" Excluir o Local",
+				"Tem certeza que deseja excluir o Local " + endereco.getNome() + " ?").equals(ButtonType.OK)) {
 
+			Banco.InserirQuery("UPDATE telefone SET lugar = null WHERE lugar = '" + endereco.getId() + "'");
+			if (Banco.InserirQuery("DELETE FROM endereco WHERE id = " + endereco.getId())) {
 
-               Banco.InserirQuery("UPDATE telefone SET lugar = null WHERE lugar = '" + endereco.getId() + "'");
-			if(Banco.InserirQuery("DELETE FROM endereco WHERE id = " + endereco.getId())) {
-				
-				Util.MessageBoxShow("Endereço excluído", "Seu endereço foi excluído com sucesso", AlertType.INFORMATION);
-				//Util.dashboard.AtualizarCbxEnderecos();
+				Util.MessageBoxShow("Endereço excluído", "Seu endereço foi excluído com sucesso",
+						AlertType.INFORMATION);
+				// Util.dashboard.AtualizarCbxEnderecos();
 				Util.dashboard.AtualizarFlowPaneEndereco(index);
-			}
-			else
+			} else
 				Util.MessageBoxShow("Exclusão de Endereço", "Houve um erro ao excluir seu endereço", AlertType.ERROR);
 		}
 	}
 
-
 	private void obterImagemLocal() throws SQLException, Exception {
 
-		String caminho="C:\\lista\\locais\\addr"+endereco.getId()+".jpg";
+		String caminho = "C:\\lista\\locais\\addr" + endereco.getId() + ".jpg";
 		File f = new File(caminho);
 
-		String query="select imagem from endereco where id="+endereco.getId();
+		String query = "select imagem from endereco where id=" + endereco.getId();
 		Banco.InserirQueryReader(query);
 
-		if(Banco.getReader().next()) {
-			String imagem=Banco.getReader().getString("imagem");
-			if(imagem != null) {
-				if(imagem.length()>0) {
-					Util.verificaExistenciaImagem("addr"+endereco.getId()+".jpg", imagem.getBytes(), true);
+		if (Banco.getReader().next()) {
+			String imagem = Banco.getReader().getString("imagem");
+			if (imagem != null) {
+				if (imagem.length() > 0) {
+					Util.verificaExistenciaImagem("addr" + endereco.getId() + ".jpg", imagem.getBytes(), true);
 					imgLocal.setImage(new Image(new File(caminho).toURI().toString(), 400, 400, false, false));
 
-				}	
+				}
 
 			}
 		}
 
-
 	}
-	
+
 	private Endereco endereco;
-	public void initialize() throws SQLException, Exception
-	{
+
+	public void initialize() throws SQLException, Exception {
 		index = Util.indexEndereco;
 		endereco = Util.endereco;
 		txtRua.setText(endereco.getRua());
 		txtBairro.setText(endereco.getBairro());
 		txtNumero.setText(String.valueOf(endereco.getNumero()));
 		txtNome.setText(endereco.getNome());
-        
+
 		ArrayList<UF> estados = API.doGetEstados();
 
 		for (UF estado : estados) {
@@ -259,34 +279,37 @@ public class UCEnderecoController {
 		RecuperarCidades();
 		cboxCidade.getSelectionModel().select(endereco.getCidade());
 		obterImagemLocal();
+		lbIndice.setText(String.valueOf(index));
+		System.out.println("Local " + endereco.getNome() + " index "+ index );
+		nome = endereco.getNome();
 	}
 
 	private void RecuperarCidades() {
 		cboxCidade.getItems().clear();
 
-		ArrayList<Municipio> municipios = API.doGetCidades(idsEstado.get(cboxEstado.getSelectionModel().getSelectedIndex()));
+		ArrayList<Municipio> municipios = API
+				.doGetCidades(idsEstado.get(cboxEstado.getSelectionModel().getSelectedIndex()));
 		for (Municipio municipio : municipios) {
 			cboxCidade.getItems().add(municipio.getNome());
 		}
 		cboxCidade.getSelectionModel().selectFirst();
 	}
+
 	@FXML
 	private void recuperarCidades() {
 		RecuperarCidades();
 	}
 
-	public void setPane(FlowPane pane)
-	{
+	public void setPane(FlowPane pane) {
 		this.secPane = pane;
 	}
 
-	@FXML 
-	public void loadFxml () throws IOException {
+	@FXML
+	public void loadFxml() throws IOException {
 
 		AnchorPane newLoadedPane = FXMLLoader.load(getClass().getResource("UCEndereco.fxml"));
 		secPane.getChildren().add(newLoadedPane);
 		Util.nodes.add(newLoadedPane);
 	}
-
 
 }

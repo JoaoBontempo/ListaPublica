@@ -249,7 +249,6 @@ public class Dashboard extends Application {
 	@FXML
 	private FlowPane fpEndereco;
 
-
 	@FXML
 	private RadioButton rbtnQualquer0;
 
@@ -266,10 +265,8 @@ public class Dashboard extends Application {
 		return fpTelefones;
 	}
 
-	private void TrocarTipo(int tipo)
-	{
-		switch (tipo)
-		{
+	private void TrocarTipo(int tipo) {
+		switch (tipo) {
 		case 0:
 			this.tipo = "*";
 			break;
@@ -289,11 +286,10 @@ public class Dashboard extends Application {
 	}
 
 	@FXML
-	public void TrocarRadioButtons(Event e)
-	{
-		RadioButton selected = (RadioButton)e.getSource();
-		int num = Integer.parseInt(String.valueOf(selected.getId().charAt(selected.getId().length()-1)));
-		Util.ChangeRadioButtons(new RadioButton[] {rbtnQualquer0, rbtnCelular1, rbtnFixo2, rbtnOutro3}, num);
+	public void TrocarRadioButtons(Event e) {
+		RadioButton selected = (RadioButton) e.getSource();
+		int num = Integer.parseInt(String.valueOf(selected.getId().charAt(selected.getId().length() - 1)));
+		Util.ChangeRadioButtons(new RadioButton[] { rbtnQualquer0, rbtnCelular1, rbtnFixo2, rbtnOutro3 }, num);
 		TrocarTipo(num);
 	}
 
@@ -347,7 +343,7 @@ public class Dashboard extends Application {
 		} catch (IOException ie) {
 			// TODO Auto-generated catch block
 			ie.printStackTrace();
-		}catch(NullPointerException ne) {
+		} catch (NullPointerException ne) {
 			// fechar sem escolher arquivo
 			return;
 		}
@@ -421,26 +417,22 @@ public class Dashboard extends Application {
 
 	private String codigo = null;
 
-	public String getCodigo()
-	{
+	public String getCodigo() {
 		return this.codigo;
 	}
 
-	public void setCodigo(String codigo)
-	{
+	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
 
-	private String GerarCodigo()
-	{
+	private String GerarCodigo() {
 		Random random = new Random();
 		String codigo = "TSLP-";
-		for (int i = 0; i < 7; i++)
-		{
-			if (i % 2 == 0) 
+		for (int i = 0; i < 7; i++) {
+			if (i % 2 == 0)
 				codigo += String.valueOf(random.nextInt(10));
 			else
-				codigo += (char)(random.nextInt((122 - 97) + 1) + 97);
+				codigo += (char) (random.nextInt((122 - 97) + 1) + 97);
 		}
 		System.out.println(codigo);
 		return codigo;
@@ -449,25 +441,24 @@ public class Dashboard extends Application {
 	@FXML
 	void AlterarSenha(ActionEvent event) {
 		codigo = GerarCodigo();
-		if (Email.enviarEmail("Você solicitou a troca de senha no sistema Lista Pública de Telefones."
-				+ "\n\n Insira o código abaixo para validar sua operação:"
-				+ "\n\n" + codigo, "Solicitação de troca de senha - Lista Pública",
-				Util.getContaLogada().getEmail())) {
-			//TemporizadorCodigo temp = new TemporizadorCodigo(this);
-			//temp.start();
-			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o código de alteração ao seu E-mail!", AlertType.INFORMATION);
+		if (Email.enviarEmail(
+				"Você solicitou a troca de senha no sistema Lista Pública de Telefones."
+						+ "\n\n Insira o código abaixo para validar sua operação:" + "\n\n" + codigo,
+						"Solicitação de troca de senha - Lista Pública", Util.getContaLogada().getEmail())) {
+			// TemporizadorCodigo temp = new TemporizadorCodigo(this);
+			// temp.start();
+			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o código de alteração ao seu E-mail!",
+					AlertType.INFORMATION);
 			MudarInterfaceCodigo(true);
 			txtMCCodigo.requestFocus();
 		}
 	}
 
-	public void setLabelTemporizador(int tempo)
-	{
+	public void setLabelTemporizador(int tempo) {
 		lbTempoRestante.setText("Tempo restante: " + tempo + " segundos");
 	}
 
-	public void MudarInterfaceCodigo(boolean visible)
-	{
+	public void MudarInterfaceCodigo(boolean visible) {
 		lbCodigo1.setVisible(visible);
 		lbCodigo2.setVisible(visible);
 		vsSeparador.setVisible(visible);
@@ -487,9 +478,7 @@ public class Dashboard extends Application {
 			trocarSenha.getEvent(event);
 			trocarSenha.start(new Stage());
 
-		}
-		else
-		{
+		} else {
 			Util.MessageBoxShow("Código inválido", "O código informado está incorreto", AlertType.INFORMATION);
 		}
 	}
@@ -526,7 +515,8 @@ public class Dashboard extends Application {
 		}
 	}
 
-	// esse mï¿½todo vai obter o ID do usuï¿½rio que pertence ao lugar clicado e abrir a
+	// esse mï¿½todo vai obter o ID do usuï¿½rio que pertence ao lugar clicado e
+	// abrir a
 	// janela de Tela, mostrando as infos detalhadas e todos os
 	// telefones associados ao mesmo.
 	@FXML
@@ -569,7 +559,8 @@ public class Dashboard extends Application {
 					UtilDashboard.getTelefones().clear();
 					while (Banco.getReader().next()) {
 						try {
-							UtilDashboard.getTelefones().add(new TelefoneNumero(Banco.getReader().getString("numero"), Banco.getReader().getString("tipo")));
+							UtilDashboard.getTelefones().add(new TelefoneNumero(Banco.getReader().getString("numero"),
+									Banco.getReader().getString("tipo")));
 						} catch (Exception exc) {
 							exc.printStackTrace();
 						}
@@ -643,68 +634,56 @@ public class Dashboard extends Application {
 	}
 
 	@FXML
-	public void txtPesquisaTelefoneTextChanged()
-	{
+	public void txtPesquisaTelefoneTextChanged() {
 		BuscarInformacao(txtPesquisaTelefone.getText());
 	}
 
-	private void BuscarInformacao(String info)
-	{
+	private void BuscarInformacao(String info) {
 		fpTelefones.getChildren().clear();
 		info = info.toLowerCase();
 		int i = 0;
-		for (Node node : Util.nodos)
-		{
-			if (Validacao.isNullOrEmpty(info))
-			{
-				//node.setVisible(true);
+		for (Node node : Util.nodos) {
+			if (Validacao.isNullOrEmpty(info)) {
+				// node.setVisible(true);
 				fpTelefones.getChildren().add(node);
 				continue;
 			}
-			if (Util.FormatarSetTelefone(Util.telefones.get(i).getNumero(), Util.telefones.get(i).getTipo()).toLowerCase().contains(info) || 
-					Util.telefones.get(i).getDescricao().toLowerCase().contains(info) ||
-					Util.enderecosAtuais.get(i).getNome().toLowerCase().contains(info))
-			{
+			if (Util.FormatarSetTelefone(Util.telefones.get(i).getNumero(), Util.telefones.get(i).getTipo())
+					.toLowerCase().contains(info) || Util.telefones.get(i).getDescricao().toLowerCase().contains(info)
+					|| Util.enderecosAtuais.get(i).getNome().toLowerCase().contains(info)) {
 				fpTelefones.getChildren().add(node);
-			}
-			else
-			{
-				//node.setVisible(false);
+			} else {
+				// node.setVisible(false);
 			}
 			i++;
 		}
 	}
+
 	@FXML
 	void txtPesquisaEnderecoTextChanged(KeyEvent event) {
 		BuscarInformacaoEndereco(txtPesquisaEndereco.getText());
 	}
 
-	private void BuscarInformacaoEndereco(String info)
-	{
+	private void BuscarInformacaoEndereco(String info) {
 
 		fpEndereco.getChildren().clear();
 		info = info.toLowerCase();
 		int i = 0;
-		for (Node node : Util.nodes)
-		{
-			if (Validacao.isNullOrEmpty(info))
-			{
-				//node.setVisible(true);
+		for (Node node : Util.nodes) {
+			if (Validacao.isNullOrEmpty(info)) {
+				// node.setVisible(true);
 				fpEndereco.getChildren().add(node);
 				continue;
 			}
-			if (Util.Enderecos.get(i).getEstado().toLowerCase().contains(info) || 
-					Util.Enderecos.get(i).getCidade().toLowerCase().contains(info) ||
-					Util.Enderecos.get(i).getBairro().toLowerCase().contains(info) ||
-					Util.Enderecos.get(i).getRua().toLowerCase().contains(info) ||
-					Integer.toString(Util.Enderecos.get(i).getNumero()).contains(info) ||
-					Util.Enderecos.get(i).getNome().toLowerCase().contains(info) )
-			{
+			if (Util.Enderecos.get(i).getEstado().toLowerCase().contains(info)
+					|| Util.Enderecos.get(i).getCidade().toLowerCase().contains(info)
+					|| Util.Enderecos.get(i).getBairro().toLowerCase().contains(info)
+					|| Util.Enderecos.get(i).getRua().toLowerCase().contains(info)
+					|| Integer.toString(Util.Enderecos.get(i).getNumero()).contains(info)
+					|| Util.Enderecos.get(i).getNome().toLowerCase().contains(info)) {
 				fpEndereco.getChildren().add(node);
-			}
-			else
-			{
-				//node.setVisible(false);
+			} else {
+				// node.setVisible(false);
 			}
 			i++;
 		}
@@ -714,14 +693,15 @@ public class Dashboard extends Application {
 		if (Util.isConvidado())
 			return;
 		AtualizarEnderecos();
-		ResultSet result = Banco.InserirQueryReader(
-				"SELECT id, numero, descricao, lugar, tipo FROM telefone WHERE dono = " + Util.getContaLogada().getId());
+		ResultSet result = Banco
+				.InserirQueryReader("SELECT id, numero, descricao, lugar, tipo FROM telefone WHERE dono = "
+						+ Util.getContaLogada().getId());
 		Util.nodos.clear();
 		Util.enderecosAtuais.clear();
 		fpTelefones.getChildren().clear();
 		Util.telefones.clear();
-		int i = 0;
-		while(result.next()) {
+		int i = -1;
+		while (result.next()) {
 
 			Util.idEndereco = result.getInt("lugar");
 			Telefone telefone = new Telefone();
@@ -733,7 +713,7 @@ public class Dashboard extends Application {
 			Util.telefone = telefone;
 			Util.telefones.add(telefone);
 			UCTelefoneController uct = new UCTelefoneController();
-			Util.index = i++;
+			Util.index = ++i;
 			uct.setPane(fpTelefones);
 			uct.loadFxml();
 		}
@@ -744,57 +724,83 @@ public class Dashboard extends Application {
 		if (Util.isConvidado())
 			return;
 
-		//AtualizarEnderecos();
-		ResultSet result = Banco.InserirQueryReader(
-				"SELECT * FROM endereco WHERE usuario = " + Util.getContaLogada().getId());
+		// AtualizarEnderecos();
+		ResultSet result = Banco
+				.InserirQueryReader("SELECT * FROM endereco WHERE usuario = " + Util.getContaLogada().getId());
 		Util.nodes.clear();
-		//Util.enderecosAtuais.clear();
+		// Util.enderecosAtuais.clear();
 		fpEndereco.getChildren().clear();
 		Util.Enderecos.clear();
 		int i = 0;
-		while(result.next()) {
+		while (result.next()) {
 
-			//Util.idEndereco = result.getInt("lugar");
-			Endereco endereco = new Endereco();
-
-			endereco.setId(result.getInt("id"));
-			endereco.setBairro(result.getString("bairro"));
-			endereco.setRua(result.getString("rua"));
-			endereco.setEstado(result.getString("estado"));
-			endereco.setNumero(result.getInt("numero"));
-			endereco.setNome(result.getString("nome"));
-			endereco.setCidade(result.getString("cidade"));
-			endereco.setImagem(result.getString("imagem"));
-
-
-
-			Util.endereco = endereco;
-			Util.Enderecos.add(endereco);
-			UCEnderecoController uce= new UCEnderecoController();
-			Util.indexEndereco = i++;
-			uce.setPane(fpEndereco);
-			uce.loadFxml();
+			AtualizarFlowPaneEndereco(i++, result.getInt("id"), result.getString("bairro"), result.getString("rua"),
+					result.getString("estado"), result.getInt("numero"), result.getString("nome"),
+					result.getString("cidade"), result.getString("imagem"));
 		}
 	}
-	public void AtualizarFlowPaneEndereco(int index) {
 
+	public void AtualizarFlowPaneEndereco(int index) {
+        
+		System.out.print("INDICE PASSADO " + index);
+		// função excluir
 		fpEndereco.getChildren().clear();
 		Util.Enderecos.remove(index);
 		Util.nodes.remove(index);
+		Util.controladorEndereco.remove(index);
 
-		for (Node node : Util.nodes) {
-			
-           fpEndereco.getChildren().add(node);
+		int i = 0;
+		for(UCEnderecoController control : Util.controladorEndereco) {
+
+			System.out.println("Local " + control.getNome() + "Indice" + control.getIndex());
 		}
+		for (Node node : Util.nodes) {
+
+			//Util.controladorEndereco.get(i).setIndex(i++);
+			
+
+			fpEndereco.getChildren().add(node);
+
+		}
+		for(UCEnderecoController control : Util.controladorEndereco) {
+
+			System.out.println("Local " + control.getNome()  + "Indice" + control.getIndex());
+		}
+
 
 	}
 
-	public void AtualizarEnderecos() throws SQLException
-	{
+	public void AtualizarFlowPaneEndereco(int index, int id, String bairro, String rua, String estado, int numero,
+			String nome, String cidade, String imagem) throws IOException {
+
+		// função cadastrar
+		Endereco endereco = new Endereco();
+
+		endereco.setId(id);
+		endereco.setBairro(bairro);
+		endereco.setRua(rua);
+		endereco.setEstado(estado);
+		endereco.setNumero(numero);
+		endereco.setNome(nome);
+		endereco.setCidade(cidade);
+		endereco.setImagem(imagem);
+
+		Util.endereco = endereco;
+		Util.Enderecos.add(endereco);
+	
+		UCEnderecoController uce = new UCEnderecoController();
+		Util.indexEndereco = index; // cadastrar Util.indexEndereco++
+		Util.controladorEndereco.add(uce);
+		uce.setPane(fpEndereco);
+		uce.loadFxml();
+
+	}
+
+	public void AtualizarEnderecos() throws SQLException {
 		Util.todoEnderecos.clear();
-		ResultSet result = Banco.InserirQueryReader("SELECT id, nome FROM endereco WHERE usuario = " + Util.getContaLogada().getId());
-		while(result.next())
-		{
+		ResultSet result = Banco
+				.InserirQueryReader("SELECT id, nome FROM endereco WHERE usuario = " + Util.getContaLogada().getId());
+		while (result.next()) {
 
 			Endereco end = new Endereco();
 			end.setId(result.getInt("id"));
@@ -825,7 +831,8 @@ public class Dashboard extends Application {
 	private void AplicarFiltroDeDados() {
 		setQueryParameters();
 		System.out.println(tipo);
-		AtualizarGridTelefones(API.doPostTelefone(new TableViewUtil(nome, numero, cidade, estado, email, descricao, tipo)));
+		AtualizarGridTelefones(
+				API.doPostTelefone(new TableViewUtil(nome, numero, cidade, estado, email, descricao, tipo)));
 	}
 
 	private void AtualizarGridTelefones(ArrayList<Telefone> dados) {
@@ -862,7 +869,8 @@ public class Dashboard extends Application {
 					return true;
 				} else if (telefone.getEstado().toLowerCase().indexOf(lowerCaseFilter) != -1) {
 					return true;
-				} else if (Util.FormatarSetTelefone(telefone.getNumero().toLowerCase(), telefone.getTipo()).indexOf(lowerCaseFilter) != -1) {
+				} else if (Util.FormatarSetTelefone(telefone.getNumero().toLowerCase(), telefone.getTipo())
+						.indexOf(lowerCaseFilter) != -1) {
 					return true;
 				} else if (telefone.getDescricao().toLowerCase().indexOf(lowerCaseFilter) != -1) {
 					return true;
