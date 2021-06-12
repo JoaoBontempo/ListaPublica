@@ -61,11 +61,7 @@ public final class Util {
 	/* UTILIDADES DO USER CONTROL ENDERECOS */
 	public static Endereco endereco;
 	public static ArrayList<Endereco> Enderecos = new ArrayList<Endereco>();
-	// public static ArrayList<Endereco> enderecosAtuais = new
-	// ArrayList<Endereco>();
-	// public static int index;
 	public static ArrayList<Node> nodes = new ArrayList<Node>();
-
 	public static ArrayList<UCEnderecoController> controladorEndereco = new ArrayList<UCEnderecoController>();
 	/**/
 

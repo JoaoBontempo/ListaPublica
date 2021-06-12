@@ -164,7 +164,7 @@ public class Dashboard extends Application {
 	private TextField txtEmail;
 
 	@FXML
-	private TextField txtDescriï¿½ï¿½o;
+	private TextField txtDescrição;
 
 	@FXML
 	private Button btnNovoTelefone;
@@ -326,7 +326,7 @@ public class Dashboard extends Application {
 
 			String diretorioTmp = "C:\\lista\\usuarios\\" + imagemEscolhida.getName() + Util.getContaLogada().getId();
 			if (Util.verificaTamanhoImagem(4194304L, new File(imagemEscolhida.getAbsolutePath()))) {
-				Util.MessageBoxShow("Imagem muito grande", "A imagem ï¿½ maior que 4Mb.");
+				Util.MessageBoxShow("Imagem muito grande", "A imagem é maior que 4Mb.");
 				return;
 			}
 
@@ -789,29 +789,32 @@ public class Dashboard extends Application {
 
 	public void AtualizarFlowPaneEndereco(int index) {
         
-		System.out.print("INDICE PASSADO " + index);
+		System.out.println("INDICE PASSADO " + index);
 		// funï¿½ï¿½o excluir
 		fpEndereco.getChildren().clear();
 		Util.Enderecos.remove(index);
 		Util.nodes.remove(index);
 		Util.controladorEndereco.remove(index);
 
-		int i = 0;
 		for(UCEnderecoController control : Util.controladorEndereco) {
 
-			System.out.println("Local " + control.getNome() + "Indice" + control.getIndex());
+			System.out.println("Local " + control.getNome() + " Indice " + control.getIndex());
 		}
+		
 		for (Node node : Util.nodes) {
-
-			//Util.controladorEndereco.get(i).setIndex(i++);
-			
-
 			fpEndereco.getChildren().add(node);
 
 		}
+		
+		int i = 0;
+		for (UCEnderecoController control : Util.controladorEndereco)
+		{
+			Util.indexEndereco = i++;
+			control.setIndex();
+		}
 		for(UCEnderecoController control : Util.controladorEndereco) {
 
-			System.out.println("Local " + control.getNome()  + "Indice" + control.getIndex());
+			System.out.println("Local " + control.getNome()  + " Indice " + control.getIndex());
 			//fpEndereco.getChildren().add(node);
 		}
 
@@ -835,10 +838,10 @@ public class Dashboard extends Application {
 
 		Util.endereco = endereco;
 		Util.Enderecos.add(endereco);
-	
+		
 		UCEnderecoController uce = new UCEnderecoController();
 		Util.indexEndereco = index; // cadastrar Util.indexEndereco++
-		Util.controladorEndereco.add(uce);
+		//Util.controladorEndereco.add(uce);
 		uce.setPane(fpEndereco);
 		uce.loadFxml();
 
@@ -861,7 +864,7 @@ public class Dashboard extends Application {
 		numero = Validacao.isNullOrEmpty(txtTelefone.getText()) ? "*" : txtTelefone.getText();
 		nome = Validacao.isNullOrEmpty(txtNome.getText()) ? "*" : txtNome.getText();
 		email = Validacao.isNullOrEmpty(txtEmail.getText()) ? "*" : txtEmail.getText();
-		descricao = Validacao.isNullOrEmpty(txtDescriï¿½ï¿½o.getText()) ? "*" : txtDescriï¿½ï¿½o.getText();
+		descricao = Validacao.isNullOrEmpty(txtDescrição.getText()) ? "*" : txtDescrição.getText();
 		cidade = cboxCidades.getSelectionModel().getSelectedIndex() == 0 ? "*"
 				: cboxCidades.getSelectionModel().getSelectedItem();
 		estado = cboxEstados.getSelectionModel().getSelectedIndex() == 0 ? "*"
@@ -886,7 +889,7 @@ public class Dashboard extends Application {
 	private void AtualizarGridTelefones(ArrayList<Telefone> dados) {
 		if (dados.size() == 0) {
 			Util.MessageBoxShow("Nenhum dado foi encontrado",
-					"Nï¿½o foi possivel encontrar nenhum dado.\n" + "Tente mudar as informaï¿½ï¿½es do filtro",
+					"Nï¿½o foi possivel encontrar nenhum dado.\n" + "Tente mudar as informações do filtro",
 					AlertType.WARNING);
 			return;
 		}

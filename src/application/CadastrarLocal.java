@@ -182,7 +182,7 @@ public class CadastrarLocal extends Application implements Initializable {
 						.InserirQueryReader(String.format("SELECT * FROM endereco WHERE id = %s", lastid));
 
 				if (result.next()) {
-					Util.dashboard.AtualizarFlowPaneEndereco(++Util.indexEndereco, result.getInt("id"),
+					Util.dashboard.AtualizarFlowPaneEndereco(Util.Enderecos.size(), result.getInt("id"),
 							result.getString("bairro"), result.getString("rua"), result.getString("estado"),
 							result.getInt("numero"), result.getString("nome"), result.getString("cidade"),
 							result.getString("imagem"));

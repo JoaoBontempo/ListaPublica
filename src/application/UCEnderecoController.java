@@ -92,11 +92,6 @@ public class UCEnderecoController {
 		return index;
 	}
 
-	public void setIndex(int index) {
-		this.index = index;
-		System.out.println("Index passado ao set: " + index);
-		//lbIndice.setText(String.valueOf(index));
-	}
 	public String getNome() {
 		return nome;
 	}
@@ -279,9 +274,10 @@ public class UCEnderecoController {
 		RecuperarCidades();
 		cboxCidade.getSelectionModel().select(endereco.getCidade());
 		obterImagemLocal();
-		lbIndice.setText(String.valueOf(index));
-		System.out.println("Local " + endereco.getNome() + " index "+ index );
-		nome = endereco.getNome();
+		lbIndice.setText(String.valueOf(Util.indexEndereco));
+		//System.out.println("Local " + endereco.getNome() + " index "+ index );
+		//nome = endereco.getNome();
+		Util.controladorEndereco.add(this);
 	}
 
 	private void RecuperarCidades() {
@@ -302,6 +298,11 @@ public class UCEnderecoController {
 
 	public void setPane(FlowPane pane) {
 		this.secPane = pane;
+	}
+	
+	public void setIndex()
+	{
+		this.index = Util.indexEndereco;
 	}
 
 	@FXML
