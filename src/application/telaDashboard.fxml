@@ -22,7 +22,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane fx:id="TabDash" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="1181.0" stylesheets="@application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Dashboard">
+<TabPane fx:id="TabDash" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="1181.0" stylesheets="@application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Dashboard">
 	<tabs>
 		<Tab text="Lista de lugares/telefones">
 			<content>
@@ -194,61 +194,53 @@
 			<content>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="430.0" prefWidth="1181.0">
 					<children>
-						<TextField fx:id="txtMCNome" disable="true" editable="false" layoutX="187.0" layoutY="85.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="187.0" />
-						<TextField fx:id="txtMCUsuario" disable="true" editable="false" layoutX="187.0" layoutY="149.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="187.0" />
-						<TextField fx:id="txtMCEmail" layoutX="187.0" layoutY="211.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="187.0" />
-						<TextField fx:id="txtMCCPFouCNPJ" disable="true" editable="false" layoutX="187.0" layoutY="274.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="187.0" />
-						<Label layoutX="193.0" layoutY="63.0" text="Nome" textFill="WHITE" AnchorPane.leftAnchor="193.0">
+						<TextField fx:id="txtMCNome" disable="true" editable="false" layoutX="83.0" layoutY="211.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="83.0" />
+						<TextField fx:id="txtMCUsuario" disable="true" editable="false" layoutX="83.0" layoutY="275.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="83.0" />
+						<TextField fx:id="txtMCEmail" layoutX="83.0" layoutY="337.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="83.0" />
+						<TextField fx:id="txtMCCPFouCNPJ" disable="true" editable="false" layoutX="83.0" layoutY="400.0" prefHeight="34.0" prefWidth="300.0" AnchorPane.leftAnchor="83.0" />
+						<Label layoutX="89.0" layoutY="189.0" text="Nome" textFill="WHITE" AnchorPane.leftAnchor="89.0">
 							<font>
 								<Font name="Candara" size="19.0" />
 							</font>
 						</Label>
-						<Label layoutX="193.0" layoutY="127.0" text="Usuário" textFill="WHITE" AnchorPane.leftAnchor="193.0">
+						<Label layoutX="89.0" layoutY="253.0" text="Usuário" textFill="WHITE" AnchorPane.leftAnchor="89.0">
 							<font>
 								<Font name="Candara" size="19.0" />
 							</font>
 						</Label>
-						<Label layoutX="193.0" layoutY="189.0" text="E-mail" textFill="WHITE" AnchorPane.leftAnchor="193.0">
+						<Label layoutX="89.0" layoutY="315.0" text="E-mail" textFill="WHITE" AnchorPane.leftAnchor="89.0">
 							<font>
 								<Font name="Candara" size="19.0" />
 							</font>
 						</Label>
-						<Label fx:id="lbMCCPFouCNPJ" layoutX="193.0" layoutY="252.0" text="CPF" textFill="WHITE" AnchorPane.leftAnchor="193.0">
+						<Label fx:id="lbMCCPFouCNPJ" layoutX="89.0" layoutY="378.0" text="CPF" textFill="WHITE" AnchorPane.leftAnchor="89.0">
 							<font>
 								<Font name="Candara" size="19.0" />
 							</font>
 						</Label>
-						<Button fx:id="btnAlterarDados" layoutX="236.0" layoutY="328.0" mnemonicParsing="false" onAction="#AlterarDados" prefHeight="36.0" prefWidth="206.0" text="Alterar Dados" />
-						<Separator layoutX="511.0" layoutY="34.0" orientation="VERTICAL" prefHeight="356.0" prefWidth="0.0" />
-						<Label layoutX="578.0" layoutY="172.0" text="Código" textFill="WHITE">
+						<Button fx:id="btnAlterarDados" layoutX="83.0" layoutY="451.0" mnemonicParsing="false" onAction="#AlterarDados" prefHeight="36.0" prefWidth="300.0" text="Alterar Dados" />
+						<Separator fx:id="vsSeparador" layoutX="479.0" layoutY="34.0" orientation="VERTICAL" prefHeight="502.0" prefWidth="6.0" />
+						<Label fx:id="lbCodigo2" layoutX="544.0" layoutY="178.0" text="Código" textFill="WHITE">
 							<font>
 								<Font name="Candara" size="19.0" />
 							</font>
 						</Label>
-						<Button fx:id="btnConfirmarAlteracao" layoutX="570.0" layoutY="243.0" mnemonicParsing="false" onAction="#ConfirmarCodigoSenha" prefHeight="36.0" prefWidth="205.0" text="Confirmar" />
-						<Button fx:id="btnAlterarSenha" layoutX="570.0" layoutY="107.0" mnemonicParsing="false" onAction="#AlterarSenha" prefHeight="40.0" prefWidth="313.0" styleClass="text-field2" text="Alterar Senha" textFill="#903939" />
-						<PasswordField fx:id="txtMCCodigo" layoutX="570.0" layoutY="195.0" prefHeight="34.0" prefWidth="404.0" promptText="Insira o código de confirmação enviado no E-mail cadastrado" />
-						<Label fx:id="lblTrocarFotoPerfil" layoutX="33.0" layoutY="127.0" onMouseClicked="#TrocarFotoPerfil" prefHeight="22.0" prefWidth="133.0" styleClass="labelVerde" stylesheets="@application.css" text="Trocar foto de perfil" textFill="WHITE">
-							<cursor>
-								<Cursor fx:constant="HAND" />
-							</cursor>
-							<font>
-								<Font name="Candara" size="14.0" />
-							</font>
-						</Label>
-						<BorderPane fx:id="pnlImagem" layoutX="27.0" layoutY="19.0" prefHeight="88.0" prefWidth="116.0">
+						<Button fx:id="btnConfirmarAlteracao" layoutX="544.0" layoutY="267.0" mnemonicParsing="false" onAction="#ConfirmarCodigoSenha" prefHeight="36.0" prefWidth="205.0" text="Confirmar código" />
+						<Button fx:id="btnAlterarSenha" layoutX="83.0" layoutY="500.0" mnemonicParsing="false" onAction="#AlterarSenha" prefHeight="36.0" prefWidth="300.0" text="Alterar Senha" textFill="#903939" />
+						<PasswordField fx:id="txtMCCodigo" layoutX="544.0" layoutY="201.0" prefHeight="34.0" prefWidth="404.0" promptText="Insira o código de confirmação enviado no E-mail cadastrado" />
+						<BorderPane fx:id="pnlImagem" layoutX="161.0" layoutY="28.0" prefHeight="93.0" prefWidth="110.0">
 							<center>
-								<ImageView fx:id="imgIconePerfil" fitHeight="103.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" BorderPane.alignment="CENTER">
-									<image>
-										<Image url="@../Recursos/logo_contornada.png" />
-									</image>
-									<viewport>
-										<Rectangle2D minX="194.0" minY="112.0" />
-									</viewport>
-								</ImageView>
+      								<ImageView fx:id="imgIconePerfil" fitHeight="103.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" BorderPane.alignment="CENTER">
+      									<image>
+      										<Image url="@../Recursos/logo_contornada.png" />
+      									</image>
+      									<viewport>
+      										<Rectangle2D minX="194.0" minY="112.0" />
+      									</viewport>
+      								</ImageView>
 							</center>
 						</BorderPane>
-						<Label fx:id="lblExcluirFotoPerfil" layoutX="33.0" layoutY="150.0" onMouseClicked="#ExcluirFotoPerfil" prefHeight="22.0" prefWidth="133.0" styleClass="labelVerde" stylesheets="@application.css" text="Excluir foto de perfil" textFill="WHITE">
+						<Label fx:id="lblTrocarFotoPerfil" layoutX="167.0" layoutY="121.0" onMouseClicked="#TrocarFotoPerfil" prefHeight="22.0" prefWidth="133.0" styleClass="labelComLink" stylesheets="@application.css" text="Trocar foto de perfil" textFill="WHITE">
 							<cursor>
 								<Cursor fx:constant="HAND" />
 							</cursor>
@@ -256,6 +248,24 @@
 								<Font name="Candara" size="14.0" />
 							</font>
 						</Label>
+						<Label fx:id="lblExcluirFotoPerfil" layoutX="167.0" layoutY="142.0" onMouseClicked="#ExcluirFotoPerfil" prefHeight="22.0" prefWidth="133.0" styleClass="labelComLink" stylesheets="@application.css" text="Excluir foto de perfil" textFill="WHITE">
+							<cursor>
+								<Cursor fx:constant="HAND" />
+							</cursor>
+							<font>
+								<Font name="Candara" size="14.0" />
+							</font>
+						</Label>
+                  <Label fx:id="lbCodigo1" layoutX="544.0" layoutY="52.0" prefHeight="112.0" prefWidth="426.0" styleClass="labelVerde" text="Um código de confirmação foi enviado para o e-mail cadastrado em sua conta. Por favor, verifique sua caixa de mensagens" wrapText="true">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbTempoRestante" layoutX="545.0" layoutY="237.0" styleClass="labelVerde" text="Tempo restante: 120s">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
 					</children>
 				</AnchorPane>
 			</content>

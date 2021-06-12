@@ -41,6 +41,7 @@ import classes.Parceiro;
 import classes.TableViewUtil;
 import classes.Telefone;
 import classes.TelefoneNumero;
+import classes.TemporizadorCodigo;
 import classes.Util;
 import classes.UtilDashboard;
 import classes.Validacao;
@@ -66,6 +67,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -167,6 +169,15 @@ public class Dashboard extends Application {
 	private Button btnNovoTelefone;
 
 	@FXML
+	private Separator vsSeparador;
+
+	@FXML
+	private Label lbCodigo2;
+
+	@FXML
+	private Label lbCodigo1;
+
+	@FXML
 	private Tab tbMeusTelefones;
 
 	@FXML
@@ -201,6 +212,9 @@ public class Dashboard extends Application {
 
 	@FXML
 	private Label lbMCCPFouCNPJ;
+	
+	@FXML
+	private Label lbTempoRestante;
 
 	@FXML
 	private Button btnAlterarDados;
@@ -405,29 +419,78 @@ public class Dashboard extends Application {
 
 	}
 
-	private String Codigo = null;
+	private String codigo = null;
+	
+	public String getCodigo()
+	{
+		return this.codigo;
+	}
+	
+	public void setCodigo(String codigo)
+	{
+		this.codigo = codigo;
+	}
+	
+	private String GerarCodigo()
+	{
+		Random random = new Random();
+		String codigo = "TSLP-";
+		for (int i = 0; i < 7; i++)
+		{
+			if (i % 2 == 0) 
+				codigo += String.valueOf(random.nextInt(10));
+			else
+				codigo += (char)random.nextInt(255);
+		}
+		System.out.println(codigo);
+		return codigo.replace(" ", "-");
+	}
 
 	@FXML
 	void AlterarSenha(ActionEvent event) {
-		Codigo = RecuperarSenha.gerarCodigo(0, "", new Random().nextInt(9));
-
-		if (Email.enviarEmail("O seu código de acesso é " + Codigo, "Troca de Senha",
+		codigo = GerarCodigo();
+		if (Email.enviarEmail("Você solicitou a troca de senha no sistema Lista Pública de Telefones."
+				+ "\n\n Insira o código abaixo para validar sua operação:"
+				+ "\n\n" + codigo, "Solicitação de troca de senha - Lista Pública",
 				Util.getContaLogada().getEmail())) {
-			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o código de alteração ao seu E-mail! ");
+			TemporizadorCodigo temp = new TemporizadorCodigo(this);
+			temp.start();
+			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o código de alteração ao seu E-mail!", AlertType.INFORMATION);
+			MudarInterfaceCodigo(true);
 			txtMCCodigo.requestFocus();
 		}
+	}
+	
+	public void setLabelTemporizador(int tempo)
+	{
+		lbTempoRestante.setText("Tempo restante: " + tempo + " segundos");
+	}
+
+	public void MudarInterfaceCodigo(boolean visible)
+	{
+		lbCodigo1.setVisible(visible);
+		lbCodigo2.setVisible(visible);
+		vsSeparador.setVisible(visible);
+		txtMCCodigo.setVisible(visible);
+		lbTempoRestante.setVisible(visible);
+		btnConfirmarAlteracao.setVisible(visible);
 	}
 
 	@FXML
 	void ConfirmarCodigoSenha(ActionEvent event) {
 
-		if (txtMCCodigo.getText().equals(Codigo)) {
-
+		if (txtMCCodigo.getText().equals(codigo)) {
+			MudarInterfaceCodigo(false);
+			codigo = null;
 			TrocarSenha trocarSenha = new TrocarSenha();
 			trocarSenha.setEmail(Util.getContaLogada().getEmail());
 			trocarSenha.getEvent(event);
 			trocarSenha.start(new Stage());
 
+		}
+		else
+		{
+			Util.MessageBoxShow("Código inválido", "O código informado está incorreto", AlertType.INFORMATION);
 		}
 	}
 
@@ -572,7 +635,8 @@ public class Dashboard extends Application {
 		tvcCidade.setCellValueFactory(new PropertyValueFactory("cidade"));
 		tvcCidade.setStyle("-fx-alignment: CENTER;");
 		tvcEmail.setCellValueFactory(new PropertyValueFactory("email"));
-
+		
+		MudarInterfaceCodigo(false);
 		AtualizarCbxTelefones();
 		AtualizarCbxEnderecos();
 		AtualizarGridTelefones(API.doGetTelefones(100));

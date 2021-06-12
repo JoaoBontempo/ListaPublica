@@ -40,7 +40,7 @@ public class TrocarSenha extends Application {
     	}
     	if(txtNovaSenha.getText().equals(txtRedigiteSenha.getText())) {
 			try {
-				String query=String.format("UPDATE parceiro SET senha=%s WHERE email=%s;",Util.criptografarSenha(txtNovaSenha.getText()),
+				String query=String.format("UPDATE parceiro SET senha='%s' WHERE email='%s';",Util.criptografarSenha(txtNovaSenha.getText()),
 						email);
 				Banco.InserirQuery(query);
 				Util.MessageBoxShow("Senha alterada", "Senha alterada com sucesso.", AlertType.INFORMATION);
