@@ -38,6 +38,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -122,13 +123,29 @@ public class CadastrarLocal extends Application implements Initializable {
 	}
 
 	void limparTela() {
-		txtCaminhoImagem.clear();
-		txtNomeLocal.clear();
-		txtBairro.clear();
-		txtNumeroResidencia.clear();
-		txtRua.clear();
-		txtCep.clear();
-		txtNumeroResidencia.clear();
+		try {
+			txtCaminhoImagem.clear();
+			txtNomeLocal.clear();
+			txtBairro.clear();
+			
+			txtNumeroResidencia.setTextFormatter(null);
+			txtNumeroResidencia.clear();
+			setFormatterNumeroResidencia();
+			
+			txtRua.clear();
+			txtCep.clear();
+			cmbCidades.getSelectionModel().select("");
+			
+			cmbEstados.getSelectionModel().select("");
+			
+			
+			
+				
+		}catch(Exception e) {
+			// dará uma exception ao limpar o estados pois irá ativar o evento para buscar o estado, e como estará vazio, dará erro.
+			// não faça nada
+		}
+		
 	}
 
 	@FXML
