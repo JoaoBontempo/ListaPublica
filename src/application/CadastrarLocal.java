@@ -128,12 +128,19 @@ public class CadastrarLocal extends Application implements Initializable {
 			txtNomeLocal.clear();
 			txtBairro.clear();
 			
+			
+			
 			txtNumeroResidencia.setTextFormatter(null);
 			txtNumeroResidencia.clear();
 			setFormatterNumeroResidencia();
 			
 			txtRua.clear();
+			
+			txtCep.setTextFormatter(null);
+			setFormatterCpnj(); // cep
+			
 			txtCep.clear();
+			
 			cmbCidades.getSelectionModel().select("");
 			
 			cmbEstados.getSelectionModel().select("");

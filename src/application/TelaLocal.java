@@ -420,6 +420,13 @@ public class TelaLocal extends Application {
 	                	try {
 	                		id_telefone=Util.RecuperarIdTelefonePorTelefone(numeroStr);
 		            		
+	                		if(id_telefone==-1) {
+	                			Util.MessageBoxShow("Telefone inexistente", "O telefone selecionado não existe. O telefone pode ter sido removido pelo moderador.");
+	                			tvTelefone.getItems().remove(numero);
+	                			
+	                			return;
+		            		}
+		            		
 	                		// verifica se o telefone possui descrição
 		            		verificaDescricaoTelefone(id_telefone);
 	                		
@@ -466,7 +473,7 @@ public class TelaLocal extends Application {
 	            		// não faça nada, pois se entrar aqui é pq o array não tem posições, então ignore.
 	            		e.printStackTrace();
 	            	} catch (Exception e) {
-						// TODO Auto-generated catch block
+	            		
 						e.printStackTrace();
 					}
 	            	
