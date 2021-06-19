@@ -404,12 +404,12 @@ public class Dashboard extends Application {
 			if (Banco.InserirQuery(String.format("UPDATE parceiro set email = '%s' where id = %s", txtMCEmail.getText(),
 					Util.getContaLogada().getId()))) {
 
-				Util.MessageBoxShow("Alteraï¿½ï¿½o de Dados", "Email alterado com sucesso!");
+				Util.MessageBoxShow("Alteração de Dados", "Email alterado com sucesso!");
 				Util.getContaLogada().setEmail(txtMCEmail.getText());
 
 			} else {
 
-				Util.MessageBoxShow("Alteraï¿½ï¿½o de Dados", "Verifique se o E-mail inserido ï¿½ vï¿½lido!",
+				Util.MessageBoxShow("Alteraçãoo de Dados", "Verifique se o E-mail inserido válido!",
 						AlertType.WARNING);
 			}
 		}
@@ -469,12 +469,12 @@ public class Dashboard extends Application {
 	@FXML
 	void AlterarSenha(ActionEvent event) {
 		codigo = GerarCodigo();
-		if (Email.enviarEmail("Vocï¿½ solicitou a troca de senha no sistema Lista Pï¿½blica de Telefones."
-				+ "\n\n Insira o cï¿½digo abaixo para validar sua operaï¿½ï¿½o:"
-				+ "\n\n" + codigo, "Solicitaï¿½ï¿½o de troca de senha - Lista Pï¿½blica",
+		if (Email.enviarEmail("Você solicitou a troca de senha no sistema Lista Pública de Telefones."
+				+ "\n\n Insira o código abaixo para validar sua operação:"
+				+ "\n\n" + codigo, "Solicitação de troca de senha - Lista Pública",
 				Util.getContaLogada().getEmail())) {
 			iniciarTimer();
-			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o cï¿½digo de alteraï¿½ï¿½o ao seu E-mail!", AlertType.INFORMATION);
+			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o código de alteração ao seu E-mail!", AlertType.INFORMATION);
 			MudarInterfaceCodigo(true);
 			txtMCCodigo.requestFocus();
 		}
@@ -497,8 +497,8 @@ public class Dashboard extends Application {
 				{
 					MudarInterfaceCodigo(false);
 					codigo = null;
-					Util.MessageBoxShow("Tempo esgotado", "O cï¿½digo de validaï¿½ï¿½o de troca de senha expirou."
-							+ "\nPor favor, solicite um novo cï¿½digo", AlertType.INFORMATION);
+					Util.MessageBoxShow("Tempo esgotado", "O código de validação de troca de senha expirou."
+							+ "\nPor favor, solicite um novo código", AlertType.INFORMATION);
 				}
 			}
 		});
@@ -526,7 +526,7 @@ public class Dashboard extends Application {
 			trocarSenha.start(new Stage());
 
 		} else {
-			Util.MessageBoxShow("Cï¿½digo invï¿½lido", "O cï¿½digo informado estï¿½ incorreto", AlertType.INFORMATION);
+			Util.MessageBoxShow("Código inválido", "O código informado está incorreto", AlertType.INFORMATION);
 		}
 	}
 
@@ -889,7 +889,7 @@ public class Dashboard extends Application {
 	private void AtualizarGridTelefones(ArrayList<Telefone> dados) {
 		if (dados.size() == 0) {
 			Util.MessageBoxShow("Nenhum dado foi encontrado",
-					"Nï¿½o foi possivel encontrar nenhum dado.\n" + "Tente mudar as informações do filtro",
+					"Não foi possivel encontrar nenhum dado.\n" + "Tente mudar as informações do filtro",
 					AlertType.WARNING);
 			return;
 		}
@@ -964,7 +964,7 @@ public class Dashboard extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Image icon = new Image("/Recursos/logo.png");
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("Lista Pï¿½blica - Menu principal");
+			primaryStage.setTitle("Lista Pública - Menu principal");
 			primaryStage.getIcons().add(icon);
 			primaryStage.setMaximized(true);
 			// root.getSelectionModel().selectedItemProperty().addListener((v, oldValue,
