@@ -1,5 +1,6 @@
 ﻿using SistemaModerador.Classes;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -75,7 +76,20 @@ namespace SistemaModerador.View
 
                         Banco.InserirQuery("DELETE FROM comentarios WHERE idTelefone = " + txtIdTel.Text);
                         Banco.InserirQuery("DELETE FROM comentarios WHERE idParceiro = " + textBox.Text);
-                        Banco.InserirQuery("DELETE FROM denuncia WHERE id = " + idDenuncia);
+
+                        ArrayList telefones = new ArrayList();
+                        Banco.InserirQueryReader("SELECT id FROM telefone WHERE dono = " + textBox.Text);
+                        while (Banco.reader.Read())
+                        {
+                            telefones.Add(Banco.reader.GetInt32("id"));
+                        }
+
+                        foreach (int id in telefones)
+                        {
+                            Banco.InserirQuery("DELETE FROM comentarios WHERE idTelefone = " + id.ToString());
+                        }
+
+                        Banco.InserirQuery(String.Format("DELETE FROM denuncia WHERE {0} = {1}", parceiro, textBox.Text));
                         Banco.InserirQuery("DELETE FROM telefone WHERE dono = " + textBox.Text);
                         Banco.InserirQuery("DELETE FROM endereco WHERE usuario = " + textBox.Text);
                         Banco.InserirQuery("DELETE FROM	parceiro WHERE id = " + textBox.Text);
