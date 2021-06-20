@@ -152,7 +152,7 @@ public class Cadastrar extends Application {
 //			Banco.InserirQuery("update parceiro set imagem='" + base + "' where id =" + Util.getContaLogada().getId());
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			// faz nada. se entrou aqui=fechou window sem selecionar arquivo
 		}
 
 	}
@@ -164,7 +164,14 @@ public class Cadastrar extends Application {
 			if (validarCredenciais(tipo)) {
 
 				if (txtSenha.getText().equals(txtConfirmarSenha.getText())) {
-					String base = Util.converterStringParaBase64(Path.of(txtCaminhoImagemPerfil.getText()).toString());
+					String base="";
+					if(Files.exists(Path.of(txtCaminhoImagemPerfil.getText()))) {
+						base = Util.converterStringParaBase64(Path.of(txtCaminhoImagemPerfil.getText()).toString());	
+					}else {
+						Util.MessageBoxShow("Arquivo inexistente", "O arquivo de imagem de perfil selecionado não existe.");
+						return;
+					}
+					
 					if (tipo) {
 						Banco.InserirQuery(String.format(
 								"INSERT INTO parceiro(id,nome,usuario,tipo,cnpj,email,senha,imagem) VALUES(default,'%s','%s','%s','%s','%s','%s','%s')",
