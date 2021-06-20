@@ -4,6 +4,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.channels.NonWritableChannelException;
 import java.util.InputMismatchException;
 import java.util.logging.Level;
 
@@ -11,6 +12,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomElement;
@@ -234,10 +236,13 @@ public final class Validacao {
 		}
 		return true;
 	}
-
-	public static boolean ValidarDocumento(String doc)
+	
+	private static boolean isException, ativo = false;
+	
+	private static void RealizarWebScrapDocumento(String doc, BrowserVersion browser)
 	{
-		WebClient client = new WebClient();
+		isException = false;
+		WebClient client = new WebClient(browser);
 		try
 		{
 			java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
@@ -254,27 +259,50 @@ public final class Validacao {
 
 			HtmlElement button = (HtmlElement) page.getElementById("consultar");
 			page = button.click();
-
+			
+			//System.out.println(page.getTextContent());
+			
 			HtmlElement resultado = (HtmlElement) page.getElementById("resultado");
 			String result = resultado.getTextContent();
+			System.out.println(result);
 			client.close();
-			boolean ativo = result.contains("Situação: Regular") || result.contains("Situação: Ativa");
+			ativo = result.contains("Situação: Regular") || result.contains("Situação: Ativa");
 			if (ativo)
-				return ativo;
+				return;
 			else
 			{
 				Util.MessageBoxShow("CPF/CNPJ inválido", "Somente CPFs regulares ou CNPJs ativos podem ser cadastrados."
 						+ "\n\n"
 						+ "Por favor, verifique a situação do seu documento.", AlertType.ERROR);
-				return ativo;
+				return;
 			}
 		}
 		catch (Exception erro)
 		{
+			client.close();
+			isException = true;
+			return;
+		}
+	}
+
+	public static boolean ValidarDocumento(String doc)
+	{
+		BrowserVersion[] navegadores = BrowserVersion.ALL_SUPPORTED_BROWSERS;
+		for (BrowserVersion navegador : navegadores)
+		{
+			System.out.println("Tentando com: " + navegador);
+			RealizarWebScrapDocumento(doc, navegador);
+			if (!isException)
+			{
+				return ativo;
+			}
+		}
+		if (isException)
+		{
 			Util.MessageBoxShow("Ocorreu um erro", "Houve um erro ao buscar a situação de seu documento. "
 					+ "\nPor favor, verifique seu CPF ou CNPJ e tente novamente");
-			client.close();
 			return false;
 		}
+		return false;
 	}
 }
