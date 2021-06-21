@@ -408,9 +408,15 @@ public class Dashboard extends Application {
 
 			} else {
 
-				Util.MessageBoxShow("Alteraçãoo de Dados", "Verifique se o E-mail inserido válido!",
+				Util.MessageBoxShow("Erro ao alterar Dados", "Verifique se o E-mail inserido válido!",
 						AlertType.WARNING);
 			}
+		}
+		else {
+
+			Util.MessageBoxShow("Alteração de Dados", "Verifique se o E-mail inserido válido!",
+					AlertType.WARNING);
+
 		}
 
 	}
@@ -434,14 +440,18 @@ public class Dashboard extends Application {
 			else
 				codigo += (char) (random.nextInt((122 - 97) + 1) + 97);
 		}
+<<<<<<< Updated upstream
+=======
+		//System.out.println(codigo);
+>>>>>>> Stashed changes
 		return codigo;
 	}
 
-	
+
 	Thread thread;
 	int segundos = 0 ;
 	boolean codigoCerto = false;
-	
+
 	private void iniciarTimer()
 	{
 		thread = new Thread(new Runnable() {
@@ -490,7 +500,7 @@ public class Dashboard extends Application {
 				}
 				// TODO Auto-generated method stub
 				lbTempoRestante.setText("Tempo restante: " + segundos + " segundos");
-				
+
 				if (segundos == 0 && !codigoCerto)
 				{
 					MudarInterfaceCodigo(false);
@@ -784,7 +794,12 @@ public class Dashboard extends Application {
 	}
 
 	public void AtualizarFlowPaneEndereco(int index) {
+<<<<<<< Updated upstream
         
+=======
+
+		System.out.println("INDICE PASSADO " + index);
+>>>>>>> Stashed changes
 		// funï¿½ï¿½o excluir
 		fpEndereco.getChildren().clear();
 		Util.Enderecos.remove(index);
@@ -795,12 +810,12 @@ public class Dashboard extends Application {
 
 			System.out.println("Local " + control.getNome() + " Indice " + control.getIndex());
 		}
-		
+
 		for (Node node : Util.nodes) {
 			fpEndereco.getChildren().add(node);
 
 		}
-		
+
 		int i = 0;
 		for (UCEnderecoController control : Util.controladorEndereco)
 		{
@@ -833,7 +848,7 @@ public class Dashboard extends Application {
 
 		Util.endereco = endereco;
 		Util.Enderecos.add(endereco);
-		
+
 		UCEnderecoController uce = new UCEnderecoController();
 		Util.indexEndereco = index; // cadastrar Util.indexEndereco++
 		//Util.controladorEndereco.add(uce);
@@ -928,7 +943,7 @@ public class Dashboard extends Application {
 		sortedData.comparatorProperty().bind(tvTelefones.comparatorProperty());
 		tvTelefones.setItems(sortedData);
 	}
-	
+
 	@FXML
 	private void LimparFiltro() {
 		txtNome.setText("");
@@ -939,16 +954,16 @@ public class Dashboard extends Application {
 
 		txtTelefone.setText("");
 		numero = "*";
-		
+
 		txtDescrição.setText("");
 		descricao = "*";
-		
+
 		cboxEstados.getSelectionModel().selectFirst();
 
 		cboxCidades.getItems().clear();
 		cboxCidades.getItems().add("Todas as cidades");
 		cboxCidades.getSelectionModel().selectFirst();
-		
+
 		Util.ChangeRadioButtons(new RadioButton[] { rbtnQualquer0, rbtnCelular1, rbtnFixo2, rbtnOutro3 }, 0);
 		TrocarTipo(0);
 
