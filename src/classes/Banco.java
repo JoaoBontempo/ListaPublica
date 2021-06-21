@@ -22,14 +22,10 @@ public final class Banco {
 
 	// Credenciais do banco
 
-<<<<<<< Updated upstream
 	//private static String ip = "6.tcp.ngrok.io";
 //	private static String ip = "127.0.0.1";
 	private static String ip = "6.tcp.ngrok.io";
-=======
-	private static String ip = "6.tcp.ngrok.io";
-	//private static String ip = "127.0.0.1";
->>>>>>> Stashed changes
+
 
 	private static String banco = "db_lista_publica";
 
@@ -39,12 +35,7 @@ public final class Banco {
 	private static String senha = "root";
 
 	private static String porta = "16784";
-<<<<<<< Updated upstream
-	//private static String porta = "19147";
-=======
 
-	//private static String porta = "3306";
->>>>>>> Stashed changes
 
 	// Biblioteca
 	private final static String DRIVE = "com.mysql.cj.jdbc.Driver";
