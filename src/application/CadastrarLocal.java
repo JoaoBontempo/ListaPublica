@@ -128,8 +128,6 @@ public class CadastrarLocal extends Application implements Initializable {
 			txtNomeLocal.clear();
 			txtBairro.clear();
 			
-			
-			
 			txtNumeroResidencia.setTextFormatter(null);
 			txtNumeroResidencia.clear();
 			setFormatterNumeroResidencia();
@@ -137,12 +135,10 @@ public class CadastrarLocal extends Application implements Initializable {
 			txtRua.clear();
 			
 			txtCep.setTextFormatter(null);
+			txtCep.clear();
 			setFormatterCpnj(); // cep
 			
-			txtCep.clear();
-			
 			cmbCidades.getSelectionModel().select("");
-			
 			cmbEstados.getSelectionModel().select("");
 			
 			
@@ -287,6 +283,7 @@ public class CadastrarLocal extends Application implements Initializable {
 	@FXML
 	private void recuperarCidades() {
 		cmbCidades.getItems().clear();
+		if(cmbEstados.getSelectionModel().getSelectedIndex() == -1) return;
 		ArrayList<Municipio> municipios = doGetCidades();
 		for (Municipio municipio : municipios) {
 			cmbCidades.getItems().add(municipio.getNome());
@@ -300,7 +297,9 @@ public class CadastrarLocal extends Application implements Initializable {
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		ArrayList<Municipio> municipios = new ArrayList<Municipio>();
 		HttpClient httpClient = HttpClientBuilder.create().build();
-		int ret = idsEstado.get(cmbEstados.getSelectionModel().getSelectedIndex());
+		int indiceSelecionado=cmbEstados.getSelectionModel().getSelectedIndex();
+		int ret = idsEstado.get(indiceSelecionado);
+		
 		HttpGet httpGet = new HttpGet(
 				String.format("https://servicodados.ibge.gov.br/api/v1/localidades/estados/%s/municipios",
 						idsEstado.get(cmbEstados.getSelectionModel().getSelectedIndex())));
@@ -378,7 +377,7 @@ public class CadastrarLocal extends Application implements Initializable {
 
 	@FXML
 	void verificarTeclaDeletarNumeroResidencia(KeyEvent event) {
-		if (event.getCode().toString().equals("BACK_SPACE") && txtNumeroResidencia.getLength() == 0) {
+		if (event.getCode().toString().equals("BACK_SPACE") && txtNumeroResidencia.getLength() == 1) {
 			txtNumeroResidencia.setTextFormatter(null);
 			txtNumeroResidencia.clear();
 			setFormatterNumeroResidencia();

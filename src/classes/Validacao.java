@@ -264,7 +264,6 @@ public final class Validacao {
 			
 			HtmlElement resultado = (HtmlElement) page.getElementById("resultado");
 			String result = resultado.getTextContent();
-			System.out.println(result);
 			client.close();
 			ativo = result.contains("Situação: Regular") || result.contains("Situação: Ativa");
 			if (ativo)
