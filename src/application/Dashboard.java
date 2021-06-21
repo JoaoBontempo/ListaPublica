@@ -440,10 +440,7 @@ public class Dashboard extends Application {
 			else
 				codigo += (char) (random.nextInt((122 - 97) + 1) + 97);
 		}
-<<<<<<< Updated upstream
-=======
-		//System.out.println(codigo);
->>>>>>> Stashed changes
+
 		return codigo;
 	}
 
@@ -794,13 +791,7 @@ public class Dashboard extends Application {
 	}
 
 	public void AtualizarFlowPaneEndereco(int index) {
-<<<<<<< Updated upstream
-        
-=======
 
-		System.out.println("INDICE PASSADO " + index);
->>>>>>> Stashed changes
-		// fun��o excluir
 		fpEndereco.getChildren().clear();
 		Util.Enderecos.remove(index);
 		Util.nodes.remove(index);

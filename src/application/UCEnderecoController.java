@@ -134,10 +134,7 @@ public class UCEnderecoController {
 
 					Util.MessageBoxShow("Endereço inalterado", "Não foi possível alterar seu endereço",
 							AlertType.ERROR);
-<<<<<<< Updated upstream
-=======
-					//System.out.println("Query : " + query);
->>>>>>> Stashed changes
+
 				}
 			}
 		}
