@@ -395,7 +395,6 @@ public class Dashboard extends Application {
 	void AlterarDados(ActionEvent event) throws SQLException {
 
 		if (txtMCEmail.getText().equals(Util.getContaLogada().getEmail())) {
-			System.out.println("Iguais");
 			return;
 		}
 
@@ -934,7 +933,7 @@ public class Dashboard extends Application {
 		sortedData.comparatorProperty().bind(tvTelefones.comparatorProperty());
 		tvTelefones.setItems(sortedData);
 	}
-
+	
 	@FXML
 	private void LimparFiltro() {
 		txtNome.setText("");
@@ -945,12 +944,18 @@ public class Dashboard extends Application {
 
 		txtTelefone.setText("");
 		numero = "*";
-
+		
+		txtDescrição.setText("");
+		descricao = "*";
+		
 		cboxEstados.getSelectionModel().selectFirst();
 
 		cboxCidades.getItems().clear();
 		cboxCidades.getItems().add("Todas as cidades");
 		cboxCidades.getSelectionModel().selectFirst();
+		
+		Util.ChangeRadioButtons(new RadioButton[] { rbtnQualquer0, rbtnCelular1, rbtnFixo2, rbtnOutro3 }, 0);
+		TrocarTipo(0);
 
 	}
 

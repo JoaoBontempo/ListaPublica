@@ -133,7 +133,7 @@ namespace SistemaModerador.View
 
         private void btnExcluirDenunciante_Click(object sender, EventArgs e)
         {
-            ExcluirInformacoes("denunciante");
+            ExcluirInformacoes("denunciador");
         }
 
         private void btnExcluirTelefone_Click(object sender, EventArgs e)
@@ -177,6 +177,8 @@ namespace SistemaModerador.View
                         break;
 
                     case 1:
+                        Banco.InserirQuery("UPDATE telefone SET lugar = null WHERE lugar = " + idEndereco);
+                        Banco.InserirQuery("UPDATE denuncia SET end_ = null WHERE id = " + idDenuncia);
                         Banco.InserirQuery("DELETE FROM endereco WHERE id = " + idEndereco);
                         MessageBox.Show("Endereço excluído com sucesso!");
                         btnExcluirEndereco.Visible = false;

@@ -49,7 +49,7 @@ namespace SistemaModerador.View
             this.btnConfirmar.Location = new System.Drawing.Point(12, 137);
             this.btnConfirmar.Name = "btnConfirmar";
             this.btnConfirmar.Size = new System.Drawing.Size(240, 30);
-            this.btnConfirmar.TabIndex = 23;
+            this.btnConfirmar.TabIndex = 2;
             this.btnConfirmar.Text = "Confirmar";
             this.btnConfirmar.UseVisualStyleBackColor = false;
             this.btnConfirmar.Click += new System.EventHandler(this.btnAtualizar_Click);
@@ -62,7 +62,7 @@ namespace SistemaModerador.View
             this.txtNovaSenha.Location = new System.Drawing.Point(12, 31);
             this.txtNovaSenha.Name = "txtNovaSenha";
             this.txtNovaSenha.Size = new System.Drawing.Size(240, 27);
-            this.txtNovaSenha.TabIndex = 22;
+            this.txtNovaSenha.TabIndex = 0;
             this.txtNovaSenha.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtNovaSenha.TextChanged += new System.EventHandler(this.txtNovaSenha_TextChanged);
             // 
@@ -85,7 +85,7 @@ namespace SistemaModerador.View
             this.txtConfirmarSenha.Location = new System.Drawing.Point(12, 89);
             this.txtConfirmarSenha.Name = "txtConfirmarSenha";
             this.txtConfirmarSenha.Size = new System.Drawing.Size(240, 27);
-            this.txtConfirmarSenha.TabIndex = 25;
+            this.txtConfirmarSenha.TabIndex = 1;
             this.txtConfirmarSenha.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtConfirmarSenha.TextChanged += new System.EventHandler(this.txtConfirmarSenha_TextChanged);
             // 

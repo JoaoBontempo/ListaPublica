@@ -66,7 +66,7 @@ namespace SistemaModerador.View
             Util.isCodigo = true;
             codigo = GerarCodigo();
             string[] dest = { Util.moderador.getEmail() };
-            Email.EnviarEmail("Código de confirmação", String.Format("Este é seu código de confirmação para excluir as informações no Sistema Moderador:" +
+            Email.EnviarEmail("Código de confirmação", String.Format("Este é seu código de confirmação para realizar sua operação no Sistema Moderador:" +
                 "\n\n{0}\n\n" +
                 "Este código irá expirar em 2 minutos. Por favor, não compartilhe este código.", codigo), dest);
             timer.Enabled = true;
