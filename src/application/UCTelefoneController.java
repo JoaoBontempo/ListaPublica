@@ -94,11 +94,15 @@ public class UCTelefoneController extends Application{
 	@FXML
 	public void AlterarTelefone() throws SQLException
 	{
+		if(!Validacao.verificarTextArea(txtDescrição))
+			return;
+		
+		if (!Validacao.VerificarQuantidadeCaracteres(txtDescrição, 300))
+			return;
+		
 		if(Util.MessageBoxShow("Alterar informações" , "Tem certeza que deseja aletrar as informações do telefone " 
 				+ telefone.getNumero() + " ?").equals(ButtonType.OK)){
 
-			if(!Validacao.verificarTextArea(txtDescrição))
-				return;
 
 			if (cboxEndereco.getSelectionModel().getSelectedIndex() != 0)
 			{

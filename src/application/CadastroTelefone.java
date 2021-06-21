@@ -132,6 +132,9 @@ public class CadastroTelefone extends Application{
 		if (!Validacao.verificarTextField(txtDescrição))
 			return false;
 		
+		if (!Validacao.VerificarQuantidadeCaracteres(txtDescrição, 300))
+			return false;
+		
 		if (tipo == 2)
 			return VerificarExistenciaTelefone(String.format("SELECT id FROM telefone WHERE telefone.numero = '%s'", txtNumero.getText()));
 		else

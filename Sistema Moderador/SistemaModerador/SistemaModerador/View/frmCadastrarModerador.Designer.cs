@@ -47,7 +47,7 @@ namespace SistemaModerador.View
             this.btnCadastrar.Location = new System.Drawing.Point(12, 129);
             this.btnCadastrar.Name = "btnCadastrar";
             this.btnCadastrar.Size = new System.Drawing.Size(241, 30);
-            this.btnCadastrar.TabIndex = 23;
+            this.btnCadastrar.TabIndex = 2;
             this.btnCadastrar.Text = "Cadastrar";
             this.btnCadastrar.UseVisualStyleBackColor = false;
             this.btnCadastrar.Click += new System.EventHandler(this.btnCadastrar_Click);
@@ -60,7 +60,7 @@ namespace SistemaModerador.View
             this.txtUsuario.Location = new System.Drawing.Point(12, 31);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(241, 27);
-            this.txtUsuario.TabIndex = 22;
+            this.txtUsuario.TabIndex = 0;
             // 
             // label3
             // 
@@ -81,7 +81,7 @@ namespace SistemaModerador.View
             this.txtEmail.Location = new System.Drawing.Point(12, 83);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(241, 27);
-            this.txtEmail.TabIndex = 25;
+            this.txtEmail.TabIndex = 1;
             // 
             // label1
             // 

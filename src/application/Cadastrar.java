@@ -107,11 +107,11 @@ public class Cadastrar extends Application {
 		
 		if (txtCPFouCNPJ.getText().length() == 14) {
 			tipo = true; // tipo cnpj
-			return Validacao.validarCNPJ(txtCPFouCNPJ);
+			return Validacao.validarCNPJ(txtCPFouCNPJ, true);
 
 		} else {
 			tipo = false; // tipo cpf
-			return Validacao.validarCPF(txtCPFouCNPJ);
+			return Validacao.validarCPF(txtCPFouCNPJ, true);
 		}
 
 	}

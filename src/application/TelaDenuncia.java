@@ -162,7 +162,7 @@ public class TelaDenuncia extends Application {
 						+ "Rua: " + Util.getDenunciAtual().getEndereco().getRua() + "\n"
 						+ "Número: " + Util.getDenunciAtual().getEndereco().getNumero() + "\n"
 						+ "Bairro: " + Util.getDenunciAtual().getEndereco().getBairro() + "\n"
-						+ "Cidade: " + Util.getDenunciAtual().getEndereco().getBairro() + "\n"
+						+ "Cidade: " + Util.getDenunciAtual().getEndereco().getCidade() + "\n"
 						+ "Estado: " + Util.getDenunciAtual().getEndereco().getEstado() + "\n"
 						+ "Nome: " + Util.getDenunciAtual().getEndereco().getNome() + "\n"
 						+ "---------------------------------------------------------------"
@@ -211,6 +211,8 @@ public class TelaDenuncia extends Application {
 				Util.MessageBoxShow("Denúncia enviada com sucesso!", "Um e-mail com as informações foi enviado para os moderadores.\n"
 						+ "\nSua denúncia será analisada.\n"
 						+ "\nObrigado por contribuir para a melhoria do software!", AlertType.INFORMATION);
+			Stage stageAtual = (Stage) cboxMotivo.getScene().getWindow();
+			stageAtual.close();
 		}
 	}
 

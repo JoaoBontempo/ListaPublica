@@ -67,7 +67,7 @@ public final class Validacao {
 			return true;
 	}
 
-	public static boolean validarCNPJ(TextField CNPJ) {
+	public static boolean validarCNPJ(TextField CNPJ, boolean validarDocumento) {
 		// considera-se erro CNPJ's formados por uma sequencia de numeros iguais
 		if (CNPJ.getText().equals("00000000000000") || CNPJ.getText().equals("11111111111111")
 				|| CNPJ.getText().equals("22222222222222") || CNPJ.getText().equals("33333333333333")
@@ -123,7 +123,10 @@ public final class Validacao {
 
 			// Verifica se os dígitos calculados conferem com os dígitos informados.
 			if ((dig13 == CNPJ.getText().charAt(12)) && (dig14 == CNPJ.getText().charAt(13)))
-				return (ValidarDocumento(CNPJ.getText()));
+				if (validarDocumento)
+					return (ValidarDocumento(CNPJ.getText()));
+				else
+					return true;
 			else {
 				Util.MessageBoxShow("Campo inválido", "O CPNJ inserido é inválido", AlertType.ERROR);
 				return (false);
@@ -134,7 +137,7 @@ public final class Validacao {
 		}
 	}
 
-	public static boolean validarCPF(TextField textBox) {
+	public static boolean validarCPF(TextField textBox, boolean validarDocumento) {
 		if (isNullOrEmpty(textBox.getText())) {
 			Util.MessageBoxShow("Campo inválido", "O campo 'CPF' está em branco", AlertType.WARNING);
 			textBox.requestFocus();
@@ -201,7 +204,10 @@ public final class Validacao {
 			Util.MessageBoxShow("Campo inválido", "O CPF inserido é inválido!", AlertType.WARNING);
 			return false;
 		} else
-			return ValidarDocumento(textBox.getText());
+			if (validarDocumento)
+				return ValidarDocumento(textBox.getText());
+			else
+				return true;
 	}
 
 	public static boolean validarEmail(String email) {
@@ -236,9 +242,9 @@ public final class Validacao {
 		}
 		return true;
 	}
-	
+
 	private static boolean isException, ativo = false;
-	
+
 	private static void RealizarWebScrapDocumento(String doc, BrowserVersion browser)
 	{
 		isException = false;
@@ -259,9 +265,9 @@ public final class Validacao {
 
 			HtmlElement button = (HtmlElement) page.getElementById("consultar");
 			page = button.click();
-			
+
 			//System.out.println(page.getTextContent());
-			
+
 			HtmlElement resultado = (HtmlElement) page.getElementById("resultado");
 			String result = resultado.getTextContent();
 			client.close();
@@ -281,6 +287,51 @@ public final class Validacao {
 			client.close();
 			isException = true;
 			return;
+		}
+	}
+	
+	private static boolean VerificarCaracteres(int quantidade, String texto)
+	{
+		return texto.length() >= quantidade;
+	}
+
+	public static boolean VerificarQuantidadeCaracteres(Object textBox, int quantidadeCaracteres)
+	{
+		TextArea txtArea = null;
+		TextField txtField = null;
+
+		try
+		{
+			txtArea = (TextArea) textBox;
+			if (VerificarCaracteres(quantidadeCaracteres, txtArea.getText()))
+			{
+				Util.MessageBoxShow("Campo inválido!", "O campo " + txtArea.getId().substring(3) + " deve possuir menos de " 
+				+ quantidadeCaracteres + " caracteres.", AlertType.INFORMATION);
+				return false;
+			}
+			else
+				return true;
+			
+		}
+		catch (Exception e)
+		{
+			try
+			{
+				txtField = (TextField) textBox;
+				if (VerificarCaracteres(quantidadeCaracteres, txtField.getText()))
+				{
+					Util.MessageBoxShow("Campo inválido!", "O campo " + txtField.getId().substring(3) + " deve possuir menos de " 
+					+ quantidadeCaracteres + " caracteres.", AlertType.INFORMATION);
+					return false;
+				}
+				else
+					return true;
+			}
+			catch(Exception erro)
+			{
+				erro.printStackTrace();
+				return false;
+			}
 		}
 	}
 

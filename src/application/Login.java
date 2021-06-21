@@ -109,14 +109,14 @@ public class Login extends Application {
 		if (tipo.equals("CPF/CNPJ")) {
 			// cpf
 			if (txtLogin.getText().length() == 11) {
-				if (!Validacao.validarCPF(txtLogin))
+				if (!Validacao.validarCPF(txtLogin, false))
 					return false;
 				else {
 					tipo = "CPF";
 				}
 			} else if (txtLogin.getText().length() == 14) // cnpj
 			{
-				if (!Validacao.validarCNPJ(txtLogin))
+				if (!Validacao.validarCNPJ(txtLogin, false))
 					return false;
 				else {
 					tipo = "CNPJ";

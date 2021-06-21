@@ -359,7 +359,7 @@ public class RecuperarSenha extends Application {
 
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Lista Pública - Esqueci a senha");
-
+			primaryStage.setResizable(false);
 			primaryStage.getIcons().add(icon);
 
 			//setar tela modal e tela que chamou 
