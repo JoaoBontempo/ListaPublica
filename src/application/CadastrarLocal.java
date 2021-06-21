@@ -127,28 +127,28 @@ public class CadastrarLocal extends Application implements Initializable {
 			txtCaminhoImagem.clear();
 			txtNomeLocal.clear();
 			txtBairro.clear();
-			
+
 			txtNumeroResidencia.setTextFormatter(null);
 			txtNumeroResidencia.clear();
 			setFormatterNumeroResidencia();
-			
+
 			txtRua.clear();
-			
+
 			txtCep.setTextFormatter(null);
 			txtCep.clear();
 			setFormatterCpnj(); // cep
-			
+
 			cmbCidades.getSelectionModel().select("");
 			cmbEstados.getSelectionModel().select("");
-			
-			
-			
-				
+
+
+
+
 		}catch(Exception e) {
 			// dará uma exception ao limpar o estados pois irá ativar o evento para buscar o estado, e como estará vazio, dará erro.
 			// não faça nada
 		}
-		
+
 	}
 
 	@FXML
@@ -273,7 +273,14 @@ public class CadastrarLocal extends Application implements Initializable {
 			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"),
 					new FileChooser.ExtensionFilter("PNG", "*.png"));
 			File imagemEscolhida = fileChooser.showOpenDialog(this.primaryStage);
-			txtCaminhoImagem.setText(imagemEscolhida.getAbsolutePath());
+			if (imagemEscolhida.length() <= 4194304) {
+				txtCaminhoImagem.setText(imagemEscolhida.getAbsolutePath());
+			}
+			else {
+				Util.MessageBoxShow("Inserção de Imagem", "Erro ao inserir imagem. A imagem solicitada excede o tamanho mínimo de 4Mb",
+						AlertType.WARNING);
+				return;
+			}
 		} catch (Exception e) {
 			return;
 		}
@@ -299,7 +306,7 @@ public class CadastrarLocal extends Application implements Initializable {
 		HttpClient httpClient = HttpClientBuilder.create().build();
 		int indiceSelecionado=cmbEstados.getSelectionModel().getSelectedIndex();
 		int ret = idsEstado.get(indiceSelecionado);
-		
+
 		HttpGet httpGet = new HttpGet(
 				String.format("https://servicodados.ibge.gov.br/api/v1/localidades/estados/%s/municipios",
 						idsEstado.get(cmbEstados.getSelectionModel().getSelectedIndex())));

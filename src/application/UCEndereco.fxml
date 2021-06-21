@@ -84,6 +84,5 @@
       <Button fx:id="btnRemoverImagem" layoutX="314.0" layoutY="237.0" mnemonicParsing="false" onAction="#removerImagem" prefHeight="34.0" prefWidth="34.0" text="X" />
       <Button fx:id="btnAdicionarImagem" layoutX="252.0" layoutY="237.0" mnemonicParsing="false" onAction="#abrirImagem" prefHeight="34.0" prefWidth="56.0" text="..." />
       <TextField fx:id="txtCaminhoImagem" editable="false" layoutX="39.0" layoutY="237.0" prefHeight="34.0" prefWidth="203.0" promptText="Clique para escolher o arquivo de imagem" styleClass="text-field2" stylesheets="@application.css" />
-      <Label fx:id="lbIndice" layoutX="49.0" layoutY="300.0" text="Label" textFill="#fcfcfc" />
    </children>
 </AnchorPane>
