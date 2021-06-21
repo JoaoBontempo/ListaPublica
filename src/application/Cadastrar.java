@@ -95,7 +95,6 @@ public class Cadastrar extends Application {
 		if(!Validacao.verificarTextField(txtConfirmarSenha)) return false;
 
 		if (!txtUsuario.getText().matches("[a-zA-Z]+"))/* regex para ver somente letras e acentuadas */ {
-			System.out.print("não é letra");
 			Util.MessageBoxShow("Erro ao Cadastrar", "O Usuário inserido é inválido, insira somente letras",
 					AlertType.ERROR);
 			return false;
@@ -140,16 +139,6 @@ public class Cadastrar extends Application {
 			File imagemEscolhida = fileChooser.showOpenDialog(this.primaryStage);
 			// armazeno o arquivo na pasta
 			txtCaminhoImagemPerfil.setText(imagemEscolhida.getAbsolutePath());
-			
-//			String diretorioTmp = "C:\\lista\\usuarios\\" + imagemEscolhida.getName() + Util.getContaLogada().getId();
-//			if (Util.verificaTamanhoImagem(4194304L, new File(imagemEscolhida.getAbsolutePath()))) {
-//				Util.MessageBoxShow("Imagem muito grande", "A imagem é maior que 4Mb.");
-//				return;
-//			}
-//
-//			Files.copy(Path.of(imagemEscolhida.getAbsolutePath()), new FileOutputStream(diretorioTmp));
-//			String base = Util.converterStringParaBase64(Path.of(imagemEscolhida.getAbsolutePath()).toString());
-//			Banco.InserirQuery("update parceiro set imagem='" + base + "' where id =" + Util.getContaLogada().getId());
 
 		} catch (Exception e) {
 			// faz nada. se entrou aqui=fechou window sem selecionar arquivo
@@ -162,15 +151,20 @@ public class Cadastrar extends Application {
 		try {
 
 			if (validarCredenciais(tipo)) {
-
-				if (txtSenha.getText().equals(txtConfirmarSenha.getText())) {
-					String base="";
-					if(Files.exists(Path.of(txtCaminhoImagemPerfil.getText()))) {
-						base = Util.converterStringParaBase64(Path.of(txtCaminhoImagemPerfil.getText()).toString());	
-					}else {
-						Util.MessageBoxShow("Arquivo inexistente", "O arquivo de imagem de perfil selecionado não existe.");
-						return;
+				String base="";
+				
+				if (txtSenha.getText().equals(txtConfirmarSenha.getText())) {	
+					String caminhoArquivo=txtCaminhoImagemPerfil.getText();
+					if(caminhoArquivo.length()>0) {
+						if(Files.exists(Path.of(caminhoArquivo))) {
+							base = Util.converterStringParaBase64(Path.of(txtCaminhoImagemPerfil.getText()).toString());
+						}
+						else {
+							Util.MessageBoxShow("Arquivo inexistente", "O arquivo de imagem de perfil selecionado não existe.");
+							return;
+						}
 					}
+					
 					
 					if (tipo) {
 						Banco.InserirQuery(String.format(
@@ -186,7 +180,6 @@ public class Cadastrar extends Application {
 					}
 
 					Util.MessageBoxShow("Cadastar", "Cadastro realizado com sucesso", AlertType.INFORMATION);
-					//this.primaryStage.close();
 				} else {
 
 					Util.MessageBoxShow("Erro ao Cadastrar", "As senhas inseridas não correspondem", AlertType.ERROR);
@@ -221,7 +214,6 @@ public class Cadastrar extends Application {
 			if (result.getString("usuario").equals(txtUsuario.getText())) {
 				msg += "usuario";
 				num++;
-				System.out.print(num);
 			}
 
 			if (result.getString("email").equals(txtEmail.getText())) {
@@ -237,7 +229,6 @@ public class Cadastrar extends Application {
 				//System.out.print("cnpj");
 				if (!Validacao.isNullOrEmpty(result.getString("cnpj")))
 				{
-					System.out.print("cnpj");
 					if (result.getString("cnpj").equals(txtCPFouCNPJ.getText())) {
 						if (!Validacao.isNullOrEmpty(msg))
 							msg += ", cnpj";
@@ -252,7 +243,6 @@ public class Cadastrar extends Application {
 				//System.out.print("cpf");
 				if (!Validacao.isNullOrEmpty(result.getString("cpf")))
 				{
-					System.out.print("cpf");
 					if (result.getString("cpf").equals(txtCPFouCNPJ.getText())) {
 						if (!Validacao.isNullOrEmpty(msg))
 							msg += " e cpf";
@@ -263,7 +253,6 @@ public class Cadastrar extends Application {
 					}
 				}
 			}
-			System.out.print(num);
 			if (num > 1) {
 				
 				if(num == 2)
@@ -279,12 +268,6 @@ public class Cadastrar extends Application {
 			return true;
 	}
 
-	//private Event evento;
-
-	//public void setEvento(Event evento) {
-	//this.evento = evento;
-	//}
-
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -296,8 +279,6 @@ public class Cadastrar extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Lista Pública - Cadastrar");
 			primaryStage.getIcons().add(icon);
-			//primaryStage.initModality(Modality.WINDOW_MODAL);
-			//primaryStage.initOwner(((Node) evento.getSource()).getScene().getWindow());
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -23,7 +23,8 @@ public final class Banco {
 	// Credenciais do banco
 
 	//private static String ip = "6.tcp.ngrok.io";
-	private static String ip = "127.0.0.1";
+//	private static String ip = "127.0.0.1";
+	private static String ip = "6.tcp.ngrok.io";
 
 	private static String banco = "db_lista_publica";
 
@@ -32,9 +33,8 @@ public final class Banco {
 	private static String usuario = "root";
 	private static String senha = "root";
 
-	//private static String porta = "15038";
-
-	private static String porta = "3306";
+	private static String porta = "16784";
+	//private static String porta = "19147";
 
 	// Biblioteca
 	private final static String DRIVE = "com.mysql.cj.jdbc.Driver";
@@ -92,7 +92,6 @@ public final class Banco {
 			return true;
 			
 		} catch (Exception e) {
-			System.out.println(e);
 			return false;
 		}
 

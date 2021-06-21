@@ -162,7 +162,6 @@ public final class Util {
 				ComentarioTable c = new ComentarioTable(Banco.getReader().getString("usuario"),
 						Banco.getReader().getString("comentario"), data);
 				comentarios.add(c);
-				System.out.println(c);
 			}
 			return comentarios;
 		} catch (SQLException e) {

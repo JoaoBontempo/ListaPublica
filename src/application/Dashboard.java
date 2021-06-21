@@ -434,7 +434,6 @@ public class Dashboard extends Application {
 			else
 				codigo += (char) (random.nextInt((122 - 97) + 1) + 97);
 		}
-		System.out.println(codigo);
 		return codigo;
 	}
 
@@ -585,14 +584,12 @@ public class Dashboard extends Application {
 					// primeiro obtenho o id do dono , depois obtenho os telefones associados a ele
 					query = "select dono,lugar,descricao from telefone where numero LIKE '%" + numero + "%'";
 					query += descricao == null ? ";" : " and descricao LIKE '%" + descricao + "%';";
-					System.out.println(query);
 
 					Banco.InserirQueryReader(query);
 					Banco.getReader().next();
 
 					idDono = Banco.getReader().getString("dono");
 
-					System.out.println("ID DONO: " + idDono);
 
 					UtilDashboard.setIdLugar(String.valueOf(Banco.getReader().getInt("lugar")));
 					UtilDashboard.setIdDono(idDono);
@@ -788,7 +785,6 @@ public class Dashboard extends Application {
 
 	public void AtualizarFlowPaneEndereco(int index) {
         
-		System.out.println("INDICE PASSADO " + index);
 		// fun��o excluir
 		fpEndereco.getChildren().clear();
 		Util.Enderecos.remove(index);
@@ -880,7 +876,6 @@ public class Dashboard extends Application {
 	@FXML
 	private void AplicarFiltroDeDados() {
 		setQueryParameters();
-		System.out.println(tipo);
 		AtualizarGridTelefones(
 				API.doPostTelefone(new TableViewUtil(nome, numero, cidade, estado, email, descricao, tipo)));
 	}

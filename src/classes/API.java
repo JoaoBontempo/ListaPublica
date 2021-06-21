@@ -64,8 +64,6 @@ public final class API {
 		js.put("email", queryFilter.getEmail());
 		js.put("descricao", queryFilter.getDescricao());
 		js.put("tipo", queryFilter.getTipo());
-		System.out.println(js.toString());
-
 		try {
 			post.setEntity(new StringEntity(js.toString(), "UTF-8"));
 			HttpClient httpClient = HttpClients.createDefault();
@@ -155,7 +153,6 @@ public final class API {
 
 			for(int i =0; i < obj.length(); i++)
 			{
-				System.out.println(obj.getJSONObject(0).toString());
 				telefone = mapper.readValue(obj.getJSONObject(i).toString(), Telefone.class);
 				telefones.add(telefone);
 			}

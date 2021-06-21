@@ -289,7 +289,6 @@ public final class Validacao {
 		BrowserVersion[] navegadores = BrowserVersion.ALL_SUPPORTED_BROWSERS;
 		for (BrowserVersion navegador : navegadores)
 		{
-			System.out.println("Tentando com: " + navegador);
 			RealizarWebScrapDocumento(doc, navegador);
 			if (!isException)
 			{

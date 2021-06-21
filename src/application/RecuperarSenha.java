@@ -295,7 +295,6 @@ public class RecuperarSenha extends Application {
 			// se chegou aqui então ok. Gere o código, armazene, Envie o código e mostre o panel para colocar os
 			codigoGerado=gerarCodigo(0,"",5);
 			id = result.getInt("id");
-			System.out.println("Código: "+codigoGerado);
 			//if(Email.enviarEmail("Seu código de verificação : "+codigoGerado,"Código de verificação",txtEmailPrincipal.getText()))
 			if(Email.enviarEmail("Seu código de verificação é : " + codigoGerado +
 					"\n\nEste código irá expirar em 2 minutos.","Código de verificação", email)) {

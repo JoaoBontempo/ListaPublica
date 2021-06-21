@@ -366,7 +366,6 @@ public class TelaLocal extends Application {
 					Util.verificaExistenciaImagem("profile"+idDono+".jpg", imagem.getBytes(), false);
 					
 					Image img=new Image(new File(caminho).toURI().toString(), 400, 400, false, false);
-					System.out.println("Tamanho largura: "+img.getWidth());
 					imgProprietario.setImage(img);
 				}	
 			}
@@ -381,7 +380,7 @@ public class TelaLocal extends Application {
 		File f = new File(caminho);
 		
 			String query="select imagem from endereco where id="+id_endereco;
-			System.out.println("ID ENDERECO: "+id_endereco);
+			
 			Banco.InserirQueryReader(query);
 			
 			if(Banco.getReader().next()) {

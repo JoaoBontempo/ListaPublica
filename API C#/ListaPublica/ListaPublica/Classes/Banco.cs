@@ -14,7 +14,7 @@ namespace ListaPublica.Classes
         private static MySqlCommand cmd;
 
 
-        private static string parametrosBancoAWS = "server=6.tcp.ngrok.io; Port=15038; uid=root;pwd=root; database=db_lista_publica; convert zero datetime=True";
+        private static string parametrosBancoAWS = "server=8.tcp.ngrok.io; Port=17548; uid=root;pwd=root; database=db_lista_publica; convert zero datetime=True";
         //private static string parametrosBancoAWS = "server=0.tcp.ngrok.io; Port=15770; uid=root;pwd=root; database=db_lista_publica; convert zero datetime=True";
         //private static string parametrosBancoAWS = "server=127.0.0.1; Port=3306; uid=root;pwd=P@ssw0rd; database=db_lista_publica; convert zero datetime=True";
         //private static string parametrosBancoAWS = "server=127.0.0.1; Port=3306; uid=root;pwd=root; database=db_lista_publica; convert zero datetime=True";
