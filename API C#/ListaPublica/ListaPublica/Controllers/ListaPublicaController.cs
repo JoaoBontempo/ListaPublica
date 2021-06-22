@@ -52,7 +52,6 @@ namespace ListaPublica.Controllers
                 // query para obter informações sobre o determinado lugar
                 string query = String.Format("select distinct e.id,e.rua,e.numero,e.bairro,e.estado,e.cidade,e.nome,e.imagem,t.descricao from "
                     + " endereco as e, (select descricao from telefone where lugar={0} and numero='" + telefone + "') as t where id={0};", idLocal);
-                Console.WriteLine(query);
                 Banco.InserirQueryReader(query);
 
                 while (Banco.reader.Read())
@@ -73,7 +72,6 @@ namespace ListaPublica.Controllers
                             try
                             {
                                 endereco.imagem = Banco.reader.GetString("imagem");
-                                Console.WriteLine(endereco.imagem);
                             }
                             catch
                             {
