@@ -223,7 +223,6 @@ public class UCEnderecoController {
 
 	@FXML
 	void VerificarCampoNumero(KeyEvent event) {
-		if (event.getCode().equals(KeyCode.BACK_SPACE)) {System.out.print("nelson");}
 		if (event.getCode().equals(KeyCode.BACK_SPACE) && txtNumero.getLength() == 1) {
 			txtNumero.setTextFormatter(null);
 			txtNumero.clear();

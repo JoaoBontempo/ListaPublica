@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import classes.Banco;
 import classes.Endereco;
@@ -67,6 +69,9 @@ public class CadastroTelefone extends Application{
     
     String numeroC, tipoC;
 
+	String[] words = { "a", "b", "c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+
+    
 	public CadastroTelefone() {
 		// TODO Auto-generated constructor stub
 	}
@@ -89,8 +94,16 @@ public class CadastroTelefone extends Application{
 
 	private boolean validarCampos() throws SQLException
 	{
+
+		if (Stream.of(words).anyMatch(word -> txtNumero.getText().contains(word.toLowerCase()))) {
+			Util.MessageBoxShow("Campo inválido", "O campo 'Número' contém letras.", AlertType.ERROR);
+			txtNumero.requestFocus();
+			return false;
+		}
+		
 		if (!Validacao.verificarTextField(txtNumero))
 			return false;
+		
 		if (tipo != 2)
 		{
 			if (!Validacao.verificarTextField(txtDDD))
