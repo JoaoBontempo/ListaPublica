@@ -237,7 +237,8 @@ public class UCEnderecoController {
 				"Tem certeza que deseja excluir o Local " + endereco.getNome() + " ?").equals(ButtonType.OK)) {
 
 			Banco.InserirQuery("UPDATE telefone SET lugar = null WHERE lugar = '" + endereco.getId() + "'");
-			if (Banco.InserirQuery("DELETE FROM endereco WHERE id = " + endereco.getId())) {
+			if (Banco.InserirQuery("UPDATE denuncia set end_ = null WHERE end_= " + endereco.getId()) &&
+					Banco.InserirQuery("DELETE FROM endereco WHERE id = " + endereco.getId())) {
 
 				Util.MessageBoxShow("Endereço excluído", "Seu endereço foi excluído com sucesso",
 						AlertType.INFORMATION);
