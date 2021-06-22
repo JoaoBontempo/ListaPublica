@@ -64,7 +64,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtNumero" layoutX="621.0" layoutY="237.0" prefHeight="34.0" prefWidth="56.0" styleClass="text-field2" />
+      <TextField fx:id="txtNumero" layoutX="621.0" layoutY="237.0" onKeyPressed="#VerificarCampoNumero" prefHeight="34.0" prefWidth="56.0" styleClass="text-field2" />
       <Label layoutX="612.0" layoutY="217.0" prefHeight="10.0" prefWidth="37.0" styleClass="labelVerde" text="N°">
          <font>
             <Font size="14.0" />

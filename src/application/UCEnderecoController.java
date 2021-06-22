@@ -26,8 +26,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -86,8 +89,8 @@ public class UCEnderecoController {
 
 	private File imagemEscolhida;
 	private int index;
-    public String nome;
-	
+	public String nome;
+
 	public int getIndex() {
 		return index;
 	}
@@ -112,9 +115,9 @@ public class UCEnderecoController {
 							"UPDATE endereco SET nome = '%s', imagem = '%s', estado = '%s', cidade = '%s', bairro = '%s', rua = '%s', numero = %s WHERE id = %s ",
 							txtNome.getText(),
 							anexoImagem.length() > 0 ? Util.converterStringParaBase64(anexoImagem) : "",
-							cboxEstado.getSelectionModel().getSelectedItem(),
-							cboxCidade.getSelectionModel().getSelectedItem(), txtBairro.getText(), txtRua.getText(),
-							txtNumero.getText(), endereco.getId());
+									cboxEstado.getSelectionModel().getSelectedItem(),
+									cboxCidade.getSelectionModel().getSelectedItem(), txtBairro.getText(), txtRua.getText(),
+									txtNumero.getText(), endereco.getId());
 				} else {
 
 					query = String.format(
@@ -213,6 +216,21 @@ public class UCEnderecoController {
 
 		return true;
 	}
+	void setFormatterNumeroResidencia() {
+		txtNumero.setTextFormatter(
+				new TextFormatter<>(change -> (change.getControlNewText().matches("([0-9])+")) ? change : null));
+	}
+
+	@FXML
+	void VerificarCampoNumero(KeyEvent event) {
+		if (event.getCode().equals(KeyCode.BACK_SPACE)) {System.out.print("nelson");}
+		if (event.getCode().equals(KeyCode.BACK_SPACE) && txtNumero.getLength() == 1) {
+			txtNumero.setTextFormatter(null);
+			txtNumero.clear();
+			setFormatterNumeroResidencia();
+		}
+	}
+
 
 	@FXML
 	void ExcluirEndereco(MouseEvent event) throws SQLException, IOException {
@@ -262,6 +280,7 @@ public class UCEnderecoController {
 		txtBairro.setText(endereco.getBairro());
 		txtNumero.setText(String.valueOf(endereco.getNumero()));
 		txtNome.setText(endereco.getNome());
+		setFormatterNumeroResidencia();
 
 		ArrayList<UF> estados = API.doGetEstados();
 
@@ -299,7 +318,7 @@ public class UCEnderecoController {
 	public void setPane(FlowPane pane) {
 		this.secPane = pane;
 	}
-	
+
 	public void setIndex()
 	{
 		this.index = Util.indexEndereco;
