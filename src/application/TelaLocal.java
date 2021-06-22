@@ -405,14 +405,15 @@ public class TelaLocal extends Application {
 	            if(tvTelefone.getSelectionModel().getSelectedItem() != null) {
 	            	tabInfosEndereco.setDisable(false);
 	            	TelefoneNumero numero=tvTelefone.getSelectionModel().getSelectedItem();
-	            	
 	            	try {
-	            		//String telefone=numero.getNumero();
 	            		idDono=Util.recuperarIdDonoAtravesTelefone(numero.getNumero());
 	            		Util.setTelefoneAtual(new TableViewUtil(numero.getNumero(), numero.getTipo()));
-	            		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", Util.FormatarGetTelefone(numero.getNumero(), numero.getTipo())));
+	            		lbWhatsApp.setText(String.format("Chamar %s no WhatsApp", Util.FormatarGetTelefone(Util.FormatarSetTelefone(numero.getNumero(),numero.getTipo()) , numero.getTipo())));
 	            		
-	            		String numeroStr=numero.getNumero().replace('\s', '+');
+	            		//String numeroStr=numero.getNumero().replace('\s', '+');
+	            		String numeroStr=numero.getNumero();
+	            		numeroStr=Util.FormatarSetTelefone(numeroStr, numero.getTipo());
+	            		numeroStr=numeroStr.replace('\s','+');
 	                	String url="http://localhost:5000/ListaPublica/getUserAddress/" + numeroStr;
 	                	JSONArray array=null;
 	                	JSONObject objeto=null;
@@ -440,15 +441,18 @@ public class TelaLocal extends Application {
 	                		telefoneSemEndereco();
 	                	}
 	                	
-	                	if(objeto.getString("imagem").length()>0) {
-	                		conteudoImagem = objeto.getString("imagem");
-	                		possuiImagem = true;
-	                		fileName = numero.getNumero() + ".jpg";
-	                		Util.verificaExistenciaImagem(fileName, conteudoImagem.getBytes(), true);
-	                		imgLocal.setImage(new Image("file:///C:/lista/locais/"+fileName));
+	                	if(objeto != null) {
+	                		if(objeto.getString("imagem").length()>0) {
+		                		conteudoImagem = objeto.getString("imagem");
+		                		possuiImagem = true;
+		                		fileName = numero.getNumero() + ".jpg";
+		                		Util.verificaExistenciaImagem(fileName, conteudoImagem.getBytes(), true);
+		                		imgLocal.setImage(new Image("file:///C:/lista/locais/"+fileName));
+		                	}
+		                	insereCampos(objeto.get("estado").toString(),objeto.get("bairro").toString(),objeto.get("rua").toString(),
+		                			objeto.get("cidade").toString(),objeto.get("numero").toString(),objeto.getString("nome"));
+		                	
 	                	}
-	                	insereCampos(objeto.get("estado").toString(),objeto.get("bairro").toString(),objeto.get("rua").toString(),
-	                			objeto.get("cidade").toString(),objeto.get("numero").toString(),objeto.getString("nome"));
 	                	List<ComentarioTable> comentarios=Util.RecuperarComentariosEndereco(id_telefone); // Esse utilDashboard será usado apenas ao entrar no form
 	            		if(comentarios != null) {
 	            			ObservableList<ComentarioTable> observableComentario =
@@ -498,22 +502,23 @@ public class TelaLocal extends Application {
 	}
 
 	private void telefoneSemEndereco() {
-		imgAbrirMaps.setVisible(false);
-		lbAbrirMaps.setVisible(false);
-		txtEstado.setText("N/D");
-		txtCidade.setText("N/D");
-		txtBairro.setText("N/D");
-		txtRua.setText("N/D");
-		txtNumeroResidencia.setText("N/D");
-		txtNome.setText("N/D");
-		txtComentario.setText("N/D");
-		txtNomeCompleto.setText("N/D");
-		txtNomeUsuario.setText("N/D");
-		txtEmail.setText("N/D");
-		tabInfosEndereco.setDisable(true);
-		
-		
-		tvComentarios.getItems().clear();
+		try {
+			imgAbrirMaps.setVisible(false);
+			lbAbrirMaps.setVisible(false);
+			txtEstado.setText("N/D");
+			txtCidade.setText("N/D");
+			txtBairro.setText("N/D");
+			txtRua.setText("N/D");
+			txtNumeroResidencia.setText("N/D");
+			txtNome.setText("N/D");
+			txtComentario.setText("N/D");
+			txtNomeCompleto.setText("N/D");
+			txtNomeUsuario.setText("N/D");
+			txtEmail.setText("N/D");
+			tabInfosEndereco.setDisable(true);
+			
+			tvComentarios.getItems().clear();	
+		}catch(Exception e) {return;}
 		
 	}
 
@@ -546,6 +551,11 @@ public class TelaLocal extends Application {
 		}
 		
 		// obtenho os valores do arraylist da tela anterior e jogo no ListView
+
+		for(TelefoneNumero n:UtilDashboard.getTelefones()) {
+			System.out.println(n.getNumero()+":"+n.getTipo());
+		}
+		
 		ObservableList<TelefoneNumero> observableTelefones =
 				FXCollections.observableArrayList(UtilDashboard.getTelefones());
 		tvTelefone.setItems(observableTelefones);
@@ -571,7 +581,7 @@ public class TelaLocal extends Application {
 	
 		int contador=0;
 		for(TelefoneNumero n:tvTelefone.getItems()) {
-			if(n.getNumero().toString().equals(UtilDashboard.getNumeroTelefone().toString())) {
+			if(Util.FormatarSetTelefone(n.getNumero().toString(),n.getTipo()).equals(UtilDashboard.getNumeroTelefone().toString())) {
 				tvTelefone.getSelectionModel().select(contador);
 				break;
 			}

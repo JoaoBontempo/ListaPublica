@@ -605,12 +605,11 @@ public class Dashboard extends Application {
 
 					query = "select numero, tipo from telefone where dono=" + idDono + ";";
 					Banco.InserirQueryReader(query);
-
 					UtilDashboard.getTelefones().clear();
 					while (Banco.getReader().next()) {
 						try {
-							UtilDashboard.getTelefones().add(new TelefoneNumero(Banco.getReader().getString("numero"),
-									Banco.getReader().getString("tipo")));
+							UtilDashboard.getTelefones().add(new TelefoneNumero(Util.FormatarGetTelefone(Banco.getReader().getString("numero"),
+									Banco.getReader().getString("tipo")),Banco.getReader().getString("tipo")));
 						} catch (Exception exc) {
 							exc.printStackTrace();
 						}
