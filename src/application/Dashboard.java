@@ -395,6 +395,7 @@ public class Dashboard extends Application {
 	void AlterarDados(ActionEvent event) throws SQLException {
 
 		if (txtMCEmail.getText().equals(Util.getContaLogada().getEmail())) {
+			Util.MessageBoxShow("Alteração de Dados", "Nenhum dado foi modificado.", Alert.AlertType.WARNING);
 			return;
 		}
 
