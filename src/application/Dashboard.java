@@ -252,7 +252,10 @@ public class Dashboard extends Application {
 
 	@FXML
 	private RadioButton rbtnQualquer0;
-
+	
+	@FXML
+    private Button btnDeletarConta;
+	
 	@FXML
 	private RadioButton rbtnCelular1;
 
@@ -471,6 +474,25 @@ public class Dashboard extends Application {
 		});
 		thread.start();
 	}
+	
+	
+	@FXML
+    void DeletarConta(ActionEvent event) {
+		try {
+			if (Util.MessageBoxShow("Deletar conta",
+					"Tem certeza que deseja deletar sua conta permanentemente ?").equals(ButtonType.OK)) {
+				if(Banco.InserirQuery("delete from parceiro where id="+Util.getContaLogada().getId()+";")) {
+					Util.MessageBoxShow("Deleção confirmada", "A conta foi deletada com sucesso.");
+					// fecha o aplicativo
+					Runtime.getRuntime().exit(0);
+					return;
+				}
+			}	
+		}catch(Exception e) {
+			// erro quando fecha o dialog "cancelar"
+		}
+		
+    }
 
 	@FXML
 	void AlterarSenha(ActionEvent event) {
