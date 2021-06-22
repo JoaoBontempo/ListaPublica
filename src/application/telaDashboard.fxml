@@ -22,7 +22,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane fx:id="TabDash" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="1181.0" stylesheets="@application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Dashboard">
+<TabPane fx:id="TabDash" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="613.0" prefWidth="1181.0" stylesheets="@application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Dashboard">
 	<tabs>
 		<Tab text="Lista de lugares/telefones">
 			<content>
@@ -221,15 +221,15 @@
 								<Font name="Candara" size="19.0" />
 							</font>
 						</Label>
-						<Button fx:id="btnAlterarDados" layoutX="83.0" layoutY="451.0" mnemonicParsing="false" onAction="#AlterarDados" prefHeight="36.0" prefWidth="300.0" text="Alterar Dados" />
-						<Separator fx:id="vsSeparador" layoutX="479.0" layoutY="34.0" orientation="VERTICAL" prefHeight="502.0" prefWidth="6.0" />
+						<Button fx:id="btnAlterarDados" layoutX="84.0" layoutY="462.0" mnemonicParsing="false" onAction="#AlterarDados" prefHeight="36.0" prefWidth="300.0" text="Alterar Dados" />
+						<Separator fx:id="vsSeparador" layoutX="479.0" layoutY="34.0" orientation="VERTICAL" prefHeight="531.0" prefWidth="3.0" />
 						<Label fx:id="lbCodigo2" layoutX="544.0" layoutY="178.0" text="Código" textFill="WHITE">
 							<font>
 								<Font name="Candara" size="19.0" />
 							</font>
 						</Label>
 						<Button fx:id="btnConfirmarAlteracao" layoutX="544.0" layoutY="267.0" mnemonicParsing="false" onAction="#ConfirmarCodigoSenha" prefHeight="36.0" prefWidth="205.0" text="Confirmar código" />
-						<Button fx:id="btnAlterarSenha" layoutX="83.0" layoutY="500.0" mnemonicParsing="false" onAction="#AlterarSenha" prefHeight="36.0" prefWidth="300.0" text="Alterar Senha" textFill="#903939" />
+						<Button fx:id="btnAlterarSenha" layoutX="84.0" layoutY="511.0" mnemonicParsing="false" onAction="#AlterarSenha" prefHeight="36.0" prefWidth="300.0" text="Alterar Senha" textFill="#903939" />
 						<PasswordField fx:id="txtMCCodigo" layoutX="544.0" layoutY="201.0" prefHeight="34.0" prefWidth="404.0" promptText="Insira o código de confirmação enviado no E-mail cadastrado" />
 						<BorderPane fx:id="pnlImagem" layoutX="161.0" layoutY="28.0" prefHeight="93.0" prefWidth="110.0">
 							<center>
@@ -243,7 +243,7 @@
       								</ImageView>
 							</center>
 						</BorderPane>
-						<Label fx:id="lblTrocarFotoPerfil" layoutX="167.0" layoutY="135.0" onMouseClicked="#TrocarFotoPerfil" prefHeight="22.0" prefWidth="133.0" styleClass="labelComLink" stylesheets="@application.css" text="Trocar foto de perfil" textFill="WHITE">
+						<Label fx:id="lblTrocarFotoPerfil" layoutX="85.0" layoutY="153.0" onMouseClicked="#TrocarFotoPerfil" prefHeight="22.0" prefWidth="133.0" styleClass="labelComLink" stylesheets="@application.css" text="Trocar foto de perfil" textFill="WHITE">
 							<cursor>
 								<Cursor fx:constant="HAND" />
 							</cursor>
@@ -251,7 +251,7 @@
 								<Font name="Candara" size="14.0" />
 							</font>
 						</Label>
-						<Label fx:id="lblExcluirFotoPerfil" layoutX="167.0" layoutY="156.0" onMouseClicked="#ExcluirFotoPerfil" prefHeight="22.0" prefWidth="133.0" styleClass="labelComLink" stylesheets="@application.css" text="Excluir foto de perfil" textFill="WHITE">
+						<Label fx:id="lblExcluirFotoPerfil" layoutX="251.0" layoutY="153.0" onMouseClicked="#ExcluirFotoPerfil" prefHeight="22.0" prefWidth="133.0" styleClass="labelComLink" stylesheets="@application.css" text="Excluir foto de perfil" textFill="WHITE">
 							<cursor>
 								<Cursor fx:constant="HAND" />
 							</cursor>
