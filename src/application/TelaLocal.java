@@ -552,9 +552,6 @@ public class TelaLocal extends Application {
 		
 		// obtenho os valores do arraylist da tela anterior e jogo no ListView
 
-		for(TelefoneNumero n:UtilDashboard.getTelefones()) {
-			System.out.println(n.getNumero()+":"+n.getTipo());
-		}
 		
 		ObservableList<TelefoneNumero> observableTelefones =
 				FXCollections.observableArrayList(UtilDashboard.getTelefones());
