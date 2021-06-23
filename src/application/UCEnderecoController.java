@@ -192,7 +192,7 @@ public class UCEnderecoController {
 					new Image(new File(txtCaminhoImagem.getText()).toURI().toString(), 400, 400, false, false));
 			alterada = true;
 		} else
-			Util.MessageBoxShow("Inserção de Imagem", "A imagem solicitada excede o tamanho mínimo de 4Mb",
+			Util.MessageBoxShow("Inserção de Imagem", "A imagem solicitada excede o tamanho máximo de 4Mb",
 					AlertType.WARNING);
 	}
 

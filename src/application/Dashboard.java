@@ -421,10 +421,21 @@ public class Dashboard extends Application {
 		}
 
 		if (Validacao.validarEmail(txtMCEmail.getText())) {
-
+			
+			ResultSet result = Banco.InserirQueryReader("SELECT email FROM parceiro");
+			while (result.next())
+			{
+				if (result.getString("email").equals(txtMCEmail.getText()))
+				{
+					Util.MessageBoxShow("Alterar dados", "Não foi possível alterar o e-mail pois ele já está cadastrado", AlertType.WARNING);
+					txtMCEmail.setText(Util.getContaLogada().getEmail());
+					return;
+				}
+			}
+			
 			if (Banco.InserirQuery(String.format("UPDATE parceiro set email = '%s' where id = %s", txtMCEmail.getText(),
 					Util.getContaLogada().getId()))) {
-
+				
 				Util.MessageBoxShow("Alteração de Dados", "Email alterado com sucesso!");
 				Util.getContaLogada().setEmail(txtMCEmail.getText());
 
@@ -432,13 +443,14 @@ public class Dashboard extends Application {
 
 				Util.MessageBoxShow("Erro ao alterar Dados", "Verifique se o E-mail inserido válido!",
 						AlertType.WARNING);
+				txtMCEmail.setText(Util.getContaLogada().getEmail());
 			}
 		}
 		else {
 
 			Util.MessageBoxShow("Alteração de Dados", "Verifique se o E-mail inserido válido!",
 					AlertType.WARNING);
-
+			txtMCEmail.setText(Util.getContaLogada().getEmail());
 		}
 
 	}

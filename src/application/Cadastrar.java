@@ -150,6 +150,11 @@ public class Cadastrar extends Application {
 					new FileChooser.ExtensionFilter("PNG", "*.png"), new FileChooser.ExtensionFilter("ICO", "*.ico"));
 			File imagemEscolhida = fileChooser.showOpenDialog(this.primaryStage);
 			
+			if(imagemEscolhida.length() >= 4194304) {
+				Util.MessageBoxShow("Inserção de Imagem", "A imagem solicitada excede o tamanho máximo de 4Mb",
+						AlertType.WARNING);
+				return;
+			}
 			if(imagemEscolhida==null)return;
 			
 			if(!validarImagem(imagemEscolhida)) {
@@ -245,10 +250,8 @@ public class Cadastrar extends Application {
 					msg += "email";
 
 				num++;
-				System.out.print(num);
 			}
 			if (tipo) {
-				//System.out.print("cnpj");
 				if (!Validacao.isNullOrEmpty(result.getString("cnpj")))
 				{
 					if (result.getString("cnpj").equals(txtCPFouCNPJ.getText())) {
@@ -262,7 +265,6 @@ public class Cadastrar extends Application {
 				}
 
 			} else {
-				//System.out.print("cpf");
 				if (!Validacao.isNullOrEmpty(result.getString("cpf")))
 				{
 					if (result.getString("cpf").equals(txtCPFouCNPJ.getText())) {
