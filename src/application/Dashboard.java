@@ -481,7 +481,27 @@ public class Dashboard extends Application {
 		try {
 			if (Util.MessageBoxShow("Deletar conta",
 					"Tem certeza que deseja deletar sua conta permanentemente ?").equals(ButtonType.OK)) {
-				if(Banco.InserirQuery("delete from parceiro where id="+Util.getContaLogada().getId()+";")) {
+				int id=Util.getContaLogada().getId();
+				Banco.InserirQuery("DELETE FROM comentarios WHERE idParceiro = " + id);
+
+                ArrayList<Integer> telefones = new ArrayList<>();
+                Banco.InserirQueryReader("SELECT id FROM telefone WHERE dono = " + id);
+                while (Banco.getReader().next())
+                {
+                    telefones.add(Banco.getReader().getInt("id"));
+                }
+
+                for (int id_:telefones)
+                {
+                    Banco.InserirQuery("DELETE FROM comentarios WHERE idTelefone = " + id_);
+                }
+
+                Banco.InserirQuery("DELETE FROM denuncia WHERE denunciador="+id+" OR denunciado="+id);
+                Banco.InserirQuery("DELETE FROM telefone WHERE dono = " + id);
+                Banco.InserirQuery("DELETE FROM endereco WHERE usuario = " + id);
+                
+				
+				if(Banco.InserirQuery("delete from parceiro where id="+id+";")) {
 					Util.MessageBoxShow("Deleção confirmada", "A conta foi deletada com sucesso.");
 					// fecha o aplicativo
 					Runtime.getRuntime().exit(0);
