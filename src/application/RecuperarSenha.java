@@ -224,6 +224,7 @@ public class RecuperarSenha extends Application {
 			telaTrocarSenha.setEmail(email);
 			telaTrocarSenha.getEvent(event);
 			telaTrocarSenha.start(new Stage());
+			thread.stop();
 
 		}else {
 			tentativas--;
