@@ -512,9 +512,9 @@ public class TelaLocal extends Application {
 			txtNumeroResidencia.setText("N/D");
 			txtNome.setText("N/D");
 			txtComentario.setText("N/D");
-			txtNomeCompleto.setText("N/D");
-			txtNomeUsuario.setText("N/D");
-			txtEmail.setText("N/D");
+//			txtNomeCompleto.setText("N/D");
+//			txtNomeUsuario.setText("N/D");
+//			txtEmail.setText("N/D");
 			tabInfosEndereco.setDisable(true);
 			
 			tvComentarios.getItems().clear();	

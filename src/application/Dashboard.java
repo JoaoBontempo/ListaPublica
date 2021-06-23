@@ -338,10 +338,7 @@ public class Dashboard extends Application {
 					new FileChooser.ExtensionFilter("PNG", "*.png"), new FileChooser.ExtensionFilter("ICO", "*.ico"));
 			File imagemEscolhida = fileChooser.showOpenDialog(this.primaryStage);
 			// armazeno o arquivo na pasta
-			if(!validarImagem(imagemEscolhida)) {
-				Util.MessageBoxShow("Imagem corrompida", "A imagem selecionada está corrompida.");
-				return;
-			}
+			
 			
 			String diretorioTmp = "C:\\lista\\usuarios\\" + imagemEscolhida.getName() + Util.getContaLogada().getId();
 			if (Util.verificaTamanhoImagem(4194304L, new File(imagemEscolhida.getAbsolutePath()))) {
@@ -349,6 +346,11 @@ public class Dashboard extends Application {
 				return;
 			}
 
+			if(!validarImagem(imagemEscolhida)) {
+				Util.MessageBoxShow("Imagem corrompida", "A imagem selecionada está corrompida.");
+				return;
+			}
+			
 			Files.copy(Path.of(imagemEscolhida.getAbsolutePath()), new FileOutputStream(diretorioTmp));
 			String base = Util.converterStringParaBase64(Path.of(imagemEscolhida.getAbsolutePath()).toString());
 			Banco.InserirQuery("update parceiro set imagem='" + base + "' where id =" + Util.getContaLogada().getId());
@@ -471,6 +473,18 @@ public class Dashboard extends Application {
 
 	private void iniciarTimer()
 	{
+		try
+		{
+			thread.stop();
+		}
+		catch (Exception erro)
+		{
+			
+		}
+		finally
+		{
+			txtMCCodigo.setText("");
+		}
 		thread = new Thread(new Runnable() {
 			@Override
 			public void run()

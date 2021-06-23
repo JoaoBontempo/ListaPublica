@@ -180,10 +180,10 @@ public class UCEnderecoController {
 		if (imagemEscolhida == null)
 			return;
 
-//		if(!validarImagem(imagemEscolhida)) {
-//			Util.MessageBoxShow("Imagem corrompida", "A imagem selecionada está corrompida.");
-//			return;
-//		}
+		if(!validarImagem(imagemEscolhida)) {
+			Util.MessageBoxShow("Imagem corrompida", "A imagem selecionada está corrompida.");
+			return;
+		}
 		
 		if (imagemEscolhida.length() <= 4194304) {
 

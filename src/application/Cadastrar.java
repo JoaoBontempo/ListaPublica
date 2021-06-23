@@ -150,6 +150,8 @@ public class Cadastrar extends Application {
 					new FileChooser.ExtensionFilter("PNG", "*.png"), new FileChooser.ExtensionFilter("ICO", "*.ico"));
 			File imagemEscolhida = fileChooser.showOpenDialog(this.primaryStage);
 			
+			if(imagemEscolhida==null)return;
+			
 			if(!validarImagem(imagemEscolhida)) {
 				Util.MessageBoxShow("Imagem corrompida", "A imagem selecionada está corrompida.");
 				return;

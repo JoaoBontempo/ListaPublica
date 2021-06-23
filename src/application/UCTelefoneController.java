@@ -101,7 +101,7 @@ public class UCTelefoneController extends Application{
 			return;
 		
 		if(Util.MessageBoxShow("Alterar informações" , "Tem certeza que deseja aletrar as informações do telefone " 
-				+ telefone.getNumero() + " ?").equals(ButtonType.OK)){
+				+ Util.FormatarGetTelefone(telefone.getNumero(), telefone.getTipo()) + " ?").equals(ButtonType.OK)){
 
 
 			if (cboxEndereco.getSelectionModel().getSelectedIndex() != 0)
@@ -123,7 +123,7 @@ public class UCTelefoneController extends Application{
 	public void ExcluirTelefone() throws SQLException, IOException
 	{
 		if(Util.MessageBoxShow("Excluir número" , "Tem certeza que deseja excluir o telefone " 
-				+ telefone.getNumero() + " ?").equals(ButtonType.OK)){
+				+ Util.FormatarGetTelefone(telefone.getNumero(), telefone.getTipo()) + " ?").equals(ButtonType.OK)){
 
 
 			Banco.InserirQuery("DELETE FROM comentarios WHERE idTelefone = " + telefone.getId());
