@@ -179,7 +179,8 @@ public class Cadastrar extends Application {
 								txtEmail.getText(), Util.criptografarSenha(txtSenha.getText()),base));
 					}
 
-					Util.MessageBoxShow("Cadastar", "Cadastro realizado com sucesso", AlertType.INFORMATION);
+					Util.MessageBoxShow("Cadastro realizado!", "Sua nova conta foi cadastrada com sucesso!", AlertType.INFORMATION);
+					RealizarLogin(null);
 				} else {
 
 					Util.MessageBoxShow("Erro ao Cadastrar", "As senhas inseridas não correspondem", AlertType.ERROR);

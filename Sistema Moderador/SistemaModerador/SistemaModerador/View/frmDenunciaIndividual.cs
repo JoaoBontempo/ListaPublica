@@ -89,7 +89,7 @@ namespace SistemaModerador.View
                             Banco.InserirQuery("DELETE FROM comentarios WHERE idTelefone = " + id.ToString());
                         }
 
-                        Banco.InserirQuery(String.Format("DELETE FROM denuncia WHERE {0} = {1}", parceiro, textBox.Text));
+                        Banco.InserirQuery("DELETE FROM denuncia WHERE denunciador = " + textBox.Text + " OR denunciado = " + textBox.Text);
                         Banco.InserirQuery("DELETE FROM telefone WHERE dono = " + textBox.Text);
                         Banco.InserirQuery("DELETE FROM endereco WHERE usuario = " + textBox.Text);
                         Banco.InserirQuery("DELETE FROM	parceiro WHERE id = " + textBox.Text);
