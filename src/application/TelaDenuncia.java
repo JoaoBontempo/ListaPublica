@@ -107,23 +107,6 @@ public class TelaDenuncia extends Application {
 			Util.RecuperarInformacoesTelefoneAtual();
 			Util.RecuperarInformacoesDenunciado(Integer.parseInt(UtilDashboard.getIdDono()));
 			Util.getDenunciAtual().setTipo(cboxMotivo.getSelectionModel().getSelectedItem() != "Outro" ? cboxMotivo.getSelectionModel().getSelectedItem(): txtOutro_motivo.getText());
-			//String conteudo = "Nova denúncia aberta - " + Util.getDenunciAtual().getTipo() + "\n";
-			/*conteudo += "\nInformações do denunciado:"
-			+ "ID: " + Util.getDenunciAtual().getDenunciado().getId() + "\n"
-			+ "Nome: " + Util.getDenunciAtual().getDenunciado().getNome() + "\n"
-			+ Util.getDenunciAtual().getDenunciado().getCnpj() == null ? "CPF: " + Util.getDenunciAtual().getDenunciado().getCpf() : "CNPJ: " + Util.getDenunciAtual().getDenunciado().getCnpj()+ "\n"
-			+ "E-mail: " + Util.getDenunciAtual().getDenunciado().getEmail() + "\n"
-			+ "Usuário: " + Util.getDenunciAtual().getDenunciado().getUsuario() + "\n"
-			+ "\nInformações do denunciador:"
-			+ "ID: " + Util.getContaLogada().getId() + "\n"
-			+ "Nome: " + Util.getContaLogada().getNome() + "\n"
-			+ Util.getContaLogada().getCnpj() == null ? "CPF: " + Util.getContaLogada().getCpf() : "CNPJ: " + Util.getContaLogada().getCnpj()+ "\n"
-			+ "E-mail: " + Util.getContaLogada().getEmail() + "\n"
-			+ "Usuário: " + Util.getContaLogada().getUsuario() + "\n"
-			+ "\nInformações do telefone denunciado: \n"
-			+ "ID: " + Util.getDenunciAtual().getTelefone().getId() + "\n"
-			+ "Número: " + Util.getDenunciAtual().getTelefone().getNumero() + "\n"
-			+ "Descrição: " + Util.getDenunciAtual().getTelefone().getDescricao() + "\n";*/
 			String conteudo = String.format("Nova denúncia aberta - %s"
 					+ "\n---------------------------------------------------------------"
 					+ "\nInformações do denunciado: "
@@ -179,10 +162,6 @@ public class TelaDenuncia extends Application {
 			}			
 			try
 			{
-				System.out.println(String.format("INSERT INTO denuncia (id, descricao, tipo, denunciado, denunciador, status_, tel, end_) "
-						+ "VALUES (default, '%s', '%s', %s, %s, 0, %s, %s)", 
-						txtDescrição.getText(), Util.getDenunciAtual().getTipo(), Util.getDenunciAtual().getDenunciado().getId(),
-						Util.getContaLogada().getId(), Util.getDenunciAtual().getTelefone().getId(), Util.getDenunciAtual().getEndereco().getId()));
 				Banco.InserirQuery(String.format("INSERT INTO denuncia (id, descricao, tipo, denunciado, denunciador, status_, tel, end_) "
 						+ "VALUES (default, '%s', '%s', %s, %s, 0, %s, %s)", 
 						txtDescrição.getText(), Util.getDenunciAtual().getTipo(), Util.getDenunciAtual().getDenunciado().getId(),
@@ -190,10 +169,6 @@ public class TelaDenuncia extends Application {
 			}
 			catch (Exception erro)
 			{
-				System.out.println(String.format("INSERT INTO denuncia (id, descricao, tipo, denunciado, denunciador, status_, tel) "
-						+ "VALUES (default, '%s', '%s', %s, %s, 0, %s)", 
-						txtDescrição.getText(), Util.getDenunciAtual().getTipo(), Util.getDenunciAtual().getDenunciado().getId(),
-						Util.getContaLogada().getId(), Util.getDenunciAtual().getTelefone().getId()));
 				Banco.InserirQuery(String.format("INSERT INTO denuncia (id, descricao, tipo, denunciado, denunciador, status_, tel) "
 						+ "VALUES (default, '%s', '%s', %s, %s, 0, %s)", 
 						txtDescrição.getText(), Util.getDenunciAtual().getTipo(), Util.getDenunciAtual().getDenunciado().getId(),
