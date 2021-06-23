@@ -252,10 +252,10 @@ public class Dashboard extends Application {
 
 	@FXML
 	private RadioButton rbtnQualquer0;
-	
+
 	@FXML
-    private Button btnDeletarConta;
-	
+	private Button btnDeletarConta;
+
 	@FXML
 	private RadioButton rbtnCelular1;
 
@@ -451,7 +451,7 @@ public class Dashboard extends Application {
 
 	Thread thread;
 	int segundos = 0 ;
-	boolean codigoCerto = false;
+	boolean codigoCerto = false, isDelete = false;
 
 	private void iniciarTimer()
 	{
@@ -474,45 +474,35 @@ public class Dashboard extends Application {
 		});
 		thread.start();
 	}
-	
-	
+
+
 	@FXML
-    void DeletarConta(ActionEvent event) {
+	void DeletarConta(ActionEvent event) {
 		try {
 			if (Util.MessageBoxShow("Deletar conta",
 					"Tem certeza que deseja deletar sua conta permanentemente ?").equals(ButtonType.OK)) {
-				int id=Util.getContaLogada().getId();
-				Banco.InserirQuery("DELETE FROM comentarios WHERE idParceiro = " + id);
-
-                ArrayList<Integer> telefones = new ArrayList<>();
-                Banco.InserirQueryReader("SELECT id FROM telefone WHERE dono = " + id);
-                while (Banco.getReader().next())
-                {
-                    telefones.add(Banco.getReader().getInt("id"));
-                }
-
-                for (int id_:telefones)
-                {
-                    Banco.InserirQuery("DELETE FROM comentarios WHERE idTelefone = " + id_);
-                }
-
-                Banco.InserirQuery("DELETE FROM denuncia WHERE denunciador="+id+" OR denunciado="+id);
-                Banco.InserirQuery("DELETE FROM telefone WHERE dono = " + id);
-                Banco.InserirQuery("DELETE FROM endereco WHERE usuario = " + id);
-                
-				
-				if(Banco.InserirQuery("delete from parceiro where id="+id+";")) {
-					Util.MessageBoxShow("Deleção confirmada", "A conta foi deletada com sucesso.");
-					// fecha o aplicativo
-					Runtime.getRuntime().exit(0);
-					return;
+				codigo = GerarCodigo();
+				if (Email.enviarEmail("Você solicitou a exclusão de conta no sistema Lista Pública de Telefones."
+						+ "\n\n Insira o código abaixo para validar sua operação:"
+						+ "\n\n" + codigo, "Solicitação de exclusão de conta - Lista Pública",
+						Util.getContaLogada().getEmail())) {
+					iniciarTimer();
+					Util.MessageBoxShow("Excluir conta", "Foi enviado o código de exclusão ao seu E-mail!", AlertType.INFORMATION);
+					MudarInterfaceCodigo(true);
+					txtMCCodigo.requestFocus();
+					isDelete = true;
+				}
+				else
+				{
+					Util.MessageBoxShow("Excluir conta", "Não foi possível enviar o código de confirmação para o seguinte e-mail:"
+							+ "\n\n" + Util.getContaLogada().getEmail() , AlertType.ERROR);
 				}
 			}	
 		}catch(Exception e) {
 			// erro quando fecha o dialog "cancelar"
 		}
-		
-    }
+
+	}
 
 	@FXML
 	void AlterarSenha(ActionEvent event) {
@@ -525,6 +515,12 @@ public class Dashboard extends Application {
 			Util.MessageBoxShow("Troca de Senhas", "Foi enviado o código de alteração ao seu E-mail!", AlertType.INFORMATION);
 			MudarInterfaceCodigo(true);
 			txtMCCodigo.requestFocus();
+			isDelete = false;
+		}
+		else
+		{
+			Util.MessageBoxShow("Excluir conta", "Não foi possível enviar o código de confirmação para o seguinte e-mail:"
+					+ "\n\n" + Util.getContaLogada().getEmail() , AlertType.ERROR);
 		}
 	}
 
@@ -562,16 +558,57 @@ public class Dashboard extends Application {
 	}
 
 	@FXML
-	void ConfirmarCodigoSenha(ActionEvent event) {
+	void ConfirmarCodigoSenha(ActionEvent event) throws SQLException {
 
 		if (txtMCCodigo.getText().equals(codigo)) {
 			MudarInterfaceCodigo(false);
-			codigo = null;
-			codigoCerto = true;
-			TrocarSenha trocarSenha = new TrocarSenha();
-			trocarSenha.setEmail(Util.getContaLogada().getEmail());
-			trocarSenha.getEvent(event);
-			trocarSenha.start(new Stage());
+			if (!isDelete)
+			{
+				codigo = null;
+				codigoCerto = true;
+				TrocarSenha trocarSenha = new TrocarSenha();
+				trocarSenha.setEmail(Util.getContaLogada().getEmail());
+				trocarSenha.getEvent(event);
+				trocarSenha.start(new Stage());
+			}
+			else
+			{
+				if (Util.MessageBoxShow("Deletar conta",
+						"Você realmente deseja deletar sua conta permanentemente?"
+						+ "\n\n"
+						+ "Todas as suas informações serão excluídas!"
+						+ "\n\n"
+						+ "Esta ação não poderá ser desfeita!"
+						+ "\n\n"
+						+ "Você confirma a exclusão?").equals(ButtonType.OK)) {
+					int id=Util.getContaLogada().getId();
+					Banco.InserirQuery("DELETE FROM comentarios WHERE idParceiro = " + id);
+
+					ArrayList<Integer> telefones = new ArrayList<>();
+					Banco.InserirQueryReader("SELECT id FROM telefone WHERE dono = " + id);
+					while (Banco.getReader().next())
+					{
+						telefones.add(Banco.getReader().getInt("id"));
+					}
+
+					for (int id_:telefones)
+					{
+						Banco.InserirQuery("DELETE FROM comentarios WHERE idTelefone = " + id_);
+					}
+
+					Banco.InserirQuery("DELETE FROM denuncia WHERE denunciador="+id+" OR denunciado="+id);
+					Banco.InserirQuery("DELETE FROM telefone WHERE dono = " + id);
+					Banco.InserirQuery("DELETE FROM endereco WHERE usuario = " + id);
+
+
+					if(Banco.InserirQuery("delete from parceiro where id="+id+";")) {
+						Util.MessageBoxShow("Deleção confirmada", "A conta foi deletada com sucesso.");
+						// fecha o aplicativo
+						Runtime.getRuntime().exit(0);
+						return;
+					}
+				}
+			}
 
 		} else {
 			Util.MessageBoxShow("Código inválido", "O código informado está incorreto", AlertType.INFORMATION);
