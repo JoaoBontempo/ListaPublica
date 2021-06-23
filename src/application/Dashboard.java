@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -317,6 +319,16 @@ public class Dashboard extends Application {
 				this.larguraFotoPerfil, this.alturaFotoPerfil, false, false));
 	}
 
+	public boolean validarImagem(File f) {
+		boolean isValid = true;
+		try {
+			ImageIO.read(f).flush();
+		} catch (Exception e) {
+			isValid = false;
+		}
+		return isValid;
+	}	
+	
 	@FXML
 	void TrocarFotoPerfil(MouseEvent event) {
 		try {
@@ -326,7 +338,11 @@ public class Dashboard extends Application {
 					new FileChooser.ExtensionFilter("PNG", "*.png"), new FileChooser.ExtensionFilter("ICO", "*.ico"));
 			File imagemEscolhida = fileChooser.showOpenDialog(this.primaryStage);
 			// armazeno o arquivo na pasta
-
+			if(!validarImagem(imagemEscolhida)) {
+				Util.MessageBoxShow("Imagem corrompida", "A imagem selecionada está corrompida.");
+				return;
+			}
+			
 			String diretorioTmp = "C:\\lista\\usuarios\\" + imagemEscolhida.getName() + Util.getContaLogada().getId();
 			if (Util.verificaTamanhoImagem(4194304L, new File(imagemEscolhida.getAbsolutePath()))) {
 				Util.MessageBoxShow("Imagem muito grande", "A imagem é maior que 4Mb.");
@@ -386,7 +402,7 @@ public class Dashboard extends Application {
 		// file://C:/lista/usuarios/profile.jpg
 		if (possuiIcone) {
 			imgIconePerfil.setImage(new Image(new File("C:\\lista\\usuarios\\profile" + id + ".jpg").toURI().toString(),
-					400, 400, false, false));
+					this.larguraFotoPerfil, this.alturaFotoPerfil, false, false));
 		} else {
 			trocaFotoPerfilParaOPadrao();
 

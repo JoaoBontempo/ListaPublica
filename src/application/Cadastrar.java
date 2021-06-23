@@ -10,6 +10,8 @@ import java.nio.file.Path;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.imageio.ImageIO;
+
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.sun.javafx.geom.Point2D;
 
@@ -129,6 +131,16 @@ public class Cadastrar extends Application {
 	}
 
 	
+	public boolean validarImagem(File f) {
+		boolean isValid = true;
+		try {
+			ImageIO.read(f).flush();
+		} catch (Exception e) {
+			isValid = false;
+		}
+		return isValid;
+	}	
+	
 	@FXML
 	void TrocarFotoPerfil(ActionEvent event) {
 		try {
@@ -137,6 +149,13 @@ public class Cadastrar extends Application {
 			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"),
 					new FileChooser.ExtensionFilter("PNG", "*.png"), new FileChooser.ExtensionFilter("ICO", "*.ico"));
 			File imagemEscolhida = fileChooser.showOpenDialog(this.primaryStage);
+			
+			if(!validarImagem(imagemEscolhida)) {
+				Util.MessageBoxShow("Imagem corrompida", "A imagem selecionada está corrompida.");
+				return;
+			}
+			
+			
 			// armazeno o arquivo na pasta
 			txtCaminhoImagemPerfil.setText(imagemEscolhida.getAbsolutePath());
 

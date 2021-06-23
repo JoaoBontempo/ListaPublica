@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+
 import API_IBGE.Municipio;
 import API_IBGE.UF;
 import classes.API;
@@ -155,6 +157,17 @@ public class UCEnderecoController {
 
 	}
 
+	public boolean validarImagem(File f) {
+		boolean isValid = true;
+		try {
+			ImageIO.read(f).flush();
+		} catch (Exception e) {
+			isValid = false;
+		}
+		return isValid;
+	}	
+	
+	
 	@FXML
 	void abrirImagem(ActionEvent event) {
 
@@ -167,6 +180,11 @@ public class UCEnderecoController {
 		if (imagemEscolhida == null)
 			return;
 
+//		if(!validarImagem(imagemEscolhida)) {
+//			Util.MessageBoxShow("Imagem corrompida", "A imagem selecionada está corrompida.");
+//			return;
+//		}
+		
 		if (imagemEscolhida.length() <= 4194304) {
 
 			txtCaminhoImagem.setText(imagemEscolhida.getAbsolutePath());

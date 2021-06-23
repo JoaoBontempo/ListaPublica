@@ -13,6 +13,8 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -264,6 +266,16 @@ public class CadastrarLocal extends Application implements Initializable {
 
 		return estados;
 	}
+	
+	public boolean validarImagem(File f) {
+		boolean isValid = true;
+		try {
+			ImageIO.read(f).flush();
+		} catch (Exception e) {
+			isValid = false;
+		}
+		return isValid;
+	}	
 
 	@FXML
 	void escolherImagem(ActionEvent event) {
@@ -273,6 +285,12 @@ public class CadastrarLocal extends Application implements Initializable {
 			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"),
 					new FileChooser.ExtensionFilter("PNG", "*.png"));
 			File imagemEscolhida = fileChooser.showOpenDialog(this.primaryStage);
+			
+			if(!validarImagem(imagemEscolhida)) {
+				Util.MessageBoxShow("Imagem corrompida", "A imagem selecionada está corrompida.");
+				return;
+			}
+			
 			if (imagemEscolhida.length() <= 4194304) {
 				txtCaminhoImagem.setText(imagemEscolhida.getAbsolutePath());
 			}
