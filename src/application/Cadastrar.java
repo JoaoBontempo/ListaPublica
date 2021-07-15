@@ -61,18 +61,18 @@ public class Cadastrar extends Application {
 	private TextField txtEmail;
 
 	@FXML
-    private TextField txtCaminhoImagemPerfil;
+	private TextField txtCaminhoImagemPerfil;
 
-    @FXML
-    private Button btnEscolherImagem;
-    
+	@FXML
+	private Button btnEscolherImagem;
+
 	@FXML
 	private PasswordField txtConfirmarSenha;
 	@FXML
 	private TextField txtCPFouCNPJ;
 
 	private Stage primaryStage;
-	
+
 	@FXML
 	private TextField txtNome;
 
@@ -97,16 +97,16 @@ public class Cadastrar extends Application {
 		if(!Validacao.verificarTextField(txtConfirmarSenha)) return false;
 
 		if (!txtUsuario.getText().matches("[a-zA-Z]+"))/* regex para ver somente letras e acentuadas */ {
-			Util.MessageBoxShow("Erro ao Cadastrar", "O Usuário inserido é inválido, insira somente letras",
+			Util.MessageBoxShow("Erro ao Cadastrar", "O Usuï¿½rio inserido ï¿½ invï¿½lido, insira somente letras",
 					AlertType.ERROR);
 			return false;
 		}
 
 		if (!Validacao.validarEmail(txtEmail.getText())) {
-			Util.MessageBoxShow("Erro ao Cadastrar", "O E-mail inserido é inválido", AlertType.ERROR);
+			Util.MessageBoxShow("Erro ao Cadastrar", "O E-mail inserido ï¿½ invï¿½lido", AlertType.ERROR);
 			return false;
 		}
-		
+
 		if (txtCPFouCNPJ.getText().length() == 14) {
 			tipo = true; // tipo cnpj
 			return Validacao.validarCNPJ(txtCPFouCNPJ, true);
@@ -119,7 +119,7 @@ public class Cadastrar extends Application {
 	}
 
 	public void initialize() {
-		
+
 	}
 
 	@FXML
@@ -130,7 +130,7 @@ public class Cadastrar extends Application {
 		stageAtual.close();
 	}
 
-	
+
 	public boolean validarImagem(File f) {
 		boolean isValid = true;
 		try {
@@ -140,7 +140,7 @@ public class Cadastrar extends Application {
 		}
 		return isValid;
 	}	
-	
+
 	@FXML
 	void TrocarFotoPerfil(ActionEvent event) {
 		try {
@@ -151,18 +151,18 @@ public class Cadastrar extends Application {
 			File imagemEscolhida = fileChooser.showOpenDialog(this.primaryStage);
 			
 			if(imagemEscolhida.length() >= 4194304) {
-				Util.MessageBoxShow("Inserção de Imagem", "A imagem solicitada excede o tamanho máximo de 4Mb",
+				Util.MessageBoxShow("InserÃ§Ã£o de Imagem", "A imagem solicitada excede o tamanho mï¿½ximo de 4Mb",
 						AlertType.WARNING);
 				return;
 			}
 			if(imagemEscolhida==null)return;
-			
+
 			if(!validarImagem(imagemEscolhida)) {
-				Util.MessageBoxShow("Imagem corrompida", "A imagem selecionada está corrompida.");
+				Util.MessageBoxShow("Imagem corrompida", "A imagem selecionada estï¿½ corrompida.");
 				return;
 			}
-			
-			
+
+
 			// armazeno o arquivo na pasta
 			txtCaminhoImagemPerfil.setText(imagemEscolhida.getAbsolutePath());
 
@@ -171,14 +171,14 @@ public class Cadastrar extends Application {
 		}
 
 	}
-	
+
 	void realizarCadastro(boolean tipo) {
 
 		try {
 
 			if (validarCredenciais(tipo)) {
 				String base="";
-				
+
 				if (txtSenha.getText().equals(txtConfirmarSenha.getText())) {	
 					String caminhoArquivo=txtCaminhoImagemPerfil.getText();
 					if(caminhoArquivo.length()>0) {
@@ -186,12 +186,12 @@ public class Cadastrar extends Application {
 							base = Util.converterStringParaBase64(Path.of(txtCaminhoImagemPerfil.getText()).toString());
 						}
 						else {
-							Util.MessageBoxShow("Arquivo inexistente", "O arquivo de imagem de perfil selecionado não existe.");
+							Util.MessageBoxShow("Arquivo inexistente", "O arquivo de imagem de perfil selecionado nï¿½o existe.");
 							return;
 						}
 					}
-					
-					
+
+
 					if (tipo) {
 						Banco.InserirQuery(String.format(
 								"INSERT INTO parceiro(id,nome,usuario,tipo,cnpj,email,senha,imagem) VALUES(default,'%s','%s','%s','%s','%s','%s','%s')",
@@ -209,7 +209,7 @@ public class Cadastrar extends Application {
 					RealizarLogin(null);
 				} else {
 
-					Util.MessageBoxShow("Erro ao Cadastrar", "As senhas inseridas não correspondem", AlertType.ERROR);
+					Util.MessageBoxShow("Erro ao Cadastrar", "As senhas inseridas nï¿½o correspondem", AlertType.ERROR);
 					txtConfirmarSenha.requestFocus();
 
 				}
@@ -272,21 +272,21 @@ public class Cadastrar extends Application {
 							msg += " e cpf";
 						else
 							msg += "cpf";
-						
+
 						num++;
 					}
 				}
 			}
 			if (num > 1) {
-				
+
 				if(num == 2)
-					 msg.replace(',', 'e');
-				
-				Util.MessageBoxShow("Erro ao Cadastrar", "As credenciais " + msg + " ja são existentes", AlertType.WARNING);
+					msg.replace(',', 'e');
+
+				Util.MessageBoxShow("Erro ao Cadastrar", "As credenciais " + msg + " ja sï¿½o existentes", AlertType.WARNING);
 			}
 			else
-				Util.MessageBoxShow("Erro ao Cadastrar", "A credencial " + msg + " ja é existente", AlertType.WARNING);
-			
+				Util.MessageBoxShow("Erro ao Cadastrar", "A credencial " + msg + " ja ï¿½ existente", AlertType.WARNING);
+
 			return false;
 		} else
 			return true;
@@ -301,7 +301,7 @@ public class Cadastrar extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Image icon = new Image("Recursos/logo.png");
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("Lista Pública - Cadastrar");
+			primaryStage.setTitle("Lista Pï¿½blica - Cadastrar");
 			primaryStage.getIcons().add(icon);
 			primaryStage.show();
 		} catch (Exception e) {
